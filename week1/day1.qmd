@@ -1,0 +1,438 @@
+---
+title: "Day 1: Environment Setup & First SDTM Code"
+subtitle: "SDTM Programming Walkthrough"
+author: "Indraneel Chakraborty"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    code-tools: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+<div style="margin-bottom:12px;"><a href="../roadmap.html" class="resource-link">← Back to Roadmap</a></div>
+
+## Learning Objectives
+
+By the end of Day 1, you will be able to:
+
+1.  Set up your R environment with essential pharmaverse packages
+2.  Load and explore SDTM datasets from `pharmaversesdtm`
+3.  Understand the CDISC data flow: **Raw → SDTM → ADaM → TLFs**
+4.  Use `dplyr` to explore relationships between SDTM domains
+5.  Perform basic data manipulation operations on clinical data
+
+------------------------------------------------------------------------
+
+## Introduction to CDISC and the Pharmaverse
+
+### What is CDISC?
+
+**CDISC (Clinical Data Interchange Standards Consortium)** is an organization that develops global data standards for clinical research. These standards ensure that clinical trial data is:
+
+-   **Consistent** across different studies and organizations
+-   **Interoperable** between different systems and regulatory agencies
+-   **Submission-ready** for regulatory authorities like the FDA and EMA
+
+### The CDISC Data Flow
+
+Understanding the data flow is critical for clinical programming:
+
+```         
+Raw Data → SDTM → ADaM → TLFs
+```
+
+| Stage | Description | Example |
+|------------------|--------------------------------|----------------------|
+| **Raw Data** | Data collected from EDC systems, labs, etc. | CRF exports, lab files |
+| **SDTM** | Study Data Tabulation Model - standardized clinical data | DM, AE, EX, LB domains |
+| **ADaM** | Analysis Data Model - analysis-ready datasets | ADSL, ADAE, ADLB |
+| **TLFs** | Tables, Listings, and Figures for submission | Demographics table, AE summary |
+
+### What is the Pharmaverse?
+
+The **pharmaverse** is a cross-industry collaboration of R packages designed for clinical reporting workflows. It provides open-source tools that map to each stage of the CDISC data flow:
+
+-   **SDTM creation**: `sdtm.oak`, `pharmaversesdtm` (example data)
+-   **ADaM creation**: `admiral` (the flagship package)
+-   **TLG creation**: `rtables`, `tern`, `tfrmt`
+-   **Validation & Export**: `xportr`, `metacore`, `sdtmchecks`
+
+------------------------------------------------------------------------
+
+## Package Installation & Loading
+
+The following packages are essential for today's exercises. Each serves a specific purpose in the clinical programming workflow.
+
+### Required Packages
+
+| Package           | Purpose                                                |
+|-------------------|--------------------------------------------------------|
+| `admiral`         | ADaM dataset creation - the core pharmaverse package   |
+| `pharmaversesdtm` | Example SDTM datasets for learning and testing         |
+| `dplyr`           | Data manipulation (filter, select, mutate, join, etc.) |
+| `haven`           | Read/write SAS transport files (.xpt)                  |
+| `xportr`          | Apply metadata and export to .xpt for FDA submission   |
+
+### Step 1: Install Packages (if needed)
+
+The code below checks if each package is installed and installs it if missing. This is a safe pattern that won't reinstall packages you already have.
+
+```{r}
+#| label: install-packages
+
+# Install packages if not already installed
+if (!requireNamespace("admiral", quietly = TRUE)) install.packages("admiral")
+if (!requireNamespace("pharmaversesdtm", quietly = TRUE)) install.packages("pharmaversesdtm")
+if (!requireNamespace("xportr", quietly = TRUE)) install.packages("xportr")
+if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
+if (!requireNamespace("haven", quietly = TRUE)) install.packages("haven")
+```
+
+### Step 2: Load Packages
+
+Now we load the packages into our R session. The `library()` function makes all functions from a package available for use.
+
+```{r}
+#| label: load-packages
+
+# Load packages into the session
+library(admiral)
+library(pharmaversesdtm)
+library(dplyr)
+library(haven)
+library(xportr)
+```
+
+::: callout-note
+## What do these messages mean?
+
+When you load packages, you may see messages about package versions and any function name conflicts. This is normal and helps you understand which package's function will be used when names overlap.
+:::
+
+------------------------------------------------------------------------
+
+## Loading SDTM Datasets
+
+The `pharmaversesdtm` package contains example SDTM datasets that mirror real clinical trial data. These are the same datasets used by production teams when developing and testing admiral.
+
+### What are SDTM Domains?
+
+SDTM organizes clinical data into **domains**, each representing a specific type of information:
+
+| Domain Class        | Domain | Description                                |
+|---------------------|--------|--------------------------------------------|
+| **Special Purpose** | DM     | Demographics - one row per subject         |
+| **Events**          | AE     | Adverse Events - multiple rows per subject |
+| **Events**          | DS     | Disposition - study milestones             |
+| **Interventions**   | EX     | Exposure - drug dosing information         |
+| **Interventions**   | CM     | Concomitant Medications                    |
+| **Findings**        | LB     | Laboratory Results                         |
+| **Findings**        | VS     | Vital Signs                                |
+
+### Step 3: Load the Core SDTM Domains
+
+Let's load four key domains that we'll work with today:
+
+```{r}
+#| label: load-sdtm-data
+
+# Load SDTM domains from pharmaversesdtm
+# DM = Demographics (one row per subject)
+data("dm", package = "pharmaversesdtm")
+
+# AE = Adverse Events (multiple rows per subject)
+data("ae", package = "pharmaversesdtm")
+
+# EX = Exposure/Dosing (multiple rows per subject)
+data("ex", package = "pharmaversesdtm")
+
+# LB = Laboratory Results (many rows per subject)
+data("lb", package = "pharmaversesdtm")
+```
+
+------------------------------------------------------------------------
+
+## Exploring the Data
+
+Before working with any dataset, it's essential to understand its structure. Let's explore each domain using different R functions.
+
+### Method 1: `glimpse()` - Quick Structure Overview
+
+The `glimpse()` function from `dplyr` provides a compact view of the data structure, showing column names, types, and a preview of values.
+
+```{r}
+#| label: explore-dm
+
+# Explore the Demographics (DM) domain
+# This shows us all variables and their types
+dplyr::glimpse(dm)
+```
+
+::: callout-tip
+## Key DM Variables
+
+-   **USUBJID**: Unique Subject Identifier - the key that links all domains together
+-   **RFSTDTC**: Reference Start Date (usually first dose date)
+-   **RFENDTC**: Reference End Date
+-   **ARM**: Treatment Arm (e.g., "Placebo", "Drug 80mg")
+-   **ACTARM**: Actual Treatment Arm
+:::
+
+### Method 2: `head()` - View First Few Rows
+
+The `head()` function shows the first n rows of data (default is 6).
+
+```{r}
+#| label: head-ae
+
+# View the first 6 rows of Adverse Events
+utils::head(ae)
+```
+
+### Method 3: `dim()` and `names()` - Dimensions and Column Names
+
+```{r}
+#| label: explore-dimensions
+
+# How many rows and columns in each domain?
+cat("DM dimensions:", dim(dm), "\n")
+cat("AE dimensions:", dim(ae), "\n")
+cat("EX dimensions:", dim(ex), "\n")
+cat("LB dimensions:", dim(lb), "\n")
+```
+
+```{r}
+#| label: explore-names
+
+# What variables are in the AE domain?
+names(ae)
+```
+
+------------------------------------------------------------------------
+
+## Understanding Domain Relationships
+
+One of the most important concepts in clinical programming is understanding how domains relate to each other. **USUBJID** is the universal key that connects all domains.
+
+### The USUBJID Connection
+
+```         
+        ┌─────────────┐
+        │     DM      │
+        │ (1 row per  │
+        │  subject)   │
+        └──────┬──────┘
+               │ USUBJID
+    ┌──────────┼──────────┬──────────┐
+    ▼          ▼          ▼          ▼
+┌────────┐  ┌───────┐  ┌───────┐  ┌────────┐
+│  AE    │  │  EX   │  │  LB   │  │  VS    │
+│(events)│  │(doses)│  │(labs) │  │(vitals)│
+└────────┘  └───────┘  └───────┘  └────────┘
+```
+
+### Step 4: Join DM and AE (Demographics + Adverse Events)
+
+When analyzing adverse events, we often need demographic information like treatment arm. Let's join these domains.
+
+```{r}
+#| label: join-dm-ae
+
+# Join Demographics (DM) with Adverse Events (AE)
+# We select key DM variables and join on USUBJID
+
+dm_ae <- dm %>%
+  # Select only the DM variables we need
+  dplyr::select(USUBJID, RFSTDTC, RFENDTC, ARM, AGE, SEX, RACE) %>%
+  # Inner join keeps only subjects that appear in both datasets
+  dplyr::inner_join(ae, by = "USUBJID")
+
+# How many records do we have now?
+cat("Number of AE records with demographic info:", nrow(dm_ae), "\n")
+
+# Preview the joined data
+utils::head(dm_ae)
+```
+
+::: callout-note
+## Why use `inner_join()`?
+
+-   **inner_join()**: Keeps only rows where USUBJID exists in BOTH datasets
+-   **left_join()**: Keeps all rows from the left dataset (DM), adds matching rows from right (AE)
+-   **anti_join()**: Keeps rows from left where there is NO match in right (useful for finding missing data)
+:::
+
+### Step 5: Join DM and EX (Demographics + Exposure)
+
+Exposure data tells us about drug dosing. Let's combine this with demographics.
+
+```{r}
+#| label: join-dm-ex
+
+# Join Demographics (DM) with Exposure (EX)
+dm_ex <- dm %>%
+  dplyr::select(USUBJID, ARM, AGE, SEX) %>%
+  dplyr::inner_join(ex, by = "USUBJID")
+
+# Preview the result
+dplyr::glimpse(dm_ex)
+```
+
+------------------------------------------------------------------------
+
+## Hands-On: 5+ dplyr Operations
+
+The deliverable for Day 1 requires demonstrating at least 5 `dplyr` operations. Let's work through practical examples.
+
+### Operation 1: `filter()` - Subset Rows
+
+Filter AEs to show only serious adverse events (SAEs).
+
+```{r}
+#| label: dplyr-filter
+
+# Filter for Serious Adverse Events only
+serious_aes <- ae %>%
+  dplyr::filter(AESER == "Y")
+
+cat("Total AEs:", nrow(ae), "\n")
+cat("Serious AEs:", nrow(serious_aes), "\n")
+```
+
+### Operation 2: `select()` - Choose Columns
+
+Select only the variables we need for a quick AE overview.
+
+```{r}
+#| label: dplyr-select
+
+# Select key AE variables
+ae_summary <- ae %>%
+  dplyr::select(USUBJID, AEDECOD, AESEV, AESER, AESTDTC, AEENDTC)
+
+utils::head(ae_summary)
+```
+
+### Operation 3: `mutate()` - Create New Variables
+
+Create a flag for treatment-related adverse events.
+
+```{r}
+#| label: dplyr-mutate
+
+# Create a new variable: treatment-related flag
+ae_with_flag <- ae %>%
+  dplyr::mutate(
+    # Create a related flag (Y if related, N otherwise)
+    AEREL_FLAG = dplyr::if_else(AEREL == "PROBABLE" | AEREL == "POSSIBLE", "Y", "N")
+  )
+
+# Check the distribution
+table(ae_with_flag$AEREL_FLAG, useNA = "ifany")
+```
+
+### Operation 4: `group_by()` + `summarise()` - Aggregate Data
+
+Count adverse events by System Organ Class (SOC).
+
+```{r}
+#| label: dplyr-summarise
+
+# Count AEs by System Organ Class
+ae_by_soc <- ae %>%
+  dplyr::group_by(AEBODSYS) %>%
+  dplyr::summarise(
+    n_events = dplyr::n(),
+    n_subjects = dplyr::n_distinct(USUBJID)
+  ) %>%
+  dplyr::arrange(dplyr::desc(n_events))
+
+# Show top 10 SOCs
+utils::head(ae_by_soc, 10)
+```
+
+### Operation 5: `arrange()` - Sort Data
+
+Sort AEs by subject and start date.
+
+```{r}
+#| label: dplyr-arrange
+
+# Sort AEs chronologically within each subject
+ae_sorted <- ae %>%
+  dplyr::select(USUBJID, AEDECOD, AESTDTC, AESEV) %>%
+  dplyr::arrange(USUBJID, AESTDTC)
+
+utils::head(ae_sorted, 10)
+```
+
+### Bonus Operation 6: `anti_join()` - Find Missing Data
+
+Find subjects in DM who have no adverse events (useful for data QC).
+
+```{r}
+#| label: dplyr-antijoin
+
+# Find subjects with NO adverse events
+subjects_no_ae <- dm %>%
+  dplyr::select(USUBJID, ARM) %>%
+  dplyr::anti_join(ae, by = "USUBJID")
+
+cat("Subjects with no AEs:", nrow(subjects_no_ae), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Day 1 Deliverable Summary
+
+Today you completed the following:
+
+| Task                                         | Status |
+|----------------------------------------------|--------|
+| Installed and loaded pharmaverse packages    | Done   |
+| Loaded DM, AE, EX, LB SDTM domains           | Done   |
+| Explored data with glimpse(), head(), dim()  | Done   |
+| Joined DM-AE (demographics + adverse events) | Done   |
+| Joined DM-EX (demographics + exposure)       | Done   |
+| Demonstrated 5+ dplyr operations             | Done   |
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  **USUBJID is the universal key** - It links all SDTM domains together
+2.  **SDTM domains have classes** - Special Purpose (DM), Events (AE), Interventions (EX), Findings (LB)
+3.  **The CDISC data flow** - Raw → SDTM → ADaM → TLFs
+4.  **dplyr is essential** - Most pharmaverse packages are built on tidyverse principles
+5.  **pharmaversesdtm provides real-world example data** - Use it for learning and testing
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   [pharmaverse.org](https://pharmaverse.org) - The central hub for all pharmaverse packages
+-   [pharmaversesdtm GitHub](https://github.com/pharmaverse/pharmaversesdtm) - Source code and documentation
+-   [admiral 'Get Started' vignette](https://pharmaverse.github.io/admiral/articles/admiral.html) - Introduction to ADaM creation
+-   [CDISC SDTM Implementation Guide](https://www.cdisc.org/standards/foundational/sdtm) - Official SDTM documentation
+-   [dplyr documentation](https://dplyr.tidyverse.org/) - Complete reference for data manipulation
+
+------------------------------------------------------------------------
+
+## What's Next?
+
+In **Day 2**, we'll dive deeper into: - SDTM domain classes and their specific structures - Advanced tidyverse operations - Variable naming conventions (--TESTCD, --ORRES, --DY patterns) - Creating data summaries by treatment arm

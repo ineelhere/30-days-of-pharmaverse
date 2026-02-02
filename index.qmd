@@ -1,0 +1,114 @@
+---
+format:
+  html:
+    theme:
+      dark: darkly
+      light: cosmo
+    toc: false
+    page-layout: full
+    minimal: true
+---
+
+```{=html}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; URL=roadmap.html">
+  <title>30-Day CDISC Clinical Programming Mastery</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Playfair Display', Georgia, serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .redirect-container {
+      text-align: center;
+      padding: 60px 40px;
+      max-width: 600px;
+    }
+    
+    .label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 16px;
+    }
+    
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    
+    .subtitle {
+      font-size: 14px;
+      color: #94a3b8;
+      font-style: italic;
+      margin-bottom: 40px;
+    }
+    
+    .redirect-msg {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 20px;
+    }
+    
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #334155;
+      border-top-color: #38bdf8;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 24px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .link {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      padding: 10px 24px;
+      background: rgba(56,189,248,0.1);
+      border: 1px solid #38bdf8;
+      border-radius: 6px;
+      color: #38bdf8;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    
+    .link:hover {
+      background: rgba(56,189,248,0.2);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="redirect-container">
+    <div class="label">Pharmaverse R Onboarding</div>
+    <h1>30-Day CDISC Clinical Programming Mastery</h1>
+    <p class="subtitle">CDISC · SDTM · ADaM · Admiral · FDA-Ready</p>
+    <div class="spinner"></div>
+    <p class="redirect-msg">Redirecting to the roadmap...</p>
+    <a href="roadmap.html" class="link">Click here if not redirected</a>
+  </div>
+</body>
+</html>
+```

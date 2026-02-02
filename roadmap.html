@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>30-Day CDISC Clinical Programming Mastery</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #0d1525;
+    --bg-row-even: #1a202c;
+    --bg-row-odd: #0f172a;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --text-dim: #475569;
+    --border-color: #334155;
+    --border-light: #1e293b;
+    --card-bg: #1a202c;
+    --tag-bg: #0f172a;
+    --shadow: 0 2px 12px rgba(0,0,0,0.3);
+    --accent-1: #38bdf8;
+    --accent-2: #a78bfa;
+    --accent-3: #4ade80;
+    --accent-4: #fb923c;
+    --deliverable-color: #a5f3fc;
+  }
+
+  [data-theme="light"] {
+    --bg-primary: #f0f4f8;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #e2e8f0;
+    --bg-row-even: #ffffff;
+    --bg-row-odd: #f7fafc;
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --text-dim: #94a3b8;
+    --border-color: #cbd5e1;
+    --border-light: #e2e8f0;
+    --card-bg: #ffffff;
+    --tag-bg: #f1f5f9;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --accent-1: #0284c7;
+    --accent-2: #7c3aed;
+    --accent-3: #16a34a;
+    --accent-4: #ea580c;
+    --deliverable-color: #0e7490;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Playfair Display', Georgia, serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    transition: background 0.35s, color 0.35s;
+  }
+
+  /* ─── THEME TOGGLE ─── */
+  .theme-toggle {
+    position: fixed;
+    top: 18px;
+    right: 22px;
+    z-index: 100;
+    width: 56px;
+    height: 28px;
+    border-radius: 14px;
+    background: var(--bg-secondary);
+    border: 1.5px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    padding: 0 3px;
+  }
+  .theme-toggle .knob {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent-1);
+    transition: transform 0.3s, background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  }
+  [data-theme="light"] .theme-toggle .knob { transform: translateX(28px); background: var(--accent-4); }
+
+  /* ─── HEADER ─── */
+  .header {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 32px 24px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.35s, border-color 0.35s;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(56,189,248,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -70px; right: -50px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(167,139,250,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-inner { position: relative; z-index: 1; }
+  .header-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .header h1 {
+    font-size: 25px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+    transition: color 0.35s;
+  }
+  .header p {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    font-style: italic;
+    transition: color 0.35s;
+  }
+
+  /* ─── WEEK TABS ─── */
+  .week-tabs {
+    display: flex;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-light);
+    overflow-x: auto;
+    transition: background 0.35s, border-color 0.35s;
+  }
+  .week-tab {
+    flex: 1 1 auto;
+    min-width: 105px;
+    padding: 13px 14px;
+    background: transparent;
+    border: none;
+    border-bottom: 2.5px solid transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    font-size: 11.5px;
+    text-align: center;
+    transition: all 0.22s;
+  }
+  .week-tab:hover { color: var(--text-secondary); }
+  .week-tab .tab-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 3px;
+  }
+  .week-tab .tab-title { font-size: 10.5px; }
+
+  .week-tab[data-active="true"] { background: transparent; }
+  .week-tab[data-week="0"][data-active="true"] { color: var(--accent-1); border-bottom-color: var(--accent-1); }
+  .week-tab[data-week="1"][data-active="true"] { color: var(--accent-2); border-bottom-color: var(--accent-2); }
+  .week-tab[data-week="2"][data-active="true"] { color: var(--accent-3); border-bottom-color: var(--accent-3); }
+  .week-tab[data-week="3"][data-active="true"] { color: var(--accent-4); border-bottom-color: var(--accent-4); }
+
+  /* ─── WEEK HEADER BAR ─── */
+  .week-header {
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    transition: background 0.35s, border-color 0.35s;
+  }
+  .week-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    color: #0f172a;
+    font-weight: 600;
+  }
+  .week-header-text h2 { font-size: 15.5px; font-weight: 600; color: var(--text-primary); transition: color 0.35s; }
+  .week-header-text p { font-size: 11.5px; font-style: italic; margin-top: 2px; transition: color 0.35s; }
+
+  /* ─── TABLE WRAPPER ─── */
+  .table-wrap {
+    overflow-x: auto;
+    padding: 14px 16px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 740px;
+  }
+  thead tr { border-bottom: 1px solid var(--border-light); }
+  thead th {
+    text-align: left;
+    padding: 9px 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--text-muted);
+    white-space: nowrap;
+    transition: color 0.35s;
+  }
+  thead th { border-bottom: 1px solid var(--border-light); }
+
+  /* ─── TABLE ROWS ─── */
+  .day-row {
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-light);
+    transition: background 0.15s;
+    vertical-align: top;
+  }
+  .day-row:hover { background: rgba(56,189,248,0.03); }
+  .day-row td { padding: 11px 11px; }
+
+  /* Day badge */
+  .day-badge {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  /* Focus */
+  .focus-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.45; transition: color 0.35s; }
+
+  /* Topic */
+  .topic-text { font-size: 10.8px; color: var(--text-secondary); font-style: italic; line-height: 1.45; transition: color 0.35s; }
+
+  /* Details */
+  .details-text {
+    font-size: 10.2px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    transition: color 0.25s, max-height 0.3s;
+    overflow: hidden;
+    max-height: 38px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+  }
+  .details-text.expanded {
+    max-height: 200px;
+    -webkit-line-clamp: unset;
+    color: var(--text-secondary);
+  }
+  .expand-hint {
+    font-size: 9px;
+    margin-top: 3px;
+    opacity: 0.6;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* Package tags */
+  .pkg-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+  .pkg-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .pkg-none { color: var(--text-dim); font-size: 9.5px; font-family: 'IBM Plex Mono', monospace; }
+
+  /* Deliverable */
+  .deliverable-text {
+    font-size: 10px;
+    line-height: 1.5;
+    font-style: italic;
+    border-left: 2px solid transparent;
+    padding-left: 8px;
+    color: var(--text-dim);
+    transition: color 0.25s;
+  }
+
+  /* Expanded row state */
+  .day-row[data-expanded="true"] .details-text { max-height: 200px; -webkit-line-clamp: unset; color: var(--text-secondary); }
+  .day-row[data-expanded="true"] .expand-hint { display: none; }
+  .day-row[data-expanded="true"] .deliverable-text { color: var(--deliverable-color); }
+
+  /* ─── RESOURCES PANEL ─── */
+  .resources-panel {
+    margin: 6px 16px 10px;
+    padding: 13px 17px;
+    background: var(--card-bg);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    transition: background 0.35s, border-color 0.35s;
+  }
+  .resources-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .resources-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .resource-tag {
+    font-size: 9.5px;
+    color: var(--text-secondary);
+    background: var(--tag-bg);
+    padding: 3px 9px;
+    border-radius: 3px;
+    border: 1px solid var(--border-color);
+    transition: background 0.35s, border-color 0.35s, color 0.35s;
+  }
+
+  /* ─── PROGRESS BAR ─── */
+  .progress-section {
+    padding: 12px 16px 18px;
+  }
+  .progress-row { display: flex; align-items: center; gap: 10px; }
+  .progress-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--text-dim);
+    min-width: 60px;
+  }
+  .progress-track {
+    flex: 1;
+    height: 4px;
+    background: var(--border-light);
+    border-radius: 2px;
+    overflow: hidden;
+    transition: background 0.35s;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.4s ease, background 0.3s;
+  }
+  .progress-pct {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--text-dim);
+    min-width: 38px;
+    text-align: right;
+  }
+
+  /* ─── LEGEND ─── */
+  .legend {
+    padding: 0 16px 14px;
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .legend-text { font-size: 9px; color: var(--text-dim); font-family: 'IBM Plex Mono', monospace; }
+  .legend-hint { font-size: 9px; color: var(--text-dim); margin-left: auto; font-family: 'IBM Plex Mono', monospace; opacity: 0.7; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 600px) {
+    .header h1 { font-size: 19px; }
+    .week-tab { min-width: 80px; padding: 10px 8px; }
+    .week-tab .tab-title { font-size: 9.5px; }
+    table { min-width: 580px; }
+  }
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- Theme Toggle -->
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <div class="knob" id="themeIcon">🌙</div>
+</button>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-label">Pharmaverse R Onboarding</div>
+    <h1>30-Day Clinical Programming Mastery</h1>
+    <p>CDISC · SDTM · ADaM · Admiral · FDA-Ready</p>
+  </div>
+</div>
+
+<!-- Week Tabs -->
+<div class="week-tabs" id="weekTabs"></div>
+
+<!-- Content Area -->
+<div id="contentArea"></div>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+// DATA — aligned with how Roche, GSK, J&J actually use pharmaverse
+// ════════════════════════════════════════════════════════════════
+const data = [
+  {
+    week: 1,
+    title: "Pharmaverse Foundations & SDTM",
+    theme: "Hands-On with Real Clinical Data from Day 1",
+    days: [
+      {
+        day: 1,
+        focus: "Environment Setup & First SDTM Code",
+        topic: "Get coding immediately with pharmaversesdtm",
+        details: "Install R, RStudio, and key pharmaverse packages (admiral, pharmaversesdtm, xportr, dplyr, haven). Load pharmaversesdtm example SDTM datasets (dm, ae, ex, lb) — these are the same datasets used by Roche/GSK teams when developing admiral. Explore with glimpse(), head(), View(). Understand CDISC data flow: Raw → SDTM → ADaM → TLFs, and how pharmaverse packages map to each stage. The pharmaverse is a cross-company collaboration (Roche, GSK, J&J, Novartis, Atorus, Merck) solving the same CDISC challenges together.",
+        packages: "admiral, pharmaversesdtm, dplyr, haven, xportr",
+        deliverable: "Load all pharmaversesdtm SDTM domains, create a script showing domain relationships (DM-AE join, DM-EX merge) with 5+ dplyr operations",
+        resources: "pharmaverse.org, pharmaversesdtm GitHub, admiral 'Get Started' vignette"
+      },
+      {
+        day: 2,
+        focus: "SDTM Domain Structure & Tidyverse Mastery",
+        topic: "Understanding SDTM domain classes through code",
+        details: "SDTM has domain classes: Special Purpose (DM), Events (AE, DS), Findings (LB, VS), Interventions (EX, CM). Use pharmaversesdtm data to practice tidyverse: filter AEs by severity, select key DM variables, mutate new flags, group_by treatment arm and summarise counts. Learn variable naming: --TESTCD, --ORRES, --STRESC, --DY patterns. This is 50% of what you'll do daily as a clinical programmer — pharmaverse packages are 50% built on tidyverse.",
+        packages: "dplyr, tidyr, pharmaversesdtm",
+        deliverable: "Write 10 tidyverse transformations on pharmaversesdtm data: filters, joins, pivots, summaries. Create an AE summary by SOC using group_by + summarise",
+        resources: "CDISC SDTM IG v3.4, tidyverse.org, pharmaverse blog: 'The pharmaverse (hi)story'"
+      },
+      {
+        day: 3,
+        focus: "Controlled Terminology & MedDRA Coding",
+        topic: "Building AE codelists in R",
+        details: "Controlled Terminology ensures consistency across submissions. Using pharmaversesdtm AE data, practice creating lookup tables with dplyr for MedDRA coding (AEDECOD → AEBODSYS mapping). Learn CDISC CT concepts: AESEV (MILD/MODERATE/SEVERE), AEREL (RELATED/NOT RELATED), AESER (Y/N). Understand how metacore + metatools automate CT validation. Companies like Roche and GSK use these packages to ensure their derivations comply with CT standards before submission.",
+        packages: "dplyr, pharmaversesdtm",
+        deliverable: "Create a MedDRA lookup table mapping 15+ AE preferred terms to SOCs, then left_join() to pharmaversesdtm$ae and validate all AEs are coded",
+        resources: "CDISC CT Browser, MedDRA hierarchy, metacore documentation"
+      },
+      {
+        day: 4,
+        focus: "Clinical Date Derivations with lubridate",
+        topic: "Study day, duration, and partial date imputation",
+        details: "Dates are central to CDISC: study day (--DY), duration (--DUR), start/end dates (--STDTC, --ENDTC). Use lubridate to parse ISO 8601 dates. Handle partial dates (2024-03--, 2024----) with CDISC imputation rules (earliest for start, latest for end). Derive AESTDY from AESTDTC and RFSTDTC using the formula: study_day = as.numeric(date - reference_date) + 1. This pattern is used across all SDTM domains and later in admiral's ADaM derivations.",
+        packages: "lubridate, dplyr, pharmaversesdtm",
+        deliverable: "Write reusable functions: impute_partial_date(), derive_study_day(). Apply to pharmaversesdtm$ae to derive AESTDY, AEENDY, AEDUR",
+        resources: "lubridate cheatsheet, CDISC SDTM IG date conventions, admiral derive_vars_dt() vignette"
+      },
+      {
+        day: 5,
+        focus: "Advanced Tidyverse: Pivoting & Joining",
+        topic: "Reshaping SDTM data for analysis",
+        details: "SDTM stores data in long format (one row per observation). Practice pivot_wider() to create wide formats (e.g., one row per subject with BP_SYSTOLIC, BP_DIASTOLIC columns from VS). Practice complex joins: DM + AE (demographic context for AEs), DM + EX (treatment exposure). Use anti_join() to find subjects in DM but not in AE (screen failures). These tidyverse patterns are foundational — admiral is essentially tidyverse + CDISC logic.",
+        packages: "dplyr, tidyr, pharmaversesdtm",
+        deliverable: "Create 3 analysis-ready datasets: (1) wide VS with one row per subject/visit, (2) DM+AE with demographic covariates, (3) screen failure report using anti_join",
+        resources: "tidyr pivot vignettes, dplyr two-table verbs, pharmaverse examples site"
+      },
+      {
+        day: 6,
+        focus: "Introduction to sdtm.oak",
+        topic: "EDC-to-SDTM transformation patterns",
+        details: "sdtm.oak is the pharmaverse package for creating SDTM from raw EDC data. It provides reusable algorithm functions for domain classes: Findings (oak_id_vars + condition_add for LB/VS), Events (assign_no_ct for AE), Interventions (hardcode_no_ct for CM). Unlike legacy SAS macros, sdtm.oak is modular and metadata-driven. Explore oak_id_vars() for adding standard SDTM identifier variables (STUDYID, USUBJID, --SEQ). This is how production teams at GSK and Roche build SDTM at scale.",
+        packages: "sdtm.oak, dplyr, pharmaversesdtm",
+        deliverable: "Use sdtm.oak functions to transform a simulated raw dataset into a valid SDTM LB domain with proper identifiers and test codes",
+        resources: "sdtm.oak GitHub, sdtm.oak algorithm vignettes, pharmaverse blog: 'There's a Pharmaverse Package for That'"
+      },
+      {
+        day: 7,
+        focus: "Week 1 Capstone: End-to-End SDTM Script",
+        topic: "Build DM, AE, EX from scratch with xportr export",
+        details: "Combine everything learned: use pharmaversesdtm as a reference to create DM, AE, and EX domains from simulated raw data. Apply variable naming, CT, date derivations, and oak patterns. Use xportr to apply variable labels and export to .xpt (FDA Transport v5 format). xportr was jointly developed by GSK, Atorus, and Appsilon and is the standard for regulatory submission. Run xportr_type(), xportr_length(), xportr_label(), xportr_write() to create submission-ready files.",
+        packages: "dplyr, lubridate, sdtm.oak, xportr, haven",
+        deliverable: "Produce validated DM.xpt, AE.xpt, EX.xpt (20+ subjects) with proper labels, types, and lengths verified via xportr checks. Document derivation logic in comments.",
+        resources: "xportr documentation, pharmaverse examples: SDTM, Week 1 review"
+      }
+    ]
+  },
+  {
+    week: 2,
+    title: "Production SDTM & Validation",
+    theme: "Industry-Grade SDTM Workflows from Roche, GSK, J&J",
+    days: [
+      {
+        day: 8,
+        focus: "Complex SDTM Domains: LB (Lab Results)",
+        topic: "Findings class with unit standardization",
+        details: "LB is one of the most complex SDTM domains. It contains: --TESTCD (lab test code), --ORRES (original result), --ORRESU (original unit), --STRESC (standardized result in character), --STRESN (standardized result numeric), --STRESU (standardized unit). Practice unit conversion (mg/dL → mmol/L), deriving reference range flags (--STNRLO, --STNRHI), and LOINC coding. Use sdtm.oak's Findings algorithms for modular construction. This is daily work for clinical programmers.",
+        packages: "dplyr, tidyr, sdtm.oak, pharmaversesdtm",
+        deliverable: "Create an LB domain from simulated raw lab data with 10+ tests, unit conversions, standardized results, reference ranges, and LOINC codes",
+        resources: "SDTM IG LB domain specification, sdtm.oak Findings vignettes, LOINC database"
+      },
+      {
+        day: 9,
+        focus: "VS (Vital Signs) & Repeated Measures",
+        topic: "Visit-level data and positional readings",
+        details: "VS handles repeated measures: BP measured 3x per visit, temperature pre/post dose. Learn VISITNUM, VISIT, VISITDY, --POS (position: SITTING/STANDING), --LOC (location: ARM). Use dplyr to handle multiple readings per visit/timepoint. Derive mean, min, max across readings. Understand how this maps to BDS (Basic Data Structure) in ADaM — ADVS will have baseline flags and change from baseline. Roche's NEST team uses similar patterns in their tern tables.",
+        packages: "dplyr, tidyr, pharmaversesdtm",
+        deliverable: "Build a VS domain with 5+ vital signs, multiple readings per visit with proper --POS and --LOC, derived mean values per visit",
+        resources: "SDTM IG VS domain specification, BDS structure primer"
+      },
+      {
+        day: 10,
+        focus: "AE Domain Mastery & SAE Logic",
+        topic: "Events class with severity, causality, outcomes",
+        details: "Deep dive into AE variables: AESEV/AETOXGR (severity grading), AESER (serious Y/N), AEREL/AEACOTH (causality), AEOUT (outcome: RECOVERED/FATAL), AESDTH/AESHOSP/AESLIFE (SAE criteria). Derive AEDUR (duration in days) from AESTDTC and AEENDTC. Learn ICH-GCP SAE definitions. Use sdtm.oak's Events class algorithms. This domain drives all safety reporting — GSK and Roche use admiral's ADAE templates built directly from this SDTM structure.",
+        packages: "dplyr, lubridate, sdtm.oak",
+        deliverable: "Create an AE domain with full SAE flagging logic, duration derivation, multiple causality assessments, and proper outcome coding from raw CRF data",
+        resources: "SDTM IG AE domain, ICH-GCP E2A SAE guidelines, admiral ADAE derivation vignette"
+      },
+      {
+        day: 11,
+        focus: "CM, MH & Interventions Class",
+        topic: "Medications and medical history with ongoing flags",
+        details: "CM (Concomitant Meds) and MH (Medical History) share structure: --STDT, --ENDT, --ONGO (ongoing flag when no end date). Practice deriving --DUR, handling ongoing treatments, and WHO Drug Dictionary coding for CM. Learn how MH connects to eligibility criteria and baseline characteristics. Use sdtm.oak's Interventions algorithms for CM. J&J's collaboration with Roche on NEST involved standardizing how ongoing statuses are handled across tables.",
+        packages: "dplyr, lubridate, sdtm.oak",
+        deliverable: "Derive CM and MH domains with proper ongoing flags, duration calculations, WHODrug coding for CM, and partial date handling",
+        resources: "SDTM IG CM and MH specifications, WHO Drug Dictionary, sdtm.oak Interventions algorithms"
+      },
+      {
+        day: 12,
+        focus: "EX, DS & Study Flow",
+        topic: "Exposure and disposition tracking",
+        details: "EX (Exposure) tracks every dose: EXDOSE, EXDOSU, EXDOSFRM, EXROUTE, EXDOSFRQ. DS (Disposition) tracks patient journey: DSCAT (DISPOSITION EVENT), DSDECOD (COMPLETED/WITHDRAWN/SCREEN FAILURE), DSTERM (free text reason). These domains are critical — ADSL derives treatment dates from EX and population flags from DS. Use datacutr for database locks. GSK and Roche teams use EX extensively in admiral's derive_vars_merged() to pull first/last dose dates into ADSL.",
+        packages: "dplyr, lubridate, datacutr",
+        deliverable: "Build EX with dose modifications and DS with multiple disposition reasons. Perform a data cut at Week 12 using datacutr. Document derivation logic.",
+        resources: "SDTM IG EX and DS specifications, datacutr documentation, admiral ADSL TRTSDT/TRTEDT derivations"
+      },
+      {
+        day: 13,
+        focus: "SDTM Validation with sdtmchecks",
+        topic: "Automated conformance checking",
+        details: "sdtmchecks runs automated validation checks on SDTM datasets: missing required variables, invalid date formats, orphan records (AE without DM), implausible values. It provides generalizable, actionable, and meaningful checks. Run check_ae_aeacn(), check_dm_usubjid(), check_ae_aedthdtc_ds_dthdt() on your domains. This is how production teams at pharma companies validate SDTM before ADaM creation. Issues caught here save hours of debugging later.",
+        packages: "sdtmchecks, dplyr, pharmaversesdtm",
+        deliverable: "Run sdtmchecks on a complete SDTM package (6+ domains). Fix all identified issues. Document validation results in a report.",
+        resources: "sdtmchecks documentation, sdtmchecks GitHub examples"
+      },
+      {
+        day: 14,
+        focus: "Metadata with metacore & xportr",
+        topic: "Specifications-driven SDTM creation",
+        details: "metacore stores dataset metadata: variable names, labels, types, lengths, codelists. Use spec_to_metacore() to load specifications from Excel. metatools uses metacore to build and check datasets. xportr applies metadata (xportr_label, xportr_type, xportr_length) before .xpt export. This is the pharmaverse metadata stack — GSK's tfrmt integrates with this for table formatting. Production teams maintain a single source of truth (Excel specs) and use metacore/xportr to enforce it programmatically.",
+        packages: "metacore, metatools, xportr, dplyr",
+        deliverable: "Create a metacore spec object for your SDTM package. Apply metadata with xportr. Export validated SDTM domains (8+) as .xpt with full metadata.",
+        resources: "metacore documentation, metatools documentation, xportr metadata vignette, GSK tfrmt integration examples"
+      }
+    ]
+  },
+  {
+    week: 3,
+    title: "ADaM with Admiral",
+    theme: "The Roche-GSK Collaboration: Admiral in Production",
+    days: [
+      {
+        day: 15,
+        focus: "ADaM Foundations & Admiral Philosophy",
+        topic: "From SDTM to analysis-ready datasets",
+        details: "ADaM structures: ADSL (Subject-Level: one row per subject), BDS (Basic Data Structure: ADLB, ADVS for repeated measures), OCCDS (Occurrence Data Structure: ADAE, ADCM for events). Admiral was jointly developed by Roche and GSK to provide a modularized, tidyverse-style toolbox — NOT a black-box automation tool. Use admiral::use_ad_template() to generate starter scripts for ADSL, ADAE, ADLB, ADVS, ADTTE. Over 50 programmers from 10+ companies have contributed to admiral. Learn the admiral manifesto: readable, modular, traceable.",
+        packages: "admiral, dplyr, pharmaversesdtm",
+        deliverable: "Use use_ad_template('adsl') to generate an ADSL template. Read through the code structure. Document 5 key admiral functions used and their purposes.",
+        resources: "admiral manifesto, admiral 'Get Started' vignette, Posit blog: 'Enabling ADaM in R: Four Perspectives from Admiral Maintainers'"
+      },
+      {
+        day: 16,
+        focus: "ADSL — The Foundation of All ADaM",
+        topic: "Subject-level dataset with admiral",
+        details: "ADSL starts with SDTM DM. Use admiral::derive_vars_merged() to add treatment variables from EX (first/last dose dates → TRTSDT/TRTEDT). Derive planned/actual treatment (TRT01P/TRT01A), treatment duration via derive_var_trtdurd(). Create population flags using derive_var_merged_exist_flag(): SAFFL (has ≥1 dose in EX), ITTFL (randomized in DS), PPSFL (completed per protocol). This is the most important ADaM — all other ADaMs link to ADSL via USUBJID. GSK and Roche teams use this exact workflow in production.",
+        packages: "admiral, dplyr, lubridate, pharmaversesdtm",
+        deliverable: "Build a complete ADSL from pharmaversesdtm using admiral functions: derive treatment variables, population flags (SAFFL, ITTFL, PPSFL), study dates, treatment duration",
+        resources: "admiral ADSL vignette, pharmaverse examples: ADSL code, admiral derive_vars_merged() reference"
+      },
+      {
+        day: 17,
+        focus: "Admiral Core Derivation Functions",
+        topic: "Building blocks for all ADaM datasets",
+        details: "Master admiral's core functions: derive_vars_merged() (add variables from another dataset via join), derive_var_extreme_flag() (flag first/last/min/max records), derive_vars_dt() / derive_vars_dtm() (date/datetime with imputation flags), derive_vars_duration() (calculate duration between dates). Learn Higher Order Functions: call_derivation() (apply same derivation with different parameters), restrict_derivation() (apply derivation to subset), slice_derivation() (conditional logic). These patterns are used in EVERY admiral script.",
+        packages: "admiral, dplyr, pharmaversesdtm",
+        deliverable: "Create 10 derivations demonstrating: merged variables, extreme flags, date derivations with imputation, duration, and Higher Order Functions (call_derivation, restrict_derivation)",
+        resources: "admiral Generic Derivations vignette, admiral Higher Order Functions vignette, admiral function reference"
+      },
+      {
+        day: 18,
+        focus: "ADAE — Occurrence Data Structure",
+        topic: "Adverse events analysis dataset",
+        details: "ADAE follows OCCDS pattern. Start with SDTM AE, merge ADSL variables using derive_vars_merged(). Key derivations: TRTEMFL (treatment-emergent flag: ASTDT >= TRTSDT & ASTDT <= TRTEDT + 30), AVAL (numeric severity: AESEV → 1=MILD, 2=MODERATE, 3=SEVERE), AESER flag, ANL01FL (analysis flag). Use pre-built event_source objects (ae_event, ae_ser_event) with derive_vars_extreme_event() for first occurrence flags. Roche's NEST tern package uses ADAE extensively for safety tables — every variable here maps directly to a table cell.",
+        packages: "admiral, dplyr, lubridate, pharmaversesdtm",
+        deliverable: "Derive a complete ADAE with TRTEMFL, AVAL encoding, duration, SAE flags, first AE flag per subject, and occurrence-level analysis flags",
+        resources: "admiral OCCDS vignette, pharmaverse ADAE example, Roche NEST tern safety table examples"
+      },
+      {
+        day: 19,
+        focus: "ADLB — Basic Data Structure",
+        topic: "Lab analysis with baseline and change",
+        details: "ADLB follows BDS pattern for repeated measures. Start with SDTM LB. Use derive_var_extreme_flag() with order = c(AVAL, ADT), mode = 'first' to flag baseline (ABLFL = 'Y'). Derive baseline value ABASE using derive_var_base(). Calculate CHG (change from baseline = AVAL - ABASE) and PCHG (percent change = 100 * (AVAL - ABASE) / ABASE). Add analysis visit (AVISITN) and analysis value (AVAL = LBSTRESN). Handle LOCF imputation. This is core to efficacy analysis — Roche uses admiral's BDS workflow for all TA-specific lab endpoints.",
+        packages: "admiral, dplyr, pharmaversesdtm",
+        deliverable: "Derive ADLB with proper baseline flagging (ABLFL), ABASE, CHG, PCHG, AVISITN structure, and demonstrate LOCF imputation for missing values",
+        resources: "admiral BDS vignette, admiral ADLB vignette, pharmaverse ADLB example"
+      },
+      {
+        day: 20,
+        focus: "ADTTE — Time-to-Event Analysis",
+        topic: "Survival analysis with admiral's TTE framework",
+        details: "ADTTE drives Kaplan-Meier curves and Cox regression. Admiral has a dedicated TTE framework: define events with event_source() (e.g., death_event from ADSL where DTHFL=='Y'), define censoring with censor_source() (e.g., lastalive_censor from ADSL where LSTALVDT exists), then use derive_param_tte() to create parameters. Use call_derivation() to derive multiple TTE parameters efficiently (TTAE, TTSERAE, TTSEVAE). PARAMCD identifies the endpoint (e.g., 'TTAE' = Time to First AE), AVAL = time in days, CNSR = censoring indicator (0=event, 1=censored). This is used heavily in oncology — admiral has admiralonco extension for tumor response TTE.",
+        packages: "admiral, dplyr, lubridate",
+        deliverable: "Build ADTTE for 'Time to First SAE' using event_source/censor_source/derive_param_tte, then add 'Time to First AE' using call_derivation()",
+        resources: "admiral BDS Time-to-Event vignette, admiral pre-built TTE source objects, admiralonco package (oncology extension)"
+      },
+      {
+        day: 21,
+        focus: "Week 3 Capstone: Full ADaM Package",
+        topic: "End-to-end SDTM → ADaM with traceability",
+        details: "Build a complete admiral pipeline: pharmaversesdtm SDTM → ADSL → ADAE → ADLB → ADTTE. Use use_ad_template() for each dataset as scaffolding. Ensure every derivation is traceable back to SDTM (document source dataset, variable, and logic in comments). Run admiral validation checks. Verify population flags (SAFFL, ITTFL) are consistent across all ADaMs. Export with xportr_write() as .xpt. This is exactly how production teams at Roche, GSK, J&J, and others create regulatory-ready ADaM packages. Your code should be readable by another programmer — that's the admiral philosophy.",
+        packages: "admiral, dplyr, lubridate, xportr, pharmaversesdtm",
+        deliverable: "Produce a complete, validated ADaM package (ADSL + 3 analysis datasets) with full traceability documentation, consistent population flags, and .xpt export",
+        resources: "admiral full workflow examples, pharmaverse E2E example site, xportr documentation, admiral Programming Strategy"
+      }
+    ]
+  },
+  {
+    week: 4,
+    title: "TLGs, Validation & Production",
+    theme: "Roche NEST, Validation, and Industry Readiness",
+    days: [
+      {
+        day: 22,
+        focus: "rtables — Roche's Table Engine",
+        topic: "Regulatory-grade clinical tables",
+        details: "rtables is Roche's flagship package for creating TLGs (Tables, Listings, Graphs). It uses a tree-based structure for complex nested tables. Practice: basic_table() to define structure, split_cols_by() for column splits (e.g., treatment arm), split_rows_by() for row splits (e.g., by SOC), analyze() to add analysis functions (count, mean, etc.). Use rtables::as_html() to export. Roche, J&J, and other companies use rtables in production for regulatory submissions. It integrates seamlessly with admiral ADaM datasets — ADAE goes straight into safety summary tables.",
+        packages: "rtables, admiral, dplyr, pharmaverseadam",
+        deliverable: "Create 3 regulatory-style tables using rtables: demographics summary by treatment arm, AE summary by SOC/PT, and baseline lab characteristics",
+        resources: "rtables documentation, Roche R/Pharma 2022 rtables workshop, J&J NEST collaboration blog"
+      },
+      {
+        day: 23,
+        focus: "tern — Analysis Components on rtables",
+        topic: "Reusable statistical summaries",
+        details: "tern builds on rtables to provide pre-built analysis functions for clinical trials: summarize_num_patients(), count_occurrences(), analyze_vars(). It's part of Roche's NEST ecosystem. Use tern with admiral ADaM datasets for instant regulatory tables. Practice creating: patient disposition table, adverse event frequency table, shift tables for lab values. The Roche-J&J collaboration enhanced tern's testing using pharmaverseadam data — the same workflow you're using now. This is production-level code used at multiple companies.",
+        packages: "tern, rtables, admiral, pharmaverseadam",
+        deliverable: "Use tern to create 3 analysis tables: patient disposition using summarize_num_patients(), AE incidence using count_occurrences(), lab shift table using analyze_vars()",
+        resources: "tern documentation, Roche NEST website, R Consortium: 'Roche NEST and Admiral Teams Collaboration'"
+      },
+      {
+        day: 24,
+        focus: "tfrmt — GSK's Table Formatting Language",
+        topic: "Display metadata for tables",
+        details: "tfrmt (table format) is GSK's package for defining table display metadata separately from data processing. It provides a grammar for formatting: decimal places, alignment, headers, footnotes, indentation. Use tfrmt with dplyr-summarized data (doesn't require rtables). Practice: tfrmt() to define format, apply_tfrmt() to apply it. This separation of data logic and display logic is critical for maintaining large TLG libraries. GSK uses tfrmt in production and it integrates with the metacore metadata stack.",
+        packages: "tfrmt, dplyr, admiral",
+        deliverable: "Create a tfrmt specification for a demographics table. Apply it to admiral ADSL data. Export formatted table as GT or flextable output.",
+        resources: "tfrmt documentation, GSK rstudio::conf(2022) tfrmt presentation, tfrmt GitHub examples"
+      },
+      {
+        day: 25,
+        focus: "teal — Interactive Analysis Apps",
+        topic: "Roche's exploratory dashboard framework",
+        details: "teal is Roche's framework for creating interactive Shiny apps for clinical data exploration. It uses teal modules (teal.modules.clinical, teal.modules.general) to build patient profiles, safety dashboards, efficacy plots. Practice: init() to initialize app, teal_data() to load ADaM datasets, teal modules for filtering and analysis. Roche uses teal extensively for exploratory analysis before locking datasets. It's integrated with the NEST stack — rtables tables become interactive. Visit teal.gallery for live examples of patient-level analysis apps.",
+        packages: "teal, teal.modules.clinical, admiral",
+        deliverable: "Build a simple teal app with admiral ADaM datasets: add data filtering, a demographics table module, and an AE explorer module. Deploy locally.",
+        resources: "teal documentation, teal.gallery (deployed apps), Roche NEST teal overview"
+      },
+      {
+        day: 26,
+        focus: "Validation: testthat, xportr, logrx",
+        topic: "GxP-compliant validation workflows",
+        details: "Validation is mandatory for regulatory submissions. Use testthat for unit testing derivations (test that SAFFL subjects all have EX records). Use xportr validation functions (xportr_type(), xportr_length()) to check dataset conformance before export. Use logrx to automatically log all R script execution with session info, package versions, and warnings — critical for FDA reproducibility requirements. Run logrx::axecute() to execute and log your ADaM scripts. The R Validation Hub provides industry guidance on package risk assessment using riskmetric.",
+        packages: "testthat, xportr, logrx, riskmetric",
+        deliverable: "Write 15+ testthat unit tests for your ADaM package (ADSL flags, ADAE TRTEMFL, ADLB baseline). Run xportr validation. Execute all scripts with logrx and generate validation logs.",
+        resources: "testthat documentation, logrx documentation, R Validation Hub white paper, xportr validation vignette"
+      },
+      {
+        day: 27,
+        focus: "Reproducibility: renv, Git, pkglite",
+        topic: "Freezing environments for submission",
+        details: "FDA requires fully reproducible analyses. Use renv to lock package versions (renv::snapshot() creates renv.lock). Use Git for version control with branches and code review (critical for GxP). Use pkglite to bundle R packages for submission environments — it creates a text representation of package source code for transfer to FDA. Practice: initialize renv, create renv.lock, set up Git repo with .gitignore, create pkglite package bundle. This is exactly how Roche, GSK, and other companies manage production code.",
+        packages: "renv, pkglite, git (via RStudio)",
+        deliverable: "Convert your ADaM project into a fully reproducible setup: renv.lock with frozen versions, Git repo with clean history and branches, pkglite bundle of key packages",
+        resources: "renv documentation, pkglite documentation, Happy Git with R, FDA Study Data Technical Conformance Guide"
+      },
+      {
+        day: 28,
+        focus: "Mock eSub Package Assembly",
+        topic: "Simulate FDA electronic submission",
+        details: "Assemble a complete mock eSub package: SDTM datasets (.xpt via xportr with metadata), ADaM datasets (.xpt via xportr with metacore specs), Define.xml (dataset/variable metadata), Analysis Results Metadata (ARM), validation logs (testthat results, xportr checks), logrx execution logs, sample TLGs (rtables/tern outputs). Structure folders per FDA eCTD guidelines. Review against the Study Data Technical Conformance Guide. This is your portfolio piece — a complete end-to-end submission-ready package.",
+        packages: "xportr, metacore, logrx, rtables, tern",
+        deliverable: "A complete mock eSub folder: SDTM (8+ domains), ADaM (4+ datasets), metadata files, validation logs, logrx logs, 5+ TLGs — reviewed against FDA checklist",
+        resources: "FDA Study Data Technical Conformance Guide, FDA eSub portal guidance, pharmaverse E2E example, CDISC Define.xml spec"
+      },
+      {
+        day: 29,
+        focus: "Industry Landscape & Career Prep",
+        topic: "Pharmaverse ecosystem and job market",
+        details: "Understand the pharmaverse landscape: Roche (rtables/tern/teal), GSK (admiral co-dev/tfrmt/xportr), J&J (tidytlg collaboration), Atorus (Tplyr/pharmaRTF), Merck (r2rtf/pkglite), Novartis (openpharma org). Learn about the R Consortium Submissions Working Group (successful R-based FDA submissions). Review common interview topics: admiral derivation patterns, CDISC standards knowledge, validation approaches, reproducibility practices. Pharmaverse is backed by the industry — contributing to these packages is career development. Join pharmaverse Slack to connect with maintainers at these companies.",
+        packages: "— (career & community)",
+        deliverable: "Write answers to 10 clinical programming interview questions with admiral/rtables code examples. Join pharmaverse Slack. Contribute a GitHub issue or PR to any pharmaverse package.",
+        resources: "pharmaverse Slack invite, R Consortium blog posts, admiral contribution model, pharmaverse blog, industry job boards"
+      },
+      {
+        day: 30,
+        focus: "Capstone: Full E2E Project",
+        topic: "Portfolio-ready clinical programming showcase",
+        details: "Execute a complete end-to-end project: Raw simulated data → SDTM (8+ domains via sdtm.oak + xportr) → ADaM (ADSL, ADAE, ADLB, ADTTE via admiral templates) → TLGs (5+ tables via rtables/tern) → Validation (testthat + xportr + sdtmchecks) → Metadata (metacore/metatools) → Logs (logrx) → eSub export. Document every derivation with traceability. Use Git with clean commits. Create a README explaining the workflow. This is a showcase project for job applications — it demonstrates you can work in the pharmaverse stack used by Roche, GSK, J&J, and other top pharma companies.",
+        packages: "admiral, sdtm.oak, xportr, metacore, rtables, tern, testthat, logrx, renv",
+        deliverable: "A fully documented, Git-versioned, validated, end-to-end clinical programming project using the complete pharmaverse stack — portfolio-ready with README",
+        resources: "pharmaverse.github.io/examples full E2E workflow, all 30 days accumulated knowledge, CDISC standards, FDA guidance"
+      }
+    ]
+  }
+];
+
+// ════════════════════════════════════════════════════════════════
+// THEME STATE & LOGIC
+// ════════════════════════════════════════════════════════════════
+let currentWeek = 0;
+let expandedDay = null;
+
+const weekAccents = ['var(--accent-1)', 'var(--accent-2)', 'var(--accent-3)', 'var(--accent-4)'];
+const weekAccentsRaw = {
+  dark:  ['#38bdf8','#a78bfa','#4ade80','#fb923c'],
+  light: ['#0284c7','#7c3aed','#16a34a','#ea580c']
+};
+
+function getAccent(weekIdx) {
+  const theme = document.body.dataset.theme;
+  return weekAccentsRaw[theme][weekIdx];
+}
+
+function toggleTheme() {
+  const body = document.body;
+  const icon = document.getElementById('themeIcon');
+  if (body.dataset.theme === 'dark') {
+    body.dataset.theme = 'light';
+    icon.textContent = '☀️';
+  } else {
+    body.dataset.theme = 'dark';
+    icon.textContent = '🌙';
+  }
+  render();
+}
+
+// ════════════════════════════════════════════════════════════════
+// RENDERING
+// ════════════════════════════════════════════════════════════════
+function render() {
+  renderTabs();
+  renderContent();
+}
+
+function renderTabs() {
+  const container = document.getElementById('weekTabs');
+  container.innerHTML = data.map((w, i) => `
+    <button class="week-tab" data-week="${i}" data-active="${i === currentWeek}"
+            onclick="selectWeek(${i})">
+      <div class="tab-label">Week ${i + 1}</div>
+      <div class="tab-title">${w.title.split(' &')[0]}</div>
+    </button>
+  `).join('');
+}
+
+function renderContent() {
+  const week = data[currentWeek];
+  const accent = getAccent(currentWeek);
+
+  // Collect all unique resources for the week
+  const allResources = [...new Set(week.days.flatMap(d => d.resources.split(', ')))];
+
+  // Progress gradient
+  const theme = document.body.dataset.theme;
+  const colors = weekAccentsRaw[theme];
+  const pct = ((currentWeek + 1) / 4) * 100;
+  const gradStart = colors[0];
+  const gradEnd   = colors[currentWeek];
+
+  document.getElementById('contentArea').innerHTML = `
+    <!-- Week Header -->
+    <div class="week-header" style="background: ${accent}08;">
+      <span class="week-badge" style="background: ${accent};">${'WEEK ' + (currentWeek+1)} / DAYS ${week.days[0].day}–${week.days[week.days.length-1].day}</span>
+      <div class="week-header-text">
+        <h2>${week.title}</h2>
+        <p style="color: ${accent};">${week.theme}</p>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="color:${accent}; border-bottom-color:${accent}33;">Day</th>
+            <th style="color:${accent}; border-bottom-color:${accent}33;">Focus Area</th>
+            <th style="color:${accent}; border-bottom-color:${accent}33;">Topic</th>
+            <th style="color:${accent}; border-bottom-color:${accent}33;">Details</th>
+            <th style="color:${accent}; border-bottom-color:${accent}33;">Key Packages</th>
+            <th style="color:${accent}; border-bottom-color:${accent}33;">Deliverable</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${week.days.map((d, idx) => {
+            const isExp = expandedDay === d.day;
+            const hasPkgs = d.packages !== '—' && d.packages !== '— (conceptual)' && d.packages !== '— (review & preparation)';
+            const pkgList = hasPkgs ? d.packages.split(', ') : [];
+            const isConceptual = d.packages.includes('conceptual') || d.packages.includes('review');
+
+            return `
+              <tr class="day-row" data-expanded="${isExp}" data-day="${d.day}" onclick="toggleDay(${d.day})">
+                <td style="min-width:44px;">
+                  <div class="day-badge" style="background:${isExp ? accent : accent+'18'}; color:${isExp ? '#0f172a' : accent};">${d.day}</div>
+                </td>
+                <td style="min-width:145px;">
+                  <div class="focus-text">${d.focus}</div>
+                </td>
+                <td style="min-width:170px;">
+                  <div class="topic-text">${d.topic}</div>
+                </td>
+                <td style="min-width:270px; max-width:370px;">
+                  <div class="details-text ${isExp ? 'expanded' : ''}">${d.details}</div>
+                  ${!isExp && d.details.length > 90 ? `<div class="expand-hint" style="color:${accent};">↓ click to expand</div>` : ''}
+                </td>
+                <td style="min-width:140px;">
+                  <div class="pkg-tags">
+                    ${pkgList.map(p => `<span class="pkg-tag" style="background:${accent}10; color:${accent}; border-color:${accent}22;">${p.trim()}</span>`).join('')}
+                    ${(!hasPkgs && !isConceptual) ? '<span class="pkg-none">—</span>' : ''}
+                    ${isConceptual ? '<span class="pkg-none" style="font-style:italic;">(conceptual)</span>' : ''}
+                  </div>
+                </td>
+                <td style="min-width:220px;">
+                  <div class="deliverable-text" style="border-color:${accent}40;">✓ ${d.deliverable}</div>
+                </td>
+              </tr>
+            `;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Resources -->
+    <div class="resources-panel">
+      <div class="resources-label">📚 Week ${currentWeek + 1} Key Resources</div>
+      <div class="resources-tags">
+        ${allResources.map(r => `<span class="resource-tag">${r}</span>`).join('')}
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-section">
+      <div class="progress-row">
+        <span class="progress-label">Progress</span>
+        <div class="progress-track">
+          <div class="progress-fill" style="width:${pct}%; background: linear-gradient(90deg, ${gradStart}, ${gradEnd});"></div>
+        </div>
+        <span class="progress-pct">${pct}%</span>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background: var(--text-dim);"></div>
+        <span class="legend-text">Conceptual</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: ${accent};"></div>
+        <span class="legend-text">Hands-on Coding</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: var(--deliverable-color);"></div>
+        <span class="legend-text">Deliverable</span>
+      </div>
+      <span class="legend-hint">Click any row to expand details</span>
+    </div>
+  `;
+}
+
+function selectWeek(idx) {
+  currentWeek = idx;
+  expandedDay = null;
+  render();
+}
+
+function toggleDay(dayNum) {
+  expandedDay = expandedDay === dayNum ? null : dayNum;
+  render();
+}
+
+// ─── INIT ───
+render();
+</script>
+</body>
+</html>
