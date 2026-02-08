@@ -1,0 +1,43 @@
+project:
+  type: website
+  output-dir: _output
+
+website:
+  title: "30 Days of Pharmaverse"
+  description: "A Practitioner's Guide to Clinical Data Science with R"
+  site-url: https://ineelhere.github.io/30-days-of-pharmaverse/
+  repo-url: https://github.com/ineelhere/30-days-of-pharmaverse
+  repo-branch: main
+  
+  navbar:
+    title: "30 Days of Pharmaverse"
+    left:
+      - text: "Home"
+        href: index.html
+      - text: "Week 1"
+        href: week1/day1.html
+    right:
+      - icon: github
+        href: https://github.com/ineelhere/30-days-of-pharmaverse
+
+  sidebar:
+    - id: week1
+      title: "Week 1: SDTM Fundamentals"
+      contents:
+        - week1/day1.qmd
+        - week1/day2.qmd
+        - week1/day3.qmd
+        - week1/day4.qmd
+        - week1/day5.qmd
+        - week1/day6.qmd
+        - week1/day7.qmd
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    toc: true
+    toc-depth: 2
+    page-layout: full
+    footer: "© 2026 - 30 Days of Pharmaverse | Personal Learning Initiative"
