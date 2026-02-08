@@ -12,7 +12,6 @@ format:
     toc-depth: 3
     toc-location: right
     number-sections: true
-    code-tools: true
     smooth-scroll: true
     highlight-style: github
     page-layout: full

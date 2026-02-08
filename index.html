@@ -6,6 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Indraneel Chakraborty">
+<meta name="dcterms.date" content="2026-02-08">
 
 <title>30 Days of Pharmaverse</title>
 <style>
@@ -66,17 +68,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="index_files/libs/quarto-html/anchor.min.js"></script>
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-dark-f1aadacce99040138bbb613f9330654f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="index_files/libs/bootstrap/bootstrap-4d7f0bce1131f3e5f9547cd857cfbfc8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="index_files/libs/bootstrap/bootstrap-dark-7c823468029c3b379f9b90e418026680.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="index_files/libs/bootstrap/bootstrap-8db4201b14708b18b0c4eb564971129b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="index_files/libs/bootstrap/bootstrap-dark-41ea73f4aed6b0572107cc1d111106fc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="index_files/libs/bootstrap/bootstrap-8db4201b14708b18b0c4eb564971129b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<style>html{ scroll-behavior: smooth; }</style>
 
 
 </head>
 
-<body class="quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
+<body class="quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -218,8 +223,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         changeGiscusTheme();
       }
     };
-    const authorPrefersDark = true;
+    const authorPrefersDark = false;
     const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
@@ -243,10 +250,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
+  <ul>
+  <li><a href="#exploration-roadmap" id="toc-exploration-roadmap" class="nav-link active" data-scroll-target="#exploration-roadmap">Exploration Roadmap</a>
   <ul class="collapse">
-  <li><a href="#exploration-roadmap" id="toc-exploration-roadmap" class="nav-link active" data-scroll-target="#exploration-roadmap">Exploration Roadmap</a></li>
+  <li><a href="#week-1-sdtm-fundamentals-core-r-skills" id="toc-week-1-sdtm-fundamentals-core-r-skills" class="nav-link" data-scroll-target="#week-1-sdtm-fundamentals-core-r-skills">Week 1: SDTM Fundamentals &amp; Core R Skills</a></li>
+  </ul></li>
   <li><a href="#what-youll-explore" id="toc-what-youll-explore" class="nav-link" data-scroll-target="#what-youll-explore">What You’ll Explore</a></li>
   <li><a href="#the-toolkit" id="toc-the-toolkit" class="nav-link" data-scroll-target="#the-toolkit">The Toolkit</a></li>
+  <li><a href="#important-disclaimer" id="toc-important-disclaimer" class="nav-link" data-scroll-target="#important-disclaimer"><strong>⚠️ Important Disclaimer</strong></a></li>
   <li><a href="#community-resources" id="toc-community-resources" class="nav-link" data-scroll-target="#community-resources">Community &amp; Resources</a></li>
   </ul>
 </nav>
@@ -257,14 +268,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">30 Days of Pharmaverse</h1>
-<p class="subtitle lead">A Practitioner’s Guide to Clinical Data Science with R</p>
+<p class="subtitle lead">A Newbie’s Guide to Clinical Data Science with R</p>
 </div>
 
 
 
 <div class="quarto-title-meta column-page-left">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Indraneel Chakraborty </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 8, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -277,7 +300,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="exploration-roadmap" class="level2">
 <h2 class="anchored" data-anchor-id="exploration-roadmap">Exploration Roadmap</h2>
 <p>Welcome to <strong>30 Days of Pharmaverse</strong>. This project is a hands-on exploration of the modern clinical data science stack, designed for programmers and data scientists who want to dive deep into CDISC standards using the open-source Pharmaverse ecosystem.</p>
-<p>Instead of a traditional course, think of this as a <strong>guided tour</strong> or a <strong>developer’s log</strong>. Each day, we tackle a specific concept—from setting up a validated environment to building complex submission-ready datasets—using industry-standard R packages like <code>admiral</code>, <code>xportr</code>, and <code>metacore</code>.</p>
+<p>Instead of a traditional course, think of this as a <strong>guided tour</strong> or a <strong>developer’s log</strong>. Each day, we tackle a specific concept-from setting up a validated environment to building complex submission-ready datasets-using industry-standard R packages like <code>admiral</code>, <code>xportr</code>, and <code>metacore</code>.</p>
 <section id="week-1-sdtm-fundamentals-core-r-skills" class="level3">
 <h3 class="anchored" data-anchor-id="week-1-sdtm-fundamentals-core-r-skills">Week 1: SDTM Fundamentals &amp; Core R Skills</h3>
 <table class="caption-top table">
@@ -344,6 +367,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Core Packages:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The Pharmaverse suite</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"haven"</span>, <span class="st">"dplyr"</span>, <span class="st">"admiral"</span>, <span class="st">"xportr"</span>, <span class="st">"sdtm.oak"</span>, <span class="st">"metacore"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="important-disclaimer" class="level2">
+<h2 class="anchored" data-anchor-id="important-disclaimer"><strong>⚠️ Important Disclaimer</strong></h2>
+<p>This project is a <strong>personal initiative</strong> created for <strong>learning and exploratory purposes only</strong>. It is in no way affiliated with, endorsed by, sponsored by, funded by, or assisted by any organization or company at any capacity.</p>
+<ul>
+<li>This project draws heavily from open-source projects, Pharmaverse examples, public repositories, and official CDISC documentation.</li>
+<li>Significant portions of the code and content have been created with assistance from <strong>Large Language Models (LLMs)</strong> and refined through human review and intervention.</li>
+<li>Examples and patterns are adapted from established best practices in the R and clinical programming communities.</li>
+</ul>
+<p><strong>Learners are strongly encouraged to:</strong></p>
+<ol type="1">
+<li><strong>Think critically</strong> - Don’t just copy-paste code. Understand <em>why</em> each step exists.</li>
+<li><strong>Verify independently</strong> - Check code against official Pharmaverse documentation and CDISC standards.</li>
+<li><strong>Test thoroughly</strong> - Validate any code in your own environment before use in production.</li>
+<li><strong>Review FDA guidance</strong> - Always cross-reference with current FDA regulatory standards.</li>
+<li><strong>Consult experts</strong> - When implementing for real clinical trials, seek guidance from regulatory specialists.</li>
+</ol>
+<p>The views, opinions, code, and materials shared in this project are solely for exploratory and learning purposes and DO NOT GUARANTEE accuracy/compliance/validation requirements. They do not represent the positions of any external organization, and this content should not be considered official guidance for regulatory submissions without independent verification.</p>
 </section>
 <section id="community-resources" class="level2">
 <h2 class="anchored" data-anchor-id="community-resources">Community &amp; Resources</h2>
@@ -776,4 +817,5 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<script src="index_files/libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

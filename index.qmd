@@ -1,21 +1,32 @@
 ---
 title: "30 Days of Pharmaverse"
-subtitle: "A Practitioner's Guide to Clinical Data Science with R"
+subtitle: "A Newbie's Guide to Clinical Data Science with R"
+date: "today"
+author: "Indraneel Chakraborty"
 format:
   html:
     theme:
-      dark: darkly
       light: cosmo
+      dark: darkly
     toc: true
-    toc-depth: 2
+    toc-depth: 3
+    toc-location: right
+    smooth-scroll: true
+    highlight-style: github
     page-layout: full
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
 ---
 
 ## Exploration Roadmap
 
 Welcome to **30 Days of Pharmaverse**. This project is a hands-on exploration of the modern clinical data science stack, designed for programmers and data scientists who want to dive deep into CDISC standards using the open-source Pharmaverse ecosystem.
 
-Instead of a traditional course, think of this as a **guided tour** or a **developer's log**. Each day, we tackle a specific concept—from setting up a validated environment to building complex submission-ready datasets—using industry-standard R packages like `admiral`, `xportr`, and `metacore`.
+Instead of a traditional course, think of this as a **guided tour** or a **developer's log**. Each day, we tackle a specific concept-from setting up a validated environment to building complex submission-ready datasets-using industry-standard R packages like `admiral`, `xportr`, and `metacore`.
 
 ```{r}
 #| echo: false
@@ -103,6 +114,23 @@ This journey covers the essential toolkit for modern clinical programming:
 # The Pharmaverse suite
 install.packages(c("haven", "dplyr", "admiral", "xportr", "sdtm.oak", "metacore"))
 ```
+## **⚠️ Important Disclaimer**
+
+This project is a **personal initiative** created for **learning and exploratory purposes only**. It is in no way affiliated with, endorsed by, sponsored by, funded by, or assisted by any organization or company at any capacity.
+
+* This project draws heavily from open-source projects, Pharmaverse examples, public repositories, and official CDISC documentation.
+* Significant portions of the code and content have been created with assistance from **Large Language Models (LLMs)** and refined through human review and intervention.
+* Examples and patterns are adapted from established best practices in the R and clinical programming communities.
+
+**Learners are strongly encouraged to:**
+
+1. **Think critically** - Don't just copy-paste code. Understand *why* each step exists.
+2. **Verify independently** - Check code against official Pharmaverse documentation and CDISC standards.
+3. **Test thoroughly** - Validate any code in your own environment before use in production.
+4. **Review FDA guidance** - Always cross-reference with current FDA regulatory standards.
+5. **Consult experts** - When implementing for real clinical trials, seek guidance from regulatory specialists.
+
+The views, opinions, code, and materials shared in this project are solely for exploratory and learning purposes and DO NOT GUARANTEE accuracy/compliance/validation requirements. They do not represent the positions of any external organization, and this content should not be considered official guidance for regulatory submissions without independent verification.
 
 ## Community & Resources
 
@@ -110,6 +138,6 @@ install.packages(c("haven", "dplyr", "admiral", "xportr", "sdtm.oak", "metacore"
 - [CDISC.org](https://www.cdisc.org) - The official standards body.
 - [Admiral Documentation](https://pharmaverse.github.io/admiral/) - The flagship ADaM package.
 
----
+___
 
 **Curated by:** Indraneel Chakraborty | **Last Updated:** February 2026

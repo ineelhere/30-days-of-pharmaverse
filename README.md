@@ -5,13 +5,14 @@
 ![R Version](https://img.shields.io/badge/R%20%3E%3D-4.0-brightblue?style=flat-square)
 ![Last Updated](https://img.shields.io/badge/updated-February%202026-blueviolet?style=flat-square)
 
+
 A hands-on exploration of **Clinical Data Science** using R and the open-source **Pharmaverse** ecosystem. This project serves as a developer's log and practical guide for mastering CDISC standards (SDTM & ADaM) through modern, reproducible workflows.
 
 ---
 
 ## 🗺️ Exploration Roadmap
 
-This isn't just a course—it's a deep dive into the tools and standards that power modern clinical trials.
+This isn't just a course-it's a deep dive into the tools and standards that power modern clinical trials.
 
 ### Week 1: SDTM Fundamentals & Core R Skills
 
@@ -78,6 +79,23 @@ Each day is structured as a **practitioner's notebook**:
 - **Deep Dive**: Nuances of the standard or tool being used.
 
 ---
+ ## **⚠️ Important Disclaimer**
+
+This project is a **personal initiative** created for **learning and exploratory purposes only**. It is in no way affiliated with, endorsed by, sponsored by, funded by, or assisted by any organization or company at any capacity.
+
+* This project draws heavily from open-source projects, Pharmaverse examples, public repositories, and official CDISC documentation.
+* Significant portions of the code and content have been created with assistance from **Large Language Models (LLMs)** and refined through human review and intervention.
+* Examples and patterns are adapted from established best practices in the R and clinical programming communities.
+
+**Learners are strongly encouraged to:**
+
+1. **Think critically** - Don't just copy-paste code. Understand *why* each step exists.
+2. **Verify independently** - Check code against official Pharmaverse documentation and CDISC standards.
+3. **Test thoroughly** - Validate any code in your own environment before use in production.
+4. **Review FDA guidance** - Always cross-reference with current FDA regulatory standards.
+5. **Consult experts** - When implementing for real clinical trials, seek guidance from regulatory specialists.
+
+The views, opinions, code, and materials shared in this project are solely for exploratory and learning purposes and DO NOT GUARANTEE accuracy/compliance/validation requirements. They do not represent the positions of any external organization, and this content should not be considered official guidance for regulatory submissions without independent verification.
 
 ## 🔗 Community & Resources
 
