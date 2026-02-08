@@ -50,3 +50,5 @@ rsconnect/
 
 *.Rproj
 render.R
+/.quarto/
+**/*.quarto_ipynb

@@ -9,7 +9,7 @@
 <meta name="author" content="Indraneel Chakraborty">
 <meta name="dcterms.date" content="2026-02-08">
 
-<title>Day 1: Environment Setup &amp; First SDTM Code</title>
+<title>Day 1: Environment Setup &amp; First SDTM Code – 30 Days of Pharmaverse</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -60,28 +60,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="day1_files/libs/clipboard/clipboard.min.js"></script>
-<script src="day1_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="day1_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="day1_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="day1_files/libs/quarto-html/popper.min.js"></script>
-<script src="day1_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="day1_files/libs/quarto-html/anchor.min.js"></script>
-<link href="day1_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="day1_files/libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="day1_files/libs/quarto-html/quarto-syntax-highlighting-dark-f1aadacce99040138bbb613f9330654f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="day1_files/libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="day1_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="day1_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="day1_files/libs/bootstrap/bootstrap-8db4201b14708b18b0c4eb564971129b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="day1_files/libs/bootstrap/bootstrap-dark-41ea73f4aed6b0572107cc1d111106fc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="day1_files/libs/bootstrap/bootstrap-8db4201b14708b18b0c4eb564971129b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f1aadacce99040138bbb613f9330654f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-60d4398d82fec002ccec76571ed06d15.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-6c9d4b6e8397689ef559897df4fbe577.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-60d4398d82fec002ccec76571ed06d15.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
 
 </head>
 
-<body class="quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -245,10 +278,110 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   </script>
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">30 Days of Pharmaverse</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../week1/day1.html" aria-current="page"> 
+<span class="menu-text">Week 1</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ineelhere/30-days-of-pharmaverse"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../week1/day1.html">Day 1: Environment Setup &amp; First SDTM Code</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week1/day1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Day 1: Environment Setup &amp; First SDTM Code</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week1/day2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 2: SDTM Domain Structure &amp; Tidyverse Mastery</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week1/day3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 3: Controlled Terminology &amp; MedDRA Coding</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week1/day4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 4: Clinical Date Derivations with lubridate</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week1/day5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 5: Advanced Tidyverse: Pivoting &amp; Joining</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week1/day6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 6: Introduction to sdtm.oak</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week1/day7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 7: Week 1 Capstone: End-to-End SDTM Script</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
    
   <ul>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">1</span> Learning Objectives</a></li>
@@ -296,19 +429,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next"><span class="header-section-number">11</span> What’s Next?</a></li>
   </ul>
 </nav>
-</div>
-<main class="content column-page-left" id="quarto-document-content">
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
 
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Day 1: Environment Setup &amp; First SDTM Code</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<h1 class="title">Day 1: Environment Setup &amp; First SDTM Code</h1>
 <p class="subtitle lead">SDTM Programming Walkthrough</p>
 </div>
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta column-body">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
@@ -1007,12 +1141,11 @@ $ EXENDY   &lt;dbl&gt; 15, 168, 182, 23, 28, 14, 172, 180, 14, 15, 170, 183, 14,
 <section id="whats-next" class="level2" data-number="11">
 <h2 data-number="11" class="anchored" data-anchor-id="whats-next"><span class="header-section-number">11</span> What’s Next?</h2>
 <p>In <strong>Day 2</strong>, we’ll dive deeper into: - SDTM domain classes and their specific structures - Advanced tidyverse operations - Variable naming conventions (–TESTCD, –ORRES, –DY patterns) - Creating data summaries by treatment arm</p>
-<!-- -->
+
 
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -1097,60 +1230,9 @@ $ EXENDY   &lt;dbl&gt; 15, 168, 182, 23, 28, 14, 172, 180, 14, 15, 170, 183, 14,
       });
       clipboardModal.on('success', onCopySuccess);
     }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
-    }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/ineelhere\.github\.io\/30-days-of-pharmaverse\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -1476,451 +1558,11 @@ $ EXENDY   &lt;dbl&gt; 15, 168, 182, 23, 28, 14, 172, 180, 14, 15, 170, 183, 14,
       }
     }
   });
-  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Day 1: Environment Setup &amp; First SDTM Code"</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "SDTM Programming Walkthrough"</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Indraneel Chakraborty"</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="co">    theme:</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="co">      light: cosmo</span></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="co">      dark: darkly</span></span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 3</span></span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-location: right</span></span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a><span class="co">    number-sections: true</span></span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a><span class="co">    smooth-scroll: true</span></span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a><span class="co">    highlight-style: github</span></span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a><span class="co">    page-layout: full</span></span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
-<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span></span>
-<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a><span class="co">  echo: true</span></span>
-<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a><span class="co">  eval: true</span></span>
-<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a><span class="co">  warning: false</span></span>
-<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a><span class="co">  message: false</span></span>
-<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> style</span><span class="op">=</span><span class="st">"margin-bottom:12px;"</span><span class="dt">&gt;&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">"../index.html"</span><span class="ot"> class</span><span class="op">=</span><span class="st">"resource-link"</span><span class="dt">&gt;</span>← Back to Roadmap<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Learning Objectives</span></span>
-<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a>By the end of Day 1, you will be able to:</span>
-<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Set up your R environment with essential pharmaverse packages</span>
-<span id="cb40-34"><a href="#cb40-34" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Load and explore SDTM datasets from <span class="in">`pharmaversesdtm`</span></span>
-<span id="cb40-35"><a href="#cb40-35" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Understand the CDISC data flow: **Raw → SDTM → ADaM → TLFs**</span>
-<span id="cb40-36"><a href="#cb40-36" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Use <span class="in">`dplyr`</span> to explore relationships between SDTM domains</span>
-<span id="cb40-37"><a href="#cb40-37" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>Perform basic data manipulation operations on clinical data</span>
-<span id="cb40-38"><a href="#cb40-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-39"><a href="#cb40-39" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb40-40"><a href="#cb40-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-41"><a href="#cb40-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction to CDISC and the Pharmaverse</span></span>
-<span id="cb40-42"><a href="#cb40-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-43"><a href="#cb40-43" aria-hidden="true" tabindex="-1"></a><span class="fu">### What is CDISC?</span></span>
-<span id="cb40-44"><a href="#cb40-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-45"><a href="#cb40-45" aria-hidden="true" tabindex="-1"></a>**CDISC (Clinical Data Interchange Standards Consortium)** is an organization that develops global data standards for clinical research. These standards ensure that clinical trial data is:</span>
-<span id="cb40-46"><a href="#cb40-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-47"><a href="#cb40-47" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Consistent** across different studies and organizations</span>
-<span id="cb40-48"><a href="#cb40-48" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Interoperable** between different systems and regulatory agencies</span>
-<span id="cb40-49"><a href="#cb40-49" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Submission-ready** for regulatory authorities like the FDA and EMA</span>
-<span id="cb40-50"><a href="#cb40-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-51"><a href="#cb40-51" aria-hidden="true" tabindex="-1"></a><span class="fu">### The CDISC Data Flow</span></span>
-<span id="cb40-52"><a href="#cb40-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-53"><a href="#cb40-53" aria-hidden="true" tabindex="-1"></a>Understanding the data flow is critical for clinical programming:</span>
-<span id="cb40-54"><a href="#cb40-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-55"><a href="#cb40-55" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
-<span id="cb40-56"><a href="#cb40-56" aria-hidden="true" tabindex="-1"></a><span class="in">Raw Data → SDTM → ADaM → TLFs</span></span>
-<span id="cb40-57"><a href="#cb40-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-58"><a href="#cb40-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-59"><a href="#cb40-59" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Stage <span class="pp">|</span> Description <span class="pp">|</span> Example <span class="pp">|</span></span>
-<span id="cb40-60"><a href="#cb40-60" aria-hidden="true" tabindex="-1"></a><span class="pp">|------------------|--------------------------------|----------------------|</span></span>
-<span id="cb40-61"><a href="#cb40-61" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Raw Data** <span class="pp">|</span> Data collected from EDC systems, labs, etc. <span class="pp">|</span> CRF exports, lab files <span class="pp">|</span></span>
-<span id="cb40-62"><a href="#cb40-62" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **SDTM** <span class="pp">|</span> Study Data Tabulation Model - standardized clinical data <span class="pp">|</span> DM, AE, EX, LB domains <span class="pp">|</span></span>
-<span id="cb40-63"><a href="#cb40-63" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **ADaM** <span class="pp">|</span> Analysis Data Model - analysis-ready datasets <span class="pp">|</span> ADSL, ADAE, ADLB <span class="pp">|</span></span>
-<span id="cb40-64"><a href="#cb40-64" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **TLFs** <span class="pp">|</span> Tables, Listings, and Figures for submission <span class="pp">|</span> Demographics table, AE summary <span class="pp">|</span></span>
-<span id="cb40-65"><a href="#cb40-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-66"><a href="#cb40-66" aria-hidden="true" tabindex="-1"></a><span class="fu">### What is the Pharmaverse?</span></span>
-<span id="cb40-67"><a href="#cb40-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-68"><a href="#cb40-68" aria-hidden="true" tabindex="-1"></a>The **pharmaverse** is a cross-industry collaboration of R packages designed for clinical reporting workflows. It provides open-source tools that map to each stage of the CDISC data flow:</span>
-<span id="cb40-69"><a href="#cb40-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-70"><a href="#cb40-70" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**SDTM creation**: <span class="in">`sdtm.oak`</span>, <span class="in">`pharmaversesdtm`</span> (example data)</span>
-<span id="cb40-71"><a href="#cb40-71" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**ADaM creation**: <span class="in">`admiral`</span> (the flagship package)</span>
-<span id="cb40-72"><a href="#cb40-72" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**TLG creation**: <span class="in">`rtables`</span>, <span class="in">`tern`</span>, <span class="in">`tfrmt`</span></span>
-<span id="cb40-73"><a href="#cb40-73" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Validation &amp; Export**: <span class="in">`xportr`</span>, <span class="in">`metacore`</span>, <span class="in">`sdtmchecks`</span></span>
-<span id="cb40-74"><a href="#cb40-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-75"><a href="#cb40-75" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb40-76"><a href="#cb40-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-77"><a href="#cb40-77" aria-hidden="true" tabindex="-1"></a><span class="fu">## Package Installation &amp; Loading</span></span>
-<span id="cb40-78"><a href="#cb40-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-79"><a href="#cb40-79" aria-hidden="true" tabindex="-1"></a>The following packages are essential for today's exercises. Each serves a specific purpose in the clinical programming workflow.</span>
-<span id="cb40-80"><a href="#cb40-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-81"><a href="#cb40-81" aria-hidden="true" tabindex="-1"></a><span class="fu">### Required Packages</span></span>
-<span id="cb40-82"><a href="#cb40-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-83"><a href="#cb40-83" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Package           <span class="pp">|</span> Purpose                                                <span class="pp">|</span></span>
-<span id="cb40-84"><a href="#cb40-84" aria-hidden="true" tabindex="-1"></a><span class="pp">|-------------------|--------------------------------------------------------|</span></span>
-<span id="cb40-85"><a href="#cb40-85" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`admiral`</span>         <span class="pp">|</span> ADaM dataset creation - the core pharmaverse package   <span class="pp">|</span></span>
-<span id="cb40-86"><a href="#cb40-86" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`pharmaversesdtm`</span> <span class="pp">|</span> Example SDTM datasets for learning and testing         <span class="pp">|</span></span>
-<span id="cb40-87"><a href="#cb40-87" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`dplyr`</span>           <span class="pp">|</span> Data manipulation (filter, select, mutate, join, etc.) <span class="pp">|</span></span>
-<span id="cb40-88"><a href="#cb40-88" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`haven`</span>           <span class="pp">|</span> Read/write SAS transport files (.xpt)                  <span class="pp">|</span></span>
-<span id="cb40-89"><a href="#cb40-89" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`xportr`</span>          <span class="pp">|</span> Apply metadata and export to .xpt for FDA submission   <span class="pp">|</span></span>
-<span id="cb40-90"><a href="#cb40-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-91"><a href="#cb40-91" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 1: Install Packages (if needed)</span></span>
-<span id="cb40-92"><a href="#cb40-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-93"><a href="#cb40-93" aria-hidden="true" tabindex="-1"></a>The code below checks if each package is installed and installs it if missing. This is a safe pattern that won't reinstall packages you already have.</span>
-<span id="cb40-94"><a href="#cb40-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-97"><a href="#cb40-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-98"><a href="#cb40-98" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: install-packages</span></span>
-<span id="cb40-99"><a href="#cb40-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-100"><a href="#cb40-100" aria-hidden="true" tabindex="-1"></a><span class="co"># Install packages if not already installed</span></span>
-<span id="cb40-101"><a href="#cb40-101" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"admiral"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"admiral"</span>)</span>
-<span id="cb40-102"><a href="#cb40-102" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"pharmaversesdtm"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"pharmaversesdtm"</span>)</span>
-<span id="cb40-103"><a href="#cb40-103" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"xportr"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"xportr"</span>)</span>
-<span id="cb40-104"><a href="#cb40-104" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"dplyr"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"dplyr"</span>)</span>
-<span id="cb40-105"><a href="#cb40-105" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"haven"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"haven"</span>)</span>
-<span id="cb40-106"><a href="#cb40-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-107"><a href="#cb40-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-108"><a href="#cb40-108" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 2: Load Packages</span></span>
-<span id="cb40-109"><a href="#cb40-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-110"><a href="#cb40-110" aria-hidden="true" tabindex="-1"></a>Now we load the packages into our R session. The <span class="in">`library()`</span> function makes all functions from a package available for use.</span>
-<span id="cb40-111"><a href="#cb40-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-114"><a href="#cb40-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-115"><a href="#cb40-115" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-packages</span></span>
-<span id="cb40-116"><a href="#cb40-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-117"><a href="#cb40-117" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages into the session</span></span>
-<span id="cb40-118"><a href="#cb40-118" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(admiral)</span>
-<span id="cb40-119"><a href="#cb40-119" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pharmaversesdtm)</span>
-<span id="cb40-120"><a href="#cb40-120" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb40-121"><a href="#cb40-121" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb40-122"><a href="#cb40-122" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xportr)</span>
-<span id="cb40-123"><a href="#cb40-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-124"><a href="#cb40-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-125"><a href="#cb40-125" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb40-126"><a href="#cb40-126" aria-hidden="true" tabindex="-1"></a><span class="fu">## What do these messages mean?</span></span>
-<span id="cb40-127"><a href="#cb40-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-128"><a href="#cb40-128" aria-hidden="true" tabindex="-1"></a>When you load packages, you may see messages about package versions and any function name conflicts. This is normal and helps you understand which package's function will be used when names overlap.</span>
-<span id="cb40-129"><a href="#cb40-129" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb40-130"><a href="#cb40-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-131"><a href="#cb40-131" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb40-132"><a href="#cb40-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-133"><a href="#cb40-133" aria-hidden="true" tabindex="-1"></a><span class="fu">## Loading SDTM Datasets</span></span>
-<span id="cb40-134"><a href="#cb40-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-135"><a href="#cb40-135" aria-hidden="true" tabindex="-1"></a>The <span class="in">`pharmaversesdtm`</span> package contains example SDTM datasets that mirror real clinical trial data. These are the same datasets used by production teams when developing and testing admiral.</span>
-<span id="cb40-136"><a href="#cb40-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-137"><a href="#cb40-137" aria-hidden="true" tabindex="-1"></a><span class="fu">### What are SDTM Domains?</span></span>
-<span id="cb40-138"><a href="#cb40-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-139"><a href="#cb40-139" aria-hidden="true" tabindex="-1"></a>SDTM organizes clinical data into **domains**, each representing a specific type of information:</span>
-<span id="cb40-140"><a href="#cb40-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-141"><a href="#cb40-141" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Domain Class        <span class="pp">|</span> Domain <span class="pp">|</span> Description                                <span class="pp">|</span></span>
-<span id="cb40-142"><a href="#cb40-142" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------------------|--------|--------------------------------------------|</span></span>
-<span id="cb40-143"><a href="#cb40-143" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Special Purpose** <span class="pp">|</span> DM     <span class="pp">|</span> Demographics - one row per subject         <span class="pp">|</span></span>
-<span id="cb40-144"><a href="#cb40-144" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Events**          <span class="pp">|</span> AE     <span class="pp">|</span> Adverse Events - multiple rows per subject <span class="pp">|</span></span>
-<span id="cb40-145"><a href="#cb40-145" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Events**          <span class="pp">|</span> DS     <span class="pp">|</span> Disposition - study milestones             <span class="pp">|</span></span>
-<span id="cb40-146"><a href="#cb40-146" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Interventions**   <span class="pp">|</span> EX     <span class="pp">|</span> Exposure - drug dosing information         <span class="pp">|</span></span>
-<span id="cb40-147"><a href="#cb40-147" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Interventions**   <span class="pp">|</span> CM     <span class="pp">|</span> Concomitant Medications                    <span class="pp">|</span></span>
-<span id="cb40-148"><a href="#cb40-148" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Findings**        <span class="pp">|</span> LB     <span class="pp">|</span> Laboratory Results                         <span class="pp">|</span></span>
-<span id="cb40-149"><a href="#cb40-149" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Findings**        <span class="pp">|</span> VS     <span class="pp">|</span> Vital Signs                                <span class="pp">|</span></span>
-<span id="cb40-150"><a href="#cb40-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-151"><a href="#cb40-151" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 3: Load the Core SDTM Domains</span></span>
-<span id="cb40-152"><a href="#cb40-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-153"><a href="#cb40-153" aria-hidden="true" tabindex="-1"></a>Let's load four key domains that we'll work with today:</span>
-<span id="cb40-154"><a href="#cb40-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-157"><a href="#cb40-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-158"><a href="#cb40-158" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load-sdtm-data</span></span>
-<span id="cb40-159"><a href="#cb40-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-160"><a href="#cb40-160" aria-hidden="true" tabindex="-1"></a><span class="co"># Load SDTM domains from pharmaversesdtm</span></span>
-<span id="cb40-161"><a href="#cb40-161" aria-hidden="true" tabindex="-1"></a><span class="co"># DM = Demographics (one row per subject)</span></span>
-<span id="cb40-162"><a href="#cb40-162" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"dm"</span>, <span class="at">package =</span> <span class="st">"pharmaversesdtm"</span>)</span>
-<span id="cb40-163"><a href="#cb40-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-164"><a href="#cb40-164" aria-hidden="true" tabindex="-1"></a><span class="co"># AE = Adverse Events (multiple rows per subject)</span></span>
-<span id="cb40-165"><a href="#cb40-165" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"ae"</span>, <span class="at">package =</span> <span class="st">"pharmaversesdtm"</span>)</span>
-<span id="cb40-166"><a href="#cb40-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-167"><a href="#cb40-167" aria-hidden="true" tabindex="-1"></a><span class="co"># EX = Exposure/Dosing (multiple rows per subject)</span></span>
-<span id="cb40-168"><a href="#cb40-168" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"ex"</span>, <span class="at">package =</span> <span class="st">"pharmaversesdtm"</span>)</span>
-<span id="cb40-169"><a href="#cb40-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-170"><a href="#cb40-170" aria-hidden="true" tabindex="-1"></a><span class="co"># LB = Laboratory Results (many rows per subject)</span></span>
-<span id="cb40-171"><a href="#cb40-171" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"lb"</span>, <span class="at">package =</span> <span class="st">"pharmaversesdtm"</span>)</span>
-<span id="cb40-172"><a href="#cb40-172" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-173"><a href="#cb40-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-174"><a href="#cb40-174" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb40-175"><a href="#cb40-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-176"><a href="#cb40-176" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exploring the Data</span></span>
-<span id="cb40-177"><a href="#cb40-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-178"><a href="#cb40-178" aria-hidden="true" tabindex="-1"></a>Before working with any dataset, it's essential to understand its structure. Let's explore each domain using different R functions.</span>
-<span id="cb40-179"><a href="#cb40-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-180"><a href="#cb40-180" aria-hidden="true" tabindex="-1"></a><span class="fu">### Method 1: `glimpse()` - Quick Structure Overview</span></span>
-<span id="cb40-181"><a href="#cb40-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-182"><a href="#cb40-182" aria-hidden="true" tabindex="-1"></a>The <span class="in">`glimpse()`</span> function from <span class="in">`dplyr`</span> provides a compact view of the data structure, showing column names, types, and a preview of values.</span>
-<span id="cb40-183"><a href="#cb40-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-186"><a href="#cb40-186" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-187"><a href="#cb40-187" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: explore-dm</span></span>
-<span id="cb40-188"><a href="#cb40-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-189"><a href="#cb40-189" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore the Demographics (DM) domain</span></span>
-<span id="cb40-190"><a href="#cb40-190" aria-hidden="true" tabindex="-1"></a><span class="co"># This shows us all variables and their types</span></span>
-<span id="cb40-191"><a href="#cb40-191" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(dm)</span>
-<span id="cb40-192"><a href="#cb40-192" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-193"><a href="#cb40-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-194"><a href="#cb40-194" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb40-195"><a href="#cb40-195" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key DM Variables</span></span>
-<span id="cb40-196"><a href="#cb40-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-197"><a href="#cb40-197" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**USUBJID**: Unique Subject Identifier - the key that links all domains together</span>
-<span id="cb40-198"><a href="#cb40-198" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**RFSTDTC**: Reference Start Date (usually first dose date)</span>
-<span id="cb40-199"><a href="#cb40-199" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**RFENDTC**: Reference End Date</span>
-<span id="cb40-200"><a href="#cb40-200" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**ARM**: Treatment Arm (e.g., "Placebo", "Drug 80mg")</span>
-<span id="cb40-201"><a href="#cb40-201" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**ACTARM**: Actual Treatment Arm</span>
-<span id="cb40-202"><a href="#cb40-202" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb40-203"><a href="#cb40-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-204"><a href="#cb40-204" aria-hidden="true" tabindex="-1"></a><span class="fu">### Method 2: `head()` - View First Few Rows</span></span>
-<span id="cb40-205"><a href="#cb40-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-206"><a href="#cb40-206" aria-hidden="true" tabindex="-1"></a>The <span class="in">`head()`</span> function shows the first n rows of data (default is 6).</span>
-<span id="cb40-207"><a href="#cb40-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-210"><a href="#cb40-210" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-211"><a href="#cb40-211" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: head-ae</span></span>
-<span id="cb40-212"><a href="#cb40-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-213"><a href="#cb40-213" aria-hidden="true" tabindex="-1"></a><span class="co"># View the first 6 rows of Adverse Events</span></span>
-<span id="cb40-214"><a href="#cb40-214" aria-hidden="true" tabindex="-1"></a>utils<span class="sc">::</span><span class="fu">head</span>(ae)</span>
-<span id="cb40-215"><a href="#cb40-215" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-216"><a href="#cb40-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-217"><a href="#cb40-217" aria-hidden="true" tabindex="-1"></a><span class="fu">### Method 3: `dim()` and `names()` - Dimensions and Column Names</span></span>
-<span id="cb40-218"><a href="#cb40-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-221"><a href="#cb40-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-222"><a href="#cb40-222" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: explore-dimensions</span></span>
-<span id="cb40-223"><a href="#cb40-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-224"><a href="#cb40-224" aria-hidden="true" tabindex="-1"></a><span class="co"># How many rows and columns in each domain?</span></span>
-<span id="cb40-225"><a href="#cb40-225" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"DM dimensions:"</span>, <span class="fu">dim</span>(dm), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb40-226"><a href="#cb40-226" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"AE dimensions:"</span>, <span class="fu">dim</span>(ae), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb40-227"><a href="#cb40-227" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"EX dimensions:"</span>, <span class="fu">dim</span>(ex), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb40-228"><a href="#cb40-228" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"LB dimensions:"</span>, <span class="fu">dim</span>(lb), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb40-229"><a href="#cb40-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-230"><a href="#cb40-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-233"><a href="#cb40-233" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-234"><a href="#cb40-234" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: explore-names</span></span>
-<span id="cb40-235"><a href="#cb40-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-236"><a href="#cb40-236" aria-hidden="true" tabindex="-1"></a><span class="co"># What variables are in the AE domain?</span></span>
-<span id="cb40-237"><a href="#cb40-237" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ae)</span>
-<span id="cb40-238"><a href="#cb40-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-239"><a href="#cb40-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-240"><a href="#cb40-240" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb40-241"><a href="#cb40-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-242"><a href="#cb40-242" aria-hidden="true" tabindex="-1"></a><span class="fu">## Understanding Domain Relationships</span></span>
-<span id="cb40-243"><a href="#cb40-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-244"><a href="#cb40-244" aria-hidden="true" tabindex="-1"></a>One of the most important concepts in clinical programming is understanding how domains relate to each other. **USUBJID** is the universal key that connects all domains.</span>
-<span id="cb40-245"><a href="#cb40-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-246"><a href="#cb40-246" aria-hidden="true" tabindex="-1"></a><span class="fu">### The USUBJID Connection</span></span>
-<span id="cb40-247"><a href="#cb40-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-248"><a href="#cb40-248" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
-<span id="cb40-249"><a href="#cb40-249" aria-hidden="true" tabindex="-1"></a><span class="in">        ┌─────────────┐</span></span>
-<span id="cb40-250"><a href="#cb40-250" aria-hidden="true" tabindex="-1"></a><span class="in">        │     DM      │</span></span>
-<span id="cb40-251"><a href="#cb40-251" aria-hidden="true" tabindex="-1"></a><span class="in">        │ (1 row per  │</span></span>
-<span id="cb40-252"><a href="#cb40-252" aria-hidden="true" tabindex="-1"></a><span class="in">        │  subject)   │</span></span>
-<span id="cb40-253"><a href="#cb40-253" aria-hidden="true" tabindex="-1"></a><span class="in">        └──────┬──────┘</span></span>
-<span id="cb40-254"><a href="#cb40-254" aria-hidden="true" tabindex="-1"></a><span class="in">               │ USUBJID</span></span>
-<span id="cb40-255"><a href="#cb40-255" aria-hidden="true" tabindex="-1"></a><span class="in">    ┌──────────┼──────────┬──────────┐</span></span>
-<span id="cb40-256"><a href="#cb40-256" aria-hidden="true" tabindex="-1"></a><span class="in">    ▼          ▼          ▼          ▼</span></span>
-<span id="cb40-257"><a href="#cb40-257" aria-hidden="true" tabindex="-1"></a><span class="in">┌────────┐  ┌───────┐  ┌───────┐  ┌────────┐</span></span>
-<span id="cb40-258"><a href="#cb40-258" aria-hidden="true" tabindex="-1"></a><span class="in">│  AE    │  │  EX   │  │  LB   │  │  VS    │</span></span>
-<span id="cb40-259"><a href="#cb40-259" aria-hidden="true" tabindex="-1"></a><span class="in">│(events)│  │(doses)│  │(labs) │  │(vitals)│</span></span>
-<span id="cb40-260"><a href="#cb40-260" aria-hidden="true" tabindex="-1"></a><span class="in">└────────┘  └───────┘  └───────┘  └────────┘</span></span>
-<span id="cb40-261"><a href="#cb40-261" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-262"><a href="#cb40-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-263"><a href="#cb40-263" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 4: Join DM and AE (Demographics + Adverse Events)</span></span>
-<span id="cb40-264"><a href="#cb40-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-265"><a href="#cb40-265" aria-hidden="true" tabindex="-1"></a>When analyzing adverse events, we often need demographic information like treatment arm. Let's join these domains.</span>
-<span id="cb40-266"><a href="#cb40-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-269"><a href="#cb40-269" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-270"><a href="#cb40-270" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: join-dm-ae</span></span>
-<span id="cb40-271"><a href="#cb40-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-272"><a href="#cb40-272" aria-hidden="true" tabindex="-1"></a><span class="co"># Join Demographics (DM) with Adverse Events (AE)</span></span>
-<span id="cb40-273"><a href="#cb40-273" aria-hidden="true" tabindex="-1"></a><span class="co"># We select key DM variables and join on USUBJID</span></span>
-<span id="cb40-274"><a href="#cb40-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-275"><a href="#cb40-275" aria-hidden="true" tabindex="-1"></a>dm_ae <span class="ot">&lt;-</span> dm <span class="sc">%&gt;%</span></span>
-<span id="cb40-276"><a href="#cb40-276" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Select only the DM variables we need</span></span>
-<span id="cb40-277"><a href="#cb40-277" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(USUBJID, RFSTDTC, RFENDTC, ARM, AGE, SEX, RACE) <span class="sc">%&gt;%</span></span>
-<span id="cb40-278"><a href="#cb40-278" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Inner join keeps only subjects that appear in both datasets</span></span>
-<span id="cb40-279"><a href="#cb40-279" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">inner_join</span>(ae, <span class="at">by =</span> <span class="st">"USUBJID"</span>)</span>
-<span id="cb40-280"><a href="#cb40-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-281"><a href="#cb40-281" aria-hidden="true" tabindex="-1"></a><span class="co"># How many records do we have now?</span></span>
-<span id="cb40-282"><a href="#cb40-282" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of AE records with demographic info:"</span>, <span class="fu">nrow</span>(dm_ae), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb40-283"><a href="#cb40-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-284"><a href="#cb40-284" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview the joined data</span></span>
-<span id="cb40-285"><a href="#cb40-285" aria-hidden="true" tabindex="-1"></a>utils<span class="sc">::</span><span class="fu">head</span>(dm_ae)</span>
-<span id="cb40-286"><a href="#cb40-286" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-287"><a href="#cb40-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-288"><a href="#cb40-288" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb40-289"><a href="#cb40-289" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why use `inner_join()`?</span></span>
-<span id="cb40-290"><a href="#cb40-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-291"><a href="#cb40-291" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**inner_join()**: Keeps only rows where USUBJID exists in BOTH datasets</span>
-<span id="cb40-292"><a href="#cb40-292" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**left_join()**: Keeps all rows from the left dataset (DM), adds matching rows from right (AE)</span>
-<span id="cb40-293"><a href="#cb40-293" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**anti_join()**: Keeps rows from left where there is NO match in right (useful for finding missing data)</span>
-<span id="cb40-294"><a href="#cb40-294" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb40-295"><a href="#cb40-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-296"><a href="#cb40-296" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 5: Join DM and EX (Demographics + Exposure)</span></span>
-<span id="cb40-297"><a href="#cb40-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-298"><a href="#cb40-298" aria-hidden="true" tabindex="-1"></a>Exposure data tells us about drug dosing. Let's combine this with demographics.</span>
-<span id="cb40-299"><a href="#cb40-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-302"><a href="#cb40-302" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-303"><a href="#cb40-303" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: join-dm-ex</span></span>
-<span id="cb40-304"><a href="#cb40-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-305"><a href="#cb40-305" aria-hidden="true" tabindex="-1"></a><span class="co"># Join Demographics (DM) with Exposure (EX)</span></span>
-<span id="cb40-306"><a href="#cb40-306" aria-hidden="true" tabindex="-1"></a>dm_ex <span class="ot">&lt;-</span> dm <span class="sc">%&gt;%</span></span>
-<span id="cb40-307"><a href="#cb40-307" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(USUBJID, ARM, AGE, SEX) <span class="sc">%&gt;%</span></span>
-<span id="cb40-308"><a href="#cb40-308" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">inner_join</span>(ex, <span class="at">by =</span> <span class="st">"USUBJID"</span>)</span>
-<span id="cb40-309"><a href="#cb40-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-310"><a href="#cb40-310" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview the result</span></span>
-<span id="cb40-311"><a href="#cb40-311" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(dm_ex)</span>
-<span id="cb40-312"><a href="#cb40-312" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-313"><a href="#cb40-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-314"><a href="#cb40-314" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb40-315"><a href="#cb40-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-316"><a href="#cb40-316" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hands-On: 5+ dplyr Operations</span></span>
-<span id="cb40-317"><a href="#cb40-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-318"><a href="#cb40-318" aria-hidden="true" tabindex="-1"></a>The deliverable for Day 1 requires demonstrating at least 5 <span class="in">`dplyr`</span> operations. Let's work through practical examples.</span>
-<span id="cb40-319"><a href="#cb40-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-320"><a href="#cb40-320" aria-hidden="true" tabindex="-1"></a><span class="fu">### Operation 1: `filter()` - Subset Rows</span></span>
-<span id="cb40-321"><a href="#cb40-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-322"><a href="#cb40-322" aria-hidden="true" tabindex="-1"></a>Filter AEs to show only serious adverse events (SAEs).</span>
-<span id="cb40-323"><a href="#cb40-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-326"><a href="#cb40-326" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-327"><a href="#cb40-327" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: dplyr-filter</span></span>
-<span id="cb40-328"><a href="#cb40-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-329"><a href="#cb40-329" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for Serious Adverse Events only</span></span>
-<span id="cb40-330"><a href="#cb40-330" aria-hidden="true" tabindex="-1"></a>serious_aes <span class="ot">&lt;-</span> ae <span class="sc">%&gt;%</span></span>
-<span id="cb40-331"><a href="#cb40-331" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(AESER <span class="sc">==</span> <span class="st">"Y"</span>)</span>
-<span id="cb40-332"><a href="#cb40-332" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-333"><a href="#cb40-333" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Total AEs:"</span>, <span class="fu">nrow</span>(ae), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb40-334"><a href="#cb40-334" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Serious AEs:"</span>, <span class="fu">nrow</span>(serious_aes), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb40-335"><a href="#cb40-335" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-336"><a href="#cb40-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-337"><a href="#cb40-337" aria-hidden="true" tabindex="-1"></a><span class="fu">### Operation 2: `select()` - Choose Columns</span></span>
-<span id="cb40-338"><a href="#cb40-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-339"><a href="#cb40-339" aria-hidden="true" tabindex="-1"></a>Select only the variables we need for a quick AE overview.</span>
-<span id="cb40-340"><a href="#cb40-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-343"><a href="#cb40-343" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-344"><a href="#cb40-344" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: dplyr-select</span></span>
-<span id="cb40-345"><a href="#cb40-345" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-346"><a href="#cb40-346" aria-hidden="true" tabindex="-1"></a><span class="co"># Select key AE variables</span></span>
-<span id="cb40-347"><a href="#cb40-347" aria-hidden="true" tabindex="-1"></a>ae_summary <span class="ot">&lt;-</span> ae <span class="sc">%&gt;%</span></span>
-<span id="cb40-348"><a href="#cb40-348" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(USUBJID, AEDECOD, AESEV, AESER, AESTDTC, AEENDTC)</span>
-<span id="cb40-349"><a href="#cb40-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-350"><a href="#cb40-350" aria-hidden="true" tabindex="-1"></a>utils<span class="sc">::</span><span class="fu">head</span>(ae_summary)</span>
-<span id="cb40-351"><a href="#cb40-351" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-352"><a href="#cb40-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-353"><a href="#cb40-353" aria-hidden="true" tabindex="-1"></a><span class="fu">### Operation 3: `mutate()` - Create New Variables</span></span>
-<span id="cb40-354"><a href="#cb40-354" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-355"><a href="#cb40-355" aria-hidden="true" tabindex="-1"></a>Create a flag for treatment-related adverse events.</span>
-<span id="cb40-356"><a href="#cb40-356" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-359"><a href="#cb40-359" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-360"><a href="#cb40-360" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: dplyr-mutate</span></span>
-<span id="cb40-361"><a href="#cb40-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-362"><a href="#cb40-362" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new variable: treatment-related flag</span></span>
-<span id="cb40-363"><a href="#cb40-363" aria-hidden="true" tabindex="-1"></a>ae_with_flag <span class="ot">&lt;-</span> ae <span class="sc">%&gt;%</span></span>
-<span id="cb40-364"><a href="#cb40-364" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb40-365"><a href="#cb40-365" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a related flag (Y if related, N otherwise)</span></span>
-<span id="cb40-366"><a href="#cb40-366" aria-hidden="true" tabindex="-1"></a>    <span class="at">AEREL_FLAG =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(AEREL <span class="sc">==</span> <span class="st">"PROBABLE"</span> <span class="sc">|</span> AEREL <span class="sc">==</span> <span class="st">"POSSIBLE"</span>, <span class="st">"Y"</span>, <span class="st">"N"</span>)</span>
-<span id="cb40-367"><a href="#cb40-367" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb40-368"><a href="#cb40-368" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-369"><a href="#cb40-369" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the distribution</span></span>
-<span id="cb40-370"><a href="#cb40-370" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ae_with_flag<span class="sc">$</span>AEREL_FLAG, <span class="at">useNA =</span> <span class="st">"ifany"</span>)</span>
-<span id="cb40-371"><a href="#cb40-371" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-372"><a href="#cb40-372" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-373"><a href="#cb40-373" aria-hidden="true" tabindex="-1"></a><span class="fu">### Operation 4: `group_by()` + `summarise()` - Aggregate Data</span></span>
-<span id="cb40-374"><a href="#cb40-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-375"><a href="#cb40-375" aria-hidden="true" tabindex="-1"></a>Count adverse events by System Organ Class (SOC).</span>
-<span id="cb40-376"><a href="#cb40-376" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-379"><a href="#cb40-379" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-380"><a href="#cb40-380" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: dplyr-summarise</span></span>
-<span id="cb40-381"><a href="#cb40-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-382"><a href="#cb40-382" aria-hidden="true" tabindex="-1"></a><span class="co"># Count AEs by System Organ Class</span></span>
-<span id="cb40-383"><a href="#cb40-383" aria-hidden="true" tabindex="-1"></a>ae_by_soc <span class="ot">&lt;-</span> ae <span class="sc">%&gt;%</span></span>
-<span id="cb40-384"><a href="#cb40-384" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(AEBODSYS) <span class="sc">%&gt;%</span></span>
-<span id="cb40-385"><a href="#cb40-385" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
-<span id="cb40-386"><a href="#cb40-386" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_events =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(),</span>
-<span id="cb40-387"><a href="#cb40-387" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_subjects =</span> dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(USUBJID)</span>
-<span id="cb40-388"><a href="#cb40-388" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb40-389"><a href="#cb40-389" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(dplyr<span class="sc">::</span><span class="fu">desc</span>(n_events))</span>
-<span id="cb40-390"><a href="#cb40-390" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-391"><a href="#cb40-391" aria-hidden="true" tabindex="-1"></a><span class="co"># Show top 10 SOCs</span></span>
-<span id="cb40-392"><a href="#cb40-392" aria-hidden="true" tabindex="-1"></a>utils<span class="sc">::</span><span class="fu">head</span>(ae_by_soc, <span class="dv">10</span>)</span>
-<span id="cb40-393"><a href="#cb40-393" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-394"><a href="#cb40-394" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-395"><a href="#cb40-395" aria-hidden="true" tabindex="-1"></a><span class="fu">### Operation 5: `arrange()` - Sort Data</span></span>
-<span id="cb40-396"><a href="#cb40-396" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-397"><a href="#cb40-397" aria-hidden="true" tabindex="-1"></a>Sort AEs by subject and start date.</span>
-<span id="cb40-398"><a href="#cb40-398" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-401"><a href="#cb40-401" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-402"><a href="#cb40-402" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: dplyr-arrange</span></span>
-<span id="cb40-403"><a href="#cb40-403" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-404"><a href="#cb40-404" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort AEs chronologically within each subject</span></span>
-<span id="cb40-405"><a href="#cb40-405" aria-hidden="true" tabindex="-1"></a>ae_sorted <span class="ot">&lt;-</span> ae <span class="sc">%&gt;%</span></span>
-<span id="cb40-406"><a href="#cb40-406" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(USUBJID, AEDECOD, AESTDTC, AESEV) <span class="sc">%&gt;%</span></span>
-<span id="cb40-407"><a href="#cb40-407" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(USUBJID, AESTDTC)</span>
-<span id="cb40-408"><a href="#cb40-408" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-409"><a href="#cb40-409" aria-hidden="true" tabindex="-1"></a>utils<span class="sc">::</span><span class="fu">head</span>(ae_sorted, <span class="dv">10</span>)</span>
-<span id="cb40-410"><a href="#cb40-410" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-411"><a href="#cb40-411" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-412"><a href="#cb40-412" aria-hidden="true" tabindex="-1"></a><span class="fu">### Bonus Operation 6: `anti_join()` - Find Missing Data</span></span>
-<span id="cb40-413"><a href="#cb40-413" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-414"><a href="#cb40-414" aria-hidden="true" tabindex="-1"></a>Find subjects in DM who have no adverse events (useful for data QC).</span>
-<span id="cb40-415"><a href="#cb40-415" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-418"><a href="#cb40-418" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-419"><a href="#cb40-419" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: dplyr-antijoin</span></span>
-<span id="cb40-420"><a href="#cb40-420" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-421"><a href="#cb40-421" aria-hidden="true" tabindex="-1"></a><span class="co"># Find subjects with NO adverse events</span></span>
-<span id="cb40-422"><a href="#cb40-422" aria-hidden="true" tabindex="-1"></a>subjects_no_ae <span class="ot">&lt;-</span> dm <span class="sc">%&gt;%</span></span>
-<span id="cb40-423"><a href="#cb40-423" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(USUBJID, ARM) <span class="sc">%&gt;%</span></span>
-<span id="cb40-424"><a href="#cb40-424" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">anti_join</span>(ae, <span class="at">by =</span> <span class="st">"USUBJID"</span>)</span>
-<span id="cb40-425"><a href="#cb40-425" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-426"><a href="#cb40-426" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Subjects with no AEs:"</span>, <span class="fu">nrow</span>(subjects_no_ae), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb40-427"><a href="#cb40-427" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-428"><a href="#cb40-428" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-429"><a href="#cb40-429" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb40-430"><a href="#cb40-430" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-431"><a href="#cb40-431" aria-hidden="true" tabindex="-1"></a><span class="fu">## Day 1 Deliverable Summary</span></span>
-<span id="cb40-432"><a href="#cb40-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-433"><a href="#cb40-433" aria-hidden="true" tabindex="-1"></a>Today you completed the following:</span>
-<span id="cb40-434"><a href="#cb40-434" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-435"><a href="#cb40-435" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Task                                         <span class="pp">|</span> Status <span class="pp">|</span></span>
-<span id="cb40-436"><a href="#cb40-436" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------------------------------------------|--------|</span></span>
-<span id="cb40-437"><a href="#cb40-437" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Installed and loaded pharmaverse packages    <span class="pp">|</span> Done   <span class="pp">|</span></span>
-<span id="cb40-438"><a href="#cb40-438" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Loaded DM, AE, EX, LB SDTM domains           <span class="pp">|</span> Done   <span class="pp">|</span></span>
-<span id="cb40-439"><a href="#cb40-439" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Explored data with glimpse(), head(), dim()  <span class="pp">|</span> Done   <span class="pp">|</span></span>
-<span id="cb40-440"><a href="#cb40-440" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Joined DM-AE (demographics + adverse events) <span class="pp">|</span> Done   <span class="pp">|</span></span>
-<span id="cb40-441"><a href="#cb40-441" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Joined DM-EX (demographics + exposure)       <span class="pp">|</span> Done   <span class="pp">|</span></span>
-<span id="cb40-442"><a href="#cb40-442" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Demonstrated 5+ dplyr operations             <span class="pp">|</span> Done   <span class="pp">|</span></span>
-<span id="cb40-443"><a href="#cb40-443" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-444"><a href="#cb40-444" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb40-445"><a href="#cb40-445" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-446"><a href="#cb40-446" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Takeaways</span></span>
-<span id="cb40-447"><a href="#cb40-447" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-448"><a href="#cb40-448" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**USUBJID is the universal key** - It links all SDTM domains together</span>
-<span id="cb40-449"><a href="#cb40-449" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**SDTM domains have classes** - Special Purpose (DM), Events (AE), Interventions (EX), Findings (LB)</span>
-<span id="cb40-450"><a href="#cb40-450" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**The CDISC data flow** - Raw → SDTM → ADaM → TLFs</span>
-<span id="cb40-451"><a href="#cb40-451" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>**dplyr is essential** - Most pharmaverse packages are built on tidyverse principles</span>
-<span id="cb40-452"><a href="#cb40-452" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>**pharmaversesdtm provides real-world example data** - Use it for learning and testing</span>
-<span id="cb40-453"><a href="#cb40-453" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-454"><a href="#cb40-454" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb40-455"><a href="#cb40-455" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-456"><a href="#cb40-456" aria-hidden="true" tabindex="-1"></a><span class="fu">## Resources</span></span>
-<span id="cb40-457"><a href="#cb40-457" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-458"><a href="#cb40-458" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">pharmaverse.org</span><span class="co">](https://pharmaverse.org)</span> - The central hub for all pharmaverse packages</span>
-<span id="cb40-459"><a href="#cb40-459" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">pharmaversesdtm GitHub</span><span class="co">](https://github.com/pharmaverse/pharmaversesdtm)</span> - Source code and documentation</span>
-<span id="cb40-460"><a href="#cb40-460" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">admiral 'Get Started' vignette</span><span class="co">](https://pharmaverse.github.io/admiral/articles/admiral.html)</span> - Introduction to ADaM creation</span>
-<span id="cb40-461"><a href="#cb40-461" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">CDISC SDTM Implementation Guide</span><span class="co">](https://www.cdisc.org/standards/foundational/sdtm)</span> - Official SDTM documentation</span>
-<span id="cb40-462"><a href="#cb40-462" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">dplyr documentation</span><span class="co">](https://dplyr.tidyverse.org/)</span> - Complete reference for data manipulation</span>
-<span id="cb40-463"><a href="#cb40-463" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-464"><a href="#cb40-464" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb40-465"><a href="#cb40-465" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-466"><a href="#cb40-466" aria-hidden="true" tabindex="-1"></a><span class="fu">## What's Next?</span></span>
-<span id="cb40-467"><a href="#cb40-467" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-468"><a href="#cb40-468" aria-hidden="true" tabindex="-1"></a>In **Day 2**, we'll dive deeper into: - SDTM domain classes and their specific structures - Advanced tidyverse operations - Variable naming conventions (--TESTCD, --ORRES, --DY patterns) - Creating data summaries by treatment arm</span>
-</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
-</div></div></div></div></div>
+  </script>
 </div> <!-- /content -->
 
 
 
 
-<script src="day1_files/libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

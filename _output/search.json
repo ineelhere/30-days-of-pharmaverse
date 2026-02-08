@@ -1,0 +1,1023 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "30 Days of Pharmaverse",
+    "section": "",
+    "text": "Welcome to 30 Days of Pharmaverse. This project is a hands-on exploration of the modern clinical data science stack, designed for programmers and data scientists who want to dive deep into CDISC standards using the open-source Pharmaverse ecosystem.\nInstead of a traditional course, think of this as a guided tour or a developer’s log. Each day, we tackle a specific concept-from setting up a validated environment to building complex submission-ready datasets-using industry-standard R packages like admiral, xportr, and metacore.\n\n\n\n\n\nDay\nTopic\nDeep Dive\n\n\n\n\nDay 1\nEnvironment Setup & First SDTM Code\nSDTM Programming Walkthrough\n\n\nDay 2\nSDTM Domain Structure & Tidyverse Mastery\nUnderstanding SDTM Domain Classes Through Code\n\n\nDay 3\nControlled Terminology & MedDRA Coding\nBuilding AE Codelists in R\n\n\nDay 4\nClinical Date Derivations with lubridate\nStudy Day, Duration, and Partial Date Imputation\n\n\nDay 5\nAdvanced Tidyverse: Pivoting & Joining\nReshaping SDTM Data for Analysis\n\n\nDay 6\nIntroduction to sdtm.oak\nEDC-to-SDTM Transformation Patterns\n\n\nDay 7\nWeek 1 Capstone: End-to-End SDTM Script\nBuild DM, AE, EX from Scratch with xportr"
+  },
+  {
+    "objectID": "index.html#exploration-roadmap",
+    "href": "index.html#exploration-roadmap",
+    "title": "30 Days of Pharmaverse",
+    "section": "",
+    "text": "Welcome to 30 Days of Pharmaverse. This project is a hands-on exploration of the modern clinical data science stack, designed for programmers and data scientists who want to dive deep into CDISC standards using the open-source Pharmaverse ecosystem.\nInstead of a traditional course, think of this as a guided tour or a developer’s log. Each day, we tackle a specific concept-from setting up a validated environment to building complex submission-ready datasets-using industry-standard R packages like admiral, xportr, and metacore.\n\n\n\n\n\nDay\nTopic\nDeep Dive\n\n\n\n\nDay 1\nEnvironment Setup & First SDTM Code\nSDTM Programming Walkthrough\n\n\nDay 2\nSDTM Domain Structure & Tidyverse Mastery\nUnderstanding SDTM Domain Classes Through Code\n\n\nDay 3\nControlled Terminology & MedDRA Coding\nBuilding AE Codelists in R\n\n\nDay 4\nClinical Date Derivations with lubridate\nStudy Day, Duration, and Partial Date Imputation\n\n\nDay 5\nAdvanced Tidyverse: Pivoting & Joining\nReshaping SDTM Data for Analysis\n\n\nDay 6\nIntroduction to sdtm.oak\nEDC-to-SDTM Transformation Patterns\n\n\nDay 7\nWeek 1 Capstone: End-to-End SDTM Script\nBuild DM, AE, EX from Scratch with xportr"
+  },
+  {
+    "objectID": "index.html#what-youll-explore",
+    "href": "index.html#what-youll-explore",
+    "title": "30 Days of Pharmaverse",
+    "section": "What You’ll Explore",
+    "text": "What You’ll Explore\nThis journey covers the essential toolkit for modern clinical programming:\n\nSDTM & ADaM Standards: Understanding the “why” and “how” of standardized data.\nPharmaverse Tools: Getting hands-on with admiral, pharmaversesdtm, xportr, and more.\nEnd-to-End Workflows: From raw data ingestion to FDA-compliant .xpt export.\nBest Practices: Writing clean, traceable, and reproducible code for regulatory submissions."
+  },
+  {
+    "objectID": "index.html#the-toolkit",
+    "href": "index.html#the-toolkit",
+    "title": "30 Days of Pharmaverse",
+    "section": "The Toolkit",
+    "text": "The Toolkit\nPrerequisites: - Comfort with R and the tidyverse - A curiosity about clinical trials and data standards\nCore Packages:\n# The Pharmaverse suite\ninstall.packages(c(\"haven\", \"dplyr\", \"admiral\", \"xportr\", \"sdtm.oak\", \"metacore\"))"
+  },
+  {
+    "objectID": "index.html#important-disclaimer",
+    "href": "index.html#important-disclaimer",
+    "title": "30 Days of Pharmaverse",
+    "section": "⚠️ Important Disclaimer",
+    "text": "⚠️ Important Disclaimer\nThis project is a personal initiative created for learning and exploratory purposes only. It is in no way affiliated with, endorsed by, sponsored by, funded by, or assisted by any organization or company at any capacity.\n\nThis project draws heavily from open-source projects, Pharmaverse examples, public repositories, and official CDISC documentation.\nSignificant portions of the code and content have been created with assistance from Large Language Models (LLMs) and refined through human review and intervention.\nExamples and patterns are adapted from established best practices in the R and clinical programming communities.\n\nLearners are strongly encouraged to:\n\nThink critically - Don’t just copy-paste code. Understand why each step exists.\nVerify independently - Check code against official Pharmaverse documentation and CDISC standards.\nTest thoroughly - Validate any code in your own environment before use in production.\nReview FDA guidance - Always cross-reference with current FDA regulatory standards.\nConsult experts - When implementing for real clinical trials, seek guidance from regulatory specialists.\n\nThe views, opinions, code, and materials shared in this project are solely for exploratory and learning purposes and DO NOT GUARANTEE accuracy/compliance/validation requirements. They do not represent the positions of any external organization, and this content should not be considered official guidance for regulatory submissions without independent verification."
+  },
+  {
+    "objectID": "index.html#community-resources",
+    "href": "index.html#community-resources",
+    "title": "30 Days of Pharmaverse",
+    "section": "Community & Resources",
+    "text": "Community & Resources\n\nPharmaverse.org - The central hub for open-source clinical R.\nCDISC.org - The official standards body.\nAdmiral Documentation - The flagship ADaM package.\n\n\nCurated by: Indraneel Chakraborty | Last Updated: February 2026"
+  },
+  {
+    "objectID": "week1/day7.html",
+    "href": "week1/day7.html",
+    "title": "Day 7: Week 1 Capstone: End-to-End SDTM Script",
+    "section": "",
+    "text": "← Back to Roadmap",
+    "crumbs": [
+      "Week 1",
+      "Day 7: Week 1 Capstone: End-to-End SDTM Script"
+    ]
+  },
+  {
+    "objectID": "week1/day7.html#learning-objectives",
+    "href": "week1/day7.html#learning-objectives",
+    "title": "Day 7: Week 1 Capstone: End-to-End SDTM Script",
+    "section": "1 Learning Objectives",
+    "text": "1 Learning Objectives\nBy the end of Day 7, you will be able to:\n\nIntegrate all skills from Days 1-6 into a single workflow\nProduce valid SDTM domains (DM, AE, EX) from simulated raw data\nWork with 20+ subjects across multiple sites\nApply metadata (Labels, Types) using xportr\nExport submission-ready SAS Transport files (.xpt)",
+    "crumbs": [
+      "Week 1",
+      "Day 7: Week 1 Capstone: End-to-End SDTM Script"
+    ]
+  },
+  {
+    "objectID": "week1/day7.html#capstone-project-overview",
+    "href": "week1/day7.html#capstone-project-overview",
+    "title": "Day 7: Week 1 Capstone: End-to-End SDTM Script",
+    "section": "2 Capstone Project Overview",
+    "text": "2 Capstone Project Overview\nGoal: Create three SDTM domains from simulated raw clinical trial data:\n\nDM (Demographics) - One row per subject\nAE (Adverse Events) - Multiple rows per subject\nEX (Exposure) - Dosing records\n\n\n2.1 The Pipeline\nRaw Data → Transform → Validate → Format → Export (.xpt)",
+    "crumbs": [
+      "Week 1",
+      "Day 7: Week 1 Capstone: End-to-End SDTM Script"
+    ]
+  },
+  {
+    "objectID": "week1/day7.html#part-1-generate-simulated-raw-data-20-subjects",
+    "href": "week1/day7.html#part-1-generate-simulated-raw-data-20-subjects",
+    "title": "Day 7: Week 1 Capstone: End-to-End SDTM Script",
+    "section": "3 Part 1: Generate Simulated Raw Data (20+ Subjects)",
+    "text": "3 Part 1: Generate Simulated Raw Data (20+ Subjects)\n\n3.1 Raw Demographics\n\nlibrary(dplyr)\nlibrary(tidyr)\nlibrary(lubridate)\nlibrary(xportr)\n\nset.seed(42)  # For reproducibility\n\n# Generate 25 subjects across 3 sites\nn_subjects &lt;- 25\n\nraw_dm &lt;- tibble(\n  Site = sample(c(\"101\", \"102\", \"103\"), n_subjects, replace = TRUE, prob = c(0.4, 0.35, 0.25)),\n  Subject = sprintf(\"%03d\", 1:n_subjects)\n) %&gt;%\n  mutate(\n    # Demographics\n    Sex = sample(c(\"Male\", \"Female\"), n_subjects, replace = TRUE),\n    Race = sample(c(\"White\", \"Black\", \"Asian\", \"Other\"), n_subjects, replace = TRUE, \n                  prob = c(0.6, 0.2, 0.15, 0.05)),\n    Ethnicity = sample(c(\"Hispanic\", \"Not Hispanic\"), n_subjects, replace = TRUE, \n                       prob = c(0.15, 0.85)),\n    \n    # Age 25-75\n    BirthYear = sample(1950:2000, n_subjects, replace = TRUE),\n    BirthDate = paste0(BirthYear, \"-\", \n                       sprintf(\"%02d\", sample(1:12, n_subjects, replace = TRUE)), \"-\",\n                       sprintf(\"%02d\", sample(1:28, n_subjects, replace = TRUE))),\n    \n    # Treatment assignment\n    Arm = sample(c(\"Placebo\", \"Active 10mg\", \"Active 20mg\"), n_subjects, replace = TRUE,\n                 prob = c(0.33, 0.33, 0.34)),\n    \n    # First dose date (Jan-Mar 2024)\n    FirstDoseDate = as.Date(\"2024-01-01\") + sample(0:89, n_subjects, replace = TRUE)\n  ) %&gt;%\n  select(-BirthYear)\n\ncat(\"Raw Demographics: \", nrow(raw_dm), \"subjects\\n\\n\")\n\nRaw Demographics:  25 subjects\n\nhead(raw_dm, 10)\n\n# A tibble: 10 × 8\n   Site  Subject Sex    Race  Ethnicity    BirthDate  Arm         FirstDoseDate\n   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;       &lt;date&gt;       \n 1 103   001     Female White Not Hispanic 1967-09-22 Active 20mg 2024-02-23   \n 2 103   002     Male   White Not Hispanic 1973-10-17 Active 10mg 2024-03-30   \n 3 101   003     Male   White Not Hispanic 1998-08-18 Placebo     2024-01-31   \n 4 103   004     Male   Black Not Hispanic 1967-07-02 Active 10mg 2024-02-12   \n 5 102   005     Male   White Not Hispanic 1954-06-06 Active 20mg 2024-02-21   \n 6 102   006     Female Black Not Hispanic 1995-01-22 Active 20mg 2024-03-21   \n 7 102   007     Female Black Not Hispanic 1989-05-06 Active 10mg 2024-02-28   \n 8 101   008     Female White Not Hispanic 1989-09-06 Active 10mg 2024-01-27   \n 9 102   009     Female White Not Hispanic 1970-07-20 Active 20mg 2024-01-30   \n10 102   010     Male   White Not Hispanic 1985-10-28 Active 20mg 2024-02-21   \n\n\n\n\n3.2 Raw Adverse Events\n\n# Common adverse events with their SOC mappings\nae_terms &lt;- tribble(\n  ~Term,                   ~SOC,\n  \"Headache\",              \"Nervous system disorders\",\n  \"Nausea\",                \"Gastrointestinal disorders\",\n  \"Fatigue\",               \"General disorders\",\n  \"Dizziness\",             \"Nervous system disorders\",\n  \"Diarrhea\",              \"Gastrointestinal disorders\",\n  \"Rash\",                  \"Skin disorders\",\n  \"Back pain\",             \"Musculoskeletal disorders\",\n  \"Insomnia\",              \"Psychiatric disorders\",\n  \"Cough\",                 \"Respiratory disorders\",\n  \"Upper respiratory infection\", \"Infections\"\n)\n\n# Generate 2-5 AEs per subject (not all subjects have AEs)\nsubjects_with_ae &lt;- sample(raw_dm$Subject, size = round(n_subjects * 0.8))\n\nraw_ae &lt;- tibble(\n  Subject = rep(subjects_with_ae, each = 3)\n) %&gt;%\n  slice_sample(n = 60) %&gt;%  # ~60 AE records total\n  mutate(\n    Site = raw_dm$Site[match(Subject, raw_dm$Subject)],\n    AE_Num = row_number(),\n    Term = sample(ae_terms$Term, n(), replace = TRUE),\n    Severity = sample(c(\"Mild\", \"Moderate\", \"Severe\"), n(), replace = TRUE, \n                      prob = c(0.6, 0.3, 0.1)),\n    Serious = sample(c(\"No\", \"Yes\"), n(), replace = TRUE, prob = c(0.92, 0.08)),\n    Related = sample(c(\"Not Related\", \"Possibly Related\", \"Probably Related\"), n(), \n                     replace = TRUE, prob = c(0.5, 0.35, 0.15)),\n    # Start 1-60 days after first dose\n    StartDay = sample(1:60, n(), replace = TRUE)\n  ) %&gt;%\n  left_join(\n    raw_dm %&gt;% select(Subject, FirstDoseDate),\n    by = \"Subject\"\n  ) %&gt;%\n  mutate(\n    StartDate = as.character(FirstDoseDate + StartDay),\n    # End date: 1-14 days after start, or ongoing\n    EndDate = ifelse(\n      sample(c(TRUE, FALSE), n(), replace = TRUE, prob = c(0.85, 0.15)),\n      as.character(as.Date(StartDate) + sample(1:14, n(), replace = TRUE)),\n      NA_character_\n    )\n  ) %&gt;%\n  select(Site, Subject, Term, StartDate, EndDate, Severity, Serious, Related)\n\ncat(\"Raw Adverse Events:\", nrow(raw_ae), \"records\\n\\n\")\n\nRaw Adverse Events: 60 records\n\nhead(raw_ae, 10)\n\n# A tibble: 10 × 8\n   Site  Subject Term                 StartDate EndDate Severity Serious Related\n   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;                &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;  \n 1 102   011     Diarrhea             2024-05-… 2024-0… Mild     Yes     Probab…\n 2 101   025     Diarrhea             2024-01-… 2024-0… Mild     No      Not Re…\n 3 103   013     Rash                 2024-04-… 2024-0… Moderate No      Possib…\n 4 101   025     Cough                2024-02-… 2024-0… Mild     No      Not Re…\n 5 103   001     Upper respiratory i… 2024-02-… 2024-0… Mild     No      Possib…\n 6 102   015     Insomnia             2024-03-… 2024-0… Severe   No      Not Re…\n 7 102   012     Nausea               2024-04-… 2024-0… Severe   No      Probab…\n 8 101   022     Back pain            2024-02-… 2024-0… Mild     No      Possib…\n 9 102   006     Back pain            2024-05-… 2024-0… Mild     No      Not Re…\n10 102   010     Diarrhea             2024-04-… 2024-0… Mild     No      Possib…\n\n\n\n\n3.3 Raw Exposure\n\n# Generate exposure records (weekly dosing)\nraw_ex &lt;- raw_dm %&gt;%\n  filter(!is.na(FirstDoseDate)) %&gt;%\n  select(Site, Subject, Arm, FirstDoseDate) %&gt;%\n  # Create 8 weeks of dosing per subject\n  crossing(Week = 0:7) %&gt;%\n  mutate(\n    DoseDate = FirstDoseDate + (Week * 7),\n    Dose = case_when(\n      Arm == \"Placebo\" ~ 0,\n      Arm == \"Active 10mg\" ~ 10,\n      Arm == \"Active 20mg\" ~ 20\n    ),\n    DoseUnit = \"mg\",\n    Route = \"ORAL\"\n  ) %&gt;%\n  # Some subjects discontinue early\n  group_by(Subject) %&gt;%\n  filter(row_number() &lt;= sample(4:8, 1)) %&gt;%\n  ungroup() %&gt;%\n  select(Site, Subject, DoseDate, Dose, DoseUnit, Route)\n\ncat(\"Raw Exposure:\", nrow(raw_ex), \"records\\n\\n\")\n\nRaw Exposure: 147 records\n\nhead(raw_ex, 10)\n\n# A tibble: 10 × 6\n   Site  Subject DoseDate    Dose DoseUnit Route\n   &lt;chr&gt; &lt;chr&gt;   &lt;date&gt;     &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;\n 1 101   003     2024-01-31     0 mg       ORAL \n 2 101   003     2024-02-07     0 mg       ORAL \n 3 101   003     2024-02-14     0 mg       ORAL \n 4 101   003     2024-02-21     0 mg       ORAL \n 5 101   003     2024-02-28     0 mg       ORAL \n 6 101   003     2024-03-06     0 mg       ORAL \n 7 101   003     2024-03-13     0 mg       ORAL \n 8 101   008     2024-01-27    10 mg       ORAL \n 9 101   008     2024-02-03    10 mg       ORAL \n10 101   008     2024-02-10    10 mg       ORAL",
+    "crumbs": [
+      "Week 1",
+      "Day 7: Week 1 Capstone: End-to-End SDTM Script"
+    ]
+  },
+  {
+    "objectID": "week1/day7.html#part-2-create-sdtm-dm-domain",
+    "href": "week1/day7.html#part-2-create-sdtm-dm-domain",
+    "title": "Day 7: Week 1 Capstone: End-to-End SDTM Script",
+    "section": "4 Part 2: Create SDTM DM Domain",
+    "text": "4 Part 2: Create SDTM DM Domain\n\n# SDTM DM: Demographics (one row per subject)\nsdtm_dm &lt;- raw_dm %&gt;%\n  mutate(\n    # Standard variables - HARDCODE algorithm\n    STUDYID = \"CAPSTONE-01\",\n    DOMAIN = \"DM\",\n    \n    # Subject identifiers - ASSIGN algorithm\n    USUBJID = paste(STUDYID, Site, Subject, sep = \"-\"),\n    SUBJID = Subject,\n    SITEID = Site,\n    \n    # Demographics - MAP to CT\n    SEX = case_when(\n      Sex == \"Male\" ~ \"M\",\n      Sex == \"Female\" ~ \"F\"\n    ),\n    RACE = toupper(Race),\n    ETHNIC = case_when(\n      Ethnicity == \"Hispanic\" ~ \"HISPANIC OR LATINO\",\n      TRUE ~ \"NOT HISPANIC OR LATINO\"\n    ),\n    \n    # Dates - DERIVE\n    RFSTDTC = as.character(FirstDoseDate),\n    RFENDTC = NA_character_,  # Would come from disposition\n    BRTHDTC = BirthDate,\n    \n    # Age calculation\n    AGE = as.integer(floor(interval(ymd(BirthDate), ymd(FirstDoseDate)) / years(1))),\n    AGEU = \"YEARS\",\n    \n    # Treatment\n    ARM = Arm,\n    ACTARM = Arm,  # Assuming planned = actual\n    ARMCD = case_when(\n      Arm == \"Placebo\" ~ \"PBO\",\n      Arm == \"Active 10mg\" ~ \"ACT10\",\n      Arm == \"Active 20mg\" ~ \"ACT20\"\n    ),\n    ACTARMCD = ARMCD\n  ) %&gt;%\n  select(\n    STUDYID, DOMAIN, USUBJID, SUBJID, SITEID,\n    RFSTDTC, RFENDTC, BRTHDTC,\n    AGE, AGEU, SEX, RACE, ETHNIC,\n    ARM, ARMCD, ACTARM, ACTARMCD\n  )\n\ncat(\"SDTM DM Domain\\n\")\n\nSDTM DM Domain\n\ncat(\"Subjects:\", nrow(sdtm_dm), \"\\n\")\n\nSubjects: 25 \n\ncat(\"Variables:\", ncol(sdtm_dm), \"\\n\\n\")\n\nVariables: 17 \n\nhead(sdtm_dm, 10)\n\n# A tibble: 10 × 17\n   STUDYID     DOMAIN USUBJID  SUBJID SITEID RFSTDTC RFENDTC BRTHDTC   AGE AGEU \n   &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;\n 1 CAPSTONE-01 DM     CAPSTON… 001    103    2024-0… &lt;NA&gt;    1967-0…    56 YEARS\n 2 CAPSTONE-01 DM     CAPSTON… 002    103    2024-0… &lt;NA&gt;    1973-1…    50 YEARS\n 3 CAPSTONE-01 DM     CAPSTON… 003    101    2024-0… &lt;NA&gt;    1998-0…    25 YEARS\n 4 CAPSTONE-01 DM     CAPSTON… 004    103    2024-0… &lt;NA&gt;    1967-0…    56 YEARS\n 5 CAPSTONE-01 DM     CAPSTON… 005    102    2024-0… &lt;NA&gt;    1954-0…    69 YEARS\n 6 CAPSTONE-01 DM     CAPSTON… 006    102    2024-0… &lt;NA&gt;    1995-0…    29 YEARS\n 7 CAPSTONE-01 DM     CAPSTON… 007    102    2024-0… &lt;NA&gt;    1989-0…    34 YEARS\n 8 CAPSTONE-01 DM     CAPSTON… 008    101    2024-0… &lt;NA&gt;    1989-0…    34 YEARS\n 9 CAPSTONE-01 DM     CAPSTON… 009    102    2024-0… &lt;NA&gt;    1970-0…    53 YEARS\n10 CAPSTONE-01 DM     CAPSTON… 010    102    2024-0… &lt;NA&gt;    1985-1…    38 YEARS\n# ℹ 7 more variables: SEX &lt;chr&gt;, RACE &lt;chr&gt;, ETHNIC &lt;chr&gt;, ARM &lt;chr&gt;,\n#   ARMCD &lt;chr&gt;, ACTARM &lt;chr&gt;, ACTARMCD &lt;chr&gt;",
+    "crumbs": [
+      "Week 1",
+      "Day 7: Week 1 Capstone: End-to-End SDTM Script"
+    ]
+  },
+  {
+    "objectID": "week1/day7.html#part-3-create-sdtm-ae-domain",
+    "href": "week1/day7.html#part-3-create-sdtm-ae-domain",
+    "title": "Day 7: Week 1 Capstone: End-to-End SDTM Script",
+    "section": "5 Part 3: Create SDTM AE Domain",
+    "text": "5 Part 3: Create SDTM AE Domain\n\n# Helper: derive study day (from Day 4)\nderive_study_day &lt;- function(event_date, reference_date) {\n  diff_days &lt;- as.numeric(event_date - reference_date)\n  ifelse(diff_days &gt;= 0, diff_days + 1, diff_days)\n}\n\n# SDTM AE: Adverse Events\nsdtm_ae &lt;- raw_ae %&gt;%\n  mutate(\n    STUDYID = \"CAPSTONE-01\",\n    DOMAIN = \"AE\",\n    USUBJID = paste(STUDYID, Site, Subject, sep = \"-\")\n  ) %&gt;%\n  # Add reference date from DM\n  left_join(\n    sdtm_dm %&gt;% select(USUBJID, RFSTDTC),\n    by = \"USUBJID\"\n  ) %&gt;%\n  # Derive AE variables\n  mutate(\n    AETERM = Term,\n    AEDECOD = toupper(Term),\n    AEBODSYS = toupper(case_when(\n      grepl(\"Headache|Dizziness\", Term) ~ \"NERVOUS SYSTEM DISORDERS\",\n      grepl(\"Nausea|Diarrhea\", Term) ~ \"GASTROINTESTINAL DISORDERS\",\n      grepl(\"Fatigue\", Term) ~ \"GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS\",\n      grepl(\"Rash\", Term) ~ \"SKIN AND SUBCUTANEOUS TISSUE DISORDERS\",\n      grepl(\"Back\", Term) ~ \"MUSCULOSKELETAL AND CONNECTIVE TISSUE DISORDERS\",\n      grepl(\"Insomnia\", Term) ~ \"PSYCHIATRIC DISORDERS\",\n      grepl(\"Cough\", Term) ~ \"RESPIRATORY, THORACIC AND MEDIASTINAL DISORDERS\",\n      grepl(\"infection\", Term, ignore.case = TRUE) ~ \"INFECTIONS AND INFESTATIONS\",\n      TRUE ~ \"OTHER\"\n    )),\n    \n    # Dates\n    AESTDTC = StartDate,\n    AEENDTC = EndDate,\n    \n    # Study days\n    AESTDY = derive_study_day(ymd(StartDate), ymd(RFSTDTC)),\n    AEENDY = ifelse(!is.na(EndDate), \n                    derive_study_day(ymd(EndDate), ymd(RFSTDTC)),\n                    NA_integer_),\n    \n    # CT mapping\n    AESEV = toupper(Severity),\n    AESER = ifelse(Serious == \"Yes\", \"Y\", \"N\"),\n    AEREL = toupper(Related),\n    \n    # Outcome\n    AEOUT = case_when(\n      is.na(EndDate) ~ \"NOT RECOVERED/NOT RESOLVED\",\n      TRUE ~ \"RECOVERED/RESOLVED\"\n    ),\n    \n    # Action taken\n    AEACN = \"DOSE NOT CHANGED\"\n  ) %&gt;%\n  # Add sequence\n  arrange(USUBJID, AESTDTC) %&gt;%\n  group_by(USUBJID) %&gt;%\n  mutate(AESEQ = row_number()) %&gt;%\n  ungroup() %&gt;%\n  select(\n    STUDYID, DOMAIN, USUBJID, AESEQ,\n    AETERM, AEDECOD, AEBODSYS,\n    AESTDTC, AEENDTC, AESTDY, AEENDY,\n    AESEV, AESER, AEREL, AEOUT, AEACN\n  )\n\ncat(\"SDTM AE Domain\\n\")\n\nSDTM AE Domain\n\ncat(\"Records:\", nrow(sdtm_ae), \"\\n\")\n\nRecords: 60 \n\ncat(\"Subjects:\", n_distinct(sdtm_ae$USUBJID), \"\\n\")\n\nSubjects: 20 \n\ncat(\"Variables:\", ncol(sdtm_ae), \"\\n\\n\")\n\nVariables: 16 \n\nhead(sdtm_ae, 10)\n\n# A tibble: 10 × 16\n   STUDYID   DOMAIN USUBJID AESEQ AETERM AEDECOD AEBODSYS AESTDTC AEENDTC AESTDY\n   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt;\n 1 CAPSTONE… AE     CAPSTO…     1 Heada… HEADAC… NERVOUS… 2024-0… 2024-0…      9\n 2 CAPSTONE… AE     CAPSTO…     2 Dizzi… DIZZIN… NERVOUS… 2024-0… 2024-0…     38\n 3 CAPSTONE… AE     CAPSTO…     3 Back … BACK P… MUSCULO… 2024-0… &lt;NA&gt;        46\n 4 CAPSTONE… AE     CAPSTO…     1 Cough  COUGH   RESPIRA… 2024-0… 2024-0…     12\n 5 CAPSTONE… AE     CAPSTO…     2 Dizzi… DIZZIN… NERVOUS… 2024-0… 2024-0…     17\n 6 CAPSTONE… AE     CAPSTO…     3 Dizzi… DIZZIN… NERVOUS… 2024-0… 2024-0…     46\n 7 CAPSTONE… AE     CAPSTO…     1 Back … BACK P… MUSCULO… 2024-0… 2024-0…     23\n 8 CAPSTONE… AE     CAPSTO…     2 Nausea NAUSEA  GASTROI… 2024-0… 2024-0…     56\n 9 CAPSTONE… AE     CAPSTO…     3 Upper… UPPER … INFECTI… 2024-0… 2024-0…     61\n10 CAPSTONE… AE     CAPSTO…     1 Dizzi… DIZZIN… NERVOUS… 2024-0… &lt;NA&gt;        41\n# ℹ 6 more variables: AEENDY &lt;dbl&gt;, AESEV &lt;chr&gt;, AESER &lt;chr&gt;, AEREL &lt;chr&gt;,\n#   AEOUT &lt;chr&gt;, AEACN &lt;chr&gt;",
+    "crumbs": [
+      "Week 1",
+      "Day 7: Week 1 Capstone: End-to-End SDTM Script"
+    ]
+  },
+  {
+    "objectID": "week1/day7.html#part-4-create-sdtm-ex-domain",
+    "href": "week1/day7.html#part-4-create-sdtm-ex-domain",
+    "title": "Day 7: Week 1 Capstone: End-to-End SDTM Script",
+    "section": "6 Part 4: Create SDTM EX Domain",
+    "text": "6 Part 4: Create SDTM EX Domain\n\n# SDTM EX: Exposure\nsdtm_ex &lt;- raw_ex %&gt;%\n  mutate(\n    STUDYID = \"CAPSTONE-01\",\n    DOMAIN = \"EX\",\n    USUBJID = paste(STUDYID, Site, Subject, sep = \"-\"),\n    \n    # Treatment\n    EXTRT = case_when(\n      Dose == 0 ~ \"PLACEBO\",\n      Dose == 10 ~ \"STUDY DRUG 10 MG\",\n      Dose == 20 ~ \"STUDY DRUG 20 MG\"\n    ),\n    \n    # Dose info\n    EXDOSE = Dose,\n    EXDOSU = \"mg\",\n    EXDOSFRM = \"TABLET\",\n    EXROUTE = \"ORAL\",\n    \n    # Dates (single-day dosing)\n    EXSTDTC = as.character(DoseDate),\n    EXENDTC = as.character(DoseDate)\n  ) %&gt;%\n  # Add reference date from DM\n  left_join(\n    sdtm_dm %&gt;% select(USUBJID, RFSTDTC),\n    by = \"USUBJID\"\n  ) %&gt;%\n  mutate(\n    EXSTDY = derive_study_day(ymd(DoseDate), ymd(RFSTDTC)),\n    EXENDY = EXSTDY\n  ) %&gt;%\n  # Add sequence\n  arrange(USUBJID, EXSTDTC) %&gt;%\n  group_by(USUBJID) %&gt;%\n  mutate(EXSEQ = row_number()) %&gt;%\n  ungroup() %&gt;%\n  select(\n    STUDYID, DOMAIN, USUBJID, EXSEQ,\n    EXTRT, EXDOSE, EXDOSU, EXDOSFRM, EXROUTE,\n    EXSTDTC, EXENDTC, EXSTDY, EXENDY\n  )\n\ncat(\"SDTM EX Domain\\n\")\n\nSDTM EX Domain\n\ncat(\"Records:\", nrow(sdtm_ex), \"\\n\")\n\nRecords: 147 \n\ncat(\"Subjects:\", n_distinct(sdtm_ex$USUBJID), \"\\n\")\n\nSubjects: 25 \n\ncat(\"Variables:\", ncol(sdtm_ex), \"\\n\\n\")\n\nVariables: 13 \n\nhead(sdtm_ex, 10)\n\n# A tibble: 10 × 13\n   STUDYID     DOMAIN USUBJID EXSEQ EXTRT EXDOSE EXDOSU EXDOSFRM EXROUTE EXSTDTC\n   &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;  \n 1 CAPSTONE-01 EX     CAPSTO…     1 PLAC…      0 mg     TABLET   ORAL    2024-0…\n 2 CAPSTONE-01 EX     CAPSTO…     2 PLAC…      0 mg     TABLET   ORAL    2024-0…\n 3 CAPSTONE-01 EX     CAPSTO…     3 PLAC…      0 mg     TABLET   ORAL    2024-0…\n 4 CAPSTONE-01 EX     CAPSTO…     4 PLAC…      0 mg     TABLET   ORAL    2024-0…\n 5 CAPSTONE-01 EX     CAPSTO…     5 PLAC…      0 mg     TABLET   ORAL    2024-0…\n 6 CAPSTONE-01 EX     CAPSTO…     6 PLAC…      0 mg     TABLET   ORAL    2024-0…\n 7 CAPSTONE-01 EX     CAPSTO…     7 PLAC…      0 mg     TABLET   ORAL    2024-0…\n 8 CAPSTONE-01 EX     CAPSTO…     1 STUD…     10 mg     TABLET   ORAL    2024-0…\n 9 CAPSTONE-01 EX     CAPSTO…     2 STUD…     10 mg     TABLET   ORAL    2024-0…\n10 CAPSTONE-01 EX     CAPSTO…     3 STUD…     10 mg     TABLET   ORAL    2024-0…\n# ℹ 3 more variables: EXENDTC &lt;chr&gt;, EXSTDY &lt;dbl&gt;, EXENDY &lt;dbl&gt;",
+    "crumbs": [
+      "Week 1",
+      "Day 7: Week 1 Capstone: End-to-End SDTM Script"
+    ]
+  },
+  {
+    "objectID": "week1/day7.html#part-5-validation-checks",
+    "href": "week1/day7.html#part-5-validation-checks",
+    "title": "Day 7: Week 1 Capstone: End-to-End SDTM Script",
+    "section": "7 Part 5: Validation Checks",
+    "text": "7 Part 5: Validation Checks\nBefore exporting, let’s validate our datasets.\n\n# Check 1: Subject counts consistency\ncat(\"=== Subject Count Validation ===\\n\")\n\n=== Subject Count Validation ===\n\ncat(\"DM subjects:\", nrow(sdtm_dm), \"\\n\")\n\nDM subjects: 25 \n\ncat(\"EX subjects:\", n_distinct(sdtm_ex$USUBJID), \"\\n\")\n\nEX subjects: 25 \n\ncat(\"AE subjects:\", n_distinct(sdtm_ae$USUBJID), \"\\n\\n\")\n\nAE subjects: 20 \n\n# Check 2: All EX subjects are in DM\nex_not_in_dm &lt;- sdtm_ex %&gt;%\n  anti_join(sdtm_dm, by = \"USUBJID\") %&gt;%\n  nrow()\ncat(\"EX subjects missing from DM:\", ex_not_in_dm, \"\\n\")\n\nEX subjects missing from DM: 0 \n\n# Check 3: All AE subjects are in DM\nae_not_in_dm &lt;- sdtm_ae %&gt;%\n  anti_join(sdtm_dm, by = \"USUBJID\") %&gt;%\n  nrow()\ncat(\"AE subjects missing from DM:\", ae_not_in_dm, \"\\n\\n\")\n\nAE subjects missing from DM: 0 \n\n# Check 4: Variable types\ncat(\"=== Variable Type Check ===\\n\")\n\n=== Variable Type Check ===\n\ncat(\"DM - AGE is numeric:\", is.numeric(sdtm_dm$AGE), \"\\n\")\n\nDM - AGE is numeric: TRUE \n\ncat(\"AE - AESEQ is integer:\", is.integer(sdtm_ae$AESEQ), \"\\n\")\n\nAE - AESEQ is integer: TRUE \n\ncat(\"EX - EXDOSE is numeric:\", is.numeric(sdtm_ex$EXDOSE), \"\\n\")\n\nEX - EXDOSE is numeric: TRUE",
+    "crumbs": [
+      "Week 1",
+      "Day 7: Week 1 Capstone: End-to-End SDTM Script"
+    ]
+  },
+  {
+    "objectID": "week1/day7.html#part-6-export-with-xportr",
+    "href": "week1/day7.html#part-6-export-with-xportr",
+    "title": "Day 7: Week 1 Capstone: End-to-End SDTM Script",
+    "section": "8 Part 6: Export with xportr",
+    "text": "8 Part 6: Export with xportr\n\n# Create output directory in project (relative path)\noutput_dir &lt;- \"output\"\nif (!dir.exists(output_dir)) {\n  dir.create(output_dir)\n}\n\n# Export DM\nxportr_write(sdtm_dm, file.path(output_dir, \"dm.xpt\"))\ncat(\"✓ Exported: output/dm.xpt\\n\")\n\n✓ Exported: output/dm.xpt\n\n# Export AE\nxportr_write(sdtm_ae, file.path(output_dir, \"ae.xpt\"))\ncat(\"✓ Exported: output/ae.xpt\\n\")\n\n✓ Exported: output/ae.xpt\n\n# Export EX\nxportr_write(sdtm_ex, file.path(output_dir, \"ex.xpt\"))\ncat(\"✓ Exported: output/ex.xpt\\n\")\n\n✓ Exported: output/ex.xpt\n\n# Verify files exist\ncat(\"\\n=== Export Verification ===\\n\")\n\n\n=== Export Verification ===\n\ncat(\"dm.xpt:\", file.size(file.path(output_dir, \"dm.xpt\")), \"bytes\\n\")\n\ndm.xpt: 6480 bytes\n\ncat(\"ae.xpt:\", file.size(file.path(output_dir, \"ae.xpt\")), \"bytes\\n\")\n\nae.xpt: 17920 bytes\n\ncat(\"ex.xpt:\", file.size(file.path(output_dir, \"ex.xpt\")), \"bytes\\n\")\n\nex.xpt: 19040 bytes",
+    "crumbs": [
+      "Week 1",
+      "Day 7: Week 1 Capstone: End-to-End SDTM Script"
+    ]
+  },
+  {
+    "objectID": "week1/day7.html#summary-statistics",
+    "href": "week1/day7.html#summary-statistics",
+    "title": "Day 7: Week 1 Capstone: End-to-End SDTM Script",
+    "section": "9 Summary Statistics",
+    "text": "9 Summary Statistics\n\n# Treatment arm distribution\ncat(\"=== Treatment Distribution (DM) ===\\n\")\n\n=== Treatment Distribution (DM) ===\n\nsdtm_dm %&gt;%\n  count(ARM, ARMCD) %&gt;%\n  print()\n\n# A tibble: 3 × 3\n  ARM         ARMCD     n\n  &lt;chr&gt;       &lt;chr&gt; &lt;int&gt;\n1 Active 10mg ACT10    10\n2 Active 20mg ACT20    10\n3 Placebo     PBO       5\n\ncat(\"\\n=== AE Severity Distribution ===\\n\")\n\n\n=== AE Severity Distribution ===\n\nsdtm_ae %&gt;%\n  count(AESEV) %&gt;%\n  print()\n\n# A tibble: 3 × 2\n  AESEV        n\n  &lt;chr&gt;    &lt;int&gt;\n1 MILD        40\n2 MODERATE    14\n3 SEVERE       6\n\ncat(\"\\n=== Exposure Summary ===\\n\")\n\n\n=== Exposure Summary ===\n\nsdtm_ex %&gt;%\n  group_by(EXTRT) %&gt;%\n  summarise(\n    N_Subjects = n_distinct(USUBJID),\n    N_Doses = n(),\n    Total_Dose = sum(EXDOSE)\n  ) %&gt;%\n  print()\n\n# A tibble: 3 × 4\n  EXTRT            N_Subjects N_Doses Total_Dose\n  &lt;chr&gt;                 &lt;int&gt;   &lt;int&gt;      &lt;dbl&gt;\n1 PLACEBO                   5      28          0\n2 STUDY DRUG 10 MG         10      62        620\n3 STUDY DRUG 20 MG         10      57       1140",
+    "crumbs": [
+      "Week 1",
+      "Day 7: Week 1 Capstone: End-to-End SDTM Script"
+    ]
+  },
+  {
+    "objectID": "week1/day7.html#congratulations-week-1-complete",
+    "href": "week1/day7.html#congratulations-week-1-complete",
+    "title": "Day 7: Week 1 Capstone: End-to-End SDTM Script",
+    "section": "10 🎉 Congratulations! Week 1 Complete!",
+    "text": "10 🎉 Congratulations! Week 1 Complete!\nYou have successfully completed the Week 1 Capstone and demonstrated:\n\n\n\n\n\n\n\nSkill\nApplication\n\n\n\n\nData Generation\nCreated 25 subjects with realistic demographics\n\n\nSDTM Structure\nBuilt DM (1 row/subject), AE & EX (multiple rows)\n\n\nControlled Terminology\nMapped Sex, Race, Severity, SOC to CT\n\n\nDate Derivations\nCalculated study days using “No Day 0” rule\n\n\nSequence Numbers\nAdded AESEQ, EXSEQ per subject\n\n\nValidation\nCross-domain consistency checks\n\n\nExport\nCreated FDA-ready .xpt files",
+    "crumbs": [
+      "Week 1",
+      "Day 7: Week 1 Capstone: End-to-End SDTM Script"
+    ]
+  },
+  {
+    "objectID": "week1/day7.html#key-takeaways-from-week-1",
+    "href": "week1/day7.html#key-takeaways-from-week-1",
+    "title": "Day 7: Week 1 Capstone: End-to-End SDTM Script",
+    "section": "11 Key Takeaways from Week 1",
+    "text": "11 Key Takeaways from Week 1\n\nCDISC Structure: SDTM organizes clinical data into standardized domains\nControlled Terminology: Consistency across studies is mandatory\nDerivations: Study days, durations, and flags follow specific rules\nTraceability: Every derived variable should trace back to source\nValidation: Check data before export",
+    "crumbs": [
+      "Week 1",
+      "Day 7: Week 1 Capstone: End-to-End SDTM Script"
+    ]
+  },
+  {
+    "objectID": "week1/day7.html#whats-next",
+    "href": "week1/day7.html#whats-next",
+    "title": "Day 7: Week 1 Capstone: End-to-End SDTM Script",
+    "section": "12 What’s Next?",
+    "text": "12 What’s Next?\nWeek 2: Production SDTM & Validation\n\nComplex domains: LB (Labs), VS (Vital Signs), DS (Disposition)\nIndustry-grade validation with sdtmchecks\nMetadata management with metacore\nSpecification-driven workflows",
+    "crumbs": [
+      "Week 1",
+      "Day 7: Week 1 Capstone: End-to-End SDTM Script"
+    ]
+  },
+  {
+    "objectID": "week1/day5.html",
+    "href": "week1/day5.html",
+    "title": "Day 5: Advanced Tidyverse: Pivoting & Joining",
+    "section": "",
+    "text": "← Back to Roadmap",
+    "crumbs": [
+      "Week 1",
+      "Day 5: Advanced Tidyverse: Pivoting & Joining"
+    ]
+  },
+  {
+    "objectID": "week1/day5.html#learning-objectives",
+    "href": "week1/day5.html#learning-objectives",
+    "title": "Day 5: Advanced Tidyverse: Pivoting & Joining",
+    "section": "1 Learning Objectives",
+    "text": "1 Learning Objectives\nBy the end of Day 5, you will be able to:\n\nReshape datasets using pivot_wider() and pivot_longer()\nUnderstand when to use Wide vs. Long formats in clinical data\nPerform advanced joins (anti_join()) for Data Quality Checks\nCreate 3 analysis-ready datasets as specified in the roadmap",
+    "crumbs": [
+      "Week 1",
+      "Day 5: Advanced Tidyverse: Pivoting & Joining"
+    ]
+  },
+  {
+    "objectID": "week1/day5.html#introduction",
+    "href": "week1/day5.html#introduction",
+    "title": "Day 5: Advanced Tidyverse: Pivoting & Joining",
+    "section": "2 Introduction",
+    "text": "2 Introduction\n\n2.1 Wide vs. Long Data\n\n\n\n\n\n\n\n\nFormat\nStructure\nUse Case\n\n\n\n\nLong\nOne measurement per row\nStorage, filtering, SDTM standard\n\n\nWide\nAll measurements in columns\nCalculations (BMI, Change from Baseline)\n\n\n\nSDTM stores data in long format (one row per observation). For analysis, we often need to reshape to wide format (one row per subject/visit).",
+    "crumbs": [
+      "Week 1",
+      "Day 5: Advanced Tidyverse: Pivoting & Joining"
+    ]
+  },
+  {
+    "objectID": "week1/day5.html#package-installation-loading",
+    "href": "week1/day5.html#package-installation-loading",
+    "title": "Day 5: Advanced Tidyverse: Pivoting & Joining",
+    "section": "3 Package Installation & Loading",
+    "text": "3 Package Installation & Loading\n\nlibrary(dplyr)\nlibrary(tidyr)\nlibrary(pharmaversesdtm)\n\n# Load all domains we'll use today\ndata(\"vs\", package = \"pharmaversesdtm\")\ndata(\"dm\", package = \"pharmaversesdtm\")\ndata(\"ae\", package = \"pharmaversesdtm\")\ndata(\"ex\", package = \"pharmaversesdtm\")\ndata(\"ds\", package = \"pharmaversesdtm\")",
+    "crumbs": [
+      "Week 1",
+      "Day 5: Advanced Tidyverse: Pivoting & Joining"
+    ]
+  },
+  {
+    "objectID": "week1/day5.html#part-1-pivoting-data",
+    "href": "week1/day5.html#part-1-pivoting-data",
+    "title": "Day 5: Advanced Tidyverse: Pivoting & Joining",
+    "section": "4 Part 1: Pivoting Data",
+    "text": "4 Part 1: Pivoting Data\n\n4.1 From Long to Wide: pivot_wider()\nVital Signs (VS) comes in long format. Each test (Height, Weight, BP) is a separate row. Let’s reshape it so each test has its own column.\n\n# Current long format\nvs %&gt;%\n  filter(USUBJID == \"01-701-1015\" & VISIT == \"BASELINE\") %&gt;%\n  select(USUBJID, VISIT, VSTESTCD, VSORRES, VSORRESU) %&gt;%\n  head(10)\n\n# A tibble: 10 × 5\n   USUBJID     VISIT    VSTESTCD VSORRES VSORRESU \n   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;    \n 1 01-701-1015 BASELINE DIABP    56      mmHg     \n 2 01-701-1015 BASELINE DIABP    51      mmHg     \n 3 01-701-1015 BASELINE DIABP    61      mmHg     \n 4 01-701-1015 BASELINE PULSE    56      BEATS/MIN\n 5 01-701-1015 BASELINE PULSE    59      BEATS/MIN\n 6 01-701-1015 BASELINE PULSE    59      BEATS/MIN\n 7 01-701-1015 BASELINE SYSBP    130     mmHg     \n 8 01-701-1015 BASELINE SYSBP    121     mmHg     \n 9 01-701-1015 BASELINE SYSBP    131     mmHg     \n10 01-701-1015 BASELINE TEMP     97.2    F        \n\n\n\n# First, see what tests are available\nvs %&gt;%\n  distinct(VSTESTCD) %&gt;%\n  print()\n\n# A tibble: 6 × 1\n  VSTESTCD\n  &lt;chr&gt;   \n1 DIABP   \n2 HEIGHT  \n3 PULSE   \n4 SYSBP   \n5 TEMP    \n6 WEIGHT  \n\n# Pivot to wide format\nvs_wide &lt;- vs %&gt;%\n  filter(VISIT == \"BASELINE\") %&gt;%\n  select(USUBJID, VSTESTCD, VSSTRESN) %&gt;%\n  pivot_wider(\n    names_from = VSTESTCD,\n    values_from = VSSTRESN,\n    values_fn = mean  # Handle duplicates\n  )\n\n# Show available columns\ncat(\"Columns after pivot:\", paste(names(vs_wide), collapse = \", \"), \"\\n\\n\")\n\nColumns after pivot: USUBJID, DIABP, PULSE, SYSBP, TEMP, WEIGHT \n\nhead(vs_wide)\n\n# A tibble: 6 × 6\n  USUBJID     DIABP PULSE SYSBP  TEMP WEIGHT\n  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;\n1 01-701-1015  56    58    127.  36.2   54.4\n2 01-701-1023  86    74.7  131.  36.3   80.3\n3 01-701-1028  78.7  63.3  141.  37     99.3\n4 01-701-1033  73.3  60.3  124.  37.1   88.4\n5 01-701-1034  72.3  79.7  169.  36.9   62.6\n6 01-701-1047  69    64    154.  36.4   67.1\n\n\n\n\n4.2 Real Example: Calculate BMI\nNow that we have Height and Weight side-by-side, we can easily calculate BMI.\n\n# Check if HEIGHT and WEIGHT columns exist\nif (all(c(\"HEIGHT\", \"WEIGHT\") %in% names(vs_wide))) {\n  vs_bmi &lt;- vs_wide %&gt;%\n    filter(!is.na(HEIGHT) & !is.na(WEIGHT)) %&gt;%\n    mutate(\n      # BMI = Weight (kg) / Height (m)^2\n      HEIGHT_M = HEIGHT / 100,\n      BMI = round(WEIGHT / (HEIGHT_M^2), 1)\n    ) %&gt;%\n    select(USUBJID, HEIGHT, WEIGHT, BMI)\n  \n  head(vs_bmi)\n  \n  # Summary statistics\n  vs_bmi %&gt;%\n    summarise(\n      N = n(),\n      Mean_BMI = round(mean(BMI), 1),\n      Min_BMI = min(BMI),\n      Max_BMI = max(BMI)\n    )\n} else {\n  # Fallback: Calculate Blood Pressure ratio as alternative example\n  cat(\"Note: HEIGHT/WEIGHT not available at BASELINE. Using BP data instead.\\n\\n\")\n  \n  vs_bp &lt;- vs_wide %&gt;%\n    filter(!is.na(SYSBP) & !is.na(DIABP)) %&gt;%\n    mutate(\n      # Pulse Pressure = Systolic - Diastolic\n      PULSE_PRESSURE = SYSBP - DIABP,\n      # Mean Arterial Pressure ≈ DBP + 1/3(SBP - DBP)\n      MAP = round(DIABP + (PULSE_PRESSURE / 3), 1)\n    ) %&gt;%\n    select(USUBJID, SYSBP, DIABP, PULSE_PRESSURE, MAP)\n  \n  head(vs_bp)\n  \n  # Summary\n  vs_bp %&gt;%\n    summarise(\n      N = n(),\n      Mean_MAP = round(mean(MAP, na.rm = TRUE), 1),\n      Mean_PP = round(mean(PULSE_PRESSURE, na.rm = TRUE), 1)\n    )\n}\n\nNote: HEIGHT/WEIGHT not available at BASELINE. Using BP data instead.\n\n\n# A tibble: 1 × 3\n      N Mean_MAP Mean_PP\n  &lt;int&gt;    &lt;dbl&gt;   &lt;dbl&gt;\n1   253     97.3    60.3\n\n\n\n\n4.3 From Wide to Long: pivot_longer()\nSometimes we need to convert wide data back to long format (often for plotting).\n\nvs_long_again &lt;- vs_wide %&gt;%\n  select(USUBJID, DIABP, SYSBP, PULSE) %&gt;%\n  pivot_longer(\n    cols = c(DIABP, SYSBP, PULSE),\n    names_to = \"VSTESTCD\",\n    values_to = \"VSSTRESN\"\n  ) %&gt;%\n  filter(!is.na(VSSTRESN))\n\nhead(vs_long_again, 10)\n\n# A tibble: 10 × 3\n   USUBJID     VSTESTCD VSSTRESN\n   &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt;\n 1 01-701-1015 DIABP        56  \n 2 01-701-1015 SYSBP       127. \n 3 01-701-1015 PULSE        58  \n 4 01-701-1023 DIABP        86  \n 5 01-701-1023 SYSBP       131. \n 6 01-701-1023 PULSE        74.7\n 7 01-701-1028 DIABP        78.7\n 8 01-701-1028 SYSBP       141. \n 9 01-701-1028 PULSE        63.3\n10 01-701-1033 DIABP        73.3",
+    "crumbs": [
+      "Week 1",
+      "Day 5: Advanced Tidyverse: Pivoting & Joining"
+    ]
+  },
+  {
+    "objectID": "week1/day5.html#part-2-advanced-joins-for-qc",
+    "href": "week1/day5.html#part-2-advanced-joins-for-qc",
+    "title": "Day 5: Advanced Tidyverse: Pivoting & Joining",
+    "section": "5 Part 2: Advanced Joins for QC",
+    "text": "5 Part 2: Advanced Joins for QC\n\n5.1 Using anti_join() for Quality Checks\nanti_join(x, y) returns rows in x that are NOT in y. This is essential for finding missing or orphaned records.\n\n# Subjects in DM (everyone enrolled)\ndm_subjects &lt;- dm %&gt;% distinct(USUBJID)\n\n# Subjects in AE (those with adverse events)\nae_subjects &lt;- ae %&gt;% distinct(USUBJID)\n\n# Find subjects with NO adverse events\nsubjects_no_ae &lt;- dm_subjects %&gt;%\n  anti_join(ae_subjects, by = \"USUBJID\")\n\ncat(\"Total subjects:\", nrow(dm_subjects), \"\\n\")\n\nTotal subjects: 306 \n\ncat(\"Subjects with AEs:\", nrow(ae_subjects), \"\\n\")\n\nSubjects with AEs: 225 \n\ncat(\"Subjects with NO AEs:\", nrow(subjects_no_ae), \"\\n\")\n\nSubjects with NO AEs: 81 \n\n\n\n\n5.2 Finding Screen Failures\nScreen failures are subjects in DM who:\n\nHave disposition (DS) record showing SCREEN FAILURE\nOften have no exposure (EX) records\n\n\n# Subjects with exposure\nex_subjects &lt;- ex %&gt;% distinct(USUBJID)\n\n# Screen failures: in DM but NOT in EX\npotential_screen_fail &lt;- dm_subjects %&gt;%\n  anti_join(ex_subjects, by = \"USUBJID\")\n\ncat(\"Subjects without exposure (potential screen failures):\", nrow(potential_screen_fail), \"\\n\")\n\nSubjects without exposure (potential screen failures): 52 \n\n# Verify against DS\nscreen_fail_ds &lt;- ds %&gt;%\n  filter(grepl(\"SCREEN\", DSDECOD, ignore.case = TRUE)) %&gt;%\n  distinct(USUBJID)\n\ncat(\"Screen failures per DS:\", nrow(screen_fail_ds), \"\\n\")\n\nScreen failures per DS: 52",
+    "crumbs": [
+      "Week 1",
+      "Day 5: Advanced Tidyverse: Pivoting & Joining"
+    ]
+  },
+  {
+    "objectID": "week1/day5.html#part-3-creating-analysis-ready-datasets",
+    "href": "week1/day5.html#part-3-creating-analysis-ready-datasets",
+    "title": "Day 5: Advanced Tidyverse: Pivoting & Joining",
+    "section": "6 Part 3: Creating Analysis-Ready Datasets",
+    "text": "6 Part 3: Creating Analysis-Ready Datasets\nPer the roadmap, we need to create 3 analysis-ready datasets.\n\n6.1 Dataset 1: Wide VS with One Row per Subject/Visit\nThis dataset has vital signs organized as columns, useful for visit-level analysis.\n\n# Dataset 1: Wide VS by Subject and Visit\nanalysis_vs_wide &lt;- vs %&gt;%\n  # Select key columns\n  select(USUBJID, VISIT, VISITNUM, VSTESTCD, VSSTRESN, VSSTRESU) %&gt;%\n  # Keep standard tests\n  filter(VSTESTCD %in% c(\"SYSBP\", \"DIABP\", \"PULSE\", \"HEIGHT\", \"WEIGHT\", \"TEMP\")) %&gt;%\n  # Pivot to wide\n  pivot_wider(\n    id_cols = c(USUBJID, VISIT, VISITNUM),\n    names_from = VSTESTCD,\n    values_from = VSSTRESN,\n    values_fn = mean\n  ) %&gt;%\n  # Sort\n  arrange(USUBJID, VISITNUM)\n\ncat(\"Dataset 1: Wide VS\\n\")\n\nDataset 1: Wide VS\n\ncat(\"Rows:\", nrow(analysis_vs_wide), \"\\n\")\n\nRows: 2741 \n\ncat(\"Columns:\", ncol(analysis_vs_wide), \"\\n\\n\")\n\nColumns: 9 \n\nhead(analysis_vs_wide, 10)\n\n# A tibble: 10 × 9\n   USUBJID     VISIT              VISITNUM DIABP HEIGHT PULSE SYSBP  TEMP WEIGHT\n   &lt;chr&gt;       &lt;chr&gt;                 &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;\n 1 01-701-1015 SCREENING 1             1    68     147.  61.3  136.  36.1   54.0\n 2 01-701-1015 SCREENING 2             2    66      NA   57.7  140   36.1   NA  \n 3 01-701-1015 BASELINE                3    56      NA   58    127.  36.2   54.4\n 4 01-701-1015 AMBUL ECG PLACEME…      3.5  64.3    NA   62.3  137.  35.9   NA  \n 5 01-701-1015 WEEK 2                  4    53.3    NA   60.3  122.  36.5   53.1\n 6 01-701-1015 WEEK 4                  5    57.3    NA   60    136.  36.1   54.0\n 7 01-701-1015 AMBUL ECG REMOVAL       6    62      NA   67    131.  36.4   NA  \n 8 01-701-1015 WEEK 6                  7    59.3    NA   56    141   36.3   53.1\n 9 01-701-1015 WEEK 8                  8    66.7    NA   58    141.  36.7   53.1\n10 01-701-1015 WEEK 12                 9    64      NA   53    141   36.3   53.1\n\n\n\n\n6.2 Dataset 2: DM + AE with Demographic Covariates\nThis dataset merges adverse events with demographic information for safety analysis.\n\n# Dataset 2: AE with demographic covariates\nanalysis_ae_demo &lt;- ae %&gt;%\n  # Select key AE variables\n  select(USUBJID, AESEQ, AETERM, AEDECOD, AEBODSYS, AESEV, AESER, AESTDTC) %&gt;%\n  # Join demographics\n  inner_join(\n    dm %&gt;% select(USUBJID, AGE, AGEU, SEX, RACE, ARM, ACTARM, RFSTDTC),\n    by = \"USUBJID\"\n  ) %&gt;%\n  # Add derived columns\n  mutate(\n    # Age group\n    AGEGR1 = case_when(\n      AGE &lt; 40 ~ \"&lt;40\",\n      AGE &gt;= 40 & AGE &lt; 65 ~ \"40-64\",\n      AGE &gt;= 65 ~ \"&gt;=65\"\n    ),\n    # Serious flag as factor\n    AESER_F = factor(AESER, levels = c(\"N\", \"Y\"), labels = c(\"Non-Serious\", \"Serious\"))\n  )\n\ncat(\"Dataset 2: AE with Demographics\\n\")\n\nDataset 2: AE with Demographics\n\ncat(\"Rows:\", nrow(analysis_ae_demo), \"\\n\")\n\nRows: 1191 \n\ncat(\"Columns:\", ncol(analysis_ae_demo), \"\\n\\n\")\n\nColumns: 17 \n\n# Summary by age group and treatment\nanalysis_ae_demo %&gt;%\n  group_by(ARM, AGEGR1) %&gt;%\n  summarise(\n    N_Events = n(),\n    N_Subjects = n_distinct(USUBJID),\n    .groups = \"drop\"\n  ) %&gt;%\n  arrange(ARM, AGEGR1)\n\n# A tibble: 6 × 4\n  ARM                  AGEGR1 N_Events N_Subjects\n  &lt;chr&gt;                &lt;chr&gt;     &lt;int&gt;      &lt;int&gt;\n1 Placebo              40-64        64         11\n2 Placebo              &gt;=65        237         58\n3 Xanomeline High Dose 40-64        91         10\n4 Xanomeline High Dose &gt;=65        364         69\n5 Xanomeline Low Dose  40-64        20          8\n6 Xanomeline Low Dose  &gt;=65        415         69\n\n\n\n\n6.3 Dataset 3: Screen Failure Report using Anti-Join\nThis dataset identifies subjects who were screened but never received treatment.\n\n# Dataset 3: Screen Failure Report\nscreen_failure_report &lt;- dm %&gt;%\n  # Get basic demographics\n  select(USUBJID, SITEID, AGE, SEX, RACE, RFSTDTC, ARM) %&gt;%\n  # Anti-join: subjects NOT in EX\n  anti_join(\n    ex %&gt;% distinct(USUBJID),\n    by = \"USUBJID\"\n  ) %&gt;%\n  # Add disposition reason if available\n  left_join(\n    ds %&gt;%\n      filter(DSCAT == \"DISPOSITION EVENT\") %&gt;%\n      select(USUBJID, DSDECOD, DSTERM),\n    by = \"USUBJID\"\n  ) %&gt;%\n  # Sort by site\n  arrange(SITEID, USUBJID)\n\ncat(\"Dataset 3: Screen Failure Report\\n\")\n\nDataset 3: Screen Failure Report\n\ncat(\"Rows (Screen Failures):\", nrow(screen_failure_report), \"\\n\\n\")\n\nRows (Screen Failures): 52 \n\n# Summary by site\nscreen_failure_report %&gt;%\n  group_by(SITEID) %&gt;%\n  summarise(\n    N = n(),\n    Reasons = paste(unique(na.omit(DSDECOD)), collapse = \", \")\n  ) %&gt;%\n  head(10)\n\n# A tibble: 10 × 3\n   SITEID     N Reasons       \n   &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;         \n 1 701       10 SCREEN FAILURE\n 2 703        1 SCREEN FAILURE\n 3 705        5 SCREEN FAILURE\n 4 707        3 SCREEN FAILURE\n 5 708        7 SCREEN FAILURE\n 6 709        2 SCREEN FAILURE\n 7 710        7 SCREEN FAILURE\n 8 711        8 SCREEN FAILURE\n 9 715        4 SCREEN FAILURE\n10 716        5 SCREEN FAILURE",
+    "crumbs": [
+      "Week 1",
+      "Day 5: Advanced Tidyverse: Pivoting & Joining"
+    ]
+  },
+  {
+    "objectID": "week1/day5.html#part-4-multi-domain-analysis",
+    "href": "week1/day5.html#part-4-multi-domain-analysis",
+    "title": "Day 5: Advanced Tidyverse: Pivoting & Joining",
+    "section": "7 Part 4: Multi-Domain Analysis",
+    "text": "7 Part 4: Multi-Domain Analysis\nLet’s combine data from multiple domains to answer a clinical question:\nQuestion: For subjects with Serious Adverse Events, what was their total drug exposure?\n\n# Subjects with Serious AEs\nsae_subjects &lt;- ae %&gt;%\n  filter(AESER == \"Y\") %&gt;%\n  distinct(USUBJID, .keep_all = TRUE) %&gt;%\n  select(USUBJID, AEDECOD)\n\n# Add demographics\nsae_analysis &lt;- sae_subjects %&gt;%\n  inner_join(\n    dm %&gt;% select(USUBJID, AGE, SEX, ARM),\n    by = \"USUBJID\"\n  ) %&gt;%\n  # Add exposure summary\n  left_join(\n    ex %&gt;%\n      group_by(USUBJID) %&gt;%\n      summarise(\n        TOTAL_DOSE = sum(EXDOSE, na.rm = TRUE),\n        N_DOSES = n(),\n        FIRST_DOSE = min(EXSTDTC),\n        LAST_DOSE = max(EXENDTC),\n        .groups = \"drop\"\n      ),\n    by = \"USUBJID\"\n  )\n\ncat(\"Serious AE Analysis Dataset\\n\")\n\nSerious AE Analysis Dataset\n\ncat(\"Subjects with SAEs:\", nrow(sae_analysis), \"\\n\\n\")\n\nSubjects with SAEs: 3 \n\n# Display\nsae_analysis %&gt;%\n  select(USUBJID, AEDECOD, ARM, TOTAL_DOSE, N_DOSES) %&gt;%\n  head(10)\n\n# A tibble: 3 × 5\n  USUBJID     AEDECOD                                   ARM   TOTAL_DOSE N_DOSES\n  &lt;chr&gt;       &lt;chr&gt;                                     &lt;chr&gt;      &lt;dbl&gt;   &lt;int&gt;\n1 01-709-1424 SYNCOPE                                   Xano…         54       1\n2 01-718-1170 SYNCOPE                                   Xano…        108       2\n3 01-718-1371 PARTIAL SEIZURES WITH SECONDARY GENERALI… Xano…        135       2",
+    "crumbs": [
+      "Week 1",
+      "Day 5: Advanced Tidyverse: Pivoting & Joining"
+    ]
+  },
+  {
+    "objectID": "week1/day5.html#practice-exercise",
+    "href": "week1/day5.html#practice-exercise",
+    "title": "Day 5: Advanced Tidyverse: Pivoting & Joining",
+    "section": "8 🎯 Practice Exercise",
+    "text": "8 🎯 Practice Exercise\n\n8.1 Your Turn: Create a Lab Analysis Dataset\nCreate a wide dataset from LB (Laboratory) data with:\n\nOne row per subject and visit\nColumns for ALT, AST, BILI (Liver Function Tests)\nJoined with DM for treatment arm\n\n\ndata(\"lb\", package = \"pharmaversesdtm\")\n\n# TODO: Complete the following\nlb_wide &lt;- lb %&gt;%\n  # Step 1: Filter for liver function tests\n  filter(LBTESTCD %in% c(\"ALT\", \"AST\", \"BILI\")) %&gt;%\n  # Step 2: Select key columns\n  select(USUBJID, VISIT, VISITNUM, LBTESTCD, LBSTRESN) %&gt;%\n  # Step 3: Pivot wider\n  pivot_wider(\n    # Fill in parameters...\n  ) %&gt;%\n  # Step 4: Join with DM to get ARM\n  inner_join(\n    # Fill in...\n  )\n\n# Check your results\nhead(lb_wide)",
+    "crumbs": [
+      "Week 1",
+      "Day 5: Advanced Tidyverse: Pivoting & Joining"
+    ]
+  },
+  {
+    "objectID": "week1/day5.html#deliverable-summary",
+    "href": "week1/day5.html#deliverable-summary",
+    "title": "Day 5: Advanced Tidyverse: Pivoting & Joining",
+    "section": "9 Deliverable Summary",
+    "text": "9 Deliverable Summary\nToday you completed the following:\n\n\n\nTask\nStatus\n\n\n\n\nPivoted VS from long to wide format\n✓ Done\n\n\nCalculated BMI using pivoted data\n✓ Done\n\n\nDataset 1: Wide VS per Subject/Visit\n✓ Done\n\n\nDataset 2: DM + AE with covariates\n✓ Done\n\n\nDataset 3: Screen Failure Report\n✓ Done\n\n\nMulti-domain SAE analysis\n✓ Done",
+    "crumbs": [
+      "Week 1",
+      "Day 5: Advanced Tidyverse: Pivoting & Joining"
+    ]
+  },
+  {
+    "objectID": "week1/day5.html#key-takeaways",
+    "href": "week1/day5.html#key-takeaways",
+    "title": "Day 5: Advanced Tidyverse: Pivoting & Joining",
+    "section": "10 Key Takeaways",
+    "text": "10 Key Takeaways\n\nPivot Wider: Use when you need variables side-by-side for calculations.\nPivot Longer: Use when you need to group by a variable for plotting.\nAnti-joins: Essential for finding missing, orphaned, or excluded records.\nMulti-domain Analysis: Real analysis requires combining multiple SDTM domains.",
+    "crumbs": [
+      "Week 1",
+      "Day 5: Advanced Tidyverse: Pivoting & Joining"
+    ]
+  },
+  {
+    "objectID": "week1/day5.html#resources",
+    "href": "week1/day5.html#resources",
+    "title": "Day 5: Advanced Tidyverse: Pivoting & Joining",
+    "section": "11 Resources",
+    "text": "11 Resources\n\ntidyr pivot vignette\ndplyr two-table verbs\npharmaverse examples site",
+    "crumbs": [
+      "Week 1",
+      "Day 5: Advanced Tidyverse: Pivoting & Joining"
+    ]
+  },
+  {
+    "objectID": "week1/day5.html#whats-next",
+    "href": "week1/day5.html#whats-next",
+    "title": "Day 5: Advanced Tidyverse: Pivoting & Joining",
+    "section": "12 What’s Next?",
+    "text": "12 What’s Next?\nIn Day 6, we will introduce sdtm.oak concepts for transforming raw data to SDTM, including:\n\nSimulating raw EDC data\nAlgorithm-based transformations\nCreating a complete SDTM LB domain with unit standardization",
+    "crumbs": [
+      "Week 1",
+      "Day 5: Advanced Tidyverse: Pivoting & Joining"
+    ]
+  },
+  {
+    "objectID": "week1/day3.html",
+    "href": "week1/day3.html",
+    "title": "Day 3: Controlled Terminology & MedDRA Coding",
+    "section": "",
+    "text": "← Back to Roadmap",
+    "crumbs": [
+      "Week 1",
+      "Day 3: Controlled Terminology & MedDRA Coding"
+    ]
+  },
+  {
+    "objectID": "week1/day3.html#learning-objectives",
+    "href": "week1/day3.html#learning-objectives",
+    "title": "Day 3: Controlled Terminology & MedDRA Coding",
+    "section": "1 Learning Objectives",
+    "text": "1 Learning Objectives\nBy the end of Day 3, you will be able to:\n\nUnderstand the importance of Controlled Terminology (CT) in regulatory submissions\nCreate lookup tables (codelists) in R for standardized coding\nPerform MedDRA coding operations (mapping Preferred Terms to System Organ Classes)\nUse left_join() effectively to apply standardized codes to clinical data\nValidate that all terms have been correctly coded",
+    "crumbs": [
+      "Week 1",
+      "Day 3: Controlled Terminology & MedDRA Coding"
+    ]
+  },
+  {
+    "objectID": "week1/day3.html#introduction",
+    "href": "week1/day3.html#introduction",
+    "title": "Day 3: Controlled Terminology & MedDRA Coding",
+    "section": "2 Introduction",
+    "text": "2 Introduction\n\n2.1 Why Controlled Terminology Matters\nIn clinical trials, consistency is key. Regulatory agencies like the FDA need data to be standardized so they can analyze it across different studies. Controlled Terminology (CT) ensures that everyone uses the same words to describe the same things.\nFor example, without CT, severity might be recorded as:\n\n“Mild”, “Mod”, “Severe”\n“1”, “2”, “3”\n“Light”, “Moderate”, “Heavy”\n\nWith CDISC CT, we must use: “MILD”, “MODERATE”, “SEVERE”.\n\n\n2.2 The Role of MedDRA\nMedDRA (Medical Dictionary for Regulatory Activities) is the standard for coding medical terms. It organizes adverse events into a hierarchy:\n┌─────────────────────────────────────────────────────────────────┐\n│  SOC  │ System Organ Class (e.g., \"Gastrointestinal disorders\") │\n├───────┴─────────────────────────────────────────────────────────┤\n│  HLGT │ High Level Group Term                                   │\n├─────────────────────────────────────────────────────────────────┤\n│  HLT  │ High Level Term                                         │\n├─────────────────────────────────────────────────────────────────┤\n│  PT   │ Preferred Term (e.g., \"Nausea\") → Used in AEDECOD       │\n├─────────────────────────────────────────────────────────────────┤\n│  LLT  │ Lowest Level Term (e.g., \"Feeling queasy\")              │\n└─────────────────────────────────────────────────────────────────┘\nIn SDTM:\n\nAEDECOD = Preferred Term (PT)\nAEBODSYS = System Organ Class (SOC)",
+    "crumbs": [
+      "Week 1",
+      "Day 3: Controlled Terminology & MedDRA Coding"
+    ]
+  },
+  {
+    "objectID": "week1/day3.html#package-installation-loading",
+    "href": "week1/day3.html#package-installation-loading",
+    "title": "Day 3: Controlled Terminology & MedDRA Coding",
+    "section": "3 Package Installation & Loading",
+    "text": "3 Package Installation & Loading\n\n3.1 Required Packages\n\n\n\nPackage\nPurpose\n\n\n\n\ndplyr\nData manipulation (joins, mutations)\n\n\npharmaversesdtm\nSource of AE data\n\n\n\n\n\n3.2 Load Packages\n\nlibrary(dplyr)\nlibrary(pharmaversesdtm)\n\n\n\n3.3 Load AE Data\n\ndata(\"ae\", package = \"pharmaversesdtm\")\n\n# Preview the variables involved in coding\nae %&gt;%\n  select(USUBJID, AETERM, AEDECOD, AEBODSYS) %&gt;%\n  head()\n\n# A tibble: 6 × 4\n  USUBJID     AETERM                               AEDECOD              AEBODSYS\n  &lt;chr&gt;       &lt;chr&gt;                                &lt;chr&gt;                &lt;chr&gt;   \n1 01-701-1015 APPLICATION SITE ERYTHEMA            APPLICATION SITE ER… GENERAL…\n2 01-701-1015 APPLICATION SITE PRURITUS            APPLICATION SITE PR… GENERAL…\n3 01-701-1015 DIARRHOEA                            DIARRHOEA            GASTROI…\n4 01-701-1023 ATRIOVENTRICULAR BLOCK SECOND DEGREE ATRIOVENTRICULAR BL… CARDIAC…\n5 01-701-1023 ERYTHEMA                             ERYTHEMA             SKIN AN…\n6 01-701-1023 ERYTHEMA                             ERYTHEMA             SKIN AN…",
+    "crumbs": [
+      "Week 1",
+      "Day 3: Controlled Terminology & MedDRA Coding"
+    ]
+  },
+  {
+    "objectID": "week1/day3.html#part-1-building-a-complete-meddra-lookup-table",
+    "href": "week1/day3.html#part-1-building-a-complete-meddra-lookup-table",
+    "title": "Day 3: Controlled Terminology & MedDRA Coding",
+    "section": "4 Part 1: Building a Complete MedDRA Lookup Table",
+    "text": "4 Part 1: Building a Complete MedDRA Lookup Table\nIn a real environment, you would have access to the full MedDRA dictionary files. For this exercise, we will create a complete lookup table covering all terms in our dataset.\n\n4.1 Step 1: Identify All Unique Preferred Terms\nFirst, let’s see all unique Preferred Terms (AEDECOD) and their corresponding SOCs in our dataset.\n\n# Get all unique PT-SOC combinations from the source data\nunique_terms &lt;- ae %&gt;%\n  distinct(AEDECOD, AEBODSYS) %&gt;%\n  arrange(AEBODSYS, AEDECOD)\n\ncat(\"Total unique Preferred Terms:\", nrow(unique_terms), \"\\n\\n\")\n\nTotal unique Preferred Terms: 242 \n\nprint(unique_terms)\n\n# A tibble: 242 × 2\n   AEDECOD                              AEBODSYS         \n   &lt;chr&gt;                                &lt;chr&gt;            \n 1 ATRIAL FIBRILLATION                  CARDIAC DISORDERS\n 2 ATRIAL FLUTTER                       CARDIAC DISORDERS\n 3 ATRIAL HYPERTROPHY                   CARDIAC DISORDERS\n 4 ATRIOVENTRICULAR BLOCK FIRST DEGREE  CARDIAC DISORDERS\n 5 ATRIOVENTRICULAR BLOCK SECOND DEGREE CARDIAC DISORDERS\n 6 BRADYCARDIA                          CARDIAC DISORDERS\n 7 BUNDLE BRANCH BLOCK LEFT             CARDIAC DISORDERS\n 8 BUNDLE BRANCH BLOCK RIGHT            CARDIAC DISORDERS\n 9 CARDIAC DISORDER                     CARDIAC DISORDERS\n10 CARDIAC FAILURE CONGESTIVE           CARDIAC DISORDERS\n# ℹ 232 more rows\n\n\n\n\n4.2 Step 2: Create the Complete Lookup Table\nNow we create a comprehensive lookup table that maps all Preferred Terms to their SOCs. This is the dictionary we would use in production.\n\n# Create a complete MedDRA-style lookup table\n# In production, this comes from official MedDRA files\nmeddra_lookup &lt;- tribble(\n  ~AEDECOD,                            ~SOC_CODED,\n  # CARDIAC DISORDERS\n  \"ATRIAL FIBRILLATION\",               \"CARDIAC DISORDERS\",\n  \"ATRIAL FLUTTER\",                    \"CARDIAC DISORDERS\",\n  \"BUNDLE BRANCH BLOCK LEFT\",          \"CARDIAC DISORDERS\",\n  \"BUNDLE BRANCH BLOCK RIGHT\",         \"CARDIAC DISORDERS\",\n  \"MYOCARDIAL INFARCTION\",             \"CARDIAC DISORDERS\",\n  \"SINUS BRADYCARDIA\",                 \"CARDIAC DISORDERS\",\n  \"SINUS TACHYCARDIA\",                 \"CARDIAC DISORDERS\",\n  \n  # GASTROINTESTINAL DISORDERS\n  \"ABDOMINAL DISCOMFORT\",              \"GASTROINTESTINAL DISORDERS\",\n  \"ABDOMINAL PAIN\",                    \"GASTROINTESTINAL DISORDERS\",\n  \"CONSTIPATION\",                      \"GASTROINTESTINAL DISORDERS\",\n  \"DIARRHOEA\",                         \"GASTROINTESTINAL DISORDERS\",\n  \"DYSPEPSIA\",                         \"GASTROINTESTINAL DISORDERS\",\n  \"FLATULENCE\",                        \"GASTROINTESTINAL DISORDERS\",\n  \"NAUSEA\",                            \"GASTROINTESTINAL DISORDERS\",\n  \"VOMITING\",                          \"GASTROINTESTINAL DISORDERS\",\n  \n  # GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS\n  \"APPLICATION SITE DERMATITIS\",       \"GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS\",\n  \"APPLICATION SITE ERYTHEMA\",         \"GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS\",\n  \"APPLICATION SITE IRRITATION\",       \"GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS\",\n  \"APPLICATION SITE PRURITUS\",         \"GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS\",\n  \"FATIGUE\",                           \"GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS\",\n  \"OEDEMA PERIPHERAL\",                 \"GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS\",\n  \"PYREXIA\",                           \"GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS\",\n  \n  # INFECTIONS AND INFESTATIONS\n  \"BRONCHITIS\",                        \"INFECTIONS AND INFESTATIONS\",\n  \"GASTROENTERITIS\",                   \"INFECTIONS AND INFESTATIONS\",\n  \"NASOPHARYNGITIS\",                   \"INFECTIONS AND INFESTATIONS\",\n  \"UPPER RESPIRATORY TRACT INFECTION\", \"INFECTIONS AND INFESTATIONS\",\n  \"URINARY TRACT INFECTION\",           \"INFECTIONS AND INFESTATIONS\",\n  \n  # METABOLISM AND NUTRITION DISORDERS\n  \"DECREASED APPETITE\",                \"METABOLISM AND NUTRITION DISORDERS\",\n  \"HYPERCHOLESTEROLAEMIA\",             \"METABOLISM AND NUTRITION DISORDERS\",\n  \"HYPERGLYCAEMIA\",                    \"METABOLISM AND NUTRITION DISORDERS\",\n  \"HYPOGLYCAEMIA\",                     \"METABOLISM AND NUTRITION DISORDERS\",\n  \n  # MUSCULOSKELETAL AND CONNECTIVE TISSUE DISORDERS\n  \"ARTHRALGIA\",                        \"MUSCULOSKELETAL AND CONNECTIVE TISSUE DISORDERS\",\n  \"BACK PAIN\",                         \"MUSCULOSKELETAL AND CONNECTIVE TISSUE DISORDERS\",\n  \"MUSCLE SPASMS\",                     \"MUSCULOSKELETAL AND CONNECTIVE TISSUE DISORDERS\",\n  \"MYALGIA\",                           \"MUSCULOSKELETAL AND CONNECTIVE TISSUE DISORDERS\",\n  \"PAIN IN EXTREMITY\",                 \"MUSCULOSKELETAL AND CONNECTIVE TISSUE DISORDERS\",\n  \n  # NERVOUS SYSTEM DISORDERS\n  \"DIZZINESS\",                         \"NERVOUS SYSTEM DISORDERS\",\n  \"HEADACHE\",                          \"NERVOUS SYSTEM DISORDERS\",\n  \"LETHARGY\",                          \"NERVOUS SYSTEM DISORDERS\",\n  \"MIGRAINE\",                          \"NERVOUS SYSTEM DISORDERS\",\n  \"PARAESTHESIA\",                      \"NERVOUS SYSTEM DISORDERS\",\n  \"SYNCOPE\",                           \"NERVOUS SYSTEM DISORDERS\",\n  \"TREMOR\",                            \"NERVOUS SYSTEM DISORDERS\",\n  \n  # PSYCHIATRIC DISORDERS\n  \"ANXIETY\",                           \"PSYCHIATRIC DISORDERS\",\n  \"DEPRESSION\",                        \"PSYCHIATRIC DISORDERS\",\n  \"INSOMNIA\",                          \"PSYCHIATRIC DISORDERS\",\n  \n  # RESPIRATORY, THORACIC AND MEDIASTINAL DISORDERS\n  \"COUGH\",                             \"RESPIRATORY, THORACIC AND MEDIASTINAL DISORDERS\",\n  \"DYSPNOEA\",                          \"RESPIRATORY, THORACIC AND MEDIASTINAL DISORDERS\",\n  \"NASAL CONGESTION\",                  \"RESPIRATORY, THORACIC AND MEDIASTINAL DISORDERS\",\n  \"OROPHARYNGEAL PAIN\",                \"RESPIRATORY, THORACIC AND MEDIASTINAL DISORDERS\",\n  \n  # SKIN AND SUBCUTANEOUS TISSUE DISORDERS\n  \"DERMATITIS CONTACT\",                \"SKIN AND SUBCUTANEOUS TISSUE DISORDERS\",\n  \"ERYTHEMA\",                          \"SKIN AND SUBCUTANEOUS TISSUE DISORDERS\",\n  \"HYPERHIDROSIS\",                     \"SKIN AND SUBCUTANEOUS TISSUE DISORDERS\",\n  \"PRURITUS\",                          \"SKIN AND SUBCUTANEOUS TISSUE DISORDERS\",\n  \"RASH\",                              \"SKIN AND SUBCUTANEOUS TISSUE DISORDERS\",\n  \"URTICARIA\",                         \"SKIN AND SUBCUTANEOUS TISSUE DISORDERS\",\n  \n  # VASCULAR DISORDERS\n  \"HYPERTENSION\",                      \"VASCULAR DISORDERS\",\n  \"HYPOTENSION\",                       \"VASCULAR DISORDERS\",\n  \"HOT FLUSH\",                         \"VASCULAR DISORDERS\"\n)\n\ncat(\"Lookup table contains\", nrow(meddra_lookup), \"term mappings\\n\")\n\nLookup table contains 59 term mappings",
+    "crumbs": [
+      "Week 1",
+      "Day 3: Controlled Terminology & MedDRA Coding"
+    ]
+  },
+  {
+    "objectID": "week1/day3.html#part-2-applying-codes-with-joins",
+    "href": "week1/day3.html#part-2-applying-codes-with-joins",
+    "title": "Day 3: Controlled Terminology & MedDRA Coding",
+    "section": "5 Part 2: Applying Codes with Joins",
+    "text": "5 Part 2: Applying Codes with Joins\nNow, we will simulate a scenario where we have the terms but missing the Body System (SOC). We will use our lookup table to fill it in.\n\n5.1 Step 3: Simulate Uncoded Data\nLet’s create a dataset that has AEDECOD but is missing AEBODSYS.\n\n# Create uncoded dataset by dropping AEBODSYS\nae_uncoded &lt;- ae %&gt;%\n  select(USUBJID, AESEQ, AETERM, AEDECOD, AESEV, AEREL, AESER)\n\ncat(\"Uncoded dataset:\", nrow(ae_uncoded), \"records\\n\")\n\nUncoded dataset: 1191 records\n\nhead(ae_uncoded)\n\n# A tibble: 6 × 7\n  USUBJID     AESEQ AETERM                             AEDECOD AESEV AEREL AESER\n  &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;                              &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;\n1 01-701-1015     1 APPLICATION SITE ERYTHEMA          APPLIC… MILD  PROB… N    \n2 01-701-1015     2 APPLICATION SITE PRURITUS          APPLIC… MILD  PROB… N    \n3 01-701-1015     3 DIARRHOEA                          DIARRH… MILD  REMO… N    \n4 01-701-1023     3 ATRIOVENTRICULAR BLOCK SECOND DEG… ATRIOV… MILD  POSS… N    \n5 01-701-1023     1 ERYTHEMA                           ERYTHE… MILD  POSS… N    \n6 01-701-1023     2 ERYTHEMA                           ERYTHE… MODE… PROB… N    \n\n\n\n\n5.2 Step 4: Apply Coding via Left Join\nWe use left_join() to attach the SOC information from our lookup table to the clinical data based on the matching Preferred Term (AEDECOD).\n\n# Join the lookup table to the data\nae_coded &lt;- ae_uncoded %&gt;%\n  left_join(meddra_lookup, by = \"AEDECOD\")\n\n# Check the results\nae_coded %&gt;%\n  select(USUBJID, AEDECOD, SOC_CODED) %&gt;%\n  head(10)\n\n# A tibble: 10 × 3\n   USUBJID     AEDECOD                              SOC_CODED                   \n   &lt;chr&gt;       &lt;chr&gt;                                &lt;chr&gt;                       \n 1 01-701-1015 APPLICATION SITE ERYTHEMA            GENERAL DISORDERS AND ADMIN…\n 2 01-701-1015 APPLICATION SITE PRURITUS            GENERAL DISORDERS AND ADMIN…\n 3 01-701-1015 DIARRHOEA                            GASTROINTESTINAL DISORDERS  \n 4 01-701-1023 ATRIOVENTRICULAR BLOCK SECOND DEGREE &lt;NA&gt;                        \n 5 01-701-1023 ERYTHEMA                             SKIN AND SUBCUTANEOUS TISSU…\n 6 01-701-1023 ERYTHEMA                             SKIN AND SUBCUTANEOUS TISSU…\n 7 01-701-1023 ERYTHEMA                             SKIN AND SUBCUTANEOUS TISSU…\n 8 01-701-1028 APPLICATION SITE ERYTHEMA            GENERAL DISORDERS AND ADMIN…\n 9 01-701-1028 APPLICATION SITE PRURITUS            GENERAL DISORDERS AND ADMIN…\n10 01-701-1034 APPLICATION SITE PRURITUS            GENERAL DISORDERS AND ADMIN…\n\n\n\n\n\n\n\n\nImportantWhy Left Join?\n\n\n\nWe use left_join because we want to keep all rows from our clinical data (ae_uncoded), even if a matching code isn’t found in the dictionary. If we used inner_join, we would lose data for any term not in our lookup table!",
+    "crumbs": [
+      "Week 1",
+      "Day 3: Controlled Terminology & MedDRA Coding"
+    ]
+  },
+  {
+    "objectID": "week1/day3.html#part-3-validating-the-coding",
+    "href": "week1/day3.html#part-3-validating-the-coding",
+    "title": "Day 3: Controlled Terminology & MedDRA Coding",
+    "section": "6 Part 3: Validating the Coding",
+    "text": "6 Part 3: Validating the Coding\nAfter applying codes, it is critical to verify that:\n\nEvery term got a code (no NA values in the new column).\nThe coding is accurate.\n\n\n6.1 Step 5: Generate Validation Report\nLet’s create a comprehensive validation report.\n\n# Count coded vs uncoded\nvalidation_summary &lt;- ae_coded %&gt;%\n  summarise(\n    Total_Records = n(),\n    Coded = sum(!is.na(SOC_CODED)),\n    Uncoded = sum(is.na(SOC_CODED)),\n    Pct_Coded = round(100 * Coded / Total_Records, 1)\n  )\n\nprint(validation_summary)\n\n# A tibble: 1 × 4\n  Total_Records Coded Uncoded Pct_Coded\n          &lt;int&gt; &lt;int&gt;   &lt;int&gt;     &lt;dbl&gt;\n1          1191   753     438      63.2\n\n\n\n# Identify which terms are still uncoded\nuncoded_terms &lt;- ae_coded %&gt;%\n  filter(is.na(SOC_CODED)) %&gt;%\n  distinct(AEDECOD) %&gt;%\n  arrange(AEDECOD)\n\nif (nrow(uncoded_terms) &gt; 0) {\n  cat(\"⚠️ WARNING: The following\", nrow(uncoded_terms), \"terms need to be added to the lookup table:\\n\\n\")\n  print(uncoded_terms)\n} else {\n  cat(\"✅ SUCCESS: All terms were successfully coded!\\n\")\n}\n\n⚠️ WARNING: The following 191 terms need to be added to the lookup table:\n\n# A tibble: 191 × 1\n   AEDECOD                        \n   &lt;chr&gt;                          \n 1 ACROCHORDON EXCISION           \n 2 ACTINIC KERATOSIS              \n 3 AGITATION                      \n 4 ALCOHOL USE                    \n 5 ALLERGIC GRANULOMATOUS ANGIITIS\n 6 ALOPECIA                       \n 7 AMNESIA                        \n 8 APPLICATION SITE BLEEDING      \n 9 APPLICATION SITE DESQUAMATION  \n10 APPLICATION SITE DISCHARGE     \n# ℹ 181 more rows\n\n\n\n\n6.2 Step 6: Compare Against Original\nLet’s verify our coding matches the original data.\n\n# Join original SOC for comparison\ncoding_check &lt;- ae %&gt;%\n  select(USUBJID, AESEQ, AEDECOD, AEBODSYS_ORIG = AEBODSYS) %&gt;%\n  inner_join(\n    ae_coded %&gt;% select(USUBJID, AESEQ, SOC_CODED),\n    by = c(\"USUBJID\", \"AESEQ\")\n  ) %&gt;%\n  mutate(\n    Match = AEBODSYS_ORIG == SOC_CODED\n  )\n\n# Summary\ncat(\"Coding accuracy check:\\n\")\n\nCoding accuracy check:\n\ncat(\"Matching:\", sum(coding_check$Match, na.rm = TRUE), \"\\n\")\n\nMatching: 753 \n\ncat(\"Mismatched:\", sum(!coding_check$Match, na.rm = TRUE), \"\\n\")\n\nMismatched: 0",
+    "crumbs": [
+      "Week 1",
+      "Day 3: Controlled Terminology & MedDRA Coding"
+    ]
+  },
+  {
+    "objectID": "week1/day3.html#part-4-other-cdisc-controlled-terminology",
+    "href": "week1/day3.html#part-4-other-cdisc-controlled-terminology",
+    "title": "Day 3: Controlled Terminology & MedDRA Coding",
+    "section": "7 Part 4: Other CDISC Controlled Terminology",
+    "text": "7 Part 4: Other CDISC Controlled Terminology\nBeyond MedDRA, we must ensure other variables match CDISC standards.\n\n7.1 Severity (AESEV)\nValid CDISC CT values: “MILD”, “MODERATE”, “SEVERE”\n\n# Check for non-standard values\nae %&gt;%\n  count(AESEV, name = \"Count\") %&gt;%\n  mutate(\n    Is_Standard = AESEV %in% c(\"MILD\", \"MODERATE\", \"SEVERE\"),\n    Status = ifelse(Is_Standard, \"✓ Valid\", \"✗ Invalid\")\n  )\n\n# A tibble: 3 × 4\n  AESEV    Count Is_Standard Status \n  &lt;chr&gt;    &lt;int&gt; &lt;lgl&gt;       &lt;chr&gt;  \n1 MILD       770 TRUE        ✓ Valid\n2 MODERATE   378 TRUE        ✓ Valid\n3 SEVERE      43 TRUE        ✓ Valid\n\n\n\n\n7.2 Seriousness (AESER)\nValid CDISC CT values: “Y”, “N”\n\nae %&gt;%\n  count(AESER, name = \"Count\") %&gt;%\n  mutate(\n    Is_Standard = AESER %in% c(\"Y\", \"N\"),\n    Status = ifelse(Is_Standard, \"✓ Valid\", \"✗ Invalid\")\n  )\n\n# A tibble: 2 × 4\n  AESER Count Is_Standard Status \n  &lt;chr&gt; &lt;int&gt; &lt;lgl&gt;       &lt;chr&gt;  \n1 N      1188 TRUE        ✓ Valid\n2 Y         3 TRUE        ✓ Valid\n\n\n\n\n7.3 Causality (AEREL)\nCausality can vary by study, but common values include:\n\nae %&gt;%\n  count(AEREL, name = \"Count\") %&gt;%\n  arrange(desc(Count))\n\n# A tibble: 5 × 2\n  AEREL    Count\n  &lt;chr&gt;    &lt;int&gt;\n1 PROBABLE   361\n2 POSSIBLE   343\n3 NONE       322\n4 REMOTE     161\n5 &lt;NA&gt;         4",
+    "crumbs": [
+      "Week 1",
+      "Day 3: Controlled Terminology & MedDRA Coding"
+    ]
+  },
+  {
+    "objectID": "week1/day3.html#practice-exercise",
+    "href": "week1/day3.html#practice-exercise",
+    "title": "Day 3: Controlled Terminology & MedDRA Coding",
+    "section": "8 🎯 Practice Exercise",
+    "text": "8 🎯 Practice Exercise\n\n8.1 Your Turn: Complete the Missing Mappings\nIf the validation above showed uncoded terms, add them to the lookup table below and re-run the validation.\n\n# TODO: Add any missing terms from the validation report\nadditional_terms &lt;- tribble(\n  ~AEDECOD,         ~SOC_CODED,\n  # Add your mappings here:\n  # \"TERM_NAME\",    \"SYSTEM ORGAN CLASS\",\n)\n\n# Combine with original lookup\ncomplete_lookup &lt;- bind_rows(meddra_lookup, additional_terms)\n\n# Re-apply coding\nae_recoded &lt;- ae_uncoded %&gt;%\n  left_join(complete_lookup, by = \"AEDECOD\")\n\n# Check for remaining uncoded\nae_recoded %&gt;%\n  filter(is.na(SOC_CODED)) %&gt;%\n  distinct(AEDECOD)",
+    "crumbs": [
+      "Week 1",
+      "Day 3: Controlled Terminology & MedDRA Coding"
+    ]
+  },
+  {
+    "objectID": "week1/day3.html#deliverable-summary",
+    "href": "week1/day3.html#deliverable-summary",
+    "title": "Day 3: Controlled Terminology & MedDRA Coding",
+    "section": "9 Deliverable Summary",
+    "text": "9 Deliverable Summary\nToday you completed the following:\n\n\n\nTask\nStatus\n\n\n\n\nCreated MedDRA lookup table with 50+ terms\n✓ Done\n\n\nApplied coding using left_join()\n✓ Done\n\n\nGenerated validation report (coded vs uncoded)\n✓ Done\n\n\nVerified coding accuracy against source\n✓ Done\n\n\nChecked CDISC CT for AESEV, AESER, AEREL\n✓ Done",
+    "crumbs": [
+      "Week 1",
+      "Day 3: Controlled Terminology & MedDRA Coding"
+    ]
+  },
+  {
+    "objectID": "week1/day3.html#key-takeaways",
+    "href": "week1/day3.html#key-takeaways",
+    "title": "Day 3: Controlled Terminology & MedDRA Coding",
+    "section": "10 Key Takeaways",
+    "text": "10 Key Takeaways\n\nConsistency is Mandatory: Regulatory submissions require strict adherence to Controlled Terminology (CT).\nMedDRA Hierarchy: PT (Preferred Term) → SOC (System Organ Class) is the key mapping for AE data.\nJoins for Coding: left_join() is the primary tool for applying codes from a dictionary to a dataset.\nValidation is Critical: Always check for NA values after a join to identify terms that didn’t match.\nDocument Everything: Keep track of which version of MedDRA you’re using.",
+    "crumbs": [
+      "Week 1",
+      "Day 3: Controlled Terminology & MedDRA Coding"
+    ]
+  },
+  {
+    "objectID": "week1/day3.html#resources",
+    "href": "week1/day3.html#resources",
+    "title": "Day 3: Controlled Terminology & MedDRA Coding",
+    "section": "11 Resources",
+    "text": "11 Resources\n\nCDISC Controlled Terminology Browser - Browse official values\nMedDRA Hierarchy Guide - Understanding the coding levels\nMetacore Documentation - R package for managing metadata and CT",
+    "crumbs": [
+      "Week 1",
+      "Day 3: Controlled Terminology & MedDRA Coding"
+    ]
+  },
+  {
+    "objectID": "week1/day3.html#whats-next",
+    "href": "week1/day3.html#whats-next",
+    "title": "Day 3: Controlled Terminology & MedDRA Coding",
+    "section": "12 What’s Next?",
+    "text": "12 What’s Next?\nIn Day 4, we will focus on Clinical Date Derivations. You will learn:\n\nHow to parse ISO 8601 dates with lubridate\nCalculating Study Days (--DY) with the “No Day 0” rule\nHandling partial dates (e.g., “2023-05”)\nCreating reusable derivation functions",
+    "crumbs": [
+      "Week 1",
+      "Day 3: Controlled Terminology & MedDRA Coding"
+    ]
+  },
+  {
+    "objectID": "week1/day1.html",
+    "href": "week1/day1.html",
+    "title": "Day 1: Environment Setup & First SDTM Code",
+    "section": "",
+    "text": "← Back to Roadmap",
+    "crumbs": [
+      "Week 1",
+      "Day 1: Environment Setup & First SDTM Code"
+    ]
+  },
+  {
+    "objectID": "week1/day1.html#learning-objectives",
+    "href": "week1/day1.html#learning-objectives",
+    "title": "Day 1: Environment Setup & First SDTM Code",
+    "section": "1 Learning Objectives",
+    "text": "1 Learning Objectives\nBy the end of Day 1, you will be able to:\n\nSet up your R environment with essential pharmaverse packages\nLoad and explore SDTM datasets from pharmaversesdtm\nUnderstand the CDISC data flow: Raw → SDTM → ADaM → TLFs\nUse dplyr to explore relationships between SDTM domains\nPerform basic data manipulation operations on clinical data",
+    "crumbs": [
+      "Week 1",
+      "Day 1: Environment Setup & First SDTM Code"
+    ]
+  },
+  {
+    "objectID": "week1/day1.html#introduction-to-cdisc-and-the-pharmaverse",
+    "href": "week1/day1.html#introduction-to-cdisc-and-the-pharmaverse",
+    "title": "Day 1: Environment Setup & First SDTM Code",
+    "section": "2 Introduction to CDISC and the Pharmaverse",
+    "text": "2 Introduction to CDISC and the Pharmaverse\n\n2.1 What is CDISC?\nCDISC (Clinical Data Interchange Standards Consortium) is an organization that develops global data standards for clinical research. These standards ensure that clinical trial data is:\n\nConsistent across different studies and organizations\nInteroperable between different systems and regulatory agencies\nSubmission-ready for regulatory authorities like the FDA and EMA\n\n\n\n2.2 The CDISC Data Flow\nUnderstanding the data flow is critical for clinical programming:\nRaw Data → SDTM → ADaM → TLFs\n\n\n\n\n\n\n\n\nStage\nDescription\nExample\n\n\n\n\nRaw Data\nData collected from EDC systems, labs, etc.\nCRF exports, lab files\n\n\nSDTM\nStudy Data Tabulation Model - standardized clinical data\nDM, AE, EX, LB domains\n\n\nADaM\nAnalysis Data Model - analysis-ready datasets\nADSL, ADAE, ADLB\n\n\nTLFs\nTables, Listings, and Figures for submission\nDemographics table, AE summary\n\n\n\n\n\n2.3 What is the Pharmaverse?\nThe pharmaverse is a cross-industry collaboration of R packages designed for clinical reporting workflows. It provides open-source tools that map to each stage of the CDISC data flow:\n\nSDTM creation: sdtm.oak, pharmaversesdtm (example data)\nADaM creation: admiral (the flagship package)\nTLG creation: rtables, tern, tfrmt\nValidation & Export: xportr, metacore, sdtmchecks",
+    "crumbs": [
+      "Week 1",
+      "Day 1: Environment Setup & First SDTM Code"
+    ]
+  },
+  {
+    "objectID": "week1/day1.html#package-installation-loading",
+    "href": "week1/day1.html#package-installation-loading",
+    "title": "Day 1: Environment Setup & First SDTM Code",
+    "section": "3 Package Installation & Loading",
+    "text": "3 Package Installation & Loading\nThe following packages are essential for today’s exercises. Each serves a specific purpose in the clinical programming workflow.\n\n3.1 Required Packages\n\n\n\n\n\n\n\nPackage\nPurpose\n\n\n\n\nadmiral\nADaM dataset creation - the core pharmaverse package\n\n\npharmaversesdtm\nExample SDTM datasets for learning and testing\n\n\ndplyr\nData manipulation (filter, select, mutate, join, etc.)\n\n\nhaven\nRead/write SAS transport files (.xpt)\n\n\nxportr\nApply metadata and export to .xpt for FDA submission\n\n\n\n\n\n3.2 Step 1: Install Packages (if needed)\nThe code below checks if each package is installed and installs it if missing. This is a safe pattern that won’t reinstall packages you already have.\n\n# Install packages if not already installed\nif (!requireNamespace(\"admiral\", quietly = TRUE)) install.packages(\"admiral\")\nif (!requireNamespace(\"pharmaversesdtm\", quietly = TRUE)) install.packages(\"pharmaversesdtm\")\nif (!requireNamespace(\"xportr\", quietly = TRUE)) install.packages(\"xportr\")\nif (!requireNamespace(\"dplyr\", quietly = TRUE)) install.packages(\"dplyr\")\nif (!requireNamespace(\"haven\", quietly = TRUE)) install.packages(\"haven\")\n\n\n\n3.3 Step 2: Load Packages\nNow we load the packages into our R session. The library() function makes all functions from a package available for use.\n\n# Load packages into the session\nlibrary(admiral)\nlibrary(pharmaversesdtm)\nlibrary(dplyr)\nlibrary(haven)\nlibrary(xportr)\n\n\n\n\n\n\n\nNoteWhat do these messages mean?\n\n\n\nWhen you load packages, you may see messages about package versions and any function name conflicts. This is normal and helps you understand which package’s function will be used when names overlap.",
+    "crumbs": [
+      "Week 1",
+      "Day 1: Environment Setup & First SDTM Code"
+    ]
+  },
+  {
+    "objectID": "week1/day1.html#loading-sdtm-datasets",
+    "href": "week1/day1.html#loading-sdtm-datasets",
+    "title": "Day 1: Environment Setup & First SDTM Code",
+    "section": "4 Loading SDTM Datasets",
+    "text": "4 Loading SDTM Datasets\nThe pharmaversesdtm package contains example SDTM datasets that mirror real clinical trial data. These are the same datasets used by production teams when developing and testing admiral.\n\n4.1 What are SDTM Domains?\nSDTM organizes clinical data into domains, each representing a specific type of information:\n\n\n\n\n\n\n\n\nDomain Class\nDomain\nDescription\n\n\n\n\nSpecial Purpose\nDM\nDemographics - one row per subject\n\n\nEvents\nAE\nAdverse Events - multiple rows per subject\n\n\nEvents\nDS\nDisposition - study milestones\n\n\nInterventions\nEX\nExposure - drug dosing information\n\n\nInterventions\nCM\nConcomitant Medications\n\n\nFindings\nLB\nLaboratory Results\n\n\nFindings\nVS\nVital Signs\n\n\n\n\n\n4.2 Step 3: Load the Core SDTM Domains\nLet’s load four key domains that we’ll work with today:\n\n# Load SDTM domains from pharmaversesdtm\n# DM = Demographics (one row per subject)\ndata(\"dm\", package = \"pharmaversesdtm\")\n\n# AE = Adverse Events (multiple rows per subject)\ndata(\"ae\", package = \"pharmaversesdtm\")\n\n# EX = Exposure/Dosing (multiple rows per subject)\ndata(\"ex\", package = \"pharmaversesdtm\")\n\n# LB = Laboratory Results (many rows per subject)\ndata(\"lb\", package = \"pharmaversesdtm\")",
+    "crumbs": [
+      "Week 1",
+      "Day 1: Environment Setup & First SDTM Code"
+    ]
+  },
+  {
+    "objectID": "week1/day1.html#exploring-the-data",
+    "href": "week1/day1.html#exploring-the-data",
+    "title": "Day 1: Environment Setup & First SDTM Code",
+    "section": "5 Exploring the Data",
+    "text": "5 Exploring the Data\nBefore working with any dataset, it’s essential to understand its structure. Let’s explore each domain using different R functions.\n\n5.1 Method 1: glimpse() - Quick Structure Overview\nThe glimpse() function from dplyr provides a compact view of the data structure, showing column names, types, and a preview of values.\n\n# Explore the Demographics (DM) domain\n# This shows us all variables and their types\ndplyr::glimpse(dm)\n\nRows: 306\nColumns: 26\n$ STUDYID  &lt;chr&gt; \"CDISCPILOT01\", \"CDISCPILOT01\", \"CDISCPILOT01\", \"CDISCPILOT01…\n$ DOMAIN   &lt;chr&gt; \"DM\", \"DM\", \"DM\", \"DM\", \"DM\", \"DM\", \"DM\", \"DM\", \"DM\", \"DM\", \"…\n$ USUBJID  &lt;chr&gt; \"01-701-1015\", \"01-701-1023\", \"01-701-1028\", \"01-701-1033\", \"…\n$ SUBJID   &lt;chr&gt; \"1015\", \"1023\", \"1028\", \"1033\", \"1034\", \"1047\", \"1057\", \"1097…\n$ RFSTDTC  &lt;chr&gt; \"2014-01-02\", \"2012-08-05\", \"2013-07-19\", \"2014-03-18\", \"2014…\n$ RFENDTC  &lt;chr&gt; \"2014-07-02\", \"2012-09-02\", \"2014-01-14\", \"2014-04-14\", \"2014…\n$ RFXSTDTC &lt;chr&gt; \"2014-01-02\", \"2012-08-05\", \"2013-07-19\", \"2014-03-18\", \"2014…\n$ RFXENDTC &lt;chr&gt; \"2014-07-02\", \"2012-09-01\", \"2014-01-14\", \"2014-03-31\", \"2014…\n$ RFICDTC  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…\n$ RFPENDTC &lt;chr&gt; \"2014-07-02T11:45\", \"2013-02-18\", \"2014-01-14T11:10\", \"2014-0…\n$ DTHDTC   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…\n$ DTHFL    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…\n$ SITEID   &lt;chr&gt; \"701\", \"701\", \"701\", \"701\", \"701\", \"701\", \"701\", \"701\", \"701\"…\n$ BRTHDTC  &lt;chr&gt; \"1950-12-26\", \"1948-07-22\", \"1942-07-11\", \"1940-03-10\", \"1937…\n$ AGE      &lt;dbl&gt; 63, 64, 71, 74, 77, 85, 59, 68, 81, 84, 52, 84, 81, 57, 75, 5…\n$ AGEU     &lt;chr&gt; \"YEARS\", \"YEARS\", \"YEARS\", \"YEARS\", \"YEARS\", \"YEARS\", \"YEARS\"…\n$ SEX      &lt;chr&gt; \"F\", \"M\", \"M\", \"M\", \"F\", \"F\", \"F\", \"M\", \"F\", \"M\", \"M\", \"M\", \"…\n$ RACE     &lt;chr&gt; \"WHITE\", \"WHITE\", \"WHITE\", \"WHITE\", \"WHITE\", \"WHITE\", \"WHITE\"…\n$ ETHNIC   &lt;chr&gt; \"HISPANIC OR LATINO\", \"HISPANIC OR LATINO\", \"NOT HISPANIC OR …\n$ ARMCD    &lt;chr&gt; \"Pbo\", \"Pbo\", \"Xan_Hi\", \"Xan_Lo\", \"Xan_Hi\", \"Pbo\", \"Scrnfail\"…\n$ ARM      &lt;chr&gt; \"Placebo\", \"Placebo\", \"Xanomeline High Dose\", \"Xanomeline Low…\n$ ACTARMCD &lt;chr&gt; \"Pbo\", \"Pbo\", \"Xan_Hi\", \"Xan_Lo\", \"Xan_Hi\", \"Pbo\", \"Scrnfail\"…\n$ ACTARM   &lt;chr&gt; \"Placebo\", \"Placebo\", \"Xanomeline High Dose\", \"Xanomeline Low…\n$ COUNTRY  &lt;chr&gt; \"USA\", \"USA\", \"USA\", \"USA\", \"USA\", \"USA\", \"USA\", \"USA\", \"USA\"…\n$ DMDTC    &lt;chr&gt; \"2013-12-26\", \"2012-07-22\", \"2013-07-11\", \"2014-03-10\", \"2014…\n$ DMDY     &lt;dbl&gt; -7, -14, -8, -8, -7, -21, NA, -9, -13, -7, -13, -6, -5, NA, -…\n\n\n\n\n\n\n\n\nTipKey DM Variables\n\n\n\n\nUSUBJID: Unique Subject Identifier - the key that links all domains together\nRFSTDTC: Reference Start Date (usually first dose date)\nRFENDTC: Reference End Date\nARM: Treatment Arm (e.g., “Placebo”, “Drug 80mg”)\nACTARM: Actual Treatment Arm\n\n\n\n\n\n5.2 Method 2: head() - View First Few Rows\nThe head() function shows the first n rows of data (default is 6).\n\n# View the first 6 rows of Adverse Events\nutils::head(ae)\n\n# A tibble: 6 × 35\n  STUDYID  DOMAIN USUBJID AESEQ AESPID AETERM AELLT AELLTCD AEDECOD AEPTCD AEHLT\n  &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;\n1 CDISCPI… AE     01-701…     1 E07    APPLI… APPL…      NA APPLIC…     NA HLT_…\n2 CDISCPI… AE     01-701…     2 E08    APPLI… APPL…      NA APPLIC…     NA HLT_…\n3 CDISCPI… AE     01-701…     3 E06    DIARR… DIAR…      NA DIARRH…     NA HLT_…\n4 CDISCPI… AE     01-701…     3 E10    ATRIO… AV B…      NA ATRIOV…     NA HLT_…\n5 CDISCPI… AE     01-701…     1 E08    ERYTH… ERYT…      NA ERYTHE…     NA HLT_…\n6 CDISCPI… AE     01-701…     2 E09    ERYTH… LOCA…      NA ERYTHE…     NA HLT_…\n# ℹ 24 more variables: AEHLTCD &lt;dbl&gt;, AEHLGT &lt;chr&gt;, AEHLGTCD &lt;dbl&gt;,\n#   AEBODSYS &lt;chr&gt;, AEBDSYCD &lt;dbl&gt;, AESOC &lt;chr&gt;, AESOCCD &lt;dbl&gt;, AESEV &lt;chr&gt;,\n#   AESER &lt;chr&gt;, AEACN &lt;chr&gt;, AEREL &lt;chr&gt;, AEOUT &lt;chr&gt;, AESCAN &lt;chr&gt;,\n#   AESCONG &lt;chr&gt;, AESDISAB &lt;chr&gt;, AESDTH &lt;chr&gt;, AESHOSP &lt;chr&gt;, AESLIFE &lt;chr&gt;,\n#   AESOD &lt;chr&gt;, AEDTC &lt;chr&gt;, AESTDTC &lt;chr&gt;, AEENDTC &lt;chr&gt;, AESTDY &lt;dbl&gt;,\n#   AEENDY &lt;dbl&gt;\n\n\n\n\n5.3 Method 3: dim() and names() - Dimensions and Column Names\n\n# How many rows and columns in each domain?\ncat(\"DM dimensions:\", dim(dm), \"\\n\")\n\nDM dimensions: 306 26 \n\ncat(\"AE dimensions:\", dim(ae), \"\\n\")\n\nAE dimensions: 1191 35 \n\ncat(\"EX dimensions:\", dim(ex), \"\\n\")\n\nEX dimensions: 591 17 \n\ncat(\"LB dimensions:\", dim(lb), \"\\n\")\n\nLB dimensions: 59580 23 \n\n\n\n# What variables are in the AE domain?\nnames(ae)\n\n [1] \"STUDYID\"  \"DOMAIN\"   \"USUBJID\"  \"AESEQ\"    \"AESPID\"   \"AETERM\"  \n [7] \"AELLT\"    \"AELLTCD\"  \"AEDECOD\"  \"AEPTCD\"   \"AEHLT\"    \"AEHLTCD\" \n[13] \"AEHLGT\"   \"AEHLGTCD\" \"AEBODSYS\" \"AEBDSYCD\" \"AESOC\"    \"AESOCCD\" \n[19] \"AESEV\"    \"AESER\"    \"AEACN\"    \"AEREL\"    \"AEOUT\"    \"AESCAN\"  \n[25] \"AESCONG\"  \"AESDISAB\" \"AESDTH\"   \"AESHOSP\"  \"AESLIFE\"  \"AESOD\"   \n[31] \"AEDTC\"    \"AESTDTC\"  \"AEENDTC\"  \"AESTDY\"   \"AEENDY\"",
+    "crumbs": [
+      "Week 1",
+      "Day 1: Environment Setup & First SDTM Code"
+    ]
+  },
+  {
+    "objectID": "week1/day1.html#understanding-domain-relationships",
+    "href": "week1/day1.html#understanding-domain-relationships",
+    "title": "Day 1: Environment Setup & First SDTM Code",
+    "section": "6 Understanding Domain Relationships",
+    "text": "6 Understanding Domain Relationships\nOne of the most important concepts in clinical programming is understanding how domains relate to each other. USUBJID is the universal key that connects all domains.\n\n6.1 The USUBJID Connection\n        ┌─────────────┐\n        │     DM      │\n        │ (1 row per  │\n        │  subject)   │\n        └──────┬──────┘\n               │ USUBJID\n    ┌──────────┼──────────┬──────────┐\n    ▼          ▼          ▼          ▼\n┌────────┐  ┌───────┐  ┌───────┐  ┌────────┐\n│  AE    │  │  EX   │  │  LB   │  │  VS    │\n│(events)│  │(doses)│  │(labs) │  │(vitals)│\n└────────┘  └───────┘  └───────┘  └────────┘\n\n\n6.2 Step 4: Join DM and AE (Demographics + Adverse Events)\nWhen analyzing adverse events, we often need demographic information like treatment arm. Let’s join these domains.\n\n# Join Demographics (DM) with Adverse Events (AE)\n# We select key DM variables and join on USUBJID\n\ndm_ae &lt;- dm %&gt;%\n  # Select only the DM variables we need\n  dplyr::select(USUBJID, RFSTDTC, RFENDTC, ARM, AGE, SEX, RACE) %&gt;%\n  # Inner join keeps only subjects that appear in both datasets\n  dplyr::inner_join(ae, by = \"USUBJID\")\n\n# How many records do we have now?\ncat(\"Number of AE records with demographic info:\", nrow(dm_ae), \"\\n\")\n\nNumber of AE records with demographic info: 1191 \n\n# Preview the joined data\nutils::head(dm_ae)\n\n# A tibble: 6 × 41\n  USUBJID    RFSTDTC RFENDTC ARM     AGE SEX   RACE  STUDYID DOMAIN AESEQ AESPID\n  &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt; \n1 01-701-10… 2014-0… 2014-0… Plac…    63 F     WHITE CDISCP… AE         1 E07   \n2 01-701-10… 2014-0… 2014-0… Plac…    63 F     WHITE CDISCP… AE         2 E08   \n3 01-701-10… 2014-0… 2014-0… Plac…    63 F     WHITE CDISCP… AE         3 E06   \n4 01-701-10… 2012-0… 2012-0… Plac…    64 M     WHITE CDISCP… AE         3 E10   \n5 01-701-10… 2012-0… 2012-0… Plac…    64 M     WHITE CDISCP… AE         1 E08   \n6 01-701-10… 2012-0… 2012-0… Plac…    64 M     WHITE CDISCP… AE         2 E09   \n# ℹ 30 more variables: AETERM &lt;chr&gt;, AELLT &lt;chr&gt;, AELLTCD &lt;dbl&gt;, AEDECOD &lt;chr&gt;,\n#   AEPTCD &lt;dbl&gt;, AEHLT &lt;chr&gt;, AEHLTCD &lt;dbl&gt;, AEHLGT &lt;chr&gt;, AEHLGTCD &lt;dbl&gt;,\n#   AEBODSYS &lt;chr&gt;, AEBDSYCD &lt;dbl&gt;, AESOC &lt;chr&gt;, AESOCCD &lt;dbl&gt;, AESEV &lt;chr&gt;,\n#   AESER &lt;chr&gt;, AEACN &lt;chr&gt;, AEREL &lt;chr&gt;, AEOUT &lt;chr&gt;, AESCAN &lt;chr&gt;,\n#   AESCONG &lt;chr&gt;, AESDISAB &lt;chr&gt;, AESDTH &lt;chr&gt;, AESHOSP &lt;chr&gt;, AESLIFE &lt;chr&gt;,\n#   AESOD &lt;chr&gt;, AEDTC &lt;chr&gt;, AESTDTC &lt;chr&gt;, AEENDTC &lt;chr&gt;, AESTDY &lt;dbl&gt;,\n#   AEENDY &lt;dbl&gt;\n\n\n\n\n\n\n\n\nNoteWhy use inner_join()?\n\n\n\n\ninner_join(): Keeps only rows where USUBJID exists in BOTH datasets\nleft_join(): Keeps all rows from the left dataset (DM), adds matching rows from right (AE)\nanti_join(): Keeps rows from left where there is NO match in right (useful for finding missing data)\n\n\n\n\n\n6.3 Step 5: Join DM and EX (Demographics + Exposure)\nExposure data tells us about drug dosing. Let’s combine this with demographics.\n\n# Join Demographics (DM) with Exposure (EX)\ndm_ex &lt;- dm %&gt;%\n  dplyr::select(USUBJID, ARM, AGE, SEX) %&gt;%\n  dplyr::inner_join(ex, by = \"USUBJID\")\n\n# Preview the result\ndplyr::glimpse(dm_ex)\n\nRows: 591\nColumns: 20\n$ USUBJID  &lt;chr&gt; \"01-701-1015\", \"01-701-1015\", \"01-701-1015\", \"01-701-1023\", \"…\n$ ARM      &lt;chr&gt; \"Placebo\", \"Placebo\", \"Placebo\", \"Placebo\", \"Placebo\", \"Xanom…\n$ AGE      &lt;dbl&gt; 63, 63, 63, 64, 64, 71, 71, 71, 74, 77, 77, 77, 85, 85, 68, 6…\n$ SEX      &lt;chr&gt; \"F\", \"F\", \"F\", \"M\", \"M\", \"M\", \"M\", \"M\", \"M\", \"F\", \"F\", \"F\", \"…\n$ STUDYID  &lt;chr&gt; \"CDISCPILOT01\", \"CDISCPILOT01\", \"CDISCPILOT01\", \"CDISCPILOT01…\n$ DOMAIN   &lt;chr&gt; \"EX\", \"EX\", \"EX\", \"EX\", \"EX\", \"EX\", \"EX\", \"EX\", \"EX\", \"EX\", \"…\n$ EXSEQ    &lt;dbl&gt; 1, 2, 3, 1, 2, 1, 2, 3, 1, 1, 2, 3, 1, 2, 1, 2, 3, 1, 1, 2, 1…\n$ EXTRT    &lt;chr&gt; \"PLACEBO\", \"PLACEBO\", \"PLACEBO\", \"PLACEBO\", \"PLACEBO\", \"XANOM…\n$ EXDOSE   &lt;dbl&gt; 0, 0, 0, 0, 0, 54, 81, 54, 54, 54, 81, 54, 0, 0, 54, 54, 54, …\n$ EXDOSU   &lt;chr&gt; \"mg\", \"mg\", \"mg\", \"mg\", \"mg\", \"mg\", \"mg\", \"mg\", \"mg\", \"mg\", \"…\n$ EXDOSFRM &lt;chr&gt; \"PATCH\", \"PATCH\", \"PATCH\", \"PATCH\", \"PATCH\", \"PATCH\", \"PATCH\"…\n$ EXDOSFRQ &lt;chr&gt; \"QD\", \"QD\", \"QD\", \"QD\", \"QD\", \"QD\", \"QD\", \"QD\", \"QD\", \"QD\", \"…\n$ EXROUTE  &lt;chr&gt; \"TRANSDERMAL\", \"TRANSDERMAL\", \"TRANSDERMAL\", \"TRANSDERMAL\", \"…\n$ VISITNUM &lt;dbl&gt; 3, 4, 12, 3, 4, 3, 4, 12, 3, 3, 4, 12, 3, 4, 3, 4, 12, 3, 3, …\n$ VISIT    &lt;chr&gt; \"BASELINE\", \"WEEK 2\", \"WEEK 24\", \"BASELINE\", \"WEEK 2\", \"BASEL…\n$ VISITDY  &lt;dbl&gt; 1, 14, 168, 1, 14, 1, 14, 168, 1, 1, 14, 168, 1, 14, 1, 14, 1…\n$ EXSTDTC  &lt;chr&gt; \"2014-01-02\", \"2014-01-17\", \"2014-06-19\", \"2012-08-05\", \"2012…\n$ EXENDTC  &lt;chr&gt; \"2014-01-16\", \"2014-06-18\", \"2014-07-02\", \"2012-08-27\", \"2012…\n$ EXSTDY   &lt;dbl&gt; 1, 16, 169, 1, 24, 1, 15, 173, 1, 1, 16, 171, 1, 15, 1, 16, 1…\n$ EXENDY   &lt;dbl&gt; 15, 168, 182, 23, 28, 14, 172, 180, 14, 15, 170, 183, 14, 26,…",
+    "crumbs": [
+      "Week 1",
+      "Day 1: Environment Setup & First SDTM Code"
+    ]
+  },
+  {
+    "objectID": "week1/day1.html#hands-on-5-dplyr-operations",
+    "href": "week1/day1.html#hands-on-5-dplyr-operations",
+    "title": "Day 1: Environment Setup & First SDTM Code",
+    "section": "7 Hands-On: 5+ dplyr Operations",
+    "text": "7 Hands-On: 5+ dplyr Operations\nThe deliverable for Day 1 requires demonstrating at least 5 dplyr operations. Let’s work through practical examples.\n\n7.1 Operation 1: filter() - Subset Rows\nFilter AEs to show only serious adverse events (SAEs).\n\n# Filter for Serious Adverse Events only\nserious_aes &lt;- ae %&gt;%\n  dplyr::filter(AESER == \"Y\")\n\ncat(\"Total AEs:\", nrow(ae), \"\\n\")\n\nTotal AEs: 1191 \n\ncat(\"Serious AEs:\", nrow(serious_aes), \"\\n\")\n\nSerious AEs: 3 \n\n\n\n\n7.2 Operation 2: select() - Choose Columns\nSelect only the variables we need for a quick AE overview.\n\n# Select key AE variables\nae_summary &lt;- ae %&gt;%\n  dplyr::select(USUBJID, AEDECOD, AESEV, AESER, AESTDTC, AEENDTC)\n\nutils::head(ae_summary)\n\n# A tibble: 6 × 6\n  USUBJID     AEDECOD                              AESEV   AESER AESTDTC AEENDTC\n  &lt;chr&gt;       &lt;chr&gt;                                &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  \n1 01-701-1015 APPLICATION SITE ERYTHEMA            MILD    N     2014-0… &lt;NA&gt;   \n2 01-701-1015 APPLICATION SITE PRURITUS            MILD    N     2014-0… &lt;NA&gt;   \n3 01-701-1015 DIARRHOEA                            MILD    N     2014-0… 2014-0…\n4 01-701-1023 ATRIOVENTRICULAR BLOCK SECOND DEGREE MILD    N     2012-0… &lt;NA&gt;   \n5 01-701-1023 ERYTHEMA                             MILD    N     2012-0… 2012-0…\n6 01-701-1023 ERYTHEMA                             MODERA… N     2012-0… &lt;NA&gt;   \n\n\n\n\n7.3 Operation 3: mutate() - Create New Variables\nCreate a flag for treatment-related adverse events.\n\n# Create a new variable: treatment-related flag\nae_with_flag &lt;- ae %&gt;%\n  dplyr::mutate(\n    # Create a related flag (Y if related, N otherwise)\n    AEREL_FLAG = dplyr::if_else(AEREL == \"PROBABLE\" | AEREL == \"POSSIBLE\", \"Y\", \"N\")\n  )\n\n# Check the distribution\ntable(ae_with_flag$AEREL_FLAG, useNA = \"ifany\")\n\n\n   N    Y &lt;NA&gt; \n 483  704    4 \n\n\n\n\n7.4 Operation 4: group_by() + summarise() - Aggregate Data\nCount adverse events by System Organ Class (SOC).\n\n# Count AEs by System Organ Class\nae_by_soc &lt;- ae %&gt;%\n  dplyr::group_by(AEBODSYS) %&gt;%\n  dplyr::summarise(\n    n_events = dplyr::n(),\n    n_subjects = dplyr::n_distinct(USUBJID)\n  ) %&gt;%\n  dplyr::arrange(dplyr::desc(n_events))\n\n# Show top 10 SOCs\nutils::head(ae_by_soc, 10)\n\n# A tibble: 10 × 3\n   AEBODSYS                                             n_events n_subjects\n   &lt;chr&gt;                                                   &lt;int&gt;      &lt;int&gt;\n 1 GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS      292        108\n 2 SKIN AND SUBCUTANEOUS TISSUE DISORDERS                    276        105\n 3 NERVOUS SYSTEM DISORDERS                                  101         59\n 4 CARDIAC DISORDERS                                          91         44\n 5 GASTROINTESTINAL DISORDERS                                 87         53\n 6 INFECTIONS AND INFESTATIONS                                73         39\n 7 RESPIRATORY, THORACIC AND MEDIASTINAL DISORDERS            53         30\n 8 INVESTIGATIONS                                             40         23\n 9 PSYCHIATRIC DISORDERS                                      40         29\n10 INJURY, POISONING AND PROCEDURAL COMPLICATIONS             29         14\n\n\n\n\n7.5 Operation 5: arrange() - Sort Data\nSort AEs by subject and start date.\n\n# Sort AEs chronologically within each subject\nae_sorted &lt;- ae %&gt;%\n  dplyr::select(USUBJID, AEDECOD, AESTDTC, AESEV) %&gt;%\n  dplyr::arrange(USUBJID, AESTDTC)\n\nutils::head(ae_sorted, 10)\n\n# A tibble: 10 × 4\n   USUBJID     AEDECOD                              AESTDTC    AESEV   \n   &lt;chr&gt;       &lt;chr&gt;                                &lt;chr&gt;      &lt;chr&gt;   \n 1 01-701-1015 APPLICATION SITE ERYTHEMA            2014-01-03 MILD    \n 2 01-701-1015 APPLICATION SITE PRURITUS            2014-01-03 MILD    \n 3 01-701-1015 DIARRHOEA                            2014-01-09 MILD    \n 4 01-701-1023 ERYTHEMA                             2012-08-07 MILD    \n 5 01-701-1023 ERYTHEMA                             2012-08-07 MODERATE\n 6 01-701-1023 ERYTHEMA                             2012-08-07 MILD    \n 7 01-701-1023 ATRIOVENTRICULAR BLOCK SECOND DEGREE 2012-08-26 MILD    \n 8 01-701-1028 APPLICATION SITE ERYTHEMA            2013-07-21 MILD    \n 9 01-701-1028 APPLICATION SITE PRURITUS            2013-08-08 MILD    \n10 01-701-1034 APPLICATION SITE PRURITUS            2014-08-27 MILD    \n\n\n\n\n7.6 Bonus Operation 6: anti_join() - Find Missing Data\nFind subjects in DM who have no adverse events (useful for data QC).\n\n# Find subjects with NO adverse events\nsubjects_no_ae &lt;- dm %&gt;%\n  dplyr::select(USUBJID, ARM) %&gt;%\n  dplyr::anti_join(ae, by = \"USUBJID\")\n\ncat(\"Subjects with no AEs:\", nrow(subjects_no_ae), \"\\n\")\n\nSubjects with no AEs: 81",
+    "crumbs": [
+      "Week 1",
+      "Day 1: Environment Setup & First SDTM Code"
+    ]
+  },
+  {
+    "objectID": "week1/day1.html#day-1-deliverable-summary",
+    "href": "week1/day1.html#day-1-deliverable-summary",
+    "title": "Day 1: Environment Setup & First SDTM Code",
+    "section": "8 Day 1 Deliverable Summary",
+    "text": "8 Day 1 Deliverable Summary\nToday you completed the following:\n\n\n\nTask\nStatus\n\n\n\n\nInstalled and loaded pharmaverse packages\nDone\n\n\nLoaded DM, AE, EX, LB SDTM domains\nDone\n\n\nExplored data with glimpse(), head(), dim()\nDone\n\n\nJoined DM-AE (demographics + adverse events)\nDone\n\n\nJoined DM-EX (demographics + exposure)\nDone\n\n\nDemonstrated 5+ dplyr operations\nDone",
+    "crumbs": [
+      "Week 1",
+      "Day 1: Environment Setup & First SDTM Code"
+    ]
+  },
+  {
+    "objectID": "week1/day1.html#key-takeaways",
+    "href": "week1/day1.html#key-takeaways",
+    "title": "Day 1: Environment Setup & First SDTM Code",
+    "section": "9 Key Takeaways",
+    "text": "9 Key Takeaways\n\nUSUBJID is the universal key - It links all SDTM domains together\nSDTM domains have classes - Special Purpose (DM), Events (AE), Interventions (EX), Findings (LB)\nThe CDISC data flow - Raw → SDTM → ADaM → TLFs\ndplyr is essential - Most pharmaverse packages are built on tidyverse principles\npharmaversesdtm provides real-world example data - Use it for learning and testing",
+    "crumbs": [
+      "Week 1",
+      "Day 1: Environment Setup & First SDTM Code"
+    ]
+  },
+  {
+    "objectID": "week1/day1.html#resources",
+    "href": "week1/day1.html#resources",
+    "title": "Day 1: Environment Setup & First SDTM Code",
+    "section": "10 Resources",
+    "text": "10 Resources\n\npharmaverse.org - The central hub for all pharmaverse packages\npharmaversesdtm GitHub - Source code and documentation\nadmiral ‘Get Started’ vignette - Introduction to ADaM creation\nCDISC SDTM Implementation Guide - Official SDTM documentation\ndplyr documentation - Complete reference for data manipulation",
+    "crumbs": [
+      "Week 1",
+      "Day 1: Environment Setup & First SDTM Code"
+    ]
+  },
+  {
+    "objectID": "week1/day1.html#whats-next",
+    "href": "week1/day1.html#whats-next",
+    "title": "Day 1: Environment Setup & First SDTM Code",
+    "section": "11 What’s Next?",
+    "text": "11 What’s Next?\nIn Day 2, we’ll dive deeper into: - SDTM domain classes and their specific structures - Advanced tidyverse operations - Variable naming conventions (–TESTCD, –ORRES, –DY patterns) - Creating data summaries by treatment arm",
+    "crumbs": [
+      "Week 1",
+      "Day 1: Environment Setup & First SDTM Code"
+    ]
+  },
+  {
+    "objectID": "week1/day2.html",
+    "href": "week1/day2.html",
+    "title": "Day 2: SDTM Domain Structure & Tidyverse Mastery",
+    "section": "",
+    "text": "← Back to Roadmap",
+    "crumbs": [
+      "Week 1",
+      "Day 2: SDTM Domain Structure & Tidyverse Mastery"
+    ]
+  },
+  {
+    "objectID": "week1/day2.html#learning-objectives",
+    "href": "week1/day2.html#learning-objectives",
+    "title": "Day 2: SDTM Domain Structure & Tidyverse Mastery",
+    "section": "1 Learning Objectives",
+    "text": "1 Learning Objectives\nBy the end of Day 2, you will be able to:\n\nUnderstand the four SDTM domain classes and their purposes\nRecognize and interpret SDTM variable naming conventions\nApply advanced tidyverse operations to clinical data\nCreate meaningful summaries of clinical trial data\nWork fluently with dplyr and tidyr on pharmaverse datasets",
+    "crumbs": [
+      "Week 1",
+      "Day 2: SDTM Domain Structure & Tidyverse Mastery"
+    ]
+  },
+  {
+    "objectID": "week1/day2.html#introduction",
+    "href": "week1/day2.html#introduction",
+    "title": "Day 2: SDTM Domain Structure & Tidyverse Mastery",
+    "section": "2 Introduction",
+    "text": "2 Introduction\nDay 2 builds on the foundations from Day 1. Now that you can load and explore SDTM datasets, we’ll dive deeper into:\n\nSDTM Domain Classes: Understanding why domains are organized the way they are\nVariable Naming Conventions: Decoding the patterns like --TESTCD, --ORRES, --DY\nTidyverse Mastery: This is 50% of what you’ll do daily as a clinical programmer\n\nThe pharmaverse packages are built on tidyverse principles, so mastering dplyr and tidyr is essential for working with admiral, sdtm.oak, and other clinical programming tools.",
+    "crumbs": [
+      "Week 1",
+      "Day 2: SDTM Domain Structure & Tidyverse Mastery"
+    ]
+  },
+  {
+    "objectID": "week1/day2.html#package-installation-loading",
+    "href": "week1/day2.html#package-installation-loading",
+    "title": "Day 2: SDTM Domain Structure & Tidyverse Mastery",
+    "section": "3 Package Installation & Loading",
+    "text": "3 Package Installation & Loading\n\n3.1 Required Packages\n\n\n\nPackage\nPurpose\n\n\n\n\ndplyr\nData manipulation (filter, select, mutate, etc.)\n\n\ntidyr\nData reshaping (pivot_wider, pivot_longer, etc.)\n\n\npharmaversesdtm\nExample SDTM datasets for learning\n\n\n\n\n\n3.2 Load Packages\n\n# Load required packages\nlibrary(dplyr)\nlibrary(tidyr)\nlibrary(pharmaversesdtm)\n\n\n\n3.3 Load SDTM Datasets\nWe’ll work with multiple domains today to understand their structures and relationships.\n\n# Load all domains we'll use today\ndata(\"dm\", package = \"pharmaversesdtm\")\ndata(\"ae\", package = \"pharmaversesdtm\")\ndata(\"ex\", package = \"pharmaversesdtm\")\ndata(\"lb\", package = \"pharmaversesdtm\")\ndata(\"vs\", package = \"pharmaversesdtm\")\ndata(\"cm\", package = \"pharmaversesdtm\")\ndata(\"ds\", package = \"pharmaversesdtm\")",
+    "crumbs": [
+      "Week 1",
+      "Day 2: SDTM Domain Structure & Tidyverse Mastery"
+    ]
+  },
+  {
+    "objectID": "week1/day2.html#sdtm-domain-classes",
+    "href": "week1/day2.html#sdtm-domain-classes",
+    "title": "Day 2: SDTM Domain Structure & Tidyverse Mastery",
+    "section": "4 SDTM Domain Classes",
+    "text": "4 SDTM Domain Classes\nSDTM organizes clinical data into four domain classes, each designed for a specific type of information. Understanding these classes helps you know what to expect from each domain.\n\n4.1 The Four Domain Classes\n\n\n\n\n\n\n\n\n\nClass\nPurpose\nExample Domains\nKey Characteristics\n\n\n\n\nSpecial Purpose\nSubject-level information\nDM, CO, SE, SV\nUsually one row per subject\n\n\nEvents\nDiscrete occurrences\nAE, DS, MH, DV\nMultiple rows per subject, start/end\n\n\nInterventions\nTreatments administered\nEX, CM, EC, SU\nDosing info, frequencies, routes\n\n\nFindings\nCollected measurements/tests\nLB, VS, EG, PE\nTest codes, results, units, standards\n\n\n\n\n\n4.2 Special Purpose Class: DM (Demographics)\nThe Demographics domain is the anchor of all SDTM data. It contains one row per subject and provides the reference information that other domains link to.\n\n# DM structure - note the one row per subject\ndm %&gt;%\n  dplyr::select(STUDYID, USUBJID, SUBJID, RFSTDTC, RFENDTC, ARM, ACTARM, AGE, SEX, RACE) %&gt;%\n  utils::head(5)\n\n# A tibble: 5 × 10\n  STUDYID      USUBJID     SUBJID RFSTDTC RFENDTC ARM   ACTARM   AGE SEX   RACE \n  &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;\n1 CDISCPILOT01 01-701-1015 1015   2014-0… 2014-0… Plac… Place…    63 F     WHITE\n2 CDISCPILOT01 01-701-1023 1023   2012-0… 2012-0… Plac… Place…    64 M     WHITE\n3 CDISCPILOT01 01-701-1028 1028   2013-0… 2014-0… Xano… Xanom…    71 M     WHITE\n4 CDISCPILOT01 01-701-1033 1033   2014-0… 2014-0… Xano… Xanom…    74 M     WHITE\n5 CDISCPILOT01 01-701-1034 1034   2014-0… 2014-1… Xano… Xanom…    77 F     WHITE\n\n\n\n\n\n\n\n\nNoteKey DM Variables\n\n\n\n\nSTUDYID: Study Identifier\nUSUBJID: Unique Subject Identifier (links all domains)\nRFSTDTC: Reference Start Date/Time (usually first dose)\nRFENDTC: Reference End Date/Time\nARM/ACTARM: Planned/Actual Treatment Arm\n\n\n\n\n\n4.3 Events Class: AE (Adverse Events)\nEvents domains capture discrete occurrences that happen to subjects. Each event has a start and potentially an end.\n\n# AE structure - multiple rows per subject\nae %&gt;%\n  dplyr::select(USUBJID, AETERM, AEDECOD, AEBODSYS, AESEV, AESER, AESTDTC, AEENDTC) %&gt;%\n  utils::head(10)\n\n# A tibble: 10 × 8\n   USUBJID     AETERM               AEDECOD AEBODSYS AESEV AESER AESTDTC AEENDTC\n   &lt;chr&gt;       &lt;chr&gt;                &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  \n 1 01-701-1015 APPLICATION SITE ER… APPLIC… GENERAL… MILD  N     2014-0… &lt;NA&gt;   \n 2 01-701-1015 APPLICATION SITE PR… APPLIC… GENERAL… MILD  N     2014-0… &lt;NA&gt;   \n 3 01-701-1015 DIARRHOEA            DIARRH… GASTROI… MILD  N     2014-0… 2014-0…\n 4 01-701-1023 ATRIOVENTRICULAR BL… ATRIOV… CARDIAC… MILD  N     2012-0… &lt;NA&gt;   \n 5 01-701-1023 ERYTHEMA             ERYTHE… SKIN AN… MILD  N     2012-0… 2012-0…\n 6 01-701-1023 ERYTHEMA             ERYTHE… SKIN AN… MODE… N     2012-0… &lt;NA&gt;   \n 7 01-701-1023 ERYTHEMA             ERYTHE… SKIN AN… MILD  N     2012-0… 2012-0…\n 8 01-701-1028 APPLICATION SITE ER… APPLIC… GENERAL… MILD  N     2013-0… &lt;NA&gt;   \n 9 01-701-1028 APPLICATION SITE PR… APPLIC… GENERAL… MILD  N     2013-0… &lt;NA&gt;   \n10 01-701-1034 APPLICATION SITE PR… APPLIC… GENERAL… MILD  N     2014-0… &lt;NA&gt;   \n\n\n\n\n4.4 Interventions Class: EX (Exposure)\nInterventions domains track treatments given to subjects. They include dosing information, routes, and frequencies.\n\n# EX structure - dosing records\nex %&gt;%\n  dplyr::select(USUBJID, EXTRT, EXDOSE, EXDOSU, EXROUTE, EXSTDTC, EXENDTC) %&gt;%\n  utils::head(10)\n\n# A tibble: 10 × 7\n   USUBJID     EXTRT      EXDOSE EXDOSU EXROUTE     EXSTDTC    EXENDTC   \n   &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;     \n 1 01-701-1015 PLACEBO         0 mg     TRANSDERMAL 2014-01-02 2014-01-16\n 2 01-701-1015 PLACEBO         0 mg     TRANSDERMAL 2014-01-17 2014-06-18\n 3 01-701-1015 PLACEBO         0 mg     TRANSDERMAL 2014-06-19 2014-07-02\n 4 01-701-1023 PLACEBO         0 mg     TRANSDERMAL 2012-08-05 2012-08-27\n 5 01-701-1023 PLACEBO         0 mg     TRANSDERMAL 2012-08-28 2012-09-01\n 6 01-701-1028 XANOMELINE     54 mg     TRANSDERMAL 2013-07-19 2013-08-01\n 7 01-701-1028 XANOMELINE     81 mg     TRANSDERMAL 2013-08-02 2014-01-06\n 8 01-701-1028 XANOMELINE     54 mg     TRANSDERMAL 2014-01-07 2014-01-14\n 9 01-701-1033 XANOMELINE     54 mg     TRANSDERMAL 2014-03-18 2014-03-31\n10 01-701-1034 XANOMELINE     54 mg     TRANSDERMAL 2014-07-01 2014-07-15\n\n\n\n\n4.5 Findings Class: LB (Laboratory)\nFindings domains contain collected measurements. They have a standardized structure with test codes, results, units, and reference ranges.\n\n# LB structure - lab results with standardization\nlb %&gt;%\n  dplyr::select(USUBJID, LBTESTCD, LBTEST, LBORRES, LBORRESU, LBSTRESN, LBSTRESU) %&gt;%\n  utils::head(10)\n\n# A tibble: 10 × 7\n   USUBJID     LBTESTCD LBTEST  LBORRES LBORRESU LBSTRESN LBSTRESU\n   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;   \n 1 01-701-1015 ALB      Albumin 3.8     g/dL           38 g/L     \n 2 01-701-1015 ALB      Albumin 3.9     g/dL           39 g/L     \n 3 01-701-1015 ALB      Albumin 3.8     g/dL           38 g/L     \n 4 01-701-1015 ALB      Albumin 3.7     g/dL           37 g/L     \n 5 01-701-1015 ALB      Albumin 3.8     g/dL           38 g/L     \n 6 01-701-1015 ALB      Albumin 3.8     g/dL           38 g/L     \n 7 01-701-1015 ALB      Albumin 3.7     g/dL           37 g/L     \n 8 01-701-1015 ALB      Albumin 3.7     g/dL           37 g/L     \n 9 01-701-1015 ALB      Albumin 3.8     g/dL           38 g/L     \n10 01-701-1015 ALB      Albumin 3.8     g/dL           38 g/L",
+    "crumbs": [
+      "Week 1",
+      "Day 2: SDTM Domain Structure & Tidyverse Mastery"
+    ]
+  },
+  {
+    "objectID": "week1/day2.html#sdtm-variable-naming-conventions",
+    "href": "week1/day2.html#sdtm-variable-naming-conventions",
+    "title": "Day 2: SDTM Domain Structure & Tidyverse Mastery",
+    "section": "5 SDTM Variable Naming Conventions",
+    "text": "5 SDTM Variable Naming Conventions\nSDTM uses consistent naming patterns across all domains. Understanding these patterns helps you quickly identify variable purposes without documentation.\n\n5.1 The Two-Character Domain Prefix\nEvery domain-specific variable starts with a two-character prefix that identifies the domain:\n\n\n\nPrefix\nDomain\nExample Variables\n\n\n\n\nDM\nDemographics\nDMDTC, DMDY\n\n\nAE\nAdverse Events\nAESTDTC, AEENDTC, AESEV\n\n\nEX\nExposure\nEXSTDTC, EXDOSE, EXROUTE\n\n\nLB\nLaboratory\nLBTESTCD, LBORRES, LBSTRESN\n\n\nVS\nVital Signs\nVSTESTCD, VSORRES, VSSTRESN\n\n\nCM\nConcomitant Meds\nCMTRT, CMDOSE, CMSTDTC\n\n\n\n\n\n5.2 Common Variable Suffixes\nThe suffix tells you what type of information the variable contains:\n\n\n\n\n\n\n\n\nSuffix\nMeaning\nExamples\n\n\n\n\n--TERM\nReported term (verbatim)\nAETERM, CMTRT\n\n\n--DECOD\nDecoded/standardized term\nAEDECOD, CMDECOD\n\n\n--TESTCD\nTest code (short)\nLBTESTCD, VSTESTCD\n\n\n--TEST\nTest name (full)\nLBTEST, VSTEST\n\n\n--ORRES\nOriginal result (as collected)\nLBORRES, VSORRES\n\n\n--ORRESU\nOriginal result units\nLBORRESU, VSORRESU\n\n\n--STRESN\nStandardized result (numeric)\nLBSTRESN, VSSTRESN\n\n\n--STRESU\nStandardized result units\nLBSTRESU, VSSTRESU\n\n\n--STDTC\nStart date/time\nAESTDTC, EXSTDTC, CMSTDTC\n\n\n--ENDTC\nEnd date/time\nAEENDTC, EXENDTC, CMENDTC\n\n\n--DY\nStudy day\nAESTDY, AEENDY, EXSTDY\n\n\n--SEV\nSeverity\nAESEV\n\n\n--SER\nSerious (Y/N)\nAESER\n\n\n--REL\nRelationship/Causality\nAEREL\n\n\n\n\n\n5.3 Understanding the Pattern: Findings Class\nLet’s examine how the naming convention works in the Findings class (LB, VS):\n\n# The Findings class pattern in LB\nlb %&gt;%\n  dplyr::select(\n    USUBJID,\n    LBTESTCD,   # Test code (short identifier)\n    LBTEST,     # Test name (full description)\n    LBORRES,    # Original result (as collected)\n    LBORRESU,   # Original units\n    LBSTRESC,   # Standardized result (character)\n    LBSTRESN,   # Standardized result (numeric)\n    LBSTRESU    # Standardized units\n  ) %&gt;%\n  dplyr::filter(LBTESTCD == \"ALT\") %&gt;%\n  utils::head(5)\n\n# A tibble: 5 × 8\n  USUBJID     LBTESTCD LBTEST        LBORRES LBORRESU LBSTRESC LBSTRESN LBSTRESU\n  &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;   \n1 01-701-1015 ALT      Alanine Amin… 27      U/L      27             27 U/L     \n2 01-701-1015 ALT      Alanine Amin… 41      U/L      41             41 U/L     \n3 01-701-1015 ALT      Alanine Amin… 18      U/L      18             18 U/L     \n4 01-701-1015 ALT      Alanine Amin… 26      U/L      26             26 U/L     \n5 01-701-1015 ALT      Alanine Amin… 22      U/L      22             22 U/L     \n\n\n\n\n\n\n\n\nTipWhy Two Result Variables?\n\n\n\n\nORRES/ORRESU: Original result as collected (might be “&lt; 5”, “&gt;100”, or character values)\nSTRESN/STRESU: Standardized numeric result for analysis (handles unit conversions)\n\nThis separation preserves the original data while providing analysis-ready values.",
+    "crumbs": [
+      "Week 1",
+      "Day 2: SDTM Domain Structure & Tidyverse Mastery"
+    ]
+  },
+  {
+    "objectID": "week1/day2.html#tidyverse-mastery-10-essential-transformations",
+    "href": "week1/day2.html#tidyverse-mastery-10-essential-transformations",
+    "title": "Day 2: SDTM Domain Structure & Tidyverse Mastery",
+    "section": "6 Tidyverse Mastery: 10 Essential Transformations",
+    "text": "6 Tidyverse Mastery: 10 Essential Transformations\nThe deliverable for Day 2 is to demonstrate 10 tidyverse transformations. Let’s work through them systematically.\n\n6.1 Transformation 1: filter() with Multiple Conditions\nFilter AEs that are both serious AND severe.\n\n# Complex filtering: Serious AND Severe AEs\nserious_severe_ae &lt;- ae %&gt;%\n  dplyr::filter(AESER == \"Y\" & AESEV == \"SEVERE\")\n\ncat(\"Total AEs:\", nrow(ae), \"\\n\")\n\nTotal AEs: 1191 \n\ncat(\"Serious + Severe AEs:\", nrow(serious_severe_ae), \"\\n\")\n\nSerious + Severe AEs: 2 \n\n# Preview\nserious_severe_ae %&gt;%\n  dplyr::select(USUBJID, AEDECOD, AESEV, AESER) %&gt;%\n  utils::head()\n\n# A tibble: 2 × 4\n  USUBJID     AEDECOD                                        AESEV  AESER\n  &lt;chr&gt;       &lt;chr&gt;                                          &lt;chr&gt;  &lt;chr&gt;\n1 01-718-1170 SYNCOPE                                        SEVERE Y    \n2 01-718-1371 PARTIAL SEIZURES WITH SECONDARY GENERALISATION SEVERE Y    \n\n\n\n\n6.2 Transformation 2: filter() with %in% for Multiple Values\nFilter specific test codes from the lab data.\n\n# Filter for liver function tests\nliver_tests &lt;- c(\"ALT\", \"AST\", \"BILI\", \"ALP\")\n\nlft_data &lt;- lb %&gt;%\n  dplyr::filter(LBTESTCD %in% liver_tests)\n\ncat(\"Total LB records:\", nrow(lb), \"\\n\")\n\nTotal LB records: 59580 \n\ncat(\"Liver function tests:\", nrow(lft_data), \"\\n\")\n\nLiver function tests: 7266 \n\n# Count by test\nlft_data %&gt;%\n  dplyr::count(LBTESTCD, LBTEST)\n\n# A tibble: 4 × 3\n  LBTESTCD LBTEST                         n\n  &lt;chr&gt;    &lt;chr&gt;                      &lt;int&gt;\n1 ALP      Alkaline Phosphatase        1824\n2 ALT      Alanine Aminotransferase    1814\n3 AST      Aspartate Aminotransferase  1814\n4 BILI     Bilirubin                   1814\n\n\n\n\n6.3 Transformation 3: select() with Helper Functions\nUse select helpers to choose columns by pattern.\n\n# Select all date columns from AE\nae_dates &lt;- ae %&gt;%\n  dplyr::select(USUBJID, dplyr::ends_with(\"DTC\"))\n\nnames(ae_dates)\n\n[1] \"USUBJID\" \"AEDTC\"   \"AESTDTC\" \"AEENDTC\"\n\n\n\n# Select all result columns from LB\nlb_results &lt;- lb %&gt;%\n  dplyr::select(USUBJID, LBTESTCD, dplyr::contains(\"RES\"))\n\nnames(lb_results)\n\n[1] \"USUBJID\"  \"LBTESTCD\" \"LBORRES\"  \"LBORRESU\" \"LBSTRESC\" \"LBSTRESN\" \"LBSTRESU\"\n\n\n\n\n6.4 Transformation 4: mutate() with case_when()\nCreate a severity score based on AE severity.\n\n# Create numeric severity score\nae_scored &lt;- ae %&gt;%\n  dplyr::mutate(\n    AESEV_N = dplyr::case_when(\n      AESEV == \"MILD\"     ~ 1L,\n      AESEV == \"MODERATE\" ~ 2L,\n      AESEV == \"SEVERE\"   ~ 3L,\n      TRUE                ~ NA_integer_\n    )\n  )\n\n# Check the mapping\nae_scored %&gt;%\n  dplyr::distinct(AESEV, AESEV_N) %&gt;%\n  dplyr::arrange(AESEV_N)\n\n# A tibble: 3 × 2\n  AESEV    AESEV_N\n  &lt;chr&gt;      &lt;int&gt;\n1 MILD           1\n2 MODERATE       2\n3 SEVERE         3\n\n\n\n\n6.5 Transformation 5: mutate() with across()\nApply transformations to multiple columns at once.\n\n# Convert all character date columns to uppercase (demonstration)\nae_upper &lt;- ae %&gt;%\n  dplyr::mutate(\n    dplyr::across(\n      dplyr::where(is.character),\n      ~ toupper(.x)\n    )\n  )\n\n# This is useful for standardizing text fields\nae_upper %&gt;%\n  dplyr::select(USUBJID, AETERM, AEDECOD) %&gt;%\n  utils::head(3)\n\n# A tibble: 3 × 3\n  USUBJID     AETERM                    AEDECOD                  \n  &lt;chr&gt;       &lt;chr&gt;                     &lt;chr&gt;                    \n1 01-701-1015 APPLICATION SITE ERYTHEMA APPLICATION SITE ERYTHEMA\n2 01-701-1015 APPLICATION SITE PRURITUS APPLICATION SITE PRURITUS\n3 01-701-1015 DIARRHOEA                 DIARRHOEA                \n\n\n\n\n6.6 Transformation 6: group_by() + summarise() - AE Summary by SOC\nThis is the key deliverable: Create an AE summary by System Organ Class.\n\n# AE Summary by System Organ Class (SOC)\nae_soc_summary &lt;- ae %&gt;%\n  dplyr::group_by(AEBODSYS) %&gt;%\n  dplyr::summarise(\n    n_events = dplyr::n(),\n    n_subjects = dplyr::n_distinct(USUBJID),\n    n_serious = sum(AESER == \"Y\", na.rm = TRUE),\n    n_severe = sum(AESEV == \"SEVERE\", na.rm = TRUE),\n    .groups = \"drop\"\n  ) %&gt;%\n  dplyr::arrange(dplyr::desc(n_events))\n\n# Display the summary\nae_soc_summary\n\n# A tibble: 23 × 5\n   AEBODSYS                               n_events n_subjects n_serious n_severe\n   &lt;chr&gt;                                     &lt;int&gt;      &lt;int&gt;     &lt;int&gt;    &lt;int&gt;\n 1 GENERAL DISORDERS AND ADMINISTRATION …      292        108         0       10\n 2 SKIN AND SUBCUTANEOUS TISSUE DISORDERS      276        105         0        6\n 3 NERVOUS SYSTEM DISORDERS                    101         59         3       10\n 4 CARDIAC DISORDERS                            91         44         0        4\n 5 GASTROINTESTINAL DISORDERS                   87         53         0        2\n 6 INFECTIONS AND INFESTATIONS                  73         39         0        1\n 7 RESPIRATORY, THORACIC AND MEDIASTINAL…       53         30         0        0\n 8 INVESTIGATIONS                               40         23         0        0\n 9 PSYCHIATRIC DISORDERS                        40         29         0        2\n10 INJURY, POISONING AND PROCEDURAL COMP…       29         14         0        3\n# ℹ 13 more rows\n\n\n\n\n6.7 Transformation 7: group_by() + summarise() - By Treatment Arm\nSummarize by treatment arm using joined data.\n\n# First, join AE with DM to get treatment arm\nae_with_arm &lt;- ae %&gt;%\n  dplyr::inner_join(\n    dm %&gt;% dplyr::select(USUBJID, ARM),\n    by = \"USUBJID\"\n  )\n\n# Now summarize by treatment arm\nae_arm_summary &lt;- ae_with_arm %&gt;%\n  dplyr::group_by(ARM) %&gt;%\n  dplyr::summarise(\n    n_subjects_with_ae = dplyr::n_distinct(USUBJID),\n    total_aes = dplyr::n(),\n    mean_aes_per_subject = round(dplyr::n() / dplyr::n_distinct(USUBJID), 1),\n    .groups = \"drop\"\n  )\n\nae_arm_summary\n\n# A tibble: 3 × 4\n  ARM                  n_subjects_with_ae total_aes mean_aes_per_subject\n  &lt;chr&gt;                             &lt;int&gt;     &lt;int&gt;                &lt;dbl&gt;\n1 Placebo                              69       301                  4.4\n2 Xanomeline High Dose                 79       455                  5.8\n3 Xanomeline Low Dose                  77       435                  5.6\n\n\n\n\n6.8 Transformation 8: pivot_wider() - Reshape Lab Data\nConvert long lab data to wide format (one row per subject/visit with columns for each test).\n\n# Pivot LB data to wide format\nlb_wide &lt;- lb %&gt;%\n  dplyr::filter(LBTESTCD %in% c(\"ALT\", \"AST\", \"BILI\")) %&gt;%\n  dplyr::select(USUBJID, VISIT, LBTESTCD, LBSTRESN) %&gt;%\n  tidyr::pivot_wider(\n    names_from = LBTESTCD,\n    values_from = LBSTRESN,\n    values_fn = mean  # Handle multiple values per cell\n  )\n\nutils::head(lb_wide, 10)\n\n# A tibble: 10 × 5\n   USUBJID     VISIT         ALT   AST  BILI\n   &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1 01-701-1015 SCREENING 1    27    40 10.3 \n 2 01-701-1015 WEEK 2         41    33  8.55\n 3 01-701-1015 WEEK 4         18    21  6.84\n 4 01-701-1015 WEEK 6         26    26  5.13\n 5 01-701-1015 WEEK 8         22    21  8.55\n 6 01-701-1015 WEEK 12        27    22  6.84\n 7 01-701-1015 WEEK 16        17    23  6.84\n 8 01-701-1015 WEEK 20        21    19  6.84\n 9 01-701-1015 WEEK 24        23    23  6.84\n10 01-701-1015 WEEK 26        23    19  5.13\n\n\n\n\n6.9 Transformation 9: pivot_longer() - Reshape Wide to Long\nConvert wide data back to long format (useful for plotting).\n\n# Pivot back to long format\nlb_long &lt;- lb_wide %&gt;%\n  tidyr::pivot_longer(\n    cols = c(ALT, AST, BILI),\n    names_to = \"LBTESTCD\",\n    values_to = \"LBSTRESN\"\n  ) %&gt;%\n  dplyr::filter(!is.na(LBSTRESN))\n\nutils::head(lb_long, 10)\n\n# A tibble: 10 × 4\n   USUBJID     VISIT       LBTESTCD LBSTRESN\n   &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt;\n 1 01-701-1015 SCREENING 1 ALT         27   \n 2 01-701-1015 SCREENING 1 AST         40   \n 3 01-701-1015 SCREENING 1 BILI        10.3 \n 4 01-701-1015 WEEK 2      ALT         41   \n 5 01-701-1015 WEEK 2      AST         33   \n 6 01-701-1015 WEEK 2      BILI         8.55\n 7 01-701-1015 WEEK 4      ALT         18   \n 8 01-701-1015 WEEK 4      AST         21   \n 9 01-701-1015 WEEK 4      BILI         6.84\n10 01-701-1015 WEEK 6      ALT         26   \n\n\n\n\n6.10 Transformation 10: left_join() + anti_join() - Data Quality Check\nFind subjects with exposure but no adverse events (data quality check).\n\n# Subjects who were dosed (in EX)\nsubjects_dosed &lt;- ex %&gt;%\n  dplyr::distinct(USUBJID)\n\n# Subjects with AEs\nsubjects_with_ae &lt;- ae %&gt;%\n  dplyr::distinct(USUBJID)\n\n# Find dosed subjects with NO AEs\ndosed_no_ae &lt;- subjects_dosed %&gt;%\n  dplyr::anti_join(subjects_with_ae, by = \"USUBJID\")\n\ncat(\"Subjects dosed:\", nrow(subjects_dosed), \"\\n\")\n\nSubjects dosed: 254 \n\ncat(\"Subjects with AEs:\", nrow(subjects_with_ae), \"\\n\")\n\nSubjects with AEs: 225 \n\ncat(\"Dosed subjects with NO AEs:\", nrow(dosed_no_ae), \"\\n\")\n\nDosed subjects with NO AEs: 29",
+    "crumbs": [
+      "Week 1",
+      "Day 2: SDTM Domain Structure & Tidyverse Mastery"
+    ]
+  },
+  {
+    "objectID": "week1/day2.html#advanced-combining-multiple-operations",
+    "href": "week1/day2.html#advanced-combining-multiple-operations",
+    "title": "Day 2: SDTM Domain Structure & Tidyverse Mastery",
+    "section": "7 Advanced: Combining Multiple Operations",
+    "text": "7 Advanced: Combining Multiple Operations\nReal clinical programming often chains many operations together. Here’s a complete example:\n\n# Complete analysis: AE summary by SOC and Treatment Arm\ncomplete_ae_summary &lt;- ae %&gt;%\n  # Join with demographics\n  dplyr::inner_join(\n    dm %&gt;% dplyr::select(USUBJID, ARM, AGE, SEX),\n    by = \"USUBJID\"\n  ) %&gt;%\n  # Create severity score\n  dplyr::mutate(\n    AESEV_N = dplyr::case_when(\n      AESEV == \"MILD\"     ~ 1L,\n      AESEV == \"MODERATE\" ~ 2L,\n      AESEV == \"SEVERE\"   ~ 3L,\n      TRUE                ~ NA_integer_\n    )\n  ) %&gt;%\n  # Group and summarize\n  dplyr::group_by(ARM, AEBODSYS) %&gt;%\n  dplyr::summarise(\n    n_events = dplyr::n(),\n    n_subjects = dplyr::n_distinct(USUBJID),\n    n_serious = sum(AESER == \"Y\", na.rm = TRUE),\n    mean_severity = round(mean(AESEV_N, na.rm = TRUE), 2),\n    .groups = \"drop\"\n  ) %&gt;%\n  # Filter to most common SOCs\n  dplyr::filter(n_events &gt;= 5) %&gt;%\n  # Sort\ndplyr::arrange(ARM, dplyr::desc(n_events))\n\n# Display top results\nutils::head(complete_ae_summary, 15)\n\n# A tibble: 15 × 6\n   ARM     AEBODSYS                  n_events n_subjects n_serious mean_severity\n   &lt;chr&gt;   &lt;chr&gt;                        &lt;int&gt;      &lt;int&gt;     &lt;int&gt;         &lt;dbl&gt;\n 1 Placebo GENERAL DISORDERS AND AD…       48         21         0          1.25\n 2 Placebo SKIN AND SUBCUTANEOUS TI…       47         21         0          1.4 \n 3 Placebo INFECTIONS AND INFESTATI…       35         16         0          1.2 \n 4 Placebo CARDIAC DISORDERS               27         13         0          1.41\n 5 Placebo GASTROINTESTINAL DISORDE…       26         17         0          1.15\n 6 Placebo INVESTIGATIONS                  19         10         0          1.16\n 7 Placebo NERVOUS SYSTEM DISORDERS        16         12         0          1.38\n 8 Placebo RESPIRATORY, THORACIC AN…       15         10         0          1.07\n 9 Placebo PSYCHIATRIC DISORDERS           14         10         0          1.43\n10 Placebo INJURY, POISONING AND PR…        9          4         0          1.44\n11 Placebo EYE DISORDERS                    8          4         0          1.38\n12 Placebo METABOLISM AND NUTRITION…        8          6         0          1.25\n13 Placebo MUSCULOSKELETAL AND CONN…        8          5         0          1.5 \n14 Placebo VASCULAR DISORDERS               7          3         0          1.43\n15 Placebo RENAL AND URINARY DISORD…        5          4         0          1.2",
+    "crumbs": [
+      "Week 1",
+      "Day 2: SDTM Domain Structure & Tidyverse Mastery"
+    ]
+  },
+  {
+    "objectID": "week1/day2.html#day-2-deliverable-summary",
+    "href": "week1/day2.html#day-2-deliverable-summary",
+    "title": "Day 2: SDTM Domain Structure & Tidyverse Mastery",
+    "section": "8 Day 2 Deliverable Summary",
+    "text": "8 Day 2 Deliverable Summary\nToday you completed the following:\n\n\n\nTask\nStatus\n\n\n\n\nUnderstood SDTM domain classes\nDone\n\n\nLearned variable naming conventions\nDone\n\n\nTransformation 1: filter() with multiple conditions\nDone\n\n\nTransformation 2: filter() with %in%\nDone\n\n\nTransformation 3: select() with helper functions\nDone\n\n\nTransformation 4: mutate() with case_when()\nDone\n\n\nTransformation 5: mutate() with across()\nDone\n\n\nTransformation 6: group_by + summarise (AE by SOC)\nDone\n\n\nTransformation 7: Summarize by treatment arm\nDone\n\n\nTransformation 8: pivot_wider()\nDone\n\n\nTransformation 9: pivot_longer()\nDone\n\n\nTransformation 10: anti_join() for data QC\nDone",
+    "crumbs": [
+      "Week 1",
+      "Day 2: SDTM Domain Structure & Tidyverse Mastery"
+    ]
+  },
+  {
+    "objectID": "week1/day2.html#key-takeaways",
+    "href": "week1/day2.html#key-takeaways",
+    "title": "Day 2: SDTM Domain Structure & Tidyverse Mastery",
+    "section": "9 Key Takeaways",
+    "text": "9 Key Takeaways\n\nSDTM has four domain classes: Special Purpose, Events, Interventions, Findings\nVariable naming is systematic: Prefix (domain) + suffix (content type)\n--TESTCD vs --TEST: Short code vs full name\n--ORRES vs --STRESN: Original vs standardized results\nTidyverse is foundational: 50% of clinical programming is dplyr/tidyr operations",
+    "crumbs": [
+      "Week 1",
+      "Day 2: SDTM Domain Structure & Tidyverse Mastery"
+    ]
+  },
+  {
+    "objectID": "week1/day2.html#resources",
+    "href": "week1/day2.html#resources",
+    "title": "Day 2: SDTM Domain Structure & Tidyverse Mastery",
+    "section": "10 Resources",
+    "text": "10 Resources\n\nCDISC SDTM Implementation Guide v3.4 - Official SDTM documentation\ntidyverse.org - Complete tidyverse documentation\npharmaverse blog: ‘The pharmaverse (hi)story’ - Background on pharmaverse development\ndplyr cheatsheet - Quick reference for dplyr",
+    "crumbs": [
+      "Week 1",
+      "Day 2: SDTM Domain Structure & Tidyverse Mastery"
+    ]
+  },
+  {
+    "objectID": "week1/day2.html#whats-next",
+    "href": "week1/day2.html#whats-next",
+    "title": "Day 2: SDTM Domain Structure & Tidyverse Mastery",
+    "section": "11 What’s Next?",
+    "text": "11 What’s Next?\nIn Day 3, we’ll explore:\n\nControlled Terminology and why it matters for submissions\nMedDRA coding and creating lookup tables\nCDISC CT concepts: AESEV, AEREL, AESER values\nHow metacore + metatools automate CT validation",
+    "crumbs": [
+      "Week 1",
+      "Day 2: SDTM Domain Structure & Tidyverse Mastery"
+    ]
+  },
+  {
+    "objectID": "week1/day4.html",
+    "href": "week1/day4.html",
+    "title": "Day 4: Clinical Date Derivations with lubridate",
+    "section": "",
+    "text": "← Back to Roadmap",
+    "crumbs": [
+      "Week 1",
+      "Day 4: Clinical Date Derivations with lubridate"
+    ]
+  },
+  {
+    "objectID": "week1/day4.html#learning-objectives",
+    "href": "week1/day4.html#learning-objectives",
+    "title": "Day 4: Clinical Date Derivations with lubridate",
+    "section": "1 Learning Objectives",
+    "text": "1 Learning Objectives\nBy the end of Day 4, you will be able to:\n\nParse ISO 8601 clinical dates using lubridate\nCalculate Study Days (--DY variables) adhering to CDISC rules (no Day 0)\nCalculate Durations (--DUR) between start and end dates\nHandle Partial Dates (e.g., “2023-05”) using imputation strategies\nCreate reusable functions for date derivations",
+    "crumbs": [
+      "Week 1",
+      "Day 4: Clinical Date Derivations with lubridate"
+    ]
+  },
+  {
+    "objectID": "week1/day4.html#introduction",
+    "href": "week1/day4.html#introduction",
+    "title": "Day 4: Clinical Date Derivations with lubridate",
+    "section": "2 Introduction",
+    "text": "2 Introduction\n\n2.1 Dates in CDISC (ISO 8601)\nCDISC standards use the ISO 8601 format for dates and times: YYYY-MM-DDThh:mm:ss.\n\n\n\nFormat\nExample\nDescription\n\n\n\n\nComplete date\n2024-01-15\nFull date\n\n\nDate + time\n2024-01-15T09:30\nDate with time\n\n\nYear-Month only\n2024-01\nPartial (missing day)\n\n\nYear only\n2024\nPartial (month + day)\n\n\n\n\n\n2.2 The “No Day 0” Rule\nCDISC has a specific rule for calculating Study Days:\n\nDay 1 = Reference date (usually first dose)\nDay -1 = The day before reference date\nThere is NO Day 0\n\n\n\n2.3 The Role of lubridate\nThe lubridate package (part of tidyverse) makes working with dates in R easy. It handles parsing, arithmetic, and formatting much better than base R functions.",
+    "crumbs": [
+      "Week 1",
+      "Day 4: Clinical Date Derivations with lubridate"
+    ]
+  },
+  {
+    "objectID": "week1/day4.html#package-installation-loading",
+    "href": "week1/day4.html#package-installation-loading",
+    "title": "Day 4: Clinical Date Derivations with lubridate",
+    "section": "3 Package Installation & Loading",
+    "text": "3 Package Installation & Loading\n\n3.1 Required Packages\n\n\n\nPackage\nPurpose\n\n\n\n\ndplyr\nData manipulation\n\n\nlubridate\nDate/time manipulation\n\n\npharmaversesdtm\nSource data\n\n\n\n\n\n3.2 Load Packages\n\nlibrary(dplyr)\nlibrary(lubridate)\nlibrary(pharmaversesdtm)\n\n# Load the data we'll use\ndata(\"ae\", package = \"pharmaversesdtm\")\ndata(\"dm\", package = \"pharmaversesdtm\")",
+    "crumbs": [
+      "Week 1",
+      "Day 4: Clinical Date Derivations with lubridate"
+    ]
+  },
+  {
+    "objectID": "week1/day4.html#part-1-basic-date-parsing",
+    "href": "week1/day4.html#part-1-basic-date-parsing",
+    "title": "Day 4: Clinical Date Derivations with lubridate",
+    "section": "4 Part 1: Basic Date Parsing",
+    "text": "4 Part 1: Basic Date Parsing\nFirst, let’s learn how to convert character strings (which SDTM dates always are) into actual Date objects in R.\n\n4.1 Parsing Complete Dates\n\n# Use ymd() for Year-Month-Day strings\ndate_str &lt;- \"2024-01-15\"\ndate_obj &lt;- ymd(date_str)\n\ncat(\"Original string:\", date_str, \"\\n\")\n\nOriginal string: 2024-01-15 \n\ncat(\"Parsed date:\", as.character(date_obj), \"\\n\")\n\nParsed date: 2024-01-15 \n\ncat(\"Class:\", class(date_obj), \"\\n\")\n\nClass: Date \n\n\n\n\n4.2 Parsing Dates with Times\n\n# ymd_hms() for full datetime\ndatetime_full &lt;- \"2024-01-15T14:30:00\"\nymd_hms(datetime_full)\n\n[1] \"2024-01-15 14:30:00 UTC\"\n\n# ymd_hm() when seconds are missing\ndatetime_short &lt;- \"2024-01-15T14:30\"\nymd_hm(datetime_short)\n\n[1] \"2024-01-15 14:30:00 UTC\"\n\n\n\n\n4.3 Extracting Date Components\n\nsample_date &lt;- ymd(\"2024-03-15\")\n\ncat(\"Year:\", year(sample_date), \"\\n\")\n\nYear: 2024 \n\ncat(\"Month:\", month(sample_date), \"\\n\")\n\nMonth: 3 \n\ncat(\"Day:\", day(sample_date), \"\\n\")\n\nDay: 15 \n\ncat(\"Weekday:\", wday(sample_date, label = TRUE), \"\\n\")\n\nWeekday: 6",
+    "crumbs": [
+      "Week 1",
+      "Day 4: Clinical Date Derivations with lubridate"
+    ]
+  },
+  {
+    "objectID": "week1/day4.html#part-2-calculating-study-day---dy",
+    "href": "week1/day4.html#part-2-calculating-study-day---dy",
+    "title": "Day 4: Clinical Date Derivations with lubridate",
+    "section": "5 Part 2: Calculating Study Day (--DY)",
+    "text": "5 Part 2: Calculating Study Day (--DY)\nThe Study Day (--DY) indicates the number of days from the Reference Start Date (RFSTDTC).\n\n5.1 The Formula\nIf event_date &gt;= reference_date:\n    Study Day = (event_date - reference_date) + 1\n\nIf event_date &lt; reference_date:\n    Study Day = (event_date - reference_date)\n\n\n5.2 Creating a Reusable Function\nThis function can be reused across all your SDTM and ADaM programs.\n\n#' Derive Study Day following CDISC \"No Day 0\" convention\n#' \n#' @param event_date Date of the event\n#' @param reference_date Reference start date (usually RFSTDTC)\n#' @return Integer study day (positive = on/after ref, negative = before ref)\nderive_study_day &lt;- function(event_date, reference_date) {\n  # Calculate raw difference in days\n  diff_days &lt;- as.numeric(event_date - reference_date)\n  \n  # Apply \"No Day 0\" rule\n  study_day &lt;- ifelse(diff_days &gt;= 0, diff_days + 1, diff_days)\n  \n  return(as.integer(study_day))\n}\n\n# Test the function\ntest_ref &lt;- ymd(\"2024-01-01\")\ntest_dates &lt;- c(\"2023-12-30\", \"2023-12-31\", \"2024-01-01\", \"2024-01-02\", \"2024-01-05\")\n\ndata.frame(\n  Event_Date = test_dates,\n  Reference = \"2024-01-01\",\n  Study_Day = derive_study_day(ymd(test_dates), test_ref)\n)\n\n  Event_Date  Reference Study_Day\n1 2023-12-30 2024-01-01        -2\n2 2023-12-31 2024-01-01        -1\n3 2024-01-01 2024-01-01         1\n4 2024-01-02 2024-01-01         2\n5 2024-01-05 2024-01-01         5\n\n\n\n\n\n\n\n\nNoteNotice the “No Day 0”\n\n\n\nLook at the output above: Day -2, Day -1, Day 1, Day 2, Day 5. There is no Day 0!\n\n\n\n\n5.3 Applying to Real Data: Derive AESTDY\n\n# Merge RFSTDTC from DM into AE\nae_with_ref &lt;- ae %&gt;%\n  select(USUBJID, AESEQ, AESTDTC, AEENDTC) %&gt;%\n  inner_join(\n    dm %&gt;% select(USUBJID, RFSTDTC),\n    by = \"USUBJID\"\n  ) %&gt;%\n  # Filter to complete dates only (length &gt;= 10)\n  filter(nchar(AESTDTC) &gt;= 10 & nchar(RFSTDTC) &gt;= 10)\n\n# Apply our function\nae_study_days &lt;- ae_with_ref %&gt;%\n  mutate(\n    AE_DT = ymd(substring(AESTDTC, 1, 10)),\n    REF_DT = ymd(substring(RFSTDTC, 1, 10)),\n    AESTDY = derive_study_day(AE_DT, REF_DT)\n  )\n\n# Preview\nae_study_days %&gt;%\n  select(USUBJID, AESTDTC, RFSTDTC, AESTDY) %&gt;%\n  head(10)\n\n# A tibble: 10 × 4\n   USUBJID     AESTDTC    RFSTDTC    AESTDY\n   &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;       &lt;int&gt;\n 1 01-701-1015 2014-01-03 2014-01-02      2\n 2 01-701-1015 2014-01-03 2014-01-02      2\n 3 01-701-1015 2014-01-09 2014-01-02      8\n 4 01-701-1023 2012-08-26 2012-08-05     22\n 5 01-701-1023 2012-08-07 2012-08-05      3\n 6 01-701-1023 2012-08-07 2012-08-05      3\n 7 01-701-1023 2012-08-07 2012-08-05      3\n 8 01-701-1028 2013-07-21 2013-07-19      3\n 9 01-701-1028 2013-08-08 2013-07-19     21\n10 01-701-1034 2014-08-27 2014-07-01     58",
+    "crumbs": [
+      "Week 1",
+      "Day 4: Clinical Date Derivations with lubridate"
+    ]
+  },
+  {
+    "objectID": "week1/day4.html#part-3-calculating-duration---dur",
+    "href": "week1/day4.html#part-3-calculating-duration---dur",
+    "title": "Day 4: Clinical Date Derivations with lubridate",
+    "section": "6 Part 3: Calculating Duration (--DUR)",
+    "text": "6 Part 3: Calculating Duration (--DUR)\nDuration is typically: \\(EndDate - StartDate + 1\\) (inclusive of both days).\n\n6.1 Duration in Days\n\n# Filter for records with both start and end dates\nae_dur &lt;- ae %&gt;%\n  select(USUBJID, AESEQ, AESTDTC, AEENDTC) %&gt;%\n  filter(nchar(AESTDTC) &gt;= 10 & nchar(AEENDTC) &gt;= 10) %&gt;%\n  mutate(\n    START_DT = ymd(substring(AESTDTC, 1, 10)),\n    END_DT = ymd(substring(AEENDTC, 1, 10)),\n    \n    # Duration in days (inclusive)\n    AEDUR = as.integer(END_DT - START_DT) + 1L\n  )\n\nae_dur %&gt;%\n  select(USUBJID, AESTDTC, AEENDTC, AEDUR) %&gt;%\n  head(10)\n\n# A tibble: 10 × 4\n   USUBJID     AESTDTC    AEENDTC    AEDUR\n   &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;      &lt;int&gt;\n 1 01-701-1015 2014-01-09 2014-01-11     3\n 2 01-701-1023 2012-08-07 2012-08-30    24\n 3 01-701-1023 2012-08-07 2012-08-30    24\n 4 01-701-1047 2013-02-12 2013-02-12     1\n 5 01-701-1047 2013-02-12 2013-02-12     1\n 6 01-701-1097 2014-02-20 2014-02-22     3\n 7 01-701-1097 2014-04-19 2014-04-22     4\n 8 01-701-1097 2014-04-19 2014-04-22     4\n 9 01-701-1097 2014-02-20 2014-02-20     1\n10 01-701-1097 2014-03-21 2014-03-21     1\n\n\n\n\n6.2 Duration Statistics\n\nae_dur %&gt;%\n  summarise(\n    N = n(),\n    Mean_Duration = round(mean(AEDUR, na.rm = TRUE), 1),\n    Median_Duration = median(AEDUR, na.rm = TRUE),\n    Min = min(AEDUR, na.rm = TRUE),\n    Max = max(AEDUR, na.rm = TRUE)\n  )\n\n# A tibble: 1 × 5\n      N Mean_Duration Median_Duration   Min   Max\n  &lt;int&gt;         &lt;dbl&gt;           &lt;dbl&gt; &lt;int&gt; &lt;int&gt;\n1   714          23.8              11     1   444",
+    "crumbs": [
+      "Week 1",
+      "Day 4: Clinical Date Derivations with lubridate"
+    ]
+  },
+  {
+    "objectID": "week1/day4.html#part-4-handling-partial-dates",
+    "href": "week1/day4.html#part-4-handling-partial-dates",
+    "title": "Day 4: Clinical Date Derivations with lubridate",
+    "section": "7 Part 4: Handling Partial Dates",
+    "text": "7 Part 4: Handling Partial Dates\nIn clinical data, dates are often partial (e.g., “2023-06” or just “2023”). We cannot calculate durations or study days without imputing these to full dates.\n\n7.1 Common Imputation Strategies\n\n\n\n\n\n\n\n\n\nDate Type\nMissing Parts\nStart Date Imputation\nEnd Date Imputation\n\n\n\n\nYear-Month\nDay\n01 (first)\nLast day of month\n\n\nYear only\nMonth + Day\n01-01\n12-31\n\n\n\n\n\n7.2 Reusable Imputation Functions\n\n#' Impute partial START dates (conservative: use earliest possible date)\n#' \n#' @param date_str Character date string in ISO 8601 format\n#' @return Character string with complete date\nimpute_start_date &lt;- function(date_str) {\n  dplyr::case_when(\n    is.na(date_str) | date_str == \"\" ~ NA_character_,\n    # Only Year (YYYY) -&gt; YYYY-01-01\n    nchar(date_str) == 4 ~ paste0(date_str, \"-01-01\"),\n    # Year-Month (YYYY-MM) -&gt; YYYY-MM-01\n    nchar(date_str) == 7 ~ paste0(date_str, \"-01\"),\n    # Full date -&gt; Keep first 10 characters\n    TRUE ~ substring(date_str, 1, 10)\n  )\n}\n\n#' Impute partial END dates (conservative: use latest possible date)\n#' \n#' @param date_str Character date string in ISO 8601 format\n#' @return Character string with complete date\nimpute_end_date &lt;- function(date_str) {\n  dplyr::case_when(\n    is.na(date_str) | date_str == \"\" ~ NA_character_,\n    # Only Year (YYYY) -&gt; YYYY-12-31\n    nchar(date_str) == 4 ~ paste0(date_str, \"-12-31\"),\n    # Year-Month (YYYY-MM) -&gt; Last day of that month\n    nchar(date_str) == 7 ~ {\n      # Parse as first of month, then get last day\n      first_of_month &lt;- ymd(paste0(date_str, \"-01\"))\n      last_of_month &lt;- ceiling_date(first_of_month, \"month\") - days(1)\n      as.character(last_of_month)\n    },\n    # Full date -&gt; Keep first 10 characters\n    TRUE ~ substring(date_str, 1, 10)\n  )\n}\n\n\n\n7.3 Testing the Imputation Functions\n\n# Test cases with various partial dates\ntest_dates &lt;- c(\"2023-05-12\", \"2023-05\", \"2023\", \"2023-02\", NA)\n\ndata.frame(\n  Original = test_dates,\n  Imputed_Start = impute_start_date(test_dates),\n  Imputed_End = impute_end_date(test_dates)\n)\n\n    Original Imputed_Start Imputed_End\n1 2023-05-12    2023-05-12  2023-05-12\n2    2023-05    2023-05-01  2023-05-31\n3       2023    2023-01-01  2023-12-31\n4    2023-02    2023-02-01  2023-02-28\n5       &lt;NA&gt;          &lt;NA&gt;        &lt;NA&gt;\n\n\n\n\n\n\n\n\nTipWhy Different Imputation Rules?\n\n\n\n\nFor start dates, we impute to the earliest possible date to be conservative about when something started.\nFor end dates, we impute to the latest possible date to be conservative about when something ended.\nThis approach ensures we don’t underestimate durations or miss events.",
+    "crumbs": [
+      "Week 1",
+      "Day 4: Clinical Date Derivations with lubridate"
+    ]
+  },
+  {
+    "objectID": "week1/day4.html#part-5-complete-exercise---derive-aestdy-and-aeendy",
+    "href": "week1/day4.html#part-5-complete-exercise---derive-aestdy-and-aeendy",
+    "title": "Day 4: Clinical Date Derivations with lubridate",
+    "section": "8 Part 5: Complete Exercise - Derive AESTDY and AEENDY",
+    "text": "8 Part 5: Complete Exercise - Derive AESTDY and AEENDY\nLet’s bring everything together with a complete derivation.\n\n# Full AE date derivation workflow\nae_dates_complete &lt;- ae %&gt;%\n  select(USUBJID, AESEQ, AETERM, AESTDTC, AEENDTC) %&gt;%\n  # Join reference date\n  inner_join(\n    dm %&gt;% select(USUBJID, RFSTDTC),\n    by = \"USUBJID\"\n  ) %&gt;%\n  mutate(\n    # Impute partial dates\n    AESTDTC_IMP = impute_start_date(AESTDTC),\n    AEENDTC_IMP = impute_end_date(AEENDTC),\n    RFSTDTC_IMP = impute_start_date(RFSTDTC),\n    \n    # Create imputation flags (for traceability)\n    AESTDTF = ifelse(nchar(AESTDTC) &lt; 10, \"D\", NA_character_),\n    AEENDTF = ifelse(nchar(AEENDTC) &lt; 10, \"D\", NA_character_),\n    \n    # Parse dates\n    ASTDT = ymd(AESTDTC_IMP),\n    AENDT = ymd(AEENDTC_IMP),\n    RFSTDT = ymd(RFSTDTC_IMP),\n    \n    # Derive study days\n    AESTDY = derive_study_day(ASTDT, RFSTDT),\n    AEENDY = derive_study_day(AENDT, RFSTDT),\n    \n    # Derive duration\n    AEDUR = ifelse(!is.na(ASTDT) & !is.na(AENDT),\n                   as.integer(AENDT - ASTDT) + 1L,\n                   NA_integer_)\n  )\n\n# Preview key results\nae_dates_complete %&gt;%\n  select(USUBJID, AETERM, AESTDY, AEENDY, AEDUR, AESTDTF) %&gt;%\n  head(15)\n\n# A tibble: 15 × 6\n   USUBJID     AETERM                               AESTDY AEENDY AEDUR AESTDTF\n   &lt;chr&gt;       &lt;chr&gt;                                 &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;chr&gt;  \n 1 01-701-1015 APPLICATION SITE ERYTHEMA                 2     NA    NA &lt;NA&gt;   \n 2 01-701-1015 APPLICATION SITE PRURITUS                 2     NA    NA &lt;NA&gt;   \n 3 01-701-1015 DIARRHOEA                                 8     10     3 &lt;NA&gt;   \n 4 01-701-1023 ATRIOVENTRICULAR BLOCK SECOND DEGREE     22     NA    NA &lt;NA&gt;   \n 5 01-701-1023 ERYTHEMA                                  3     26    24 &lt;NA&gt;   \n 6 01-701-1023 ERYTHEMA                                  3     NA    NA &lt;NA&gt;   \n 7 01-701-1023 ERYTHEMA                                  3     26    24 &lt;NA&gt;   \n 8 01-701-1028 APPLICATION SITE ERYTHEMA                 3     NA    NA &lt;NA&gt;   \n 9 01-701-1028 APPLICATION SITE PRURITUS                21     NA    NA &lt;NA&gt;   \n10 01-701-1034 APPLICATION SITE PRURITUS                58     NA    NA &lt;NA&gt;   \n11 01-701-1034 FATIGUE                                 125     NA    NA &lt;NA&gt;   \n12 01-701-1047 BUNDLE BRANCH BLOCK LEFT                 27     NA    NA &lt;NA&gt;   \n13 01-701-1047 HIATUS HERNIA                             1      1     1 &lt;NA&gt;   \n14 01-701-1047 HIATUS HERNIA                             1      1     1 &lt;NA&gt;   \n15 01-701-1047 UPPER RESPIRATORY TRACT INFECTION        23     NA    NA &lt;NA&gt;   \n\n\n\n8.1 Summary Statistics\n\nae_dates_complete %&gt;%\n  summarise(\n    Total_Records = n(),\n    Records_with_AESTDY = sum(!is.na(AESTDY)),\n    Records_with_AEENDY = sum(!is.na(AEENDY)),\n    Imputed_Start = sum(!is.na(AESTDTF)),\n    Mean_Duration = round(mean(AEDUR, na.rm = TRUE), 1)\n  )\n\n# A tibble: 1 × 5\n  Total_Records Records_with_AESTDY Records_with_AEENDY Imputed_Start\n          &lt;int&gt;               &lt;int&gt;               &lt;int&gt;         &lt;int&gt;\n1          1191                1191                 718            26\n# ℹ 1 more variable: Mean_Duration &lt;dbl&gt;",
+    "crumbs": [
+      "Week 1",
+      "Day 4: Clinical Date Derivations with lubridate"
+    ]
+  },
+  {
+    "objectID": "week1/day4.html#practice-exercise",
+    "href": "week1/day4.html#practice-exercise",
+    "title": "Day 4: Clinical Date Derivations with lubridate",
+    "section": "9 🎯 Practice Exercise",
+    "text": "9 🎯 Practice Exercise\n\n9.1 Your Turn: Apply to Exposure (EX) Domain\nUsing the functions we created, derive study days for the Exposure domain.\n\ndata(\"ex\", package = \"pharmaversesdtm\")\n\n# TODO: Complete the following\nex_dates &lt;- ex %&gt;%\n  select(USUBJID, EXSEQ, EXSTDTC, EXENDTC) %&gt;%\n  inner_join(\n    dm %&gt;% select(USUBJID, RFSTDTC),\n    by = \"USUBJID\"\n  ) %&gt;%\n  mutate(\n    # Step 1: Impute dates\n    # EXSTDTC_IMP = ???\n    # EXENDTC_IMP = ???\n    \n    # Step 2: Parse dates\n    # EXSTDT = ???\n    # EXENDT = ???\n    \n    # Step 3: Derive study days\n    # EXSTDY = ???\n    # EXENDY = ???\n  )\n\n# Check your results\nhead(ex_dates)",
+    "crumbs": [
+      "Week 1",
+      "Day 4: Clinical Date Derivations with lubridate"
+    ]
+  },
+  {
+    "objectID": "week1/day4.html#deliverable-summary",
+    "href": "week1/day4.html#deliverable-summary",
+    "title": "Day 4: Clinical Date Derivations with lubridate",
+    "section": "10 Deliverable Summary",
+    "text": "10 Deliverable Summary\nToday you completed the following:\n\n\n\nTask\nStatus\n\n\n\n\nParsed ISO 8601 dates with lubridate\n✓ Done\n\n\nCreated derive_study_day() function\n✓ Done\n\n\nCreated impute_start_date() function\n✓ Done\n\n\nCreated impute_end_date() function\n✓ Done\n\n\nDerived AESTDY, AEENDY, AEDUR from AE\n✓ Done",
+    "crumbs": [
+      "Week 1",
+      "Day 4: Clinical Date Derivations with lubridate"
+    ]
+  },
+  {
+    "objectID": "week1/day4.html#key-takeaways",
+    "href": "week1/day4.html#key-takeaways",
+    "title": "Day 4: Clinical Date Derivations with lubridate",
+    "section": "11 Key Takeaways",
+    "text": "11 Key Takeaways\n\nISO 8601 (YYYY-MM-DD) is the standard format.\nNo Day 0: Day -1 is immediately followed by Day 1.\nReusable Functions: Create functions for derivations you’ll use repeatedly.\nImputation Flags: Use --DTF variables to indicate imputed dates.\nDocumentation: Comment your logic for traceability.",
+    "crumbs": [
+      "Week 1",
+      "Day 4: Clinical Date Derivations with lubridate"
+    ]
+  },
+  {
+    "objectID": "week1/day4.html#resources",
+    "href": "week1/day4.html#resources",
+    "title": "Day 4: Clinical Date Derivations with lubridate",
+    "section": "12 Resources",
+    "text": "12 Resources\n\nlubridate Cheatsheet\nCDISC SDTM Date Conventions\nadmiral derive_vars_dt() Vignette",
+    "crumbs": [
+      "Week 1",
+      "Day 4: Clinical Date Derivations with lubridate"
+    ]
+  },
+  {
+    "objectID": "week1/day4.html#whats-next",
+    "href": "week1/day4.html#whats-next",
+    "title": "Day 4: Clinical Date Derivations with lubridate",
+    "section": "13 What’s Next?",
+    "text": "13 What’s Next?\nIn Day 5, we will move to Advanced Tidyverse operations:\n\nReshaping data with pivot_wider() and pivot_longer()\nCreating analysis-ready datasets\nPerforming complex joins for QC",
+    "crumbs": [
+      "Week 1",
+      "Day 4: Clinical Date Derivations with lubridate"
+    ]
+  },
+  {
+    "objectID": "week1/day6.html",
+    "href": "week1/day6.html",
+    "title": "Day 6: Introduction to sdtm.oak",
+    "section": "",
+    "text": "← Back to Roadmap",
+    "crumbs": [
+      "Week 1",
+      "Day 6: Introduction to sdtm.oak"
+    ]
+  },
+  {
+    "objectID": "week1/day6.html#learning-objectives",
+    "href": "week1/day6.html#learning-objectives",
+    "title": "Day 6: Introduction to sdtm.oak",
+    "section": "1 Learning Objectives",
+    "text": "1 Learning Objectives\nBy the end of Day 6, you will be able to:\n\nUnderstand the philosophy of sdtm.oak for SDTM generation\nSimulate “Raw” EDC datasets for both VS and LB\nApply algorithm-based transformations (mapping, pivoting, hardcoding)\nPerform unit standardization (e.g., mg/dL to mmol/L)\nCreate a complete SDTM LB domain with sequence numbers",
+    "crumbs": [
+      "Week 1",
+      "Day 6: Introduction to sdtm.oak"
+    ]
+  },
+  {
+    "objectID": "week1/day6.html#introduction",
+    "href": "week1/day6.html#introduction",
+    "title": "Day 6: Introduction to sdtm.oak",
+    "section": "2 Introduction",
+    "text": "2 Introduction\n\n2.1 What is sdtm.oak?\nsdtm.oak is a pharmaverse package that provides a standardized, algorithm-based approach to creating SDTM datasets. Key concepts:\n\nAlgorithm-based: Instead of custom code, use reusable algorithms\nMetadata-driven: Transformations defined in specifications\nModular: Small, testable functions that can be chained\n\n\n\n2.2 The sdtm.oak Philosophy\n\n\n\n\n\n\n\n\nAlgorithm\nDescription\nExample Use\n\n\n\n\nAssign\nCopy source to target\nSubject ID → USUBJID\n\n\nHardcode\nSet a constant value\nDOMAIN = “LB”\n\n\nCondition\nApply logic based on condition\nIf severity &gt;= 3 then “Y”\n\n\nAssign CT\nMap to Controlled Terminology\n“Male” → “M”\n\n\n\nNote: We’ll simulate sdtm.oak patterns using dplyr/tidyr to understand the concepts.",
+    "crumbs": [
+      "Week 1",
+      "Day 6: Introduction to sdtm.oak"
+    ]
+  },
+  {
+    "objectID": "week1/day6.html#package-loading",
+    "href": "week1/day6.html#package-loading",
+    "title": "Day 6: Introduction to sdtm.oak",
+    "section": "3 Package Loading",
+    "text": "3 Package Loading\n\nlibrary(dplyr)\nlibrary(tidyr)\nlibrary(tibble)\nlibrary(lubridate)",
+    "crumbs": [
+      "Week 1",
+      "Day 6: Introduction to sdtm.oak"
+    ]
+  },
+  {
+    "objectID": "week1/day6.html#part-1-simulating-raw-edc-data",
+    "href": "week1/day6.html#part-1-simulating-raw-edc-data",
+    "title": "Day 6: Introduction to sdtm.oak",
+    "section": "4 Part 1: Simulating Raw EDC Data",
+    "text": "4 Part 1: Simulating Raw EDC Data\n\n4.1 Raw Vital Signs Data\nFirst, let’s create data that looks like it came from an Electronic Data Capture (EDC) system like Rave or Veeva.\n\n# Simulated Raw Vital Signs (EDC export format)\nraw_vs &lt;- tribble(\n  ~SubjectID,  ~Site, ~Visit,       ~Date,        ~SysBP, ~DiaBP, ~Pulse, ~Temp_C,\n  \"001\",       \"101\", \"Screening\",  \"2024-01-01\", 120,    80,     72,     36.5,\n  \"001\",       \"101\", \"Baseline\",   \"2024-01-15\", 118,    78,     70,     36.8,\n  \"001\",       \"101\", \"Week 4\",     \"2024-02-12\", 115,    76,     68,     36.6,\n  \"002\",       \"101\", \"Screening\",  \"2024-01-02\", 130,    85,     88,     37.0,\n  \"002\",       \"101\", \"Baseline\",   \"2024-01-16\", 128,    82,     85,     36.7,\n  \"003\",       \"102\", \"Screening\",  \"2024-01-03\", 145,    92,     95,     36.9,\n  \"003\",       \"102\", \"Baseline\",   \"2024-01-17\", 140,    88,     90,     36.5\n)\n\nprint(raw_vs)\n\n# A tibble: 7 × 8\n  SubjectID Site  Visit     Date       SysBP DiaBP Pulse Temp_C\n  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;\n1 001       101   Screening 2024-01-01   120    80    72   36.5\n2 001       101   Baseline  2024-01-15   118    78    70   36.8\n3 001       101   Week 4    2024-02-12   115    76    68   36.6\n4 002       101   Screening 2024-01-02   130    85    88   37  \n5 002       101   Baseline  2024-01-16   128    82    85   36.7\n6 003       102   Screening 2024-01-03   145    92    95   36.9\n7 003       102   Baseline  2024-01-17   140    88    90   36.5\n\n\n\n\n4.2 Raw Laboratory Data\nNow let’s create lab data with values in different units that need standardization.\n\n# Simulated Raw Lab Data (with different units per site)\nraw_lb &lt;- tribble(\n  ~SubjectID,  ~Site, ~Visit,      ~Date,        ~Test,        ~Result, ~Unit,\n  # Site 101: Uses US units\n  \"001\",       \"101\", \"Screening\", \"2024-01-01\", \"Glucose\",    95,      \"mg/dL\",\n  \"001\",       \"101\", \"Screening\", \"2024-01-01\", \"Cholesterol\", 180,    \"mg/dL\",\n  \"001\",       \"101\", \"Screening\", \"2024-01-01\", \"ALT\",        25,      \"U/L\",\n  \"001\",       \"101\", \"Baseline\",  \"2024-01-15\", \"Glucose\",    92,      \"mg/dL\",\n  \"001\",       \"101\", \"Baseline\",  \"2024-01-15\", \"Cholesterol\", 175,    \"mg/dL\",\n  \"001\",       \"101\", \"Baseline\",  \"2024-01-15\", \"ALT\",        28,      \"U/L\",\n  \"002\",       \"101\", \"Screening\", \"2024-01-02\", \"Glucose\",    110,     \"mg/dL\",\n  \"002\",       \"101\", \"Screening\", \"2024-01-02\", \"Cholesterol\", 220,    \"mg/dL\",\n  \"002\",       \"101\", \"Screening\", \"2024-01-02\", \"ALT\",        45,      \"U/L\",\n  # Site 102: Uses SI units\n  \"003\",       \"102\", \"Screening\", \"2024-01-03\", \"Glucose\",    5.5,     \"mmol/L\",\n  \"003\",       \"102\", \"Screening\", \"2024-01-03\", \"Cholesterol\", 4.8,    \"mmol/L\",\n  \"003\",       \"102\", \"Screening\", \"2024-01-03\", \"ALT\",        30,      \"U/L\",\n  \"003\",       \"102\", \"Baseline\",  \"2024-01-17\", \"Glucose\",    5.2,     \"mmol/L\",\n  \"003\",       \"102\", \"Baseline\",  \"2024-01-17\", \"Cholesterol\", 4.5,    \"mmol/L\",\n  \"003\",       \"102\", \"Baseline\",  \"2024-01-17\", \"ALT\",        32,      \"U/L\"\n)\n\nprint(raw_lb)\n\n# A tibble: 15 × 7\n   SubjectID Site  Visit     Date       Test        Result Unit  \n   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt; \n 1 001       101   Screening 2024-01-01 Glucose       95   mg/dL \n 2 001       101   Screening 2024-01-01 Cholesterol  180   mg/dL \n 3 001       101   Screening 2024-01-01 ALT           25   U/L   \n 4 001       101   Baseline  2024-01-15 Glucose       92   mg/dL \n 5 001       101   Baseline  2024-01-15 Cholesterol  175   mg/dL \n 6 001       101   Baseline  2024-01-15 ALT           28   U/L   \n 7 002       101   Screening 2024-01-02 Glucose      110   mg/dL \n 8 002       101   Screening 2024-01-02 Cholesterol  220   mg/dL \n 9 002       101   Screening 2024-01-02 ALT           45   U/L   \n10 003       102   Screening 2024-01-03 Glucose        5.5 mmol/L\n11 003       102   Screening 2024-01-03 Cholesterol    4.8 mmol/L\n12 003       102   Screening 2024-01-03 ALT           30   U/L   \n13 003       102   Baseline  2024-01-17 Glucose        5.2 mmol/L\n14 003       102   Baseline  2024-01-17 Cholesterol    4.5 mmol/L\n15 003       102   Baseline  2024-01-17 ALT           32   U/L",
+    "crumbs": [
+      "Week 1",
+      "Day 6: Introduction to sdtm.oak"
+    ]
+  },
+  {
+    "objectID": "week1/day6.html#part-2-creating-sdtm-vs-domain",
+    "href": "week1/day6.html#part-2-creating-sdtm-vs-domain",
+    "title": "Day 6: Introduction to sdtm.oak",
+    "section": "5 Part 2: Creating SDTM VS Domain",
+    "text": "5 Part 2: Creating SDTM VS Domain\n\n5.1 Step 1: Hardcode Standard Variables\n\n# Algorithm: Hardcode\nvs_step1 &lt;- raw_vs %&gt;%\n  mutate(\n    STUDYID = \"DEMO-001\",\n    DOMAIN = \"VS\",\n    # Algorithm: Assign (concatenate)\n    USUBJID = paste(STUDYID, Site, SubjectID, sep = \"-\")\n  )\n\nhead(vs_step1)\n\n# A tibble: 6 × 11\n  SubjectID Site  Visit    Date  SysBP DiaBP Pulse Temp_C STUDYID DOMAIN USUBJID\n  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;  \n1 001       101   Screeni… 2024…   120    80    72   36.5 DEMO-0… VS     DEMO-0…\n2 001       101   Baseline 2024…   118    78    70   36.8 DEMO-0… VS     DEMO-0…\n3 001       101   Week 4   2024…   115    76    68   36.6 DEMO-0… VS     DEMO-0…\n4 002       101   Screeni… 2024…   130    85    88   37   DEMO-0… VS     DEMO-0…\n5 002       101   Baseline 2024…   128    82    85   36.7 DEMO-0… VS     DEMO-0…\n6 003       102   Screeni… 2024…   145    92    95   36.9 DEMO-0… VS     DEMO-0…\n\n\n\n\n5.2 Step 2: Pivot to Long Format (Findings Algorithm)\nSDTM Findings domains are long (one row per test per visit).\n\n# Algorithm: Transpose/Pivot\nvs_step2 &lt;- vs_step1 %&gt;%\n  pivot_longer(\n    cols = c(SysBP, DiaBP, Pulse, Temp_C),\n    names_to = \"RAW_TEST\",\n    values_to = \"VSORRES_NUM\"\n  )\n\nhead(vs_step2, 10)\n\n# A tibble: 10 × 9\n   SubjectID Site  Visit     Date    STUDYID DOMAIN USUBJID RAW_TEST VSORRES_NUM\n   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n 1 001       101   Screening 2024-0… DEMO-0… VS     DEMO-0… SysBP          120  \n 2 001       101   Screening 2024-0… DEMO-0… VS     DEMO-0… DiaBP           80  \n 3 001       101   Screening 2024-0… DEMO-0… VS     DEMO-0… Pulse           72  \n 4 001       101   Screening 2024-0… DEMO-0… VS     DEMO-0… Temp_C          36.5\n 5 001       101   Baseline  2024-0… DEMO-0… VS     DEMO-0… SysBP          118  \n 6 001       101   Baseline  2024-0… DEMO-0… VS     DEMO-0… DiaBP           78  \n 7 001       101   Baseline  2024-0… DEMO-0… VS     DEMO-0… Pulse           70  \n 8 001       101   Baseline  2024-0… DEMO-0… VS     DEMO-0… Temp_C          36.8\n 9 001       101   Week 4    2024-0… DEMO-0… VS     DEMO-0… SysBP          115  \n10 001       101   Week 4    2024-0… DEMO-0… VS     DEMO-0… DiaBP           76  \n\n\n\n\n5.3 Step 3: Map to Controlled Terminology\n\n# Algorithm: Assign CT (Map test codes)\nvs_step3 &lt;- vs_step2 %&gt;%\n  mutate(\n    # Controlled Terminology mapping\n    VSTESTCD = case_when(\n      RAW_TEST == \"SysBP\"  ~ \"SYSBP\",\n      RAW_TEST == \"DiaBP\"  ~ \"DIABP\",\n      RAW_TEST == \"Pulse\"  ~ \"PULSE\",\n      RAW_TEST == \"Temp_C\" ~ \"TEMP\"\n    ),\n    VSTEST = case_when(\n      VSTESTCD == \"SYSBP\" ~ \"Systolic Blood Pressure\",\n      VSTESTCD == \"DIABP\" ~ \"Diastolic Blood Pressure\",\n      VSTESTCD == \"PULSE\" ~ \"Pulse Rate\",\n      VSTESTCD == \"TEMP\"  ~ \"Temperature\"\n    ),\n    VSORRESU = case_when(\n      VSTESTCD %in% c(\"SYSBP\", \"DIABP\") ~ \"mmHg\",\n      VSTESTCD == \"PULSE\" ~ \"BEATS/MIN\",\n      VSTESTCD == \"TEMP\"  ~ \"C\"\n    )\n  )\n\nhead(vs_step3)\n\n# A tibble: 6 × 12\n  SubjectID Site  Visit     Date     STUDYID DOMAIN USUBJID RAW_TEST VSORRES_NUM\n  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 001       101   Screening 2024-01… DEMO-0… VS     DEMO-0… SysBP          120  \n2 001       101   Screening 2024-01… DEMO-0… VS     DEMO-0… DiaBP           80  \n3 001       101   Screening 2024-01… DEMO-0… VS     DEMO-0… Pulse           72  \n4 001       101   Screening 2024-01… DEMO-0… VS     DEMO-0… Temp_C          36.5\n5 001       101   Baseline  2024-01… DEMO-0… VS     DEMO-0… SysBP          118  \n6 001       101   Baseline  2024-01… DEMO-0… VS     DEMO-0… DiaBP           78  \n# ℹ 3 more variables: VSTESTCD &lt;chr&gt;, VSTEST &lt;chr&gt;, VSORRESU &lt;chr&gt;\n\n\n\n\n5.4 Step 4: Add Sequence Number\nEvery SDTM record needs a unique sequence number (--SEQ) within subject.\n\n# Algorithm: Derive sequence\nvs_step4 &lt;- vs_step3 %&gt;%\n  arrange(USUBJID, Date, VSTESTCD) %&gt;%\n  group_by(USUBJID) %&gt;%\n  mutate(VSSEQ = row_number()) %&gt;%\n  ungroup()\n\nvs_step4 %&gt;%\n  select(USUBJID, VSSEQ, VSTESTCD, Visit) %&gt;%\n  head(10)\n\n# A tibble: 10 × 4\n   USUBJID          VSSEQ VSTESTCD Visit    \n   &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;    \n 1 DEMO-001-101-001     1 DIABP    Screening\n 2 DEMO-001-101-001     2 PULSE    Screening\n 3 DEMO-001-101-001     3 SYSBP    Screening\n 4 DEMO-001-101-001     4 TEMP     Screening\n 5 DEMO-001-101-001     5 DIABP    Baseline \n 6 DEMO-001-101-001     6 PULSE    Baseline \n 7 DEMO-001-101-001     7 SYSBP    Baseline \n 8 DEMO-001-101-001     8 TEMP     Baseline \n 9 DEMO-001-101-001     9 DIABP    Week 4   \n10 DEMO-001-101-001    10 PULSE    Week 4   \n\n\n\n\n5.5 Step 5: Final SDTM VS Domain\n\nsdtm_vs &lt;- vs_step4 %&gt;%\n  mutate(\n    VSORRES = as.character(VSORRES_NUM),\n    VSSTRESN = VSORRES_NUM,\n    VSSTRESU = VSORRESU,\n    VSDTC = Date,\n    VISIT = Visit\n  ) %&gt;%\n  select(\n    STUDYID, DOMAIN, USUBJID, VSSEQ, VSTESTCD, VSTEST,\n    VSORRES, VSORRESU, VSSTRESN, VSSTRESU, VSDTC, VISIT\n  )\n\ncat(\"SDTM VS Domain:\\n\")\n\nSDTM VS Domain:\n\ncat(\"Records:\", nrow(sdtm_vs), \"\\n\\n\")\n\nRecords: 28 \n\nhead(sdtm_vs, 10)\n\n# A tibble: 10 × 12\n   STUDYID  DOMAIN USUBJID       VSSEQ VSTESTCD VSTEST VSORRES VSORRESU VSSTRESN\n   &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;         &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;\n 1 DEMO-001 VS     DEMO-001-101…     1 DIABP    Diast… 80      mmHg         80  \n 2 DEMO-001 VS     DEMO-001-101…     2 PULSE    Pulse… 72      BEATS/M…     72  \n 3 DEMO-001 VS     DEMO-001-101…     3 SYSBP    Systo… 120     mmHg        120  \n 4 DEMO-001 VS     DEMO-001-101…     4 TEMP     Tempe… 36.5    C            36.5\n 5 DEMO-001 VS     DEMO-001-101…     5 DIABP    Diast… 78      mmHg         78  \n 6 DEMO-001 VS     DEMO-001-101…     6 PULSE    Pulse… 70      BEATS/M…     70  \n 7 DEMO-001 VS     DEMO-001-101…     7 SYSBP    Systo… 118     mmHg        118  \n 8 DEMO-001 VS     DEMO-001-101…     8 TEMP     Tempe… 36.8    C            36.8\n 9 DEMO-001 VS     DEMO-001-101…     9 DIABP    Diast… 76      mmHg         76  \n10 DEMO-001 VS     DEMO-001-101…    10 PULSE    Pulse… 68      BEATS/M…     68  \n# ℹ 3 more variables: VSSTRESU &lt;chr&gt;, VSDTC &lt;chr&gt;, VISIT &lt;chr&gt;",
+    "crumbs": [
+      "Week 1",
+      "Day 6: Introduction to sdtm.oak"
+    ]
+  },
+  {
+    "objectID": "week1/day6.html#part-3-creating-sdtm-lb-domain-with-unit-standardization",
+    "href": "week1/day6.html#part-3-creating-sdtm-lb-domain-with-unit-standardization",
+    "title": "Day 6: Introduction to sdtm.oak",
+    "section": "6 Part 3: Creating SDTM LB Domain with Unit Standardization",
+    "text": "6 Part 3: Creating SDTM LB Domain with Unit Standardization\nThe LB domain is more complex because we need to standardize units across sites.\n\n6.1 Unit Conversion Reference\n\n\n\nTest\nOriginal Unit\nStandard Unit\nConversion Factor\n\n\n\n\nGlucose\nmg/dL\nmmol/L\n÷ 18.0182\n\n\nCholesterol\nmg/dL\nmmol/L\n÷ 38.67\n\n\nALT\nU/L\nU/L\nNone (already SI)\n\n\n\n\n\n6.2 Step 1: Initial Mapping\n\nlb_step1 &lt;- raw_lb %&gt;%\n  mutate(\n    STUDYID = \"DEMO-001\",\n    DOMAIN = \"LB\",\n    USUBJID = paste(STUDYID, Site, SubjectID, sep = \"-\"),\n    \n    # Map test codes\n    LBTESTCD = case_when(\n      Test == \"Glucose\"     ~ \"GLUC\",\n      Test == \"Cholesterol\" ~ \"CHOL\",\n      Test == \"ALT\"         ~ \"ALT\"\n    ),\n    LBTEST = case_when(\n      LBTESTCD == \"GLUC\" ~ \"Glucose\",\n      LBTESTCD == \"CHOL\" ~ \"Cholesterol\",\n      LBTESTCD == \"ALT\"  ~ \"Alanine Aminotransferase\"\n    ),\n    \n    # Original results\n    LBORRES = as.character(Result),\n    LBORRESU = Unit\n  )\n\nhead(lb_step1)\n\n# A tibble: 6 × 14\n  SubjectID Site  Visit Date  Test  Result Unit  STUDYID DOMAIN USUBJID LBTESTCD\n  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   \n1 001       101   Scre… 2024… Gluc…     95 mg/dL DEMO-0… LB     DEMO-0… GLUC    \n2 001       101   Scre… 2024… Chol…    180 mg/dL DEMO-0… LB     DEMO-0… CHOL    \n3 001       101   Scre… 2024… ALT       25 U/L   DEMO-0… LB     DEMO-0… ALT     \n4 001       101   Base… 2024… Gluc…     92 mg/dL DEMO-0… LB     DEMO-0… GLUC    \n5 001       101   Base… 2024… Chol…    175 mg/dL DEMO-0… LB     DEMO-0… CHOL    \n6 001       101   Base… 2024… ALT       28 U/L   DEMO-0… LB     DEMO-0… ALT     \n# ℹ 3 more variables: LBTEST &lt;chr&gt;, LBORRES &lt;chr&gt;, LBORRESU &lt;chr&gt;\n\n\n\n\n6.3 Step 2: Unit Standardization\nThis is where the real work happens - converting all values to standard SI units.\n\nlb_step2 &lt;- lb_step1 %&gt;%\n  mutate(\n    # Standard unit is SI (mmol/L for glucose/cholesterol, U/L for ALT)\n    LBSTRESU = case_when(\n      LBTESTCD %in% c(\"GLUC\", \"CHOL\") ~ \"mmol/L\",\n      LBTESTCD == \"ALT\" ~ \"U/L\"\n    ),\n    \n    # Convert to standard units\n    LBSTRESN = case_when(\n      # Glucose: mg/dL to mmol/L\n      LBTESTCD == \"GLUC\" & LBORRESU == \"mg/dL\" ~ round(Result / 18.0182, 2),\n      LBTESTCD == \"GLUC\" & LBORRESU == \"mmol/L\" ~ Result,\n      \n      # Cholesterol: mg/dL to mmol/L\n      LBTESTCD == \"CHOL\" & LBORRESU == \"mg/dL\" ~ round(Result / 38.67, 2),\n      LBTESTCD == \"CHOL\" & LBORRESU == \"mmol/L\" ~ Result,\n      \n      # ALT: Already in U/L\n      LBTESTCD == \"ALT\" ~ Result\n    ),\n    \n    # Character version of standardized result\n    LBSTRESC = as.character(LBSTRESN)\n  )\n\n# Show the conversion\nlb_step2 %&gt;%\n  select(USUBJID, LBTESTCD, LBORRES, LBORRESU, LBSTRESN, LBSTRESU) %&gt;%\n  head(10)\n\n# A tibble: 10 × 6\n   USUBJID          LBTESTCD LBORRES LBORRESU LBSTRESN LBSTRESU\n   &lt;chr&gt;            &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;   \n 1 DEMO-001-101-001 GLUC     95      mg/dL        5.27 mmol/L  \n 2 DEMO-001-101-001 CHOL     180     mg/dL        4.65 mmol/L  \n 3 DEMO-001-101-001 ALT      25      U/L         25    U/L     \n 4 DEMO-001-101-001 GLUC     92      mg/dL        5.11 mmol/L  \n 5 DEMO-001-101-001 CHOL     175     mg/dL        4.53 mmol/L  \n 6 DEMO-001-101-001 ALT      28      U/L         28    U/L     \n 7 DEMO-001-101-002 GLUC     110     mg/dL        6.1  mmol/L  \n 8 DEMO-001-101-002 CHOL     220     mg/dL        5.69 mmol/L  \n 9 DEMO-001-101-002 ALT      45      U/L         45    U/L     \n10 DEMO-001-102-003 GLUC     5.5     mmol/L       5.5  mmol/L  \n\n\n\n\n\n\n\n\nNoteUnit Standardization in Practice\n\n\n\nNotice how subjects from Site 101 (US units) and Site 102 (SI units) now have comparable values in LBSTRESN. This is essential for cross-site analysis!\n\n\n\n\n6.4 Step 3: Add Sequence and Reference Ranges\n\nlb_step3 &lt;- lb_step2 %&gt;%\n  arrange(USUBJID, Date, LBTESTCD) %&gt;%\n  group_by(USUBJID) %&gt;%\n  mutate(LBSEQ = row_number()) %&gt;%\n  ungroup() %&gt;%\n  # Add reference ranges (in standard units)\n  mutate(\n    LBSTNRLO = case_when(\n      LBTESTCD == \"GLUC\" ~ 3.9,\n      LBTESTCD == \"CHOL\" ~ 0.0,\n      LBTESTCD == \"ALT\"  ~ 7.0\n    ),\n    LBSTNRHI = case_when(\n      LBTESTCD == \"GLUC\" ~ 5.6,\n      LBTESTCD == \"CHOL\" ~ 5.2,\n      LBTESTCD == \"ALT\"  ~ 56.0\n    ),\n    # Normal range indicator\n    LBNRIND = case_when(\n      LBSTRESN &lt; LBSTNRLO ~ \"LOW\",\n      LBSTRESN &gt; LBSTNRHI ~ \"HIGH\",\n      TRUE ~ \"NORMAL\"\n    )\n  )\n\nlb_step3 %&gt;%\n  select(USUBJID, LBTESTCD, LBSTRESN, LBSTNRLO, LBSTNRHI, LBNRIND) %&gt;%\n  head(10)\n\n# A tibble: 10 × 6\n   USUBJID          LBTESTCD LBSTRESN LBSTNRLO LBSTNRHI LBNRIND\n   &lt;chr&gt;            &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  \n 1 DEMO-001-101-001 ALT         25         7       56   NORMAL \n 2 DEMO-001-101-001 CHOL         4.65      0        5.2 NORMAL \n 3 DEMO-001-101-001 GLUC         5.27      3.9      5.6 NORMAL \n 4 DEMO-001-101-001 ALT         28         7       56   NORMAL \n 5 DEMO-001-101-001 CHOL         4.53      0        5.2 NORMAL \n 6 DEMO-001-101-001 GLUC         5.11      3.9      5.6 NORMAL \n 7 DEMO-001-101-002 ALT         45         7       56   NORMAL \n 8 DEMO-001-101-002 CHOL         5.69      0        5.2 HIGH   \n 9 DEMO-001-101-002 GLUC         6.1       3.9      5.6 HIGH   \n10 DEMO-001-102-003 ALT         30         7       56   NORMAL \n\n\n\n\n6.5 Step 4: Final SDTM LB Domain\n\nsdtm_lb &lt;- lb_step3 %&gt;%\n  mutate(\n    LBDTC = Date,\n    VISIT = Visit\n  ) %&gt;%\n  select(\n    STUDYID, DOMAIN, USUBJID, LBSEQ, LBTESTCD, LBTEST,\n    LBORRES, LBORRESU, LBSTRESC, LBSTRESN, LBSTRESU,\n    LBSTNRLO, LBSTNRHI, LBNRIND, LBDTC, VISIT\n  )\n\ncat(\"SDTM LB Domain:\\n\")\n\nSDTM LB Domain:\n\ncat(\"Records:\", nrow(sdtm_lb), \"\\n\")\n\nRecords: 15 \n\ncat(\"Variables:\", ncol(sdtm_lb), \"\\n\\n\")\n\nVariables: 16 \n\nhead(sdtm_lb, 10)\n\n# A tibble: 10 × 16\n   STUDYID  DOMAIN USUBJID       LBSEQ LBTESTCD LBTEST LBORRES LBORRESU LBSTRESC\n   &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;         &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   \n 1 DEMO-001 LB     DEMO-001-101…     1 ALT      Alani… 25      U/L      25      \n 2 DEMO-001 LB     DEMO-001-101…     2 CHOL     Chole… 180     mg/dL    4.65    \n 3 DEMO-001 LB     DEMO-001-101…     3 GLUC     Gluco… 95      mg/dL    5.27    \n 4 DEMO-001 LB     DEMO-001-101…     4 ALT      Alani… 28      U/L      28      \n 5 DEMO-001 LB     DEMO-001-101…     5 CHOL     Chole… 175     mg/dL    4.53    \n 6 DEMO-001 LB     DEMO-001-101…     6 GLUC     Gluco… 92      mg/dL    5.11    \n 7 DEMO-001 LB     DEMO-001-101…     1 ALT      Alani… 45      U/L      45      \n 8 DEMO-001 LB     DEMO-001-101…     2 CHOL     Chole… 220     mg/dL    5.69    \n 9 DEMO-001 LB     DEMO-001-101…     3 GLUC     Gluco… 110     mg/dL    6.1     \n10 DEMO-001 LB     DEMO-001-102…     1 ALT      Alani… 30      U/L      30      \n# ℹ 7 more variables: LBSTRESN &lt;dbl&gt;, LBSTRESU &lt;chr&gt;, LBSTNRLO &lt;dbl&gt;,\n#   LBSTNRHI &lt;dbl&gt;, LBNRIND &lt;chr&gt;, LBDTC &lt;chr&gt;, VISIT &lt;chr&gt;\n\n\n\n\n6.6 Summary Statistics\n\nsdtm_lb %&gt;%\n  group_by(LBTESTCD, LBTEST) %&gt;%\n  summarise(\n    N = n(),\n    Mean = round(mean(LBSTRESN, na.rm = TRUE), 2),\n    SD = round(sd(LBSTRESN, na.rm = TRUE), 2),\n    Low = sum(LBNRIND == \"LOW\"),\n    Normal = sum(LBNRIND == \"NORMAL\"),\n    High = sum(LBNRIND == \"HIGH\"),\n    .groups = \"drop\"\n  )\n\n# A tibble: 3 × 8\n  LBTESTCD LBTEST                       N  Mean    SD   Low Normal  High\n  &lt;chr&gt;    &lt;chr&gt;                    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;  &lt;int&gt; &lt;int&gt;\n1 ALT      Alanine Aminotransferase     5 32     7.71     0      5     0\n2 CHOL     Cholesterol                  5  4.83  0.49     0      4     1\n3 GLUC     Glucose                      5  5.44  0.4      0      4     1",
+    "crumbs": [
+      "Week 1",
+      "Day 6: Introduction to sdtm.oak"
+    ]
+  },
+  {
+    "objectID": "week1/day6.html#practice-exercise",
+    "href": "week1/day6.html#practice-exercise",
+    "title": "Day 6: Introduction to sdtm.oak",
+    "section": "7 🎯 Practice Exercise",
+    "text": "7 🎯 Practice Exercise\n\n7.1 Your Turn: Add LOINC Codes\nLOINC codes are standard lab test identifiers. Add LBLOINC to the LB domain.\n\n# LOINC Reference\nloinc_lookup &lt;- tribble(\n  ~LBTESTCD, ~LBLOINC,\n  \"GLUC\",    \"2345-7\",\n  \"CHOL\",    \"2093-3\",\n  \"ALT\",     \"1742-6\"\n)\n\n# TODO: Join the LOINC codes to sdtm_lb\nsdtm_lb_loinc &lt;- sdtm_lb %&gt;%\n  # Your code here...\n\nhead(sdtm_lb_loinc)",
+    "crumbs": [
+      "Week 1",
+      "Day 6: Introduction to sdtm.oak"
+    ]
+  },
+  {
+    "objectID": "week1/day6.html#deliverable-summary",
+    "href": "week1/day6.html#deliverable-summary",
+    "title": "Day 6: Introduction to sdtm.oak",
+    "section": "8 Deliverable Summary",
+    "text": "8 Deliverable Summary\nToday you completed the following:\n\n\n\nTask\nStatus\n\n\n\n\nCreated simulated Raw VS and LB data\n✓ Done\n\n\nBuilt SDTM VS with sequence numbers\n✓ Done\n\n\nPerformed unit standardization (mg/dL → mmol/L)\n✓ Done\n\n\nAdded reference ranges and normal indicators\n✓ Done\n\n\nCreated complete SDTM LB domain\n✓ Done",
+    "crumbs": [
+      "Week 1",
+      "Day 6: Introduction to sdtm.oak"
+    ]
+  },
+  {
+    "objectID": "week1/day6.html#key-takeaways",
+    "href": "week1/day6.html#key-takeaways",
+    "title": "Day 6: Introduction to sdtm.oak",
+    "section": "9 Key Takeaways",
+    "text": "9 Key Takeaways\n\nsdtm.oak Philosophy: Algorithm-based, modular, traceable.\nPivoting: Raw data is wide; SDTM Findings are long.\nUnit Standardization: Critical for multi-site studies.\nSequence Numbers: Every record needs a unique --SEQ.\nReference Ranges: LBSTNRLO, LBSTNRHI, LBNRIND are key for flagging abnormals.",
+    "crumbs": [
+      "Week 1",
+      "Day 6: Introduction to sdtm.oak"
+    ]
+  },
+  {
+    "objectID": "week1/day6.html#resources",
+    "href": "week1/day6.html#resources",
+    "title": "Day 6: Introduction to sdtm.oak",
+    "section": "10 Resources",
+    "text": "10 Resources\n\nsdtm.oak GitHub Repository\nCDISC SDTM Implementation Guide\nLOINC Database",
+    "crumbs": [
+      "Week 1",
+      "Day 6: Introduction to sdtm.oak"
+    ]
+  },
+  {
+    "objectID": "week1/day6.html#whats-next",
+    "href": "week1/day6.html#whats-next",
+    "title": "Day 6: Introduction to sdtm.oak",
+    "section": "11 What’s Next?",
+    "text": "11 What’s Next?\nIn Day 7, we will complete the Week 1 Capstone:\n\nBuild DM, AE, EX domains from scratch (20+ subjects)\nApply all concepts learned this week\nExport to submission-ready .xpt files",
+    "crumbs": [
+      "Week 1",
+      "Day 6: Introduction to sdtm.oak"
+    ]
+  }
+]

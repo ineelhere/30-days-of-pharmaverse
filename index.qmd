@@ -1,6 +1,6 @@
 ---
 title: "30 Days of Pharmaverse"
-subtitle: "A Newbie's Guide to Clinical Data Science with R"
+subtitle: "Your Friendly Guide to Clinical Data Science with R in Open-Source"
 date: "today"
 author: "Indraneel Chakraborty"
 format:
@@ -13,6 +13,16 @@ format:
     toc-location: right
     smooth-scroll: true
     highlight-style: github
+    header-includes: |
+      <style>
+        .navbar {
+          padding-right: 20px;
+        }
+        .navbar-brand::after {
+          content: " | ";
+          margin: 0 10px;
+        }
+      </style>
     page-layout: full
 editor: visual
 execute:
