@@ -16,15 +16,15 @@ This isn't just a course-it's a deep dive into the tools and standards that powe
 
 ### Week 1: SDTM Fundamentals & Core R Skills
 
-| Day | Topic | Deep Dive | Status |
-|---|---|---|---|
-| **[Day 1](./week1/day1.html)** | Environment Setup & First SDTM Code | SDTM Programming Walkthrough | ✅ Complete |
-| **[Day 2](./week1/day2.html)** | SDTM Domain Structure | Understanding SDTM Classes Through Code | ✅ Complete |
-| **[Day 3](./week1/day3.html)** | Controlled Terminology | Building AE Codelists in R | ✅ Complete |
-| **[Day 4](./week1/day4.html)** | Clinical Dates with lubridate | Study Day, Duration, and Imputation | ✅ Complete |
-| **[Day 5](./week1/day5.html)** | Advanced Tidyverse | Reshaping SDTM Data for Analysis | ✅ Complete |
-| **[Day 6](./week1/day6.html)** | Introduction to sdtm.oak | EDC-to-SDTM Transformation Patterns | ✅ Complete |
-| **[Day 7](./week1/day7.html)** | Week 1 Capstone | End-to-End SDTM Script with xportr | ✅ Complete |
+| Day | Topic | Deep Dive 
+|---|---|---
+| **[Day 1](https://www.indraneelchakraborty.com/30-days-of-pharmaverse/week1/day1.html)** | Environment Setup & First SDTM Code | SDTM Programming Walkthrough |
+| **[Day 2](https://www.indraneelchakraborty.com/30-days-of-pharmaverse/week1/day2.html)** | SDTM Domain Structure | Understanding SDTM Classes Through Code |
+| **[Day 3](https://www.indraneelchakraborty.com/30-days-of-pharmaverse/week1/day3.html)** | Controlled Terminology | Building AE Codelists in R |
+| **[Day 4](https://www.indraneelchakraborty.com/30-days-of-pharmaverse/week1/day4.html)** | Clinical Dates with lubridate | Study Day, Duration, and Imputation |
+| **[Day 5](https://www.indraneelchakraborty.com/30-days-of-pharmaverse/week1/day5.html)** | Advanced Tidyverse | Reshaping SDTM Data for Analysis |
+| **[Day 6](https://www.indraneelchakraborty.com/30-days-of-pharmaverse/week1/day6.html)** | Introduction to sdtm.oak | EDC-to-SDTM Transformation Patterns |
+| **[Day 7](https://www.indraneelchakraborty.com/30-days-of-pharmaverse/week1/day7.html)** | Week 1 Capstone | End-to-End SDTM Script with xportr |
 
 ---
 
