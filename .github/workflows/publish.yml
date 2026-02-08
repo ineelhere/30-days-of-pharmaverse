@@ -2,18 +2,24 @@ name: Render and Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
-      - wip
+    branches: [main]
   pull_request:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout repository
@@ -27,11 +33,10 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
-      - name: Cache R packages
+      - name: Install R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           cache-version: 1
-          extra-packages: any::quarto
 
       - name: Render Quarto project
         run: quarto render
@@ -40,7 +45,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '_output'
+          path: _site
 
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main'
