@@ -1,0 +1,531 @@
+---
+title: "Day 7: Week 1 Capstone: End-to-End SDTM Script"
+subtitle: "Build DM, AE, EX from Scratch with xportr"
+author: "Indraneel Chakraborty"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+<div style="margin-bottom:12px;"><a href="../index.html" class="resource-link">← Back to Roadmap</a></div>
+
+## Learning Objectives
+
+By the end of Day 7, you will be able to:
+
+1.  Integrate all skills from Days 1-6 into a single workflow
+2.  Produce valid SDTM domains (DM, AE, EX) from simulated raw data
+3.  Work with **20+ subjects** across multiple sites
+4.  Apply metadata (Labels, Types) using **`xportr`**
+5.  Export submission-ready SAS Transport files (`.xpt`)
+
+------------------------------------------------------------------------
+
+## Capstone Project Overview
+
+**Goal**: Create three SDTM domains from simulated raw clinical trial data:
+
+-   **DM** (Demographics) - One row per subject
+-   **AE** (Adverse Events) - Multiple rows per subject
+-   **EX** (Exposure) - Dosing records
+
+### The Pipeline
+
+```         
+Raw Data → Transform → Validate → Format → Export (.xpt)
+```
+
+------------------------------------------------------------------------
+
+## Part 1: Generate Simulated Raw Data (20+ Subjects)
+
+### Raw Demographics
+
+```{r}
+#| label: generate-raw-dm
+
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(xportr)
+
+set.seed(42)  # For reproducibility
+
+# Generate 25 subjects across 3 sites
+n_subjects <- 25
+
+raw_dm <- tibble(
+  Site = sample(c("101", "102", "103"), n_subjects, replace = TRUE, prob = c(0.4, 0.35, 0.25)),
+  Subject = sprintf("%03d", 1:n_subjects)
+) %>%
+  mutate(
+    # Demographics
+    Sex = sample(c("Male", "Female"), n_subjects, replace = TRUE),
+    Race = sample(c("White", "Black", "Asian", "Other"), n_subjects, replace = TRUE, 
+                  prob = c(0.6, 0.2, 0.15, 0.05)),
+    Ethnicity = sample(c("Hispanic", "Not Hispanic"), n_subjects, replace = TRUE, 
+                       prob = c(0.15, 0.85)),
+    
+    # Age 25-75
+    BirthYear = sample(1950:2000, n_subjects, replace = TRUE),
+    BirthDate = paste0(BirthYear, "-", 
+                       sprintf("%02d", sample(1:12, n_subjects, replace = TRUE)), "-",
+                       sprintf("%02d", sample(1:28, n_subjects, replace = TRUE))),
+    
+    # Treatment assignment
+    Arm = sample(c("Placebo", "Active 10mg", "Active 20mg"), n_subjects, replace = TRUE,
+                 prob = c(0.33, 0.33, 0.34)),
+    
+    # First dose date (Jan-Mar 2024)
+    FirstDoseDate = as.Date("2024-01-01") + sample(0:89, n_subjects, replace = TRUE)
+  ) %>%
+  select(-BirthYear)
+
+cat("Raw Demographics: ", nrow(raw_dm), "subjects\n\n")
+head(raw_dm, 10)
+```
+
+### Raw Adverse Events
+
+```{r}
+#| label: generate-raw-ae
+
+# Common adverse events with their SOC mappings
+ae_terms <- tribble(
+  ~Term,                   ~SOC,
+  "Headache",              "Nervous system disorders",
+  "Nausea",                "Gastrointestinal disorders",
+  "Fatigue",               "General disorders",
+  "Dizziness",             "Nervous system disorders",
+  "Diarrhea",              "Gastrointestinal disorders",
+  "Rash",                  "Skin disorders",
+  "Back pain",             "Musculoskeletal disorders",
+  "Insomnia",              "Psychiatric disorders",
+  "Cough",                 "Respiratory disorders",
+  "Upper respiratory infection", "Infections"
+)
+
+# Generate 2-5 AEs per subject (not all subjects have AEs)
+subjects_with_ae <- sample(raw_dm$Subject, size = round(n_subjects * 0.8))
+
+raw_ae <- tibble(
+  Subject = rep(subjects_with_ae, each = 3)
+) %>%
+  slice_sample(n = 60) %>%  # ~60 AE records total
+  mutate(
+    Site = raw_dm$Site[match(Subject, raw_dm$Subject)],
+    AE_Num = row_number(),
+    Term = sample(ae_terms$Term, n(), replace = TRUE),
+    Severity = sample(c("Mild", "Moderate", "Severe"), n(), replace = TRUE, 
+                      prob = c(0.6, 0.3, 0.1)),
+    Serious = sample(c("No", "Yes"), n(), replace = TRUE, prob = c(0.92, 0.08)),
+    Related = sample(c("Not Related", "Possibly Related", "Probably Related"), n(), 
+                     replace = TRUE, prob = c(0.5, 0.35, 0.15)),
+    # Start 1-60 days after first dose
+    StartDay = sample(1:60, n(), replace = TRUE)
+  ) %>%
+  left_join(
+    raw_dm %>% select(Subject, FirstDoseDate),
+    by = "Subject"
+  ) %>%
+  mutate(
+    StartDate = as.character(FirstDoseDate + StartDay),
+    # End date: 1-14 days after start, or ongoing
+    EndDate = ifelse(
+      sample(c(TRUE, FALSE), n(), replace = TRUE, prob = c(0.85, 0.15)),
+      as.character(as.Date(StartDate) + sample(1:14, n(), replace = TRUE)),
+      NA_character_
+    )
+  ) %>%
+  select(Site, Subject, Term, StartDate, EndDate, Severity, Serious, Related)
+
+cat("Raw Adverse Events:", nrow(raw_ae), "records\n\n")
+head(raw_ae, 10)
+```
+
+### Raw Exposure
+
+```{r}
+#| label: generate-raw-ex
+
+# Generate exposure records (weekly dosing)
+raw_ex <- raw_dm %>%
+  filter(!is.na(FirstDoseDate)) %>%
+  select(Site, Subject, Arm, FirstDoseDate) %>%
+  # Create 8 weeks of dosing per subject
+  crossing(Week = 0:7) %>%
+  mutate(
+    DoseDate = FirstDoseDate + (Week * 7),
+    Dose = case_when(
+      Arm == "Placebo" ~ 0,
+      Arm == "Active 10mg" ~ 10,
+      Arm == "Active 20mg" ~ 20
+    ),
+    DoseUnit = "mg",
+    Route = "ORAL"
+  ) %>%
+  # Some subjects discontinue early
+  group_by(Subject) %>%
+  filter(row_number() <= sample(4:8, 1)) %>%
+  ungroup() %>%
+  select(Site, Subject, DoseDate, Dose, DoseUnit, Route)
+
+cat("Raw Exposure:", nrow(raw_ex), "records\n\n")
+head(raw_ex, 10)
+```
+
+------------------------------------------------------------------------
+
+## Part 2: Create SDTM DM Domain
+
+```{r}
+#| label: build-dm
+
+# SDTM DM: Demographics (one row per subject)
+sdtm_dm <- raw_dm %>%
+  mutate(
+    # Standard variables - HARDCODE algorithm
+    STUDYID = "CAPSTONE-01",
+    DOMAIN = "DM",
+    
+    # Subject identifiers - ASSIGN algorithm
+    USUBJID = paste(STUDYID, Site, Subject, sep = "-"),
+    SUBJID = Subject,
+    SITEID = Site,
+    
+    # Demographics - MAP to CT
+    SEX = case_when(
+      Sex == "Male" ~ "M",
+      Sex == "Female" ~ "F"
+    ),
+    RACE = toupper(Race),
+    ETHNIC = case_when(
+      Ethnicity == "Hispanic" ~ "HISPANIC OR LATINO",
+      TRUE ~ "NOT HISPANIC OR LATINO"
+    ),
+    
+    # Dates - DERIVE
+    RFSTDTC = as.character(FirstDoseDate),
+    RFENDTC = NA_character_,  # Would come from disposition
+    BRTHDTC = BirthDate,
+    
+    # Age calculation
+    AGE = as.integer(floor(interval(ymd(BirthDate), ymd(FirstDoseDate)) / years(1))),
+    AGEU = "YEARS",
+    
+    # Treatment
+    ARM = Arm,
+    ACTARM = Arm,  # Assuming planned = actual
+    ARMCD = case_when(
+      Arm == "Placebo" ~ "PBO",
+      Arm == "Active 10mg" ~ "ACT10",
+      Arm == "Active 20mg" ~ "ACT20"
+    ),
+    ACTARMCD = ARMCD
+  ) %>%
+  select(
+    STUDYID, DOMAIN, USUBJID, SUBJID, SITEID,
+    RFSTDTC, RFENDTC, BRTHDTC,
+    AGE, AGEU, SEX, RACE, ETHNIC,
+    ARM, ARMCD, ACTARM, ACTARMCD
+  )
+
+cat("SDTM DM Domain\n")
+cat("Subjects:", nrow(sdtm_dm), "\n")
+cat("Variables:", ncol(sdtm_dm), "\n\n")
+
+head(sdtm_dm, 10)
+```
+
+------------------------------------------------------------------------
+
+## Part 3: Create SDTM AE Domain
+
+```{r}
+#| label: build-ae
+
+# Helper: derive study day (from Day 4)
+derive_study_day <- function(event_date, reference_date) {
+  diff_days <- as.numeric(event_date - reference_date)
+  ifelse(diff_days >= 0, diff_days + 1, diff_days)
+}
+
+# SDTM AE: Adverse Events
+sdtm_ae <- raw_ae %>%
+  mutate(
+    STUDYID = "CAPSTONE-01",
+    DOMAIN = "AE",
+    USUBJID = paste(STUDYID, Site, Subject, sep = "-")
+  ) %>%
+  # Add reference date from DM
+  left_join(
+    sdtm_dm %>% select(USUBJID, RFSTDTC),
+    by = "USUBJID"
+  ) %>%
+  # Derive AE variables
+  mutate(
+    AETERM = Term,
+    AEDECOD = toupper(Term),
+    AEBODSYS = toupper(case_when(
+      grepl("Headache|Dizziness", Term) ~ "NERVOUS SYSTEM DISORDERS",
+      grepl("Nausea|Diarrhea", Term) ~ "GASTROINTESTINAL DISORDERS",
+      grepl("Fatigue", Term) ~ "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS",
+      grepl("Rash", Term) ~ "SKIN AND SUBCUTANEOUS TISSUE DISORDERS",
+      grepl("Back", Term) ~ "MUSCULOSKELETAL AND CONNECTIVE TISSUE DISORDERS",
+      grepl("Insomnia", Term) ~ "PSYCHIATRIC DISORDERS",
+      grepl("Cough", Term) ~ "RESPIRATORY, THORACIC AND MEDIASTINAL DISORDERS",
+      grepl("infection", Term, ignore.case = TRUE) ~ "INFECTIONS AND INFESTATIONS",
+      TRUE ~ "OTHER"
+    )),
+    
+    # Dates
+    AESTDTC = StartDate,
+    AEENDTC = EndDate,
+    
+    # Study days
+    AESTDY = derive_study_day(ymd(StartDate), ymd(RFSTDTC)),
+    AEENDY = ifelse(!is.na(EndDate), 
+                    derive_study_day(ymd(EndDate), ymd(RFSTDTC)),
+                    NA_integer_),
+    
+    # CT mapping
+    AESEV = toupper(Severity),
+    AESER = ifelse(Serious == "Yes", "Y", "N"),
+    AEREL = toupper(Related),
+    
+    # Outcome
+    AEOUT = case_when(
+      is.na(EndDate) ~ "NOT RECOVERED/NOT RESOLVED",
+      TRUE ~ "RECOVERED/RESOLVED"
+    ),
+    
+    # Action taken
+    AEACN = "DOSE NOT CHANGED"
+  ) %>%
+  # Add sequence
+  arrange(USUBJID, AESTDTC) %>%
+  group_by(USUBJID) %>%
+  mutate(AESEQ = row_number()) %>%
+  ungroup() %>%
+  select(
+    STUDYID, DOMAIN, USUBJID, AESEQ,
+    AETERM, AEDECOD, AEBODSYS,
+    AESTDTC, AEENDTC, AESTDY, AEENDY,
+    AESEV, AESER, AEREL, AEOUT, AEACN
+  )
+
+cat("SDTM AE Domain\n")
+cat("Records:", nrow(sdtm_ae), "\n")
+cat("Subjects:", n_distinct(sdtm_ae$USUBJID), "\n")
+cat("Variables:", ncol(sdtm_ae), "\n\n")
+
+head(sdtm_ae, 10)
+```
+
+------------------------------------------------------------------------
+
+## Part 4: Create SDTM EX Domain
+
+```{r}
+#| label: build-ex
+
+# SDTM EX: Exposure
+sdtm_ex <- raw_ex %>%
+  mutate(
+    STUDYID = "CAPSTONE-01",
+    DOMAIN = "EX",
+    USUBJID = paste(STUDYID, Site, Subject, sep = "-"),
+    
+    # Treatment
+    EXTRT = case_when(
+      Dose == 0 ~ "PLACEBO",
+      Dose == 10 ~ "STUDY DRUG 10 MG",
+      Dose == 20 ~ "STUDY DRUG 20 MG"
+    ),
+    
+    # Dose info
+    EXDOSE = Dose,
+    EXDOSU = "mg",
+    EXDOSFRM = "TABLET",
+    EXROUTE = "ORAL",
+    
+    # Dates (single-day dosing)
+    EXSTDTC = as.character(DoseDate),
+    EXENDTC = as.character(DoseDate)
+  ) %>%
+  # Add reference date from DM
+  left_join(
+    sdtm_dm %>% select(USUBJID, RFSTDTC),
+    by = "USUBJID"
+  ) %>%
+  mutate(
+    EXSTDY = derive_study_day(ymd(DoseDate), ymd(RFSTDTC)),
+    EXENDY = EXSTDY
+  ) %>%
+  # Add sequence
+  arrange(USUBJID, EXSTDTC) %>%
+  group_by(USUBJID) %>%
+  mutate(EXSEQ = row_number()) %>%
+  ungroup() %>%
+  select(
+    STUDYID, DOMAIN, USUBJID, EXSEQ,
+    EXTRT, EXDOSE, EXDOSU, EXDOSFRM, EXROUTE,
+    EXSTDTC, EXENDTC, EXSTDY, EXENDY
+  )
+
+cat("SDTM EX Domain\n")
+cat("Records:", nrow(sdtm_ex), "\n")
+cat("Subjects:", n_distinct(sdtm_ex$USUBJID), "\n")
+cat("Variables:", ncol(sdtm_ex), "\n\n")
+
+head(sdtm_ex, 10)
+```
+
+------------------------------------------------------------------------
+
+## Part 5: Validation Checks
+
+Before exporting, let's validate our datasets.
+
+```{r}
+#| label: validation
+
+# Check 1: Subject counts consistency
+cat("=== Subject Count Validation ===\n")
+cat("DM subjects:", nrow(sdtm_dm), "\n")
+cat("EX subjects:", n_distinct(sdtm_ex$USUBJID), "\n")
+cat("AE subjects:", n_distinct(sdtm_ae$USUBJID), "\n\n")
+
+# Check 2: All EX subjects are in DM
+ex_not_in_dm <- sdtm_ex %>%
+  anti_join(sdtm_dm, by = "USUBJID") %>%
+  nrow()
+cat("EX subjects missing from DM:", ex_not_in_dm, "\n")
+
+# Check 3: All AE subjects are in DM
+ae_not_in_dm <- sdtm_ae %>%
+  anti_join(sdtm_dm, by = "USUBJID") %>%
+  nrow()
+cat("AE subjects missing from DM:", ae_not_in_dm, "\n\n")
+
+# Check 4: Variable types
+cat("=== Variable Type Check ===\n")
+cat("DM - AGE is numeric:", is.numeric(sdtm_dm$AGE), "\n")
+cat("AE - AESEQ is integer:", is.integer(sdtm_ae$AESEQ), "\n")
+cat("EX - EXDOSE is numeric:", is.numeric(sdtm_ex$EXDOSE), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Part 6: Export with xportr
+
+```{r}
+#| label: export
+
+# Create output directory in project (relative path)
+output_dir <- "output"
+if (!dir.exists(output_dir)) {
+  dir.create(output_dir)
+}
+
+# Export DM
+xportr_write(sdtm_dm, file.path(output_dir, "dm.xpt"))
+cat("✓ Exported: output/dm.xpt\n")
+
+# Export AE
+xportr_write(sdtm_ae, file.path(output_dir, "ae.xpt"))
+cat("✓ Exported: output/ae.xpt\n")
+
+# Export EX
+xportr_write(sdtm_ex, file.path(output_dir, "ex.xpt"))
+cat("✓ Exported: output/ex.xpt\n")
+
+# Verify files exist
+cat("\n=== Export Verification ===\n")
+cat("dm.xpt:", file.size(file.path(output_dir, "dm.xpt")), "bytes\n")
+cat("ae.xpt:", file.size(file.path(output_dir, "ae.xpt")), "bytes\n")
+cat("ex.xpt:", file.size(file.path(output_dir, "ex.xpt")), "bytes\n")
+```
+
+------------------------------------------------------------------------
+
+## Summary Statistics
+
+```{r}
+#| label: summary-stats
+
+# Treatment arm distribution
+cat("=== Treatment Distribution (DM) ===\n")
+sdtm_dm %>%
+  count(ARM, ARMCD) %>%
+  print()
+
+cat("\n=== AE Severity Distribution ===\n")
+sdtm_ae %>%
+  count(AESEV) %>%
+  print()
+
+cat("\n=== Exposure Summary ===\n")
+sdtm_ex %>%
+  group_by(EXTRT) %>%
+  summarise(
+    N_Subjects = n_distinct(USUBJID),
+    N_Doses = n(),
+    Total_Dose = sum(EXDOSE)
+  ) %>%
+  print()
+```
+
+------------------------------------------------------------------------
+
+## 🎉 Congratulations! Week 1 Complete!
+
+You have successfully completed the Week 1 Capstone and demonstrated:
+
+| Skill                  | Application                                       |
+|------------------------|---------------------------------------------------|
+| Data Generation        | Created 25 subjects with realistic demographics   |
+| SDTM Structure         | Built DM (1 row/subject), AE & EX (multiple rows) |
+| Controlled Terminology | Mapped Sex, Race, Severity, SOC to CT             |
+| Date Derivations       | Calculated study days using "No Day 0" rule       |
+| Sequence Numbers       | Added AESEQ, EXSEQ per subject                    |
+| Validation             | Cross-domain consistency checks                   |
+| Export                 | Created FDA-ready .xpt files                      |
+
+------------------------------------------------------------------------
+
+## Key Takeaways from Week 1
+
+1.  **CDISC Structure**: SDTM organizes clinical data into standardized domains
+2.  **Controlled Terminology**: Consistency across studies is mandatory
+3.  **Derivations**: Study days, durations, and flags follow specific rules
+4.  **Traceability**: Every derived variable should trace back to source
+5.  **Validation**: Check data before export
+
+------------------------------------------------------------------------
+
+## What's Next?
+
+**Week 2: Production SDTM & Validation**
+
+-   Complex domains: LB (Labs), VS (Vital Signs), DS (Disposition)
+-   Industry-grade validation with `sdtmchecks`
+-   Metadata management with `metacore`
+-   Specification-driven workflows

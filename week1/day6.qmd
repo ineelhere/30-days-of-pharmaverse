@@ -1,0 +1,478 @@
+---
+title: "Day 6: Introduction to sdtm.oak"
+subtitle: "EDC-to-SDTM Transformation Patterns"
+author: "Indraneel Chakraborty"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+<div style="margin-bottom:12px;"><a href="../index.html" class="resource-link">← Back to Roadmap</a></div>
+
+## Learning Objectives
+
+By the end of Day 6, you will be able to:
+
+1.  Understand the philosophy of **`sdtm.oak`** for SDTM generation
+2.  Simulate "Raw" EDC datasets for both VS and LB
+3.  Apply algorithm-based transformations (mapping, pivoting, hardcoding)
+4.  Perform **unit standardization** (e.g., mg/dL to mmol/L)
+5.  Create a complete **SDTM LB domain** with sequence numbers
+
+------------------------------------------------------------------------
+
+## Introduction
+
+### What is `sdtm.oak`?
+
+`sdtm.oak` is a pharmaverse package that provides a standardized, algorithm-based approach to creating SDTM datasets. Key concepts:
+
+-   **Algorithm-based**: Instead of custom code, use reusable algorithms
+-   **Metadata-driven**: Transformations defined in specifications
+-   **Modular**: Small, testable functions that can be chained
+
+### The sdtm.oak Philosophy
+
+| Algorithm     | Description                    | Example Use                |
+|---------------|--------------------------------|----------------------------|
+| **Assign**    | Copy source to target          | Subject ID → USUBJID       |
+| **Hardcode**  | Set a constant value           | DOMAIN = "LB"              |
+| **Condition** | Apply logic based on condition | If severity \>= 3 then "Y" |
+| **Assign CT** | Map to Controlled Terminology  | "Male" → "M"               |
+
+*Note: We'll simulate sdtm.oak patterns using dplyr/tidyr to understand the concepts.*
+
+------------------------------------------------------------------------
+
+## Package Loading
+
+```{r}
+#| label: load-packages
+
+library(dplyr)
+library(tidyr)
+library(tibble)
+library(lubridate)
+```
+
+------------------------------------------------------------------------
+
+## Part 1: Simulating Raw EDC Data
+
+### Raw Vital Signs Data
+
+First, let's create data that looks like it came from an Electronic Data Capture (EDC) system like Rave or Veeva.
+
+```{r}
+#| label: raw-vs
+
+# Simulated Raw Vital Signs (EDC export format)
+raw_vs <- tribble(
+  ~SubjectID,  ~Site, ~Visit,       ~Date,        ~SysBP, ~DiaBP, ~Pulse, ~Temp_C,
+  "001",       "101", "Screening",  "2024-01-01", 120,    80,     72,     36.5,
+  "001",       "101", "Baseline",   "2024-01-15", 118,    78,     70,     36.8,
+  "001",       "101", "Week 4",     "2024-02-12", 115,    76,     68,     36.6,
+  "002",       "101", "Screening",  "2024-01-02", 130,    85,     88,     37.0,
+  "002",       "101", "Baseline",   "2024-01-16", 128,    82,     85,     36.7,
+  "003",       "102", "Screening",  "2024-01-03", 145,    92,     95,     36.9,
+  "003",       "102", "Baseline",   "2024-01-17", 140,    88,     90,     36.5
+)
+
+print(raw_vs)
+```
+
+### Raw Laboratory Data
+
+Now let's create lab data with values in different units that need standardization.
+
+```{r}
+#| label: raw-lb
+
+# Simulated Raw Lab Data (with different units per site)
+raw_lb <- tribble(
+  ~SubjectID,  ~Site, ~Visit,      ~Date,        ~Test,        ~Result, ~Unit,
+  # Site 101: Uses US units
+  "001",       "101", "Screening", "2024-01-01", "Glucose",    95,      "mg/dL",
+  "001",       "101", "Screening", "2024-01-01", "Cholesterol", 180,    "mg/dL",
+  "001",       "101", "Screening", "2024-01-01", "ALT",        25,      "U/L",
+  "001",       "101", "Baseline",  "2024-01-15", "Glucose",    92,      "mg/dL",
+  "001",       "101", "Baseline",  "2024-01-15", "Cholesterol", 175,    "mg/dL",
+  "001",       "101", "Baseline",  "2024-01-15", "ALT",        28,      "U/L",
+  "002",       "101", "Screening", "2024-01-02", "Glucose",    110,     "mg/dL",
+  "002",       "101", "Screening", "2024-01-02", "Cholesterol", 220,    "mg/dL",
+  "002",       "101", "Screening", "2024-01-02", "ALT",        45,      "U/L",
+  # Site 102: Uses SI units
+  "003",       "102", "Screening", "2024-01-03", "Glucose",    5.5,     "mmol/L",
+  "003",       "102", "Screening", "2024-01-03", "Cholesterol", 4.8,    "mmol/L",
+  "003",       "102", "Screening", "2024-01-03", "ALT",        30,      "U/L",
+  "003",       "102", "Baseline",  "2024-01-17", "Glucose",    5.2,     "mmol/L",
+  "003",       "102", "Baseline",  "2024-01-17", "Cholesterol", 4.5,    "mmol/L",
+  "003",       "102", "Baseline",  "2024-01-17", "ALT",        32,      "U/L"
+)
+
+print(raw_lb)
+```
+
+------------------------------------------------------------------------
+
+## Part 2: Creating SDTM VS Domain
+
+### Step 1: Hardcode Standard Variables
+
+```{r}
+#| label: vs-step1
+
+# Algorithm: Hardcode
+vs_step1 <- raw_vs %>%
+  mutate(
+    STUDYID = "DEMO-001",
+    DOMAIN = "VS",
+    # Algorithm: Assign (concatenate)
+    USUBJID = paste(STUDYID, Site, SubjectID, sep = "-")
+  )
+
+head(vs_step1)
+```
+
+### Step 2: Pivot to Long Format (Findings Algorithm)
+
+SDTM Findings domains are **long** (one row per test per visit).
+
+```{r}
+#| label: vs-step2
+
+# Algorithm: Transpose/Pivot
+vs_step2 <- vs_step1 %>%
+  pivot_longer(
+    cols = c(SysBP, DiaBP, Pulse, Temp_C),
+    names_to = "RAW_TEST",
+    values_to = "VSORRES_NUM"
+  )
+
+head(vs_step2, 10)
+```
+
+### Step 3: Map to Controlled Terminology
+
+```{r}
+#| label: vs-step3
+
+# Algorithm: Assign CT (Map test codes)
+vs_step3 <- vs_step2 %>%
+  mutate(
+    # Controlled Terminology mapping
+    VSTESTCD = case_when(
+      RAW_TEST == "SysBP"  ~ "SYSBP",
+      RAW_TEST == "DiaBP"  ~ "DIABP",
+      RAW_TEST == "Pulse"  ~ "PULSE",
+      RAW_TEST == "Temp_C" ~ "TEMP"
+    ),
+    VSTEST = case_when(
+      VSTESTCD == "SYSBP" ~ "Systolic Blood Pressure",
+      VSTESTCD == "DIABP" ~ "Diastolic Blood Pressure",
+      VSTESTCD == "PULSE" ~ "Pulse Rate",
+      VSTESTCD == "TEMP"  ~ "Temperature"
+    ),
+    VSORRESU = case_when(
+      VSTESTCD %in% c("SYSBP", "DIABP") ~ "mmHg",
+      VSTESTCD == "PULSE" ~ "BEATS/MIN",
+      VSTESTCD == "TEMP"  ~ "C"
+    )
+  )
+
+head(vs_step3)
+```
+
+### Step 4: Add Sequence Number
+
+Every SDTM record needs a unique sequence number (`--SEQ`) within subject.
+
+```{r}
+#| label: vs-step4
+
+# Algorithm: Derive sequence
+vs_step4 <- vs_step3 %>%
+  arrange(USUBJID, Date, VSTESTCD) %>%
+  group_by(USUBJID) %>%
+  mutate(VSSEQ = row_number()) %>%
+  ungroup()
+
+vs_step4 %>%
+  select(USUBJID, VSSEQ, VSTESTCD, Visit) %>%
+  head(10)
+```
+
+### Step 5: Final SDTM VS Domain
+
+```{r}
+#| label: vs-final
+
+sdtm_vs <- vs_step4 %>%
+  mutate(
+    VSORRES = as.character(VSORRES_NUM),
+    VSSTRESN = VSORRES_NUM,
+    VSSTRESU = VSORRESU,
+    VSDTC = Date,
+    VISIT = Visit
+  ) %>%
+  select(
+    STUDYID, DOMAIN, USUBJID, VSSEQ, VSTESTCD, VSTEST,
+    VSORRES, VSORRESU, VSSTRESN, VSSTRESU, VSDTC, VISIT
+  )
+
+cat("SDTM VS Domain:\n")
+cat("Records:", nrow(sdtm_vs), "\n\n")
+head(sdtm_vs, 10)
+```
+
+------------------------------------------------------------------------
+
+## Part 3: Creating SDTM LB Domain with Unit Standardization
+
+The LB domain is more complex because we need to **standardize units** across sites.
+
+### Unit Conversion Reference
+
+| Test        | Original Unit | Standard Unit | Conversion Factor |
+|-------------|---------------|---------------|-------------------|
+| Glucose     | mg/dL         | mmol/L        | ÷ 18.0182         |
+| Cholesterol | mg/dL         | mmol/L        | ÷ 38.67           |
+| ALT         | U/L           | U/L           | None (already SI) |
+
+### Step 1: Initial Mapping
+
+```{r}
+#| label: lb-step1
+
+lb_step1 <- raw_lb %>%
+  mutate(
+    STUDYID = "DEMO-001",
+    DOMAIN = "LB",
+    USUBJID = paste(STUDYID, Site, SubjectID, sep = "-"),
+    
+    # Map test codes
+    LBTESTCD = case_when(
+      Test == "Glucose"     ~ "GLUC",
+      Test == "Cholesterol" ~ "CHOL",
+      Test == "ALT"         ~ "ALT"
+    ),
+    LBTEST = case_when(
+      LBTESTCD == "GLUC" ~ "Glucose",
+      LBTESTCD == "CHOL" ~ "Cholesterol",
+      LBTESTCD == "ALT"  ~ "Alanine Aminotransferase"
+    ),
+    
+    # Original results
+    LBORRES = as.character(Result),
+    LBORRESU = Unit
+  )
+
+head(lb_step1)
+```
+
+### Step 2: Unit Standardization
+
+This is where the real work happens - converting all values to standard SI units.
+
+```{r}
+#| label: lb-step2
+
+lb_step2 <- lb_step1 %>%
+  mutate(
+    # Standard unit is SI (mmol/L for glucose/cholesterol, U/L for ALT)
+    LBSTRESU = case_when(
+      LBTESTCD %in% c("GLUC", "CHOL") ~ "mmol/L",
+      LBTESTCD == "ALT" ~ "U/L"
+    ),
+    
+    # Convert to standard units
+    LBSTRESN = case_when(
+      # Glucose: mg/dL to mmol/L
+      LBTESTCD == "GLUC" & LBORRESU == "mg/dL" ~ round(Result / 18.0182, 2),
+      LBTESTCD == "GLUC" & LBORRESU == "mmol/L" ~ Result,
+      
+      # Cholesterol: mg/dL to mmol/L
+      LBTESTCD == "CHOL" & LBORRESU == "mg/dL" ~ round(Result / 38.67, 2),
+      LBTESTCD == "CHOL" & LBORRESU == "mmol/L" ~ Result,
+      
+      # ALT: Already in U/L
+      LBTESTCD == "ALT" ~ Result
+    ),
+    
+    # Character version of standardized result
+    LBSTRESC = as.character(LBSTRESN)
+  )
+
+# Show the conversion
+lb_step2 %>%
+  select(USUBJID, LBTESTCD, LBORRES, LBORRESU, LBSTRESN, LBSTRESU) %>%
+  head(10)
+```
+
+::: callout-note
+## Unit Standardization in Practice
+
+Notice how subjects from Site 101 (US units) and Site 102 (SI units) now have comparable values in `LBSTRESN`. This is essential for cross-site analysis!
+:::
+
+### Step 3: Add Sequence and Reference Ranges
+
+```{r}
+#| label: lb-step3
+
+lb_step3 <- lb_step2 %>%
+  arrange(USUBJID, Date, LBTESTCD) %>%
+  group_by(USUBJID) %>%
+  mutate(LBSEQ = row_number()) %>%
+  ungroup() %>%
+  # Add reference ranges (in standard units)
+  mutate(
+    LBSTNRLO = case_when(
+      LBTESTCD == "GLUC" ~ 3.9,
+      LBTESTCD == "CHOL" ~ 0.0,
+      LBTESTCD == "ALT"  ~ 7.0
+    ),
+    LBSTNRHI = case_when(
+      LBTESTCD == "GLUC" ~ 5.6,
+      LBTESTCD == "CHOL" ~ 5.2,
+      LBTESTCD == "ALT"  ~ 56.0
+    ),
+    # Normal range indicator
+    LBNRIND = case_when(
+      LBSTRESN < LBSTNRLO ~ "LOW",
+      LBSTRESN > LBSTNRHI ~ "HIGH",
+      TRUE ~ "NORMAL"
+    )
+  )
+
+lb_step3 %>%
+  select(USUBJID, LBTESTCD, LBSTRESN, LBSTNRLO, LBSTNRHI, LBNRIND) %>%
+  head(10)
+```
+
+### Step 4: Final SDTM LB Domain
+
+```{r}
+#| label: lb-final
+
+sdtm_lb <- lb_step3 %>%
+  mutate(
+    LBDTC = Date,
+    VISIT = Visit
+  ) %>%
+  select(
+    STUDYID, DOMAIN, USUBJID, LBSEQ, LBTESTCD, LBTEST,
+    LBORRES, LBORRESU, LBSTRESC, LBSTRESN, LBSTRESU,
+    LBSTNRLO, LBSTNRHI, LBNRIND, LBDTC, VISIT
+  )
+
+cat("SDTM LB Domain:\n")
+cat("Records:", nrow(sdtm_lb), "\n")
+cat("Variables:", ncol(sdtm_lb), "\n\n")
+
+head(sdtm_lb, 10)
+```
+
+### Summary Statistics
+
+```{r}
+#| label: lb-summary
+
+sdtm_lb %>%
+  group_by(LBTESTCD, LBTEST) %>%
+  summarise(
+    N = n(),
+    Mean = round(mean(LBSTRESN, na.rm = TRUE), 2),
+    SD = round(sd(LBSTRESN, na.rm = TRUE), 2),
+    Low = sum(LBNRIND == "LOW"),
+    Normal = sum(LBNRIND == "NORMAL"),
+    High = sum(LBNRIND == "HIGH"),
+    .groups = "drop"
+  )
+```
+
+------------------------------------------------------------------------
+
+## 🎯 Practice Exercise
+
+### Your Turn: Add LOINC Codes
+
+LOINC codes are standard lab test identifiers. Add `LBLOINC` to the LB domain.
+
+```{r}
+#| label: practice-exercise
+#| eval: false
+
+# LOINC Reference
+loinc_lookup <- tribble(
+  ~LBTESTCD, ~LBLOINC,
+  "GLUC",    "2345-7",
+  "CHOL",    "2093-3",
+  "ALT",     "1742-6"
+)
+
+# TODO: Join the LOINC codes to sdtm_lb
+sdtm_lb_loinc <- sdtm_lb %>%
+  # Your code here...
+
+head(sdtm_lb_loinc)
+```
+
+------------------------------------------------------------------------
+
+## Deliverable Summary
+
+Today you completed the following:
+
+| Task                                            | Status |
+|-------------------------------------------------|--------|
+| Created simulated Raw VS and LB data            | ✓ Done |
+| Built SDTM VS with sequence numbers             | ✓ Done |
+| Performed unit standardization (mg/dL → mmol/L) | ✓ Done |
+| Added reference ranges and normal indicators    | ✓ Done |
+| Created complete SDTM LB domain                 | ✓ Done |
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  **sdtm.oak Philosophy**: Algorithm-based, modular, traceable.
+2.  **Pivoting**: Raw data is wide; SDTM Findings are long.
+3.  **Unit Standardization**: Critical for multi-site studies.
+4.  **Sequence Numbers**: Every record needs a unique `--SEQ`.
+5.  **Reference Ranges**: `LBSTNRLO`, `LBSTNRHI`, `LBNRIND` are key for flagging abnormals.
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   [sdtm.oak GitHub Repository](https://github.com/pharmaverse/sdtm.oak)
+-   [CDISC SDTM Implementation Guide](https://www.cdisc.org/standards)
+-   [LOINC Database](https://loinc.org/)
+
+------------------------------------------------------------------------
+
+## What's Next?
+
+In **Day 7**, we will complete the **Week 1 Capstone**:
+
+-   Build DM, AE, EX domains from scratch (20+ subjects)
+-   Apply all concepts learned this week
+-   Export to submission-ready `.xpt` files

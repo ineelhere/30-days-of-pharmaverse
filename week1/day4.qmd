@@ -1,0 +1,487 @@
+---
+title: "Day 4: Clinical Date Derivations with lubridate"
+subtitle: "Study Day, Duration, and Partial Date Imputation"
+author: "Indraneel Chakraborty"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+<div style="margin-bottom:12px;"><a href="../index.html" class="resource-link">← Back to Roadmap</a></div>
+
+## Learning Objectives
+
+By the end of Day 4, you will be able to:
+
+1.  Parse ISO 8601 clinical dates using **`lubridate`**
+2.  Calculate **Study Days** (`--DY` variables) adhering to CDISC rules (no Day 0)
+3.  Calculate **Durations** (`--DUR`) between start and end dates
+4.  Handle **Partial Dates** (e.g., "2023-05") using imputation strategies
+5.  Create **reusable functions** for date derivations
+
+------------------------------------------------------------------------
+
+## Introduction
+
+### Dates in CDISC (ISO 8601)
+
+CDISC standards use the **ISO 8601** format for dates and times: `YYYY-MM-DDThh:mm:ss`.
+
+| Format          | Example            | Description           |
+|-----------------|--------------------|-----------------------|
+| Complete date   | `2024-01-15`       | Full date             |
+| Date + time     | `2024-01-15T09:30` | Date with time        |
+| Year-Month only | `2024-01`          | Partial (missing day) |
+| Year only       | `2024`             | Partial (month + day) |
+
+### The "No Day 0" Rule
+
+CDISC has a specific rule for calculating Study Days:
+
+-   **Day 1** = Reference date (usually first dose)
+-   **Day -1** = The day before reference date
+-   **There is NO Day 0**
+
+### The Role of `lubridate`
+
+The `lubridate` package (part of tidyverse) makes working with dates in R easy. It handles parsing, arithmetic, and formatting much better than base R functions.
+
+------------------------------------------------------------------------
+
+## Package Installation & Loading
+
+### Required Packages
+
+| Package           | Purpose                |
+|-------------------|------------------------|
+| `dplyr`           | Data manipulation      |
+| `lubridate`       | Date/time manipulation |
+| `pharmaversesdtm` | Source data            |
+
+### Load Packages
+
+```{r}
+#| label: load-packages
+
+library(dplyr)
+library(lubridate)
+library(pharmaversesdtm)
+
+# Load the data we'll use
+data("ae", package = "pharmaversesdtm")
+data("dm", package = "pharmaversesdtm")
+```
+
+------------------------------------------------------------------------
+
+## Part 1: Basic Date Parsing
+
+First, let's learn how to convert character strings (which SDTM dates always are) into actual Date objects in R.
+
+### Parsing Complete Dates
+
+```{r}
+#| label: parsing-dates
+
+# Use ymd() for Year-Month-Day strings
+date_str <- "2024-01-15"
+date_obj <- ymd(date_str)
+
+cat("Original string:", date_str, "\n")
+cat("Parsed date:", as.character(date_obj), "\n")
+cat("Class:", class(date_obj), "\n")
+```
+
+### Parsing Dates with Times
+
+```{r}
+#| label: parsing-datetime
+
+# ymd_hms() for full datetime
+datetime_full <- "2024-01-15T14:30:00"
+ymd_hms(datetime_full)
+
+# ymd_hm() when seconds are missing
+datetime_short <- "2024-01-15T14:30"
+ymd_hm(datetime_short)
+```
+
+### Extracting Date Components
+
+```{r}
+#| label: extract-components
+
+sample_date <- ymd("2024-03-15")
+
+cat("Year:", year(sample_date), "\n")
+cat("Month:", month(sample_date), "\n")
+cat("Day:", day(sample_date), "\n")
+cat("Weekday:", wday(sample_date, label = TRUE), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Part 2: Calculating Study Day (`--DY`)
+
+The Study Day (`--DY`) indicates the number of days from the Reference Start Date (`RFSTDTC`).
+
+### The Formula
+
+```         
+If event_date >= reference_date:
+    Study Day = (event_date - reference_date) + 1
+
+If event_date < reference_date:
+    Study Day = (event_date - reference_date)
+```
+
+### Creating a Reusable Function
+
+This function can be reused across all your SDTM and ADaM programs.
+
+```{r}
+#| label: derive-study-day-function
+
+#' Derive Study Day following CDISC "No Day 0" convention
+#' 
+#' @param event_date Date of the event
+#' @param reference_date Reference start date (usually RFSTDTC)
+#' @return Integer study day (positive = on/after ref, negative = before ref)
+derive_study_day <- function(event_date, reference_date) {
+  # Calculate raw difference in days
+  diff_days <- as.numeric(event_date - reference_date)
+  
+  # Apply "No Day 0" rule
+  study_day <- ifelse(diff_days >= 0, diff_days + 1, diff_days)
+  
+  return(as.integer(study_day))
+}
+
+# Test the function
+test_ref <- ymd("2024-01-01")
+test_dates <- c("2023-12-30", "2023-12-31", "2024-01-01", "2024-01-02", "2024-01-05")
+
+data.frame(
+  Event_Date = test_dates,
+  Reference = "2024-01-01",
+  Study_Day = derive_study_day(ymd(test_dates), test_ref)
+)
+```
+
+::: callout-note
+## Notice the "No Day 0"
+
+Look at the output above: Day -2, Day -1, **Day 1**, Day 2, Day 5. There is no Day 0!
+:::
+
+### Applying to Real Data: Derive `AESTDY`
+
+```{r}
+#| label: calc-aestdy
+
+# Merge RFSTDTC from DM into AE
+ae_with_ref <- ae %>%
+  select(USUBJID, AESEQ, AESTDTC, AEENDTC) %>%
+  inner_join(
+    dm %>% select(USUBJID, RFSTDTC),
+    by = "USUBJID"
+  ) %>%
+  # Filter to complete dates only (length >= 10)
+  filter(nchar(AESTDTC) >= 10 & nchar(RFSTDTC) >= 10)
+
+# Apply our function
+ae_study_days <- ae_with_ref %>%
+  mutate(
+    AE_DT = ymd(substring(AESTDTC, 1, 10)),
+    REF_DT = ymd(substring(RFSTDTC, 1, 10)),
+    AESTDY = derive_study_day(AE_DT, REF_DT)
+  )
+
+# Preview
+ae_study_days %>%
+  select(USUBJID, AESTDTC, RFSTDTC, AESTDY) %>%
+  head(10)
+```
+
+------------------------------------------------------------------------
+
+## Part 3: Calculating Duration (`--DUR`)
+
+Duration is typically: $EndDate - StartDate + 1$ (inclusive of both days).
+
+### Duration in Days
+
+```{r}
+#| label: calc-duration
+
+# Filter for records with both start and end dates
+ae_dur <- ae %>%
+  select(USUBJID, AESEQ, AESTDTC, AEENDTC) %>%
+  filter(nchar(AESTDTC) >= 10 & nchar(AEENDTC) >= 10) %>%
+  mutate(
+    START_DT = ymd(substring(AESTDTC, 1, 10)),
+    END_DT = ymd(substring(AEENDTC, 1, 10)),
+    
+    # Duration in days (inclusive)
+    AEDUR = as.integer(END_DT - START_DT) + 1L
+  )
+
+ae_dur %>%
+  select(USUBJID, AESTDTC, AEENDTC, AEDUR) %>%
+  head(10)
+```
+
+### Duration Statistics
+
+```{r}
+#| label: dur-stats
+
+ae_dur %>%
+  summarise(
+    N = n(),
+    Mean_Duration = round(mean(AEDUR, na.rm = TRUE), 1),
+    Median_Duration = median(AEDUR, na.rm = TRUE),
+    Min = min(AEDUR, na.rm = TRUE),
+    Max = max(AEDUR, na.rm = TRUE)
+  )
+```
+
+------------------------------------------------------------------------
+
+## Part 4: Handling Partial Dates
+
+In clinical data, dates are often partial (e.g., "2023-06" or just "2023"). We cannot calculate durations or study days without **imputing** these to full dates.
+
+### Common Imputation Strategies
+
+| Date Type  | Missing Parts | Start Date Imputation | End Date Imputation |
+|------------|---------------|-----------------------|---------------------|
+| Year-Month | Day           | 01 (first)            | Last day of month   |
+| Year only  | Month + Day   | 01-01                 | 12-31               |
+
+### Reusable Imputation Functions
+
+```{r}
+#| label: impute-functions
+
+#' Impute partial START dates (conservative: use earliest possible date)
+#' 
+#' @param date_str Character date string in ISO 8601 format
+#' @return Character string with complete date
+impute_start_date <- function(date_str) {
+  dplyr::case_when(
+    is.na(date_str) | date_str == "" ~ NA_character_,
+    # Only Year (YYYY) -> YYYY-01-01
+    nchar(date_str) == 4 ~ paste0(date_str, "-01-01"),
+    # Year-Month (YYYY-MM) -> YYYY-MM-01
+    nchar(date_str) == 7 ~ paste0(date_str, "-01"),
+    # Full date -> Keep first 10 characters
+    TRUE ~ substring(date_str, 1, 10)
+  )
+}
+
+#' Impute partial END dates (conservative: use latest possible date)
+#' 
+#' @param date_str Character date string in ISO 8601 format
+#' @return Character string with complete date
+impute_end_date <- function(date_str) {
+  dplyr::case_when(
+    is.na(date_str) | date_str == "" ~ NA_character_,
+    # Only Year (YYYY) -> YYYY-12-31
+    nchar(date_str) == 4 ~ paste0(date_str, "-12-31"),
+    # Year-Month (YYYY-MM) -> Last day of that month
+    nchar(date_str) == 7 ~ {
+      # Parse as first of month, then get last day
+      first_of_month <- ymd(paste0(date_str, "-01"))
+      last_of_month <- ceiling_date(first_of_month, "month") - days(1)
+      as.character(last_of_month)
+    },
+    # Full date -> Keep first 10 characters
+    TRUE ~ substring(date_str, 1, 10)
+  )
+}
+```
+
+### Testing the Imputation Functions
+
+```{r}
+#| label: test-impute
+
+# Test cases with various partial dates
+test_dates <- c("2023-05-12", "2023-05", "2023", "2023-02", NA)
+
+data.frame(
+  Original = test_dates,
+  Imputed_Start = impute_start_date(test_dates),
+  Imputed_End = impute_end_date(test_dates)
+)
+```
+
+::: callout-tip
+## Why Different Imputation Rules?
+
+-   For **start dates**, we impute to the **earliest** possible date to be conservative about when something started.
+-   For **end dates**, we impute to the **latest** possible date to be conservative about when something ended.
+-   This approach ensures we don't underestimate durations or miss events.
+:::
+
+------------------------------------------------------------------------
+
+## Part 5: Complete Exercise - Derive AESTDY and AEENDY
+
+Let's bring everything together with a complete derivation.
+
+```{r}
+#| label: complete-derivation
+
+# Full AE date derivation workflow
+ae_dates_complete <- ae %>%
+  select(USUBJID, AESEQ, AETERM, AESTDTC, AEENDTC) %>%
+  # Join reference date
+  inner_join(
+    dm %>% select(USUBJID, RFSTDTC),
+    by = "USUBJID"
+  ) %>%
+  mutate(
+    # Impute partial dates
+    AESTDTC_IMP = impute_start_date(AESTDTC),
+    AEENDTC_IMP = impute_end_date(AEENDTC),
+    RFSTDTC_IMP = impute_start_date(RFSTDTC),
+    
+    # Create imputation flags (for traceability)
+    AESTDTF = ifelse(nchar(AESTDTC) < 10, "D", NA_character_),
+    AEENDTF = ifelse(nchar(AEENDTC) < 10, "D", NA_character_),
+    
+    # Parse dates
+    ASTDT = ymd(AESTDTC_IMP),
+    AENDT = ymd(AEENDTC_IMP),
+    RFSTDT = ymd(RFSTDTC_IMP),
+    
+    # Derive study days
+    AESTDY = derive_study_day(ASTDT, RFSTDT),
+    AEENDY = derive_study_day(AENDT, RFSTDT),
+    
+    # Derive duration
+    AEDUR = ifelse(!is.na(ASTDT) & !is.na(AENDT),
+                   as.integer(AENDT - ASTDT) + 1L,
+                   NA_integer_)
+  )
+
+# Preview key results
+ae_dates_complete %>%
+  select(USUBJID, AETERM, AESTDY, AEENDY, AEDUR, AESTDTF) %>%
+  head(15)
+```
+
+### Summary Statistics
+
+```{r}
+#| label: date-summary
+
+ae_dates_complete %>%
+  summarise(
+    Total_Records = n(),
+    Records_with_AESTDY = sum(!is.na(AESTDY)),
+    Records_with_AEENDY = sum(!is.na(AEENDY)),
+    Imputed_Start = sum(!is.na(AESTDTF)),
+    Mean_Duration = round(mean(AEDUR, na.rm = TRUE), 1)
+  )
+```
+
+------------------------------------------------------------------------
+
+## 🎯 Practice Exercise
+
+### Your Turn: Apply to Exposure (EX) Domain
+
+Using the functions we created, derive study days for the Exposure domain.
+
+```{r}
+#| label: practice-exercise
+#| eval: false
+
+data("ex", package = "pharmaversesdtm")
+
+# TODO: Complete the following
+ex_dates <- ex %>%
+  select(USUBJID, EXSEQ, EXSTDTC, EXENDTC) %>%
+  inner_join(
+    dm %>% select(USUBJID, RFSTDTC),
+    by = "USUBJID"
+  ) %>%
+  mutate(
+    # Step 1: Impute dates
+    # EXSTDTC_IMP = ???
+    # EXENDTC_IMP = ???
+    
+    # Step 2: Parse dates
+    # EXSTDT = ???
+    # EXENDT = ???
+    
+    # Step 3: Derive study days
+    # EXSTDY = ???
+    # EXENDY = ???
+  )
+
+# Check your results
+head(ex_dates)
+```
+
+------------------------------------------------------------------------
+
+## Deliverable Summary
+
+Today you completed the following:
+
+| Task                                   | Status |
+|----------------------------------------|--------|
+| Parsed ISO 8601 dates with `lubridate` | ✓ Done |
+| Created `derive_study_day()` function  | ✓ Done |
+| Created `impute_start_date()` function | ✓ Done |
+| Created `impute_end_date()` function   | ✓ Done |
+| Derived AESTDY, AEENDY, AEDUR from AE  | ✓ Done |
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  **ISO 8601** (`YYYY-MM-DD`) is the standard format.
+2.  **No Day 0**: Day -1 is immediately followed by Day 1.
+3.  **Reusable Functions**: Create functions for derivations you'll use repeatedly.
+4.  **Imputation Flags**: Use `--DTF` variables to indicate imputed dates.
+5.  **Documentation**: Comment your logic for traceability.
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   [lubridate Cheatsheet](https://rawgit.com/rstudio/cheatsheets/main/lubridate.pdf)
+-   [CDISC SDTM Date Conventions](https://www.cdisc.org/standards)
+-   [admiral derive_vars_dt() Vignette](https://pharmaverse.github.io/admiral/)
+
+------------------------------------------------------------------------
+
+## What's Next?
+
+In **Day 5**, we will move to **Advanced Tidyverse** operations:
+
+-   Reshaping data with `pivot_wider()` and `pivot_longer()`
+-   Creating analysis-ready datasets
+-   Performing complex joins for QC

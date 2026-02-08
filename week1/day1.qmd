@@ -24,7 +24,7 @@ execute:
   message: false
 ---
 
-<div style="margin-bottom:12px;"><a href="../roadmap.html" class="resource-link">← Back to Roadmap</a></div>
+<div style="margin-bottom:12px;"><a href="../index.html" class="resource-link">← Back to Roadmap</a></div>
 
 ## Learning Objectives
 

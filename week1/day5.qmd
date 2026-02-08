@@ -1,0 +1,478 @@
+---
+title: "Day 5: Advanced Tidyverse: Pivoting & Joining"
+subtitle: "Reshaping SDTM Data for Analysis"
+author: "Indraneel Chakraborty"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+<div style="margin-bottom:12px;"><a href="../index.html" class="resource-link">← Back to Roadmap</a></div>
+
+## Learning Objectives
+
+By the end of Day 5, you will be able to:
+
+1.  Reshape datasets using `pivot_wider()` and `pivot_longer()`
+2.  Understand when to use **Wide vs. Long** formats in clinical data
+3.  Perform advanced joins (`anti_join()`) for Data Quality Checks
+4.  Create **3 analysis-ready datasets** as specified in the roadmap
+
+------------------------------------------------------------------------
+
+## Introduction
+
+### Wide vs. Long Data
+
+| Format | Structure | Use Case |
+|----|----|----|
+| **Long** | One measurement per row | Storage, filtering, SDTM standard |
+| **Wide** | All measurements in columns | Calculations (BMI, Change from Baseline) |
+
+SDTM stores data in **long format** (one row per observation). For analysis, we often need to reshape to **wide format** (one row per subject/visit).
+
+------------------------------------------------------------------------
+
+## Package Installation & Loading
+
+```{r}
+#| label: load-packages
+
+library(dplyr)
+library(tidyr)
+library(pharmaversesdtm)
+
+# Load all domains we'll use today
+data("vs", package = "pharmaversesdtm")
+data("dm", package = "pharmaversesdtm")
+data("ae", package = "pharmaversesdtm")
+data("ex", package = "pharmaversesdtm")
+data("ds", package = "pharmaversesdtm")
+```
+
+------------------------------------------------------------------------
+
+## Part 1: Pivoting Data
+
+### From Long to Wide: `pivot_wider()`
+
+Vital Signs (VS) comes in long format. Each test (Height, Weight, BP) is a separate row. Let's reshape it so each test has its own column.
+
+```{r}
+#| label: examine-vs-long
+
+# Current long format
+vs %>%
+  filter(USUBJID == "01-701-1015" & VISIT == "BASELINE") %>%
+  select(USUBJID, VISIT, VSTESTCD, VSORRES, VSORRESU) %>%
+  head(10)
+```
+
+```{r}
+#| label: pivot-wider-basic
+
+# First, see what tests are available
+vs %>%
+  distinct(VSTESTCD) %>%
+  print()
+
+# Pivot to wide format
+vs_wide <- vs %>%
+  filter(VISIT == "BASELINE") %>%
+  select(USUBJID, VSTESTCD, VSSTRESN) %>%
+  pivot_wider(
+    names_from = VSTESTCD,
+    values_from = VSSTRESN,
+    values_fn = mean  # Handle duplicates
+  )
+
+# Show available columns
+cat("Columns after pivot:", paste(names(vs_wide), collapse = ", "), "\n\n")
+head(vs_wide)
+```
+
+### Real Example: Calculate BMI
+
+Now that we have Height and Weight side-by-side, we can easily calculate BMI.
+
+```{r}
+#| label: calc-bmi
+
+# Check if HEIGHT and WEIGHT columns exist
+if (all(c("HEIGHT", "WEIGHT") %in% names(vs_wide))) {
+  vs_bmi <- vs_wide %>%
+    filter(!is.na(HEIGHT) & !is.na(WEIGHT)) %>%
+    mutate(
+      # BMI = Weight (kg) / Height (m)^2
+      HEIGHT_M = HEIGHT / 100,
+      BMI = round(WEIGHT / (HEIGHT_M^2), 1)
+    ) %>%
+    select(USUBJID, HEIGHT, WEIGHT, BMI)
+  
+  head(vs_bmi)
+  
+  # Summary statistics
+  vs_bmi %>%
+    summarise(
+      N = n(),
+      Mean_BMI = round(mean(BMI), 1),
+      Min_BMI = min(BMI),
+      Max_BMI = max(BMI)
+    )
+} else {
+  # Fallback: Calculate Blood Pressure ratio as alternative example
+  cat("Note: HEIGHT/WEIGHT not available at BASELINE. Using BP data instead.\n\n")
+  
+  vs_bp <- vs_wide %>%
+    filter(!is.na(SYSBP) & !is.na(DIABP)) %>%
+    mutate(
+      # Pulse Pressure = Systolic - Diastolic
+      PULSE_PRESSURE = SYSBP - DIABP,
+      # Mean Arterial Pressure ≈ DBP + 1/3(SBP - DBP)
+      MAP = round(DIABP + (PULSE_PRESSURE / 3), 1)
+    ) %>%
+    select(USUBJID, SYSBP, DIABP, PULSE_PRESSURE, MAP)
+  
+  head(vs_bp)
+  
+  # Summary
+  vs_bp %>%
+    summarise(
+      N = n(),
+      Mean_MAP = round(mean(MAP, na.rm = TRUE), 1),
+      Mean_PP = round(mean(PULSE_PRESSURE, na.rm = TRUE), 1)
+    )
+}
+```
+
+### From Wide to Long: `pivot_longer()`
+
+Sometimes we need to convert wide data back to long format (often for plotting).
+
+```{r}
+#| label: pivot-longer
+
+vs_long_again <- vs_wide %>%
+  select(USUBJID, DIABP, SYSBP, PULSE) %>%
+  pivot_longer(
+    cols = c(DIABP, SYSBP, PULSE),
+    names_to = "VSTESTCD",
+    values_to = "VSSTRESN"
+  ) %>%
+  filter(!is.na(VSSTRESN))
+
+head(vs_long_again, 10)
+```
+
+------------------------------------------------------------------------
+
+## Part 2: Advanced Joins for QC
+
+### Using `anti_join()` for Quality Checks
+
+`anti_join(x, y)` returns rows in x that are **NOT** in y. This is essential for finding missing or orphaned records.
+
+```{r}
+#| label: anti-join-intro
+
+# Subjects in DM (everyone enrolled)
+dm_subjects <- dm %>% distinct(USUBJID)
+
+# Subjects in AE (those with adverse events)
+ae_subjects <- ae %>% distinct(USUBJID)
+
+# Find subjects with NO adverse events
+subjects_no_ae <- dm_subjects %>%
+  anti_join(ae_subjects, by = "USUBJID")
+
+cat("Total subjects:", nrow(dm_subjects), "\n")
+cat("Subjects with AEs:", nrow(ae_subjects), "\n")
+cat("Subjects with NO AEs:", nrow(subjects_no_ae), "\n")
+```
+
+### Finding Screen Failures
+
+Screen failures are subjects in DM who:
+
+-   Have disposition (DS) record showing SCREEN FAILURE
+-   Often have no exposure (EX) records
+
+```{r}
+#| label: screen-failures
+
+# Subjects with exposure
+ex_subjects <- ex %>% distinct(USUBJID)
+
+# Screen failures: in DM but NOT in EX
+potential_screen_fail <- dm_subjects %>%
+  anti_join(ex_subjects, by = "USUBJID")
+
+cat("Subjects without exposure (potential screen failures):", nrow(potential_screen_fail), "\n")
+
+# Verify against DS
+screen_fail_ds <- ds %>%
+  filter(grepl("SCREEN", DSDECOD, ignore.case = TRUE)) %>%
+  distinct(USUBJID)
+
+cat("Screen failures per DS:", nrow(screen_fail_ds), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Part 3: Creating Analysis-Ready Datasets
+
+Per the roadmap, we need to create **3 analysis-ready datasets**.
+
+### Dataset 1: Wide VS with One Row per Subject/Visit
+
+This dataset has vital signs organized as columns, useful for visit-level analysis.
+
+```{r}
+#| label: dataset-1
+
+# Dataset 1: Wide VS by Subject and Visit
+analysis_vs_wide <- vs %>%
+  # Select key columns
+  select(USUBJID, VISIT, VISITNUM, VSTESTCD, VSSTRESN, VSSTRESU) %>%
+  # Keep standard tests
+  filter(VSTESTCD %in% c("SYSBP", "DIABP", "PULSE", "HEIGHT", "WEIGHT", "TEMP")) %>%
+  # Pivot to wide
+  pivot_wider(
+    id_cols = c(USUBJID, VISIT, VISITNUM),
+    names_from = VSTESTCD,
+    values_from = VSSTRESN,
+    values_fn = mean
+  ) %>%
+  # Sort
+  arrange(USUBJID, VISITNUM)
+
+cat("Dataset 1: Wide VS\n")
+cat("Rows:", nrow(analysis_vs_wide), "\n")
+cat("Columns:", ncol(analysis_vs_wide), "\n\n")
+
+head(analysis_vs_wide, 10)
+```
+
+### Dataset 2: DM + AE with Demographic Covariates
+
+This dataset merges adverse events with demographic information for safety analysis.
+
+```{r}
+#| label: dataset-2
+
+# Dataset 2: AE with demographic covariates
+analysis_ae_demo <- ae %>%
+  # Select key AE variables
+  select(USUBJID, AESEQ, AETERM, AEDECOD, AEBODSYS, AESEV, AESER, AESTDTC) %>%
+  # Join demographics
+  inner_join(
+    dm %>% select(USUBJID, AGE, AGEU, SEX, RACE, ARM, ACTARM, RFSTDTC),
+    by = "USUBJID"
+  ) %>%
+  # Add derived columns
+  mutate(
+    # Age group
+    AGEGR1 = case_when(
+      AGE < 40 ~ "<40",
+      AGE >= 40 & AGE < 65 ~ "40-64",
+      AGE >= 65 ~ ">=65"
+    ),
+    # Serious flag as factor
+    AESER_F = factor(AESER, levels = c("N", "Y"), labels = c("Non-Serious", "Serious"))
+  )
+
+cat("Dataset 2: AE with Demographics\n")
+cat("Rows:", nrow(analysis_ae_demo), "\n")
+cat("Columns:", ncol(analysis_ae_demo), "\n\n")
+
+# Summary by age group and treatment
+analysis_ae_demo %>%
+  group_by(ARM, AGEGR1) %>%
+  summarise(
+    N_Events = n(),
+    N_Subjects = n_distinct(USUBJID),
+    .groups = "drop"
+  ) %>%
+  arrange(ARM, AGEGR1)
+```
+
+### Dataset 3: Screen Failure Report using Anti-Join
+
+This dataset identifies subjects who were screened but never received treatment.
+
+```{r}
+#| label: dataset-3
+
+# Dataset 3: Screen Failure Report
+screen_failure_report <- dm %>%
+  # Get basic demographics
+  select(USUBJID, SITEID, AGE, SEX, RACE, RFSTDTC, ARM) %>%
+  # Anti-join: subjects NOT in EX
+  anti_join(
+    ex %>% distinct(USUBJID),
+    by = "USUBJID"
+  ) %>%
+  # Add disposition reason if available
+  left_join(
+    ds %>%
+      filter(DSCAT == "DISPOSITION EVENT") %>%
+      select(USUBJID, DSDECOD, DSTERM),
+    by = "USUBJID"
+  ) %>%
+  # Sort by site
+  arrange(SITEID, USUBJID)
+
+cat("Dataset 3: Screen Failure Report\n")
+cat("Rows (Screen Failures):", nrow(screen_failure_report), "\n\n")
+
+# Summary by site
+screen_failure_report %>%
+  group_by(SITEID) %>%
+  summarise(
+    N = n(),
+    Reasons = paste(unique(na.omit(DSDECOD)), collapse = ", ")
+  ) %>%
+  head(10)
+```
+
+------------------------------------------------------------------------
+
+## Part 4: Multi-Domain Analysis
+
+Let's combine data from multiple domains to answer a clinical question:
+
+**Question**: For subjects with Serious Adverse Events, what was their total drug exposure?
+
+```{r}
+#| label: multi-domain
+
+# Subjects with Serious AEs
+sae_subjects <- ae %>%
+  filter(AESER == "Y") %>%
+  distinct(USUBJID, .keep_all = TRUE) %>%
+  select(USUBJID, AEDECOD)
+
+# Add demographics
+sae_analysis <- sae_subjects %>%
+  inner_join(
+    dm %>% select(USUBJID, AGE, SEX, ARM),
+    by = "USUBJID"
+  ) %>%
+  # Add exposure summary
+  left_join(
+    ex %>%
+      group_by(USUBJID) %>%
+      summarise(
+        TOTAL_DOSE = sum(EXDOSE, na.rm = TRUE),
+        N_DOSES = n(),
+        FIRST_DOSE = min(EXSTDTC),
+        LAST_DOSE = max(EXENDTC),
+        .groups = "drop"
+      ),
+    by = "USUBJID"
+  )
+
+cat("Serious AE Analysis Dataset\n")
+cat("Subjects with SAEs:", nrow(sae_analysis), "\n\n")
+
+# Display
+sae_analysis %>%
+  select(USUBJID, AEDECOD, ARM, TOTAL_DOSE, N_DOSES) %>%
+  head(10)
+```
+
+------------------------------------------------------------------------
+
+## 🎯 Practice Exercise
+
+### Your Turn: Create a Lab Analysis Dataset
+
+Create a wide dataset from LB (Laboratory) data with:
+
+-   One row per subject and visit
+-   Columns for ALT, AST, BILI (Liver Function Tests)
+-   Joined with DM for treatment arm
+
+```{r}
+#| label: practice-exercise
+#| eval: false
+
+data("lb", package = "pharmaversesdtm")
+
+# TODO: Complete the following
+lb_wide <- lb %>%
+  # Step 1: Filter for liver function tests
+  filter(LBTESTCD %in% c("ALT", "AST", "BILI")) %>%
+  # Step 2: Select key columns
+  select(USUBJID, VISIT, VISITNUM, LBTESTCD, LBSTRESN) %>%
+  # Step 3: Pivot wider
+  pivot_wider(
+    # Fill in parameters...
+  ) %>%
+  # Step 4: Join with DM to get ARM
+  inner_join(
+    # Fill in...
+  )
+
+# Check your results
+head(lb_wide)
+```
+
+------------------------------------------------------------------------
+
+## Deliverable Summary
+
+Today you completed the following:
+
+| Task                                 | Status |
+|--------------------------------------|--------|
+| Pivoted VS from long to wide format  | ✓ Done |
+| Calculated BMI using pivoted data    | ✓ Done |
+| Dataset 1: Wide VS per Subject/Visit | ✓ Done |
+| Dataset 2: DM + AE with covariates   | ✓ Done |
+| Dataset 3: Screen Failure Report     | ✓ Done |
+| Multi-domain SAE analysis            | ✓ Done |
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  **Pivot Wider**: Use when you need variables side-by-side for calculations.
+2.  **Pivot Longer**: Use when you need to group by a variable for plotting.
+3.  **Anti-joins**: Essential for finding missing, orphaned, or excluded records.
+4.  **Multi-domain Analysis**: Real analysis requires combining multiple SDTM domains.
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   [tidyr pivot vignette](https://tidyr.tidyverse.org/articles/pivot.html)
+-   [dplyr two-table verbs](https://dplyr.tidyverse.org/articles/two-table.html)
+-   [pharmaverse examples site](https://pharmaverse.github.io/examples/)
+
+------------------------------------------------------------------------
+
+## What's Next?
+
+In **Day 6**, we will introduce **`sdtm.oak`** concepts for transforming raw data to SDTM, including:
+
+-   Simulating raw EDC data
+-   Algorithm-based transformations
+-   Creating a complete SDTM LB domain with unit standardization

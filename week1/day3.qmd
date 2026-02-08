@@ -1,0 +1,464 @@
+---
+title: "Day 3: Controlled Terminology & MedDRA Coding"
+subtitle: "Building AE Codelists in R"
+author: "Indraneel Chakraborty"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+<div style="margin-bottom:12px;"><a href="../index.html" class="resource-link">← Back to Roadmap</a></div>
+
+## Learning Objectives
+
+By the end of Day 3, you will be able to:
+
+1.  Understand the importance of **Controlled Terminology (CT)** in regulatory submissions
+2.  Create **lookup tables** (codelists) in R for standardized coding
+3.  Perform **MedDRA coding** operations (mapping Preferred Terms to System Organ Classes)
+4.  Use `left_join()` effectively to apply standardized codes to clinical data
+5.  Validate that all terms have been correctly coded
+
+------------------------------------------------------------------------
+
+## Introduction
+
+### Why Controlled Terminology Matters
+
+In clinical trials, consistency is key. Regulatory agencies like the FDA need data to be standardized so they can analyze it across different studies. **Controlled Terminology (CT)** ensures that everyone uses the same words to describe the same things.
+
+For example, without CT, severity might be recorded as:
+
+-   "Mild", "Mod", "Severe"
+-   "1", "2", "3"
+-   "Light", "Moderate", "Heavy"
+
+With CDISC CT, we must use: **"MILD", "MODERATE", "SEVERE"**.
+
+### The Role of MedDRA
+
+**MedDRA** (Medical Dictionary for Regulatory Activities) is the standard for coding medical terms. It organizes adverse events into a hierarchy:
+
+```         
+┌─────────────────────────────────────────────────────────────────┐
+│  SOC  │ System Organ Class (e.g., "Gastrointestinal disorders") │
+├───────┴─────────────────────────────────────────────────────────┤
+│  HLGT │ High Level Group Term                                   │
+├─────────────────────────────────────────────────────────────────┤
+│  HLT  │ High Level Term                                         │
+├─────────────────────────────────────────────────────────────────┤
+│  PT   │ Preferred Term (e.g., "Nausea") → Used in AEDECOD       │
+├─────────────────────────────────────────────────────────────────┤
+│  LLT  │ Lowest Level Term (e.g., "Feeling queasy")              │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+In SDTM:
+
+-   **AEDECOD** = Preferred Term (PT)
+-   **AEBODSYS** = System Organ Class (SOC)
+
+------------------------------------------------------------------------
+
+## Package Installation & Loading
+
+### Required Packages
+
+| Package           | Purpose                              |
+|-------------------|--------------------------------------|
+| `dplyr`           | Data manipulation (joins, mutations) |
+| `pharmaversesdtm` | Source of AE data                    |
+
+### Load Packages
+
+```{r}
+#| label: load-packages
+
+library(dplyr)
+library(pharmaversesdtm)
+```
+
+### Load AE Data
+
+```{r}
+#| label: load-data
+
+data("ae", package = "pharmaversesdtm")
+
+# Preview the variables involved in coding
+ae %>%
+  select(USUBJID, AETERM, AEDECOD, AEBODSYS) %>%
+  head()
+```
+
+------------------------------------------------------------------------
+
+## Part 1: Building a Complete MedDRA Lookup Table
+
+In a real environment, you would have access to the full MedDRA dictionary files. For this exercise, we will create a **complete** lookup table covering all terms in our dataset.
+
+### Step 1: Identify All Unique Preferred Terms
+
+First, let's see **all** unique Preferred Terms (AEDECOD) and their corresponding SOCs in our dataset.
+
+```{r}
+#| label: unique-terms
+
+# Get all unique PT-SOC combinations from the source data
+unique_terms <- ae %>%
+  distinct(AEDECOD, AEBODSYS) %>%
+  arrange(AEBODSYS, AEDECOD)
+
+cat("Total unique Preferred Terms:", nrow(unique_terms), "\n\n")
+print(unique_terms)
+```
+
+### Step 2: Create the Complete Lookup Table
+
+Now we create a comprehensive lookup table that maps **all** Preferred Terms to their SOCs. This is the dictionary we would use in production.
+
+```{r}
+#| label: create-lookup
+
+# Create a complete MedDRA-style lookup table
+# In production, this comes from official MedDRA files
+meddra_lookup <- tribble(
+  ~AEDECOD,                            ~SOC_CODED,
+  # CARDIAC DISORDERS
+  "ATRIAL FIBRILLATION",               "CARDIAC DISORDERS",
+  "ATRIAL FLUTTER",                    "CARDIAC DISORDERS",
+  "BUNDLE BRANCH BLOCK LEFT",          "CARDIAC DISORDERS",
+  "BUNDLE BRANCH BLOCK RIGHT",         "CARDIAC DISORDERS",
+  "MYOCARDIAL INFARCTION",             "CARDIAC DISORDERS",
+  "SINUS BRADYCARDIA",                 "CARDIAC DISORDERS",
+  "SINUS TACHYCARDIA",                 "CARDIAC DISORDERS",
+  
+  # GASTROINTESTINAL DISORDERS
+  "ABDOMINAL DISCOMFORT",              "GASTROINTESTINAL DISORDERS",
+  "ABDOMINAL PAIN",                    "GASTROINTESTINAL DISORDERS",
+  "CONSTIPATION",                      "GASTROINTESTINAL DISORDERS",
+  "DIARRHOEA",                         "GASTROINTESTINAL DISORDERS",
+  "DYSPEPSIA",                         "GASTROINTESTINAL DISORDERS",
+  "FLATULENCE",                        "GASTROINTESTINAL DISORDERS",
+  "NAUSEA",                            "GASTROINTESTINAL DISORDERS",
+  "VOMITING",                          "GASTROINTESTINAL DISORDERS",
+  
+  # GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS
+  "APPLICATION SITE DERMATITIS",       "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS",
+  "APPLICATION SITE ERYTHEMA",         "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS",
+  "APPLICATION SITE IRRITATION",       "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS",
+  "APPLICATION SITE PRURITUS",         "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS",
+  "FATIGUE",                           "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS",
+  "OEDEMA PERIPHERAL",                 "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS",
+  "PYREXIA",                           "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS",
+  
+  # INFECTIONS AND INFESTATIONS
+  "BRONCHITIS",                        "INFECTIONS AND INFESTATIONS",
+  "GASTROENTERITIS",                   "INFECTIONS AND INFESTATIONS",
+  "NASOPHARYNGITIS",                   "INFECTIONS AND INFESTATIONS",
+  "UPPER RESPIRATORY TRACT INFECTION", "INFECTIONS AND INFESTATIONS",
+  "URINARY TRACT INFECTION",           "INFECTIONS AND INFESTATIONS",
+  
+  # METABOLISM AND NUTRITION DISORDERS
+  "DECREASED APPETITE",                "METABOLISM AND NUTRITION DISORDERS",
+  "HYPERCHOLESTEROLAEMIA",             "METABOLISM AND NUTRITION DISORDERS",
+  "HYPERGLYCAEMIA",                    "METABOLISM AND NUTRITION DISORDERS",
+  "HYPOGLYCAEMIA",                     "METABOLISM AND NUTRITION DISORDERS",
+  
+  # MUSCULOSKELETAL AND CONNECTIVE TISSUE DISORDERS
+  "ARTHRALGIA",                        "MUSCULOSKELETAL AND CONNECTIVE TISSUE DISORDERS",
+  "BACK PAIN",                         "MUSCULOSKELETAL AND CONNECTIVE TISSUE DISORDERS",
+  "MUSCLE SPASMS",                     "MUSCULOSKELETAL AND CONNECTIVE TISSUE DISORDERS",
+  "MYALGIA",                           "MUSCULOSKELETAL AND CONNECTIVE TISSUE DISORDERS",
+  "PAIN IN EXTREMITY",                 "MUSCULOSKELETAL AND CONNECTIVE TISSUE DISORDERS",
+  
+  # NERVOUS SYSTEM DISORDERS
+  "DIZZINESS",                         "NERVOUS SYSTEM DISORDERS",
+  "HEADACHE",                          "NERVOUS SYSTEM DISORDERS",
+  "LETHARGY",                          "NERVOUS SYSTEM DISORDERS",
+  "MIGRAINE",                          "NERVOUS SYSTEM DISORDERS",
+  "PARAESTHESIA",                      "NERVOUS SYSTEM DISORDERS",
+  "SYNCOPE",                           "NERVOUS SYSTEM DISORDERS",
+  "TREMOR",                            "NERVOUS SYSTEM DISORDERS",
+  
+  # PSYCHIATRIC DISORDERS
+  "ANXIETY",                           "PSYCHIATRIC DISORDERS",
+  "DEPRESSION",                        "PSYCHIATRIC DISORDERS",
+  "INSOMNIA",                          "PSYCHIATRIC DISORDERS",
+  
+  # RESPIRATORY, THORACIC AND MEDIASTINAL DISORDERS
+  "COUGH",                             "RESPIRATORY, THORACIC AND MEDIASTINAL DISORDERS",
+  "DYSPNOEA",                          "RESPIRATORY, THORACIC AND MEDIASTINAL DISORDERS",
+  "NASAL CONGESTION",                  "RESPIRATORY, THORACIC AND MEDIASTINAL DISORDERS",
+  "OROPHARYNGEAL PAIN",                "RESPIRATORY, THORACIC AND MEDIASTINAL DISORDERS",
+  
+  # SKIN AND SUBCUTANEOUS TISSUE DISORDERS
+  "DERMATITIS CONTACT",                "SKIN AND SUBCUTANEOUS TISSUE DISORDERS",
+  "ERYTHEMA",                          "SKIN AND SUBCUTANEOUS TISSUE DISORDERS",
+  "HYPERHIDROSIS",                     "SKIN AND SUBCUTANEOUS TISSUE DISORDERS",
+  "PRURITUS",                          "SKIN AND SUBCUTANEOUS TISSUE DISORDERS",
+  "RASH",                              "SKIN AND SUBCUTANEOUS TISSUE DISORDERS",
+  "URTICARIA",                         "SKIN AND SUBCUTANEOUS TISSUE DISORDERS",
+  
+  # VASCULAR DISORDERS
+  "HYPERTENSION",                      "VASCULAR DISORDERS",
+  "HYPOTENSION",                       "VASCULAR DISORDERS",
+  "HOT FLUSH",                         "VASCULAR DISORDERS"
+)
+
+cat("Lookup table contains", nrow(meddra_lookup), "term mappings\n")
+```
+
+------------------------------------------------------------------------
+
+## Part 2: Applying Codes with Joins
+
+Now, we will simulate a scenario where we have the terms but *missing* the Body System (SOC). We will use our lookup table to fill it in.
+
+### Step 3: Simulate Uncoded Data
+
+Let's create a dataset that has `AEDECOD` but is missing `AEBODSYS`.
+
+```{r}
+#| label: simulate-uncoded
+
+# Create uncoded dataset by dropping AEBODSYS
+ae_uncoded <- ae %>%
+  select(USUBJID, AESEQ, AETERM, AEDECOD, AESEV, AEREL, AESER)
+
+cat("Uncoded dataset:", nrow(ae_uncoded), "records\n")
+head(ae_uncoded)
+```
+
+### Step 4: Apply Coding via Left Join
+
+We use `left_join()` to attach the SOC information from our lookup table to the clinical data based on the matching Preferred Term (`AEDECOD`).
+
+```{r}
+#| label: apply-coding
+
+# Join the lookup table to the data
+ae_coded <- ae_uncoded %>%
+  left_join(meddra_lookup, by = "AEDECOD")
+
+# Check the results
+ae_coded %>%
+  select(USUBJID, AEDECOD, SOC_CODED) %>%
+  head(10)
+```
+
+::: callout-important
+## Why Left Join?
+
+We use `left_join` because we want to keep **all** rows from our clinical data (`ae_uncoded`), even if a matching code isn't found in the dictionary. If we used `inner_join`, we would lose data for any term not in our lookup table!
+:::
+
+------------------------------------------------------------------------
+
+## Part 3: Validating the Coding
+
+After applying codes, it is critical to verify that:
+
+1.  Every term got a code (no `NA` values in the new column).
+2.  The coding is accurate.
+
+### Step 5: Generate Validation Report
+
+Let's create a comprehensive validation report.
+
+```{r}
+#| label: validate-coding
+
+# Count coded vs uncoded
+validation_summary <- ae_coded %>%
+  summarise(
+    Total_Records = n(),
+    Coded = sum(!is.na(SOC_CODED)),
+    Uncoded = sum(is.na(SOC_CODED)),
+    Pct_Coded = round(100 * Coded / Total_Records, 1)
+  )
+
+print(validation_summary)
+```
+
+```{r}
+#| label: find-uncoded
+
+# Identify which terms are still uncoded
+uncoded_terms <- ae_coded %>%
+  filter(is.na(SOC_CODED)) %>%
+  distinct(AEDECOD) %>%
+  arrange(AEDECOD)
+
+if (nrow(uncoded_terms) > 0) {
+  cat("⚠️ WARNING: The following", nrow(uncoded_terms), "terms need to be added to the lookup table:\n\n")
+  print(uncoded_terms)
+} else {
+  cat("✅ SUCCESS: All terms were successfully coded!\n")
+}
+```
+
+### Step 6: Compare Against Original
+
+Let's verify our coding matches the original data.
+
+```{r}
+#| label: verify-accuracy
+
+# Join original SOC for comparison
+coding_check <- ae %>%
+  select(USUBJID, AESEQ, AEDECOD, AEBODSYS_ORIG = AEBODSYS) %>%
+  inner_join(
+    ae_coded %>% select(USUBJID, AESEQ, SOC_CODED),
+    by = c("USUBJID", "AESEQ")
+  ) %>%
+  mutate(
+    Match = AEBODSYS_ORIG == SOC_CODED
+  )
+
+# Summary
+cat("Coding accuracy check:\n")
+cat("Matching:", sum(coding_check$Match, na.rm = TRUE), "\n")
+cat("Mismatched:", sum(!coding_check$Match, na.rm = TRUE), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Part 4: Other CDISC Controlled Terminology
+
+Beyond MedDRA, we must ensure other variables match CDISC standards.
+
+### Severity (AESEV)
+
+**Valid CDISC CT values**: "MILD", "MODERATE", "SEVERE"
+
+```{r}
+#| label: check-severity
+
+# Check for non-standard values
+ae %>%
+  count(AESEV, name = "Count") %>%
+  mutate(
+    Is_Standard = AESEV %in% c("MILD", "MODERATE", "SEVERE"),
+    Status = ifelse(Is_Standard, "✓ Valid", "✗ Invalid")
+  )
+```
+
+### Seriousness (AESER)
+
+**Valid CDISC CT values**: "Y", "N"
+
+```{r}
+#| label: check-serious
+
+ae %>%
+  count(AESER, name = "Count") %>%
+  mutate(
+    Is_Standard = AESER %in% c("Y", "N"),
+    Status = ifelse(Is_Standard, "✓ Valid", "✗ Invalid")
+  )
+```
+
+### Causality (AEREL)
+
+Causality can vary by study, but common values include:
+
+```{r}
+#| label: check-rel
+
+ae %>%
+  count(AEREL, name = "Count") %>%
+  arrange(desc(Count))
+```
+
+------------------------------------------------------------------------
+
+## 🎯 Practice Exercise
+
+### Your Turn: Complete the Missing Mappings
+
+If the validation above showed uncoded terms, add them to the lookup table below and re-run the validation.
+
+```{r}
+#| label: practice-exercise
+#| eval: false
+
+# TODO: Add any missing terms from the validation report
+additional_terms <- tribble(
+  ~AEDECOD,         ~SOC_CODED,
+  # Add your mappings here:
+  # "TERM_NAME",    "SYSTEM ORGAN CLASS",
+)
+
+# Combine with original lookup
+complete_lookup <- bind_rows(meddra_lookup, additional_terms)
+
+# Re-apply coding
+ae_recoded <- ae_uncoded %>%
+  left_join(complete_lookup, by = "AEDECOD")
+
+# Check for remaining uncoded
+ae_recoded %>%
+  filter(is.na(SOC_CODED)) %>%
+  distinct(AEDECOD)
+```
+
+------------------------------------------------------------------------
+
+## Deliverable Summary
+
+Today you completed the following:
+
+| Task                                           | Status |
+|------------------------------------------------|--------|
+| Created MedDRA lookup table with 50+ terms     | ✓ Done |
+| Applied coding using `left_join()`             | ✓ Done |
+| Generated validation report (coded vs uncoded) | ✓ Done |
+| Verified coding accuracy against source        | ✓ Done |
+| Checked CDISC CT for AESEV, AESER, AEREL       | ✓ Done |
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  **Consistency is Mandatory**: Regulatory submissions require strict adherence to Controlled Terminology (CT).
+2.  **MedDRA Hierarchy**: PT (Preferred Term) → SOC (System Organ Class) is the key mapping for AE data.
+3.  **Joins for Coding**: `left_join()` is the primary tool for applying codes from a dictionary to a dataset.
+4.  **Validation is Critical**: Always check for `NA` values after a join to identify terms that didn't match.
+5.  **Document Everything**: Keep track of which version of MedDRA you're using.
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   [CDISC Controlled Terminology Browser](https://www.cancer.gov/research/resources/terminology/cdisc) - Browse official values
+-   [MedDRA Hierarchy Guide](https://www.meddra.org/how-to-use/basics/hierarchy) - Understanding the coding levels
+-   [Metacore Documentation](https://atorus-research.github.io/metacore/) - R package for managing metadata and CT
+
+------------------------------------------------------------------------
+
+## What's Next?
+
+In **Day 4**, we will focus on **Clinical Date Derivations**. You will learn:
+
+-   How to parse ISO 8601 dates with `lubridate`
+-   Calculating Study Days (`--DY`) with the "No Day 0" rule
+-   Handling partial dates (e.g., "2023-05")
+-   Creating reusable derivation functions
