@@ -1,7 +1,7 @@
 # 30 Days of Pharmaverse: A Practitioner's Guide
 
 ![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat-square)
-![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://opensource.org/license/apache-2-0)
 ![R Version](https://img.shields.io/badge/R%20%3E%3D-4.0-brightblue?style=flat-square)
 ![Last Updated](https://img.shields.io/badge/updated-February%202026-blueviolet?style=flat-square)
 
