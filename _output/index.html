@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Indraneel Chakraborty">
-<meta name="dcterms.date" content="2026-02-08">
+<meta name="dcterms.date" content="2026-02-10">
 
 <title>30 Days of Pharmaverse</title>
 <style>
@@ -74,14 +74,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-f1aadacce99040138bbb613f9330654f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-60d4398d82fec002ccec76571ed06d15.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-6c9d4b6e8397689ef559897df4fbe577.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-60d4398d82fec002ccec76571ed06d15.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-60d4398d82fec002ccec76571ed06d15.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -118,174 +114,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     content: " | ";
     margin: 0 10px;
   }
+  table td:first-child {
+    white-space: nowrap;
+  }
 </style>
 
 
 </head>
 
-<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
-    const toggleBodyColorMode = (bsSheetEl) => {
-      const mode = bsSheetEl.getAttribute("data-mode");
-      const bodyEl = window.document.querySelector("body");
-      if (mode === "dark") {
-        bodyEl.classList.add("quarto-dark");
-        bodyEl.classList.remove("quarto-light");
-      } else {
-        bodyEl.classList.add("quarto-light");
-        bodyEl.classList.remove("quarto-dark");
-      }
-    }
-    const toggleBodyColorPrimary = () => {
-      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
-      if (bsSheetEl) {
-        toggleBodyColorMode(bsSheetEl);
-      }
-    }
-    const setColorSchemeToggle = (alternate) => {
-      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-      for (let i=0; i < toggles.length; i++) {
-        const toggle = toggles[i];
-        if (toggle) {
-          if (alternate) {
-            toggle.classList.add("alternate");
-          } else {
-            toggle.classList.remove("alternate");
-          }
-        }
-      }
-    };
-    const toggleColorMode = (alternate) => {
-      // Switch the stylesheets
-      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
-      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-      manageTransitions('#quarto-margin-sidebar .nav-link', false);
-      if (alternate) {
-        // note: dark is layered on light, we don't disable primary!
-        enableStylesheet(alternateStylesheets);
-        for (const sheetNode of alternateStylesheets) {
-          if (sheetNode.id === "quarto-bootstrap") {
-            toggleBodyColorMode(sheetNode);
-          }
-        }
-      } else {
-        disableStylesheet(alternateStylesheets);
-        enableStylesheet(primaryStylesheets)
-        toggleBodyColorPrimary();
-      }
-      manageTransitions('#quarto-margin-sidebar .nav-link', true);
-      // Switch the toggles
-      setColorSchemeToggle(alternate)
-      // Hack to workaround the fact that safari doesn't
-      // properly recolor the scrollbar when toggling (#1455)
-      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-        manageTransitions("body", false);
-        window.scrollTo(0, 1);
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-          manageTransitions("body", true);
-        }, 40);
-      }
-    }
-    const disableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        stylesheet.rel = 'disabled-stylesheet';
-      }
-    }
-    const enableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
-          stylesheet.rel = 'stylesheet';
-        }
-      }
-    }
-    const manageTransitions = (selector, allowTransitions) => {
-      const els = window.document.querySelectorAll(selector);
-      for (let i=0; i < els.length; i++) {
-        const el = els[i];
-        if (allowTransitions) {
-          el.classList.remove('notransition');
-        } else {
-          el.classList.add('notransition');
-        }
-      }
-    }
-    const isFileUrl = () => {
-      return window.location.protocol === 'file:';
-    }
-    const hasAlternateSentinel = () => {
-      let styleSentinel = getColorSchemeSentinel();
-      if (styleSentinel !== null) {
-        return styleSentinel === "alternate";
-      } else {
-        return false;
-      }
-    }
-    const setStyleSentinel = (alternate) => {
-      const value = alternate ? "alternate" : "default";
-      if (!isFileUrl()) {
-        window.localStorage.setItem("quarto-color-scheme", value);
-      } else {
-        localAlternateSentinel = value;
-      }
-    }
-    const getColorSchemeSentinel = () => {
-      if (!isFileUrl()) {
-        const storageValue = window.localStorage.getItem("quarto-color-scheme");
-        return storageValue != null ? storageValue : localAlternateSentinel;
-      } else {
-        return localAlternateSentinel;
-      }
-    }
-    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-      let newTheme = '';
-      if(authorPrefersDark) {
-        newTheme = isAlternate ? baseTheme : alternateTheme;
-      } else {
-        newTheme = isAlternate ? alternateTheme : baseTheme;
-      }
-      const changeGiscusTheme = () => {
-        // From: https://github.com/giscus/giscus/issues/336
-        const sendMessage = (message) => {
-          const iframe = document.querySelector('iframe.giscus-frame');
-          if (!iframe) return;
-          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-        }
-        sendMessage({
-          setConfig: {
-            theme: newTheme
-          }
-        });
-      }
-      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-      if (isGiscussLoaded) {
-        changeGiscusTheme();
-      }
-    };
-    const authorPrefersDark = false;
-    const darkModeDefault = authorPrefersDark;
-      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
-      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
-    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-    // Dark / light mode switch
-    window.quartoToggleColorScheme = () => {
-      // Read the current dark / light value
-      let toAlternate = !hasAlternateSentinel();
-      toggleColorMode(toAlternate);
-      setStyleSentinel(toAlternate);
-      toggleGiscusIfUsed(toAlternate, darkModeDefault);
-      window.dispatchEvent(new Event('resize'));
-    };
-    // Switch to dark mode if need be
-    if (hasAlternateSentinel()) {
-      toggleColorMode(true);
-    } else {
-      toggleColorMode(false);
-    }
-  </script>
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -308,7 +145,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./week1/day1.html"> 
-<span class="menu-text">Week 1</span></a>
+<span class="menu-text">Week 1: SDTM Fundamentals</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./week2/day8.html"> 
+<span class="menu-text">Week 2: Production SDTM</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -320,7 +161,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -337,6 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#exploration-roadmap" id="toc-exploration-roadmap" class="nav-link active" data-scroll-target="#exploration-roadmap">Exploration Roadmap</a>
   <ul class="collapse">
   <li><a href="#week-1-sdtm-fundamentals-core-r-skills" id="toc-week-1-sdtm-fundamentals-core-r-skills" class="nav-link" data-scroll-target="#week-1-sdtm-fundamentals-core-r-skills">Week 1: SDTM Fundamentals &amp; Core R Skills</a></li>
+  <li><a href="#week-2-production-sdtm-validation" id="toc-week-2-production-sdtm-validation" class="nav-link" data-scroll-target="#week-2-production-sdtm-validation">Week 2: Production SDTM &amp; Validation</a></li>
   </ul></li>
   <li><a href="#what-youll-explore" id="toc-what-youll-explore" class="nav-link" data-scroll-target="#what-youll-explore">What You’ll Explore</a></li>
   <li><a href="#the-toolkit" id="toc-the-toolkit" class="nav-link" data-scroll-target="#the-toolkit">The Toolkit</a></li>
@@ -347,7 +188,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
-
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -369,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 8, 2026</p>
+      <p class="date">February 10, 2026</p>
     </div>
   </div>
   
@@ -393,6 +233,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th>Day</th>
 <th>Topic</th>
 <th>Deep Dive</th>
+<th>Key Packages</th>
 </tr>
 </thead>
 <tbody>
@@ -400,36 +241,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td><strong><a href="week1/day1.html">Day 1</a></strong></td>
 <td>Environment Setup &amp; First SDTM Code</td>
 <td>SDTM Programming Walkthrough</td>
+<td><a href="https://cran.r-project.org/package=admiral"><code>{admiral}</code></a>, <a href="https://cran.r-project.org/package=pharmaversesdtm"><code>{pharmaversesdtm}</code></a>, <a href="https://cran.r-project.org/package=dplyr"><code>{dplyr}</code></a>, <a href="https://cran.r-project.org/package=haven"><code>{haven}</code></a>, <a href="https://cran.r-project.org/package=xportr"><code>{xportr}</code></a></td>
 </tr>
 <tr class="even">
 <td><strong><a href="week1/day2.html">Day 2</a></strong></td>
 <td>SDTM Domain Structure &amp; Tidyverse Mastery</td>
 <td>Understanding SDTM Domain Classes Through Code</td>
+<td><a href="https://cran.r-project.org/package=dplyr"><code>{dplyr}</code></a>, <a href="https://cran.r-project.org/package=tidyr"><code>{tidyr}</code></a>, <a href="https://cran.r-project.org/package=pharmaversesdtm"><code>{pharmaversesdtm}</code></a></td>
 </tr>
 <tr class="odd">
 <td><strong><a href="week1/day3.html">Day 3</a></strong></td>
 <td>Controlled Terminology &amp; MedDRA Coding</td>
 <td>Building AE Codelists in R</td>
+<td><a href="https://cran.r-project.org/package=dplyr"><code>{dplyr}</code></a>, <a href="https://cran.r-project.org/package=pharmaversesdtm"><code>{pharmaversesdtm}</code></a></td>
 </tr>
 <tr class="even">
 <td><strong><a href="week1/day4.html">Day 4</a></strong></td>
 <td>Clinical Date Derivations with lubridate</td>
 <td>Study Day, Duration, and Partial Date Imputation</td>
+<td><a href="https://cran.r-project.org/package=lubridate"><code>{lubridate}</code></a>, <a href="https://cran.r-project.org/package=dplyr"><code>{dplyr}</code></a>, <a href="https://cran.r-project.org/package=pharmaversesdtm"><code>{pharmaversesdtm}</code></a></td>
 </tr>
 <tr class="odd">
 <td><strong><a href="week1/day5.html">Day 5</a></strong></td>
 <td>Advanced Tidyverse: Pivoting &amp; Joining</td>
 <td>Reshaping SDTM Data for Analysis</td>
+<td><a href="https://cran.r-project.org/package=dplyr"><code>{dplyr}</code></a>, <a href="https://cran.r-project.org/package=tidyr"><code>{tidyr}</code></a>, <a href="https://cran.r-project.org/package=pharmaversesdtm"><code>{pharmaversesdtm}</code></a></td>
 </tr>
 <tr class="even">
 <td><strong><a href="week1/day6.html">Day 6</a></strong></td>
 <td>Introduction to sdtm.oak</td>
 <td>EDC-to-SDTM Transformation Patterns</td>
+<td><a href="https://cran.r-project.org/package=sdtm.oak"><code>{sdtm.oak}</code></a>, <a href="https://cran.r-project.org/package=dplyr"><code>{dplyr}</code></a>, <a href="https://cran.r-project.org/package=pharmaversesdtm"><code>{pharmaversesdtm}</code></a></td>
 </tr>
 <tr class="odd">
 <td><strong><a href="week1/day7.html">Day 7</a></strong></td>
 <td>Week 1 Capstone: End-to-End SDTM Script</td>
 <td>Build DM, AE, EX from Scratch with xportr</td>
+<td><a href="https://cran.r-project.org/package=dplyr"><code>{dplyr}</code></a>, <a href="https://cran.r-project.org/package=lubridate"><code>{lubridate}</code></a>, <a href="https://cran.r-project.org/package=sdtm.oak"><code>{sdtm.oak}</code></a>, <a href="https://cran.r-project.org/package=xportr"><code>{xportr}</code></a>, <a href="https://cran.r-project.org/package=haven"><code>{haven}</code></a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="week-2-production-sdtm-validation" class="level3">
+<h3 class="anchored" data-anchor-id="week-2-production-sdtm-validation">Week 2: Production SDTM &amp; Validation</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Day</th>
+<th>Topic</th>
+<th>Deep Dive</th>
+<th>Key Packages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><a href="week2/day8.html">Day 8</a></strong></td>
+<td>Complex SDTM Domains - LB (Lab Results)</td>
+<td>Findings Class with Unit Standardization</td>
+<td><a href="https://cran.r-project.org/package=dplyr"><code>{dplyr}</code></a>, <a href="https://cran.r-project.org/package=tidyr"><code>{tidyr}</code></a>, <a href="https://cran.r-project.org/package=pharmaversesdtm"><code>{pharmaversesdtm}</code></a></td>
+</tr>
+<tr class="even">
+<td><strong><a href="week2/day9.html">Day 9</a></strong></td>
+<td>VS (Vital Signs) &amp; Repeated Measures</td>
+<td>Visit-Level Data and Positional Readings</td>
+<td><a href="https://cran.r-project.org/package=dplyr"><code>{dplyr}</code></a>, <a href="https://cran.r-project.org/package=tidyr"><code>{tidyr}</code></a>, <a href="https://cran.r-project.org/package=pharmaversesdtm"><code>{pharmaversesdtm}</code></a></td>
 </tr>
 </tbody>
 </table>
@@ -486,19 +361,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
-    // Ensure there is a toggle, if there isn't float one in the top right
-    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-      const a = window.document.createElement('a');
-      a.classList.add('top-right');
-      a.classList.add('quarto-color-scheme-toggle');
-      a.href = "";
-      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-      const i = window.document.createElement("i");
-      i.classList.add('bi');
-      a.appendChild(i);
-      window.document.body.appendChild(a);
-    }
-    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {

@@ -1,0 +1,678 @@
+---
+title: "Day 8: Complex SDTM Domains - LB (Lab Results)"
+subtitle: "Findings Class with Unit Standardization"
+author: "Indraneel Chakraborty"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+    
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+<div style="margin-bottom:12px;"><a href="../index.html" class="resource-link">← Back to Roadmap</a></div>
+
+## Learning Objectives
+
+By the end of Day 8, you will be able to:
+
+1.  Understand the **LB (Laboratory) domain** structure and its role as a **Findings class** domain
+2.  Identify and explain the key LB variables: **LBTESTCD, LBORRES, LBORRESU, LBSTRESC, LBSTRESN, LBSTRESU**
+3.  Perform **unit conversions** (e.g., mg/dL → mmol/L) for standardized results
+4.  Derive **reference range flags** (LBNRIND) and understand normal range variables
+5.  Create a complete LB domain from simulated raw data using `dplyr` and `tidyr`
+
+------------------------------------------------------------------------
+
+## Introduction to the LB Domain
+
+### What is the LB Domain?
+
+The **LB (Laboratory) domain** is one of the most complex and data-rich domains in SDTM. It belongs to the **Findings** class of SDTM domains, which are designed to capture observations or measurements collected during a study.
+
+::: callout-note
+## Findings Class Characteristics
+
+Findings domains share a common structure:
+
+-   **--TESTCD**: Short name for the test (e.g., "ALT", "GLUC")
+-   **--TEST**: Full descriptive name (e.g., "Alanine Aminotransferase", "Glucose")
+-   **--ORRES**: Original result as collected (character)
+-   **--ORRESU**: Original unit of the result
+-   **--STRESC**: Standardized result in character format
+-   **--STRESN**: Standardized result in numeric format
+-   **--STRESU**: Standardized unit
+:::
+
+### Why is LB Important?
+
+Laboratory data is fundamental to clinical trials because:
+
+-   It provides **objective measurements** of safety (liver enzymes, kidney function)
+-   It helps assess **efficacy** (biomarkers, disease markers)
+-   Regulatory agencies require **standardized lab data** for safety reviews
+-   Lab abnormalities often determine eligibility and safety signals
+
+### The LB Domain Structure
+
+```
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                        LB DOMAIN - KEY VARIABLES                             │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  IDENTIFIER VARIABLES                                                        │
+│    STUDYID    = Study identifier                                             │
+│    USUBJID    = Unique subject identifier (links to DM)                      │
+│    LBSEQ      = Sequence number within subject                               │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  TOPIC VARIABLE                                                              │
+│    LBTESTCD   = Lab test short name (e.g., "ALT", "BILI", "GLUC")            │
+│    LBTEST     = Lab test full name (e.g., "Alanine Aminotransferase")        │
+│    LBCAT      = Category (e.g., "CHEMISTRY", "HEMATOLOGY")                   │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  RESULT VARIABLES (Original)                                                 │
+│    LBORRES    = Result as originally collected (character)                   │
+│    LBORRESU   = Unit of original result                                      │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  RESULT VARIABLES (Standardized)                                             │
+│    LBSTRESC   = Standardized result (character)                              │
+│    LBSTRESN   = Standardized result (numeric)                                │
+│    LBSTRESU   = Standardized unit                                            │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  REFERENCE RANGE VARIABLES                                                   │
+│    LBSTNRLO   = Standard normal range lower limit                            │
+│    LBSTNRHI   = Standard normal range upper limit                            │
+│    LBNRIND    = Normal range indicator (LOW/NORMAL/HIGH)                     │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  TIMING VARIABLES                                                            │
+│    VISITNUM   = Visit number                                                 │
+│    VISIT      = Visit name (e.g., "SCREENING", "WEEK 2")                     │
+│    LBDTC      = Date/time of specimen collection (ISO 8601)                  │
+│    LBDY       = Study day of specimen collection                             │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+------------------------------------------------------------------------
+
+## Package Installation & Loading
+
+### Required Packages
+
+| Package           | Purpose                                            |
+|-------------------|----------------------------------------------------|
+| `dplyr`           | Data manipulation (filter, mutate, joins)          |
+| `tidyr`           | Data reshaping (pivot operations)                  |
+| `pharmaversesdtm` | Example SDTM datasets including LB                 |
+
+### Install Packages (if needed)
+
+```{r}
+#| label: install-packages
+
+# Install packages if not already installed
+if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
+if (!requireNamespace("tidyr", quietly = TRUE)) install.packages("tidyr")
+if (!requireNamespace("pharmaversesdtm", quietly = TRUE)) install.packages("pharmaversesdtm")
+```
+
+### Load Packages
+
+```{r}
+#| label: load-packages
+
+library(dplyr)
+library(tidyr)
+library(pharmaversesdtm)
+```
+
+------------------------------------------------------------------------
+
+## Exploring pharmaversesdtm LB Data
+
+Let's start by loading and exploring the LB domain from `pharmaversesdtm`. This is the same data used by production teams at Roche and GSK when developing the `admiral` package.
+
+### Load the LB Domain
+
+```{r}
+#| label: load-lb-data
+
+# Load LB domain from pharmaversesdtm
+data("lb", package = "pharmaversesdtm")
+
+# Quick overview
+cat("LB domain dimensions:", nrow(lb), "rows x", ncol(lb), "columns\n")
+cat("Number of unique subjects:", n_distinct(lb$USUBJID), "\n")
+cat("Number of unique tests:", n_distinct(lb$LBTESTCD), "\n")
+```
+
+### Explore LB Structure
+
+```{r}
+#| label: glimpse-lb
+
+# View the structure of the LB domain
+dplyr::glimpse(lb)
+```
+
+### Key LB Variables Explained
+
+Let's examine some critical LB variables:
+
+```{r}
+#| label: explore-lb-variables
+
+# View unique lab tests
+lb %>%
+  distinct(LBTESTCD, LBTEST, LBCAT) %>%
+  arrange(LBCAT, LBTESTCD) %>%
+  head(15)
+```
+
+::: callout-tip
+## Understanding Test Codes
+
+Notice how **LBTESTCD** is a short, standardized code while **LBTEST** is the full descriptive name. This follows CDISC conventions where:
+
+-   **Short codes** (LBTESTCD) enable efficient data processing
+-   **Full names** (LBTEST) provide human-readable descriptions
+-   **Categories** (LBCAT) group related tests (CHEMISTRY, HEMATOLOGY, etc.)
+:::
+
+------------------------------------------------------------------------
+
+## Understanding Original vs Standardized Results
+
+One of the most important concepts in the LB domain is the distinction between **original** and **standardized** results.
+
+### Why Standardization Matters
+
+Labs from different sites may report the same test in different units:
+
+-   Site A reports Glucose as **90 mg/dL**
+-   Site B reports Glucose as **5.0 mmol/L**
+
+Both values are the same measurement, just in different units! SDTM requires us to **standardize** these values so they can be analyzed together.
+
+### The Result Variable Pairs
+
+| Original Variable | Standardized Variable | Description |
+|-------------------|----------------------|-------------|
+| `LBORRES` | `LBSTRESC` | Result (character format) |
+| - | `LBSTRESN` | Result (numeric format) |
+| `LBORRESU` | `LBSTRESU` | Unit of measurement |
+
+### Viewing Original vs Standardized Values
+
+```{r}
+#| label: compare-results
+
+# Compare original and standardized values for a specific test
+lb %>%
+  filter(LBTESTCD == "GLUC") %>%
+  select(USUBJID, VISIT, LBORRES, LBORRESU, LBSTRESC, LBSTRESN, LBSTRESU) %>%
+  head(10)
+```
+
+------------------------------------------------------------------------
+
+## Unit Conversion: A Hands-On Example
+
+Let's create a practical example of unit conversion. This is one of the most common tasks when building an LB domain from raw lab data.
+
+### Common Lab Unit Conversions
+
+| Test | Original Unit | Standard Unit | Conversion Factor |
+|------|---------------|---------------|-------------------|
+| Glucose | mg/dL | mmol/L | ÷ 18.02 |
+| Creatinine | mg/dL | µmol/L | × 88.42 |
+| Bilirubin | mg/dL | µmol/L | × 17.10 |
+| Cholesterol | mg/dL | mmol/L | ÷ 38.67 |
+
+::: callout-note
+## Reference for Unit Conversions
+
+For a comprehensive list of clinical lab unit conversions, see:
+
+-   [National Institutes of Health - Unit Conversion Tables](https://www.ncbi.nlm.nih.gov/books/NBK535333/)
+-   [CDISC SEND/SDTM Unit Standards](https://www.cdisc.org/standards/foundational/sdtm)
+:::
+
+### Step-by-Step: Creating Standardized Results
+
+Let's simulate a scenario where we receive raw lab data and need to standardize it.
+
+```{r}
+#| label: create-raw-data
+
+# Create simulated raw lab data with mixed units
+raw_lab <- tibble::tribble(
+  ~USUBJID,           ~LBTESTCD, ~LBTEST,              ~LBORRES, ~LBORRESU, ~VISITNUM, ~VISIT,
+  "CDISC01-001-001",  "GLUC",    "Glucose",            "95",     "mg/dL",   1,         "BASELINE",
+  "CDISC01-001-001",  "GLUC",    "Glucose",            "5.1",    "mmol/L",  2,         "WEEK 2",
+  "CDISC01-001-001",  "CREAT",   "Creatinine",         "1.2",    "mg/dL",   1,         "BASELINE",
+  "CDISC01-001-001",  "CREAT",   "Creatinine",         "98",     "umol/L",  2,         "WEEK 2",
+  "CDISC01-001-002",  "GLUC",    "Glucose",            "102",    "mg/dL",   1,         "BASELINE",
+  "CDISC01-001-002",  "GLUC",    "Glucose",            "88",     "mg/dL",   2,         "WEEK 2",
+  "CDISC01-001-002",  "BILI",    "Bilirubin Total",    "0.8",    "mg/dL",   1,         "BASELINE",
+  "CDISC01-001-002",  "BILI",    "Bilirubin Total",    "1.1",    "mg/dL",   2,         "WEEK 2"
+)
+
+cat("Raw lab data with mixed units:\n")
+print(raw_lab)
+```
+
+### Create a Unit Conversion Function
+
+```{r}
+#| label: conversion-function
+
+# Define a reusable conversion function
+convert_lab_units <- function(testcd, value, from_unit, to_unit) {
+  # Convert character value to numeric
+  val <- as.numeric(value)
+  
+  # Define conversion factors (from original to standard)
+  # Standard units: Glucose = mmol/L, Creatinine = umol/L, Bilirubin = umol/L
+  
+  result <- case_when(
+    # Glucose: mg/dL to mmol/L
+    testcd == "GLUC" & from_unit == "mg/dL" & to_unit == "mmol/L" ~ val / 18.02,
+    
+    # Glucose: already in mmol/L
+    testcd == "GLUC" & from_unit == "mmol/L" & to_unit == "mmol/L" ~ val,
+    
+    # Creatinine: mg/dL to umol/L
+    testcd == "CREAT" & from_unit == "mg/dL" & to_unit == "umol/L" ~ val * 88.42,
+    
+    # Creatinine: already in umol/L
+    testcd == "CREAT" & from_unit == "umol/L" & to_unit == "umol/L" ~ val,
+    
+    # Bilirubin: mg/dL to umol/L
+    testcd == "BILI" & from_unit == "mg/dL" & to_unit == "umol/L" ~ val * 17.10,
+    
+    # Default: no conversion
+    TRUE ~ val
+  )
+  
+  return(round(result, 2))
+}
+```
+
+### Apply Unit Conversions
+
+```{r}
+#| label: apply-conversions
+
+# Define standard units for each test
+standard_units <- tibble::tribble(
+  ~LBTESTCD, ~LBSTRESU,
+  "GLUC",    "mmol/L",
+  "CREAT",   "umol/L",
+  "BILI",    "umol/L"
+)
+
+# Apply standardization
+lab_standardized <- raw_lab %>%
+  # Join to get target standard units
+  left_join(standard_units, by = "LBTESTCD") %>%
+  # Apply conversion
+  mutate(
+    LBSTRESN = convert_lab_units(LBTESTCD, LBORRES, LBORRESU, LBSTRESU),
+    LBSTRESC = as.character(LBSTRESN)
+  ) %>%
+  # Reorder columns for clarity
+  select(USUBJID, LBTESTCD, LBTEST, VISITNUM, VISIT, 
+         LBORRES, LBORRESU, LBSTRESC, LBSTRESN, LBSTRESU)
+
+cat("Standardized lab data:\n")
+print(lab_standardized)
+```
+
+::: callout-important
+## Key Learning Point
+
+Notice how the **original** values are preserved (`LBORRES`, `LBORRESU`) while **standardized** values are derived (`LBSTRESC`, `LBSTRESN`, `LBSTRESU`). This is a fundamental SDTM principle: **never lose the original data!**
+:::
+
+------------------------------------------------------------------------
+
+## Reference Ranges and Normal Range Indicators
+
+### What are Reference Ranges?
+
+Reference ranges (also called normal ranges) define the expected values for a lab test in a healthy population. Values outside this range may indicate:
+
+-   **LOW**: Value below the normal range (potentially abnormal)
+-   **NORMAL**: Value within expected range
+-   **HIGH**: Value above the normal range (potentially abnormal)
+
+### Key Reference Range Variables
+
+| Variable | Description |
+|----------|-------------|
+| `LBSTNRLO` | Standard normal range - lower limit |
+| `LBSTNRHI` | Standard normal range - upper limit |
+| `LBNRIND` | Normal range indicator (LOW/NORMAL/HIGH) |
+| `LBORNRLO` | Original normal range - lower limit |
+| `LBORNRHI` | Original normal range - upper limit |
+
+### Deriving Reference Range Flags
+
+```{r}
+#| label: reference-ranges
+
+# Define reference ranges (typically from lab vendor or specifications)
+reference_ranges <- tibble::tribble(
+  ~LBTESTCD, ~LBSTNRLO, ~LBSTNRHI, ~LBSTRESU,
+  "GLUC",    3.9,       5.6,       "mmol/L",   # Fasting glucose
+  "CREAT",   62,        106,       "umol/L",   # Creatinine (male)
+  "BILI",    5.1,       17.0,      "umol/L"    # Total bilirubin
+)
+
+# Join reference ranges and derive LBNRIND
+lab_with_ranges <- lab_standardized %>%
+  left_join(
+    reference_ranges %>% select(LBTESTCD, LBSTNRLO, LBSTNRHI),
+    by = "LBTESTCD"
+  ) %>%
+  mutate(
+    # Derive normal range indicator
+    LBNRIND = case_when(
+      is.na(LBSTRESN) ~ NA_character_,                    # Missing result
+      LBSTRESN < LBSTNRLO ~ "LOW",                        # Below range
+      LBSTRESN > LBSTNRHI ~ "HIGH",                       # Above range
+      TRUE ~ "NORMAL"                                     # Within range
+    )
+  )
+
+# Display results
+lab_with_ranges %>%
+  select(USUBJID, LBTESTCD, VISIT, LBSTRESN, LBSTRESU, 
+         LBSTNRLO, LBSTNRHI, LBNRIND)
+```
+
+::: callout-tip
+## Clinical Significance
+
+The `LBNRIND` variable is critical for safety analyses. It helps identify:
+
+-   **Clinically significant abnormalities** that may require action
+-   **Trends** in lab values over time (e.g., worsening liver function)
+-   **Treatment-emergent abnormalities** (normal at baseline, abnormal post-treatment)
+:::
+
+------------------------------------------------------------------------
+
+## LOINC Coding Concepts
+
+### What is LOINC?
+
+**LOINC** (Logical Observation Identifiers Names and Codes) is a universal standard for identifying medical laboratory observations. While not always required in SDTM, it enhances interoperability.
+
+### How LOINC Integrates with SDTM
+
+| SDTM Variable | LOINC Equivalent |
+|---------------|------------------|
+| `LBLOINC` | LOINC code for the test |
+| `LBTESTCD` | Mapped to LOINC component |
+
+### Example LOINC Codes
+
+| Test | LBTESTCD | LOINC Code | Description |
+|------|----------|------------|-------------|
+| Glucose | GLUC | 2339-0 | Glucose [Mass/volume] in Blood |
+| Creatinine | CREAT | 2160-0 | Creatinine [Mass/volume] in Serum or Plasma |
+| ALT | ALT | 1742-6 | Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma |
+
+::: callout-note
+## Learn More About LOINC
+
+-   [LOINC Official Website](https://loinc.org/)
+-   [Search LOINC Codes](https://loinc.org/search/)
+-   [LOINC and CDISC Integration Guide](https://www.cdisc.org/kb/articles/loinc-cdisc-lab-test-terminology)
+:::
+
+------------------------------------------------------------------------
+
+## Complete Example: Building an LB Domain
+
+Let's put everything together and build a more complete LB domain from simulated raw data.
+
+### Step 1: Create Comprehensive Raw Data
+
+```{r}
+#| label: comprehensive-raw-data
+
+# Create more comprehensive raw lab data
+set.seed(42)
+
+subjects <- c("CDISC01-001-001", "CDISC01-001-002", "CDISC01-001-003",
+              "CDISC01-001-004", "CDISC01-001-005")
+visits <- c("SCREENING", "BASELINE", "WEEK 2", "WEEK 4", "WEEK 8")
+visit_nums <- c(-1, 1, 2, 3, 4)
+
+# Generate raw lab data for 5 subjects across 5 visits
+raw_lb_data <- expand_grid(
+  USUBJID = subjects,
+  VISIT_INFO = tibble(VISIT = visits, VISITNUM = visit_nums)
+) %>%
+  unnest(VISIT_INFO) %>%
+  # Add lab tests
+  crossing(
+    tibble::tribble(
+      ~LBTESTCD, ~LBTEST,                      ~LBCAT,      ~LBORRESU,
+      "GLUC",    "Glucose",                    "CHEMISTRY", "mg/dL",
+      "CREAT",   "Creatinine",                 "CHEMISTRY", "mg/dL",
+      "ALT",     "Alanine Aminotransferase",   "CHEMISTRY", "U/L",
+      "AST",     "Aspartate Aminotransferase", "CHEMISTRY", "U/L",
+      "BILI",    "Bilirubin Total",            "CHEMISTRY", "mg/dL",
+      "WBC",     "Leukocytes",                 "HEMATOLOGY","10^9/L",
+      "RBC",     "Erythrocytes",               "HEMATOLOGY","10^12/L",
+      "HGB",     "Hemoglobin",                 "HEMATOLOGY","g/dL",
+      "PLT",     "Platelets",                  "HEMATOLOGY","10^9/L",
+      "SODIUM",  "Sodium",                     "CHEMISTRY", "mmol/L"
+    )
+  ) %>%
+  # Generate random values within typical ranges
+  rowwise() %>%
+  mutate(
+    LBORRES = as.character(round(case_when(
+      LBTESTCD == "GLUC"   ~ rnorm(1, 100, 15),
+      LBTESTCD == "CREAT"  ~ rnorm(1, 1.0, 0.2),
+      LBTESTCD == "ALT"    ~ rnorm(1, 30, 10),
+      LBTESTCD == "AST"    ~ rnorm(1, 28, 8),
+      LBTESTCD == "BILI"   ~ rnorm(1, 0.8, 0.3),
+      LBTESTCD == "WBC"    ~ rnorm(1, 7.0, 2.0),
+      LBTESTCD == "RBC"    ~ rnorm(1, 4.8, 0.5),
+      LBTESTCD == "HGB"    ~ rnorm(1, 14.5, 1.5),
+      LBTESTCD == "PLT"    ~ rnorm(1, 250, 50),
+      LBTESTCD == "SODIUM" ~ rnorm(1, 140, 3),
+      TRUE ~ NA_real_
+    ), 2))
+  ) %>%
+  ungroup() %>%
+  # Add STUDYID and sequence
+  mutate(STUDYID = "CDISC01") %>%
+  group_by(USUBJID) %>%
+  mutate(LBSEQ = row_number()) %>%
+  ungroup()
+
+cat("Raw LB data created:", nrow(raw_lb_data), "records\n")
+cat("Tests per subject per visit:", n_distinct(raw_lb_data$LBTESTCD), "\n")
+```
+
+### Step 2: Apply Standardization
+
+```{r}
+#| label: full-standardization
+
+# Define standard units and reference ranges for all tests
+lab_standards <- tibble::tribble(
+  ~LBTESTCD, ~LBSTRESU,  ~LBSTNRLO, ~LBSTNRHI, ~CONV_FACTOR,
+  "GLUC",    "mmol/L",   3.9,       5.6,       0.0555,    # mg/dL to mmol/L
+  "CREAT",   "umol/L",   62,        106,       88.42,     # mg/dL to umol/L
+  "ALT",     "U/L",      7,         56,        1.0,       # No conversion
+  "AST",     "U/L",      10,        40,        1.0,       # No conversion
+  "BILI",    "umol/L",   5.1,       17.0,      17.10,     # mg/dL to umol/L
+  "WBC",     "10^9/L",   4.5,       11.0,      1.0,       # No conversion
+  "RBC",     "10^12/L",  4.2,       5.4,       1.0,       # No conversion
+  "HGB",     "g/dL",     12.0,      17.0,      1.0,       # No conversion
+  "PLT",     "10^9/L",   150,       400,       1.0,       # No conversion
+  "SODIUM",  "mmol/L",   136,       145,       1.0        # No conversion
+)
+
+# Create complete LB domain
+lb_complete <- raw_lb_data %>%
+  # Join standards
+  left_join(lab_standards, by = "LBTESTCD") %>%
+  # Calculate standardized numeric result
+  mutate(
+    LBSTRESN = round(as.numeric(LBORRES) * CONV_FACTOR, 2),
+    LBSTRESC = as.character(LBSTRESN),
+    # Derive normal range indicator
+    LBNRIND = case_when(
+      is.na(LBSTRESN) ~ NA_character_,
+      LBSTRESN < LBSTNRLO ~ "LOW",
+      LBSTRESN > LBSTNRHI ~ "HIGH",
+      TRUE ~ "NORMAL"
+    ),
+    # Add specimen type (typically from raw data, simulated here)
+    LBSPEC = "SERUM"
+  ) %>%
+  # Select and order columns per SDTM standard
+  select(
+    STUDYID, USUBJID, LBSEQ,
+    LBTESTCD, LBTEST, LBCAT, LBSPEC,
+    LBORRES, LBORRESU,
+    LBSTRESC, LBSTRESN, LBSTRESU,
+    LBSTNRLO, LBSTNRHI, LBNRIND,
+    VISITNUM, VISIT
+  ) %>%
+  arrange(STUDYID, USUBJID, VISITNUM, LBTESTCD)
+
+# Preview
+cat("\nComplete LB domain preview:\n")
+head(lb_complete, 15)
+```
+
+### Step 3: Validate the LB Domain
+
+```{r}
+#| label: validate-lb
+
+# Validation checks
+cat("=== LB Domain Validation ===\n\n")
+
+# Check 1: All required variables present
+required_vars <- c("STUDYID", "USUBJID", "LBSEQ", "LBTESTCD", "LBTEST", 
+                   "LBORRES", "LBORRESU", "LBSTRESN", "LBSTRESU")
+present <- required_vars %in% names(lb_complete)
+cat("Required variables check:\n")
+for (i in seq_along(required_vars)) {
+  cat("  ", required_vars[i], ":", ifelse(present[i], "✓", "✗"), "\n")
+}
+
+# Check 2: No missing USUBJID
+cat("\nMissing USUBJID:", sum(is.na(lb_complete$USUBJID)), "\n")
+
+# Check 3: Distribution of LBNRIND
+cat("\nNormal Range Indicator distribution:\n")
+table(lb_complete$LBNRIND, useNA = "ifany")
+
+# Check 4: Unique subjects and visits
+cat("\nData coverage:\n")
+cat("  Unique subjects:", n_distinct(lb_complete$USUBJID), "\n")
+cat("  Unique visits:", n_distinct(lb_complete$VISIT), "\n")
+cat("  Unique tests:", n_distinct(lb_complete$LBTESTCD), "\n")
+cat("  Total records:", nrow(lb_complete), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Summary Statistics for LB Data
+
+When working with lab data, it's often useful to generate summary statistics.
+
+```{r}
+#| label: lb-summaries
+
+# Summary by test and visit
+lb_summary <- lb_complete %>%
+  group_by(LBTESTCD, LBTEST, VISIT, LBSTRESU) %>%
+  summarise(
+    N = n(),
+    Mean = round(mean(LBSTRESN, na.rm = TRUE), 2),
+    SD = round(sd(LBSTRESN, na.rm = TRUE), 2),
+    Min = round(min(LBSTRESN, na.rm = TRUE), 2),
+    Max = round(max(LBSTRESN, na.rm = TRUE), 2),
+    N_Low = sum(LBNRIND == "LOW", na.rm = TRUE),
+    N_High = sum(LBNRIND == "HIGH", na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Display chemistry panel at BASELINE
+cat("Chemistry Panel Summary at BASELINE:\n")
+lb_summary %>%
+  filter(VISIT == "BASELINE", LBTESTCD %in% c("GLUC", "CREAT", "ALT", "AST", "BILI")) %>%
+  print()
+```
+
+------------------------------------------------------------------------
+
+## Deliverable Summary
+
+Today you completed the following:
+
+| Task | Status |
+|------|--------|
+| Understood LB domain structure and Findings class | ✓ Done |
+| Explored key LB variables (LBTESTCD, LBORRES, LBSTRESN, etc.) | ✓ Done |
+| Performed unit conversions (mg/dL → mmol/L) | ✓ Done |
+| Derived reference range flags (LBNRIND) | ✓ Done |
+| Created a complete LB domain with 10+ tests | ✓ Done |
+| Generated summary statistics | ✓ Done |
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  **LB is a Findings class domain** - It follows the --TESTCD, --ORRES, --STRESC pattern shared by VS, LB, EG
+2.  **Original vs Standardized** - Always preserve original results while creating standardized versions
+3.  **Unit conversions are critical** - Labs from different sites may use different units
+4.  **Reference ranges enable safety analysis** - LBNRIND flags abnormal values
+5.  **LOINC provides universal identification** - Enhances data interoperability
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   [CDISC SDTM Implementation Guide - LB Domain](https://www.cdisc.org/standards/foundational/sdtm) - Official LB specification
+-   [LOINC Official Website](https://loinc.org/) - Medical laboratory codes
+-   [NIH Unit Conversion Tables](https://www.ncbi.nlm.nih.gov/books/NBK535333/) - Lab unit conversions
+-   [Pharmaverse.org](https://pharmaverse.org) - R packages for clinical data
+-   [sdtm.oak Documentation](https://pharmaverse.github.io/sdtm.oak/) - SDTM creation package
+
+------------------------------------------------------------------------
+
+## What's Next?
+
+In **Day 9**, we will focus on **VS (Vital Signs) & Repeated Measures**:
+
+-   Understanding visit-level data and multiple readings per timepoint
+-   Working with positional variables (VSPOS, VSLOC)
+-   Deriving statistics across multiple readings
+-   Preparing for ADaM BDS structure (baseline, change from baseline)

@@ -7,7 +7,7 @@ format:
   html:
     theme:
       light: cosmo
-      dark: darkly
+
     toc: true
     toc-depth: 3
     toc-location: right
@@ -15,7 +15,6 @@ format:
     smooth-scroll: true
     highlight-style: github
     page-layout: full
-    footer: "[📚 Explore on GitHub](https://github.com/ineelhere/30-days-of-pharmaverse)"
 editor: visual
 execute:
   echo: true

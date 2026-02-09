@@ -14,8 +14,10 @@ website:
     left:
       - text: "Home"
         href: index.html
-      - text: "Week 1"
+      - text: "Week 1: SDTM Fundamentals"
         href: week1/day1.html
+      - text: "Week 2: Production SDTM"
+        href: week2/day8.html
     right:
       - icon: github
         href: https://github.com/ineelhere/30-days-of-pharmaverse
@@ -31,12 +33,17 @@ website:
         - week1/day5.qmd
         - week1/day6.qmd
         - week1/day7.qmd
+    - id: week2
+      title: "Week 2: Production SDTM"
+      contents:
+        - week2/day8.qmd
+        - week2/day9.qmd
 
 format:
   html:
     theme:
       light: cosmo
-      dark: darkly
+
     toc: true
     toc-depth: 2
     page-layout: full

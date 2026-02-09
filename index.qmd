@@ -7,7 +7,7 @@ format:
   html:
     theme:
       light: cosmo
-      dark: darkly
+
     toc: true
     toc-depth: 3
     toc-location: right
@@ -21,6 +21,9 @@ format:
         .navbar-brand::after {
           content: " | ";
           margin: 0 10px;
+        }
+        table td:first-child {
+          white-space: nowrap;
         }
       </style>
     page-layout: full
@@ -45,9 +48,23 @@ suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(stringr))
 suppressPackageStartupMessages(library(yaml))
 
-# Find all day*.qmd files in week1 directory
-day_files <- list.files("week1", pattern = "^day\\d+\\.qmd$", full.names = TRUE) %>%
-  sort()
+# Define packages for each day with CRAN links
+packages_map <- list(
+  "1" = "[`{admiral}`](https://cran.r-project.org/package=admiral), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm), [`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{haven}`](https://cran.r-project.org/package=haven), [`{xportr}`](https://cran.r-project.org/package=xportr)",
+  "2" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{tidyr}`](https://cran.r-project.org/package=tidyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
+  "3" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
+  "4" = "[`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
+  "5" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{tidyr}`](https://cran.r-project.org/package=tidyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
+  "6" = "[`{sdtm.oak}`](https://cran.r-project.org/package=sdtm.oak), [`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
+  "7" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{sdtm.oak}`](https://cran.r-project.org/package=sdtm.oak), [`{xportr}`](https://cran.r-project.org/package=xportr), [`{haven}`](https://cran.r-project.org/package=haven)",
+  "8" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{tidyr}`](https://cran.r-project.org/package=tidyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
+  "9" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{tidyr}`](https://cran.r-project.org/package=tidyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
+  "10" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{sdtm.oak}`](https://cran.r-project.org/package=sdtm.oak)",
+  "11" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{sdtm.oak}`](https://cran.r-project.org/package=sdtm.oak)",
+  "12" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{datacutr}`](https://cran.r-project.org/package=datacutr)",
+  "13" = "[`{sdtmchecks}`](https://cran.r-project.org/package=sdtmchecks), [`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
+  "14" = "[`{metacore}`](https://cran.r-project.org/package=metacore), [`{metatools}`](https://cran.r-project.org/package=metatools), [`{xportr}`](https://cran.r-project.org/package=xportr), [`{dplyr}`](https://cran.r-project.org/package=dplyr)"
+)
 
 # Function to extract YAML frontmatter
 extract_yaml <- function(file_path) {
@@ -68,40 +85,55 @@ extract_yaml <- function(file_path) {
   }
 }
 
-# Extract metadata from all day files
-course_data <- day_files %>%
-  lapply(function(file) {
-    yaml_meta <- extract_yaml(file)
-    day_num <- str_extract(basename(file), "\\d+")
-    list(
-      day_num = as.numeric(day_num),
-      file = file,
-      title = yaml_meta$title,
-      subtitle = yaml_meta$subtitle
+# Function to generate table for a week
+generate_week_table <- function(week_dir, week_num, week_title) {
+  day_files <- list.files(week_dir, pattern = "^day\\d+\\.qmd$", full.names = TRUE) %>%
+    sort()
+  
+  if (length(day_files) == 0) return(invisible(NULL))
+  
+  # Extract metadata from all day files
+  course_data <- day_files %>%
+    lapply(function(file) {
+      yaml_meta <- extract_yaml(file)
+      day_num <- str_extract(basename(file), "\\d+")
+      list(
+        day_num = as.numeric(day_num),
+        file = file,
+        title = yaml_meta$title,
+        subtitle = yaml_meta$subtitle,
+        packages = packages_map[[day_num]] %||% ""
+      )
+    }) %>%
+    bind_rows() %>%
+    arrange(day_num) %>%
+    mutate(
+      html_file = paste0(week_dir, "/day", day_num, ".html"),
+      day_link = paste0("**[Day ", day_num, "](", html_file, ")**"),
+      # Extract just the topic from title (after the day prefix)
+      topic = str_remove(title, "^Day \\d+: "),
+      focus_area = subtitle
     )
-  }) %>%
-  bind_rows() %>%
-  arrange(day_num) %>%
-  mutate(
-    html_file = paste0("week1/day", day_num, ".html"),
-    day_link = paste0("**[Day ", day_num, "](", html_file, ")**"),
-    # Extract just the topic from title (after the day prefix)
-    topic = str_remove(title, "^Day \\d+: "),
-    focus_area = subtitle
-  )
-
-# Generate markdown table
-cat("### Week 1: SDTM Fundamentals & Core R Skills\n\n")
-cat("| Day | Topic | Deep Dive |\n")
-cat("|---|---|---|\n")
-
-for (i in seq_len(nrow(course_data))) {
-  row <- course_data[i, ]
-  cat(sprintf("| %s | %s | %s |\n", 
-              row$day_link, 
-              row$topic, 
-              row$focus_area))
+  
+  # Generate markdown table
+  cat(paste0("### Week ", week_num, ": ", week_title, "\n\n"))
+  cat("| Day | Topic | Deep Dive | Key Packages |\n")
+  cat("|---|---|---|---|\n")
+  
+  for (i in seq_len(nrow(course_data))) {
+    row <- course_data[i, ]
+    cat(sprintf("| %s | %s | %s | %s |\n", 
+                row$day_link, 
+                row$topic, 
+                row$focus_area,
+                row$packages))
+  }
+  cat("\n")
 }
+
+# Generate tables for each week
+generate_week_table("week1", 1, "SDTM Fundamentals & Core R Skills")
+generate_week_table("week2", 2, "Production SDTM & Validation")
 ```
 
 ## What You'll Explore

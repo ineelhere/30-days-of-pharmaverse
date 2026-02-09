@@ -1,0 +1,759 @@
+---
+title: "Day 9: VS (Vital Signs) & Repeated Measures"
+subtitle: "Visit-Level Data and Positional Readings"
+author: "Indraneel Chakraborty"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+    
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+<div style="margin-bottom:12px;"><a href="../index.html" class="resource-link">← Back to Roadmap</a></div>
+
+## Learning Objectives
+
+By the end of Day 9, you will be able to:
+
+1.  Understand the **VS (Vital Signs) domain** structure and its role as a **Findings class** domain
+2.  Handle **repeated measures** - multiple readings per subject per visit per timepoint
+3.  Work with **positional variables** like `VSPOS` (SITTING/STANDING) and `VSLOC` (ARM)
+4.  Derive **summary statistics** (mean, min, max) across multiple readings
+5.  Understand how VS data maps to the **ADaM BDS (Basic Data Structure)** for ADVS
+
+------------------------------------------------------------------------
+
+## Introduction to the VS Domain
+
+### What is the VS Domain?
+
+The **VS (Vital Signs) domain** captures measurements of a subject's vital functions during a clinical trial. Like the LB domain we covered on Day 8, VS belongs to the **Findings** class of SDTM domains.
+
+Common vital signs measured include:
+
+-   **Blood Pressure** (Systolic and Diastolic)
+-   **Heart Rate** (Pulse)
+-   **Temperature**
+-   **Respiratory Rate**
+-   **Weight and Height**
+-   **Oxygen Saturation**
+
+### Why is VS Special?
+
+The VS domain introduces an important concept: **repeated measures at the same timepoint**. Unlike demographics (one row per subject) or adverse events (one row per event), vital signs are often measured multiple times:
+
+-   **Multiple blood pressure readings** at the same visit (e.g., 3 readings taken 2 minutes apart)
+-   **Position-dependent measurements** (sitting vs. standing blood pressure)
+-   **Location-specific readings** (left arm vs. right arm)
+
+::: callout-note
+## Repeated Measures Challenge
+
+When analyzing vital signs, we need to decide:
+
+-   Do we use the **first** reading?
+-   Do we calculate the **mean** of all readings?
+-   Do we report the **minimum** or **maximum**?
+
+This is a key consideration when building ADaM datasets (ADVS) from SDTM VS data.
+:::
+
+### The VS Domain Structure
+
+```
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                        VS DOMAIN - KEY VARIABLES                             │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  IDENTIFIER VARIABLES                                                        │
+│    STUDYID    = Study identifier                                             │
+│    USUBJID    = Unique subject identifier (links to DM)                      │
+│    VSSEQ      = Sequence number within subject                               │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  TOPIC VARIABLE                                                              │
+│    VSTESTCD   = Vital sign test short name (e.g., "SYSBP", "DIABP", "HR")    │
+│    VSTEST     = Vital sign test name (e.g., "Systolic Blood Pressure")       │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  RESULT VARIABLES                                                            │
+│    VSORRES    = Result as originally collected (character)                   │
+│    VSORRESU   = Unit of original result                                      │
+│    VSSTRESC   = Standardized result (character)                              │
+│    VSSTRESN   = Standardized result (numeric)                                │
+│    VSSTRESU   = Standardized unit                                            │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  POSITIONAL VARIABLES (Unique to VS)                                         │
+│    VSPOS      = Position of subject (SITTING, STANDING, SUPINE)              │
+│    VSLOC      = Location on body (LEFT ARM, RIGHT ARM)                       │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  TIMING VARIABLES                                                            │
+│    VISITNUM   = Visit number                                                 │
+│    VISIT      = Visit name (e.g., "SCREENING", "WEEK 2")                     │
+│    VSDY       = Study day of measurement                                     │
+│    VSTPT      = Planned time point name (PRE-DOSE, 1 HOUR POST-DOSE)         │
+│    VSTPTNUM   = Planned time point number                                    │
+│    VSDTC      = Date/time of measurement (ISO 8601)                          │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+------------------------------------------------------------------------
+
+## Package Installation & Loading
+
+### Required Packages
+
+| Package           | Purpose                                            |
+|-------------------|----------------------------------------------------|
+| `dplyr`           | Data manipulation (filter, mutate, summarise)      |
+| `tidyr`           | Data reshaping (pivot operations)                  |
+| `pharmaversesdtm` | Example SDTM datasets including VS                 |
+
+### Install Packages (if needed)
+
+```{r}
+#| label: install-packages
+
+# Install packages if not already installed
+if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
+if (!requireNamespace("tidyr", quietly = TRUE)) install.packages("tidyr")
+if (!requireNamespace("pharmaversesdtm", quietly = TRUE)) install.packages("pharmaversesdtm")
+```
+
+### Load Packages
+
+```{r}
+#| label: load-packages
+
+library(dplyr)
+library(tidyr)
+library(pharmaversesdtm)
+```
+
+------------------------------------------------------------------------
+
+## Exploring pharmaversesdtm VS Data
+
+Let's start by loading and exploring the VS domain from `pharmaversesdtm`.
+
+### Load the VS Domain
+
+```{r}
+#| label: load-vs-data
+
+# Load VS domain from pharmaversesdtm
+data("vs", package = "pharmaversesdtm")
+
+# Quick overview
+cat("VS domain dimensions:", nrow(vs), "rows x", ncol(vs), "columns\n")
+cat("Number of unique subjects:", n_distinct(vs$USUBJID), "\n")
+cat("Number of unique tests:", n_distinct(vs$VSTESTCD), "\n")
+```
+
+### Explore VS Structure
+
+```{r}
+#| label: glimpse-vs
+
+# View the structure of the VS domain
+dplyr::glimpse(vs)
+```
+
+### Key VS Variables
+
+Let's examine the vital sign tests available in our data:
+
+```{r}
+#| label: explore-tests
+
+# View unique vital sign tests
+vs %>%
+  distinct(VSTESTCD, VSTEST, VSSTRESU) %>%
+  arrange(VSTESTCD)
+```
+
+::: callout-tip
+## Understanding VS Test Codes
+
+Common CDISC vital sign test codes:
+
+-   **SYSBP** = Systolic Blood Pressure
+-   **DIABP** = Diastolic Blood Pressure
+-   **PULSE** = Pulse Rate / Heart Rate
+-   **TEMP** = Temperature
+-   **RESP** = Respiratory Rate
+-   **WEIGHT** = Weight
+-   **HEIGHT** = Height
+-   **BMI** = Body Mass Index (often derived)
+:::
+
+------------------------------------------------------------------------
+
+## Understanding Visit Structure
+
+### Visits and Timepoints
+
+In clinical trials, vital signs are collected at specific **visits** (e.g., Screening, Week 2, Week 8) and sometimes at specific **timepoints within a visit** (e.g., pre-dose, 1 hour post-dose).
+
+```{r}
+#| label: explore-visits
+
+# View visit structure
+vs %>%
+  distinct(VISITNUM, VISIT) %>%
+  arrange(VISITNUM)
+```
+
+### SDTM Timing Variables Explained
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `VISITNUM` | Numeric visit identifier | 1, 2, 3 |
+| `VISIT` | Visit name | "BASELINE", "WEEK 2" |
+| `VSDY` | Study day of measurement | 1, 15, 29 |
+| `VSTPT` | Planned time point name | "PRE-DOSE", "1HR POST-DOSE" |
+| `VSTPTNUM` | Planned time point number | 1, 2, 3 |
+| `VSDTC` | Date/time (ISO 8601) | "2023-03-15T09:30:00" |
+
+```{r}
+#| label: timing-example
+
+# Example of timing variables
+vs %>%
+  filter(USUBJID == first(vs$USUBJID), VSTESTCD == "SYSBP") %>%
+  select(USUBJID, VSTESTCD, VISITNUM, VISIT, VSDY, VSTPT, VSTPTNUM) %>%
+  arrange(VISITNUM, VSTPTNUM) %>%
+  head(10)
+```
+
+------------------------------------------------------------------------
+
+## Positional Variables: VSPOS and VSLOC
+
+### Why Position and Location Matter
+
+Blood pressure measurements can vary significantly based on:
+
+-   **Position**: Sitting, standing, or lying down (supine)
+-   **Location**: Which arm the reading was taken from
+
+Clinical protocols often specify:
+
+> "Blood pressure should be measured after the patient has been seated for at least 5 minutes, using the right arm."
+
+### VSPOS - Position of Subject
+
+The `VSPOS` variable captures the subject's position during measurement:
+
+| VSPOS Value | Description |
+|-------------|-------------|
+| `SITTING` | Subject is seated |
+| `STANDING` | Subject is standing |
+| `SUPINE` | Subject is lying flat |
+| `RECLINING` | Subject is partially reclined |
+
+```{r}
+#| label: explore-position
+
+# Check position values in our data
+vs %>%
+  filter(VSTESTCD %in% c("SYSBP", "DIABP")) %>%
+  count(VSPOS, name = "Count") %>%
+  arrange(desc(Count))
+```
+
+### VSLOC - Location on Body
+
+The `VSLOC` variable specifies where on the body the measurement was taken:
+
+| VSLOC Value | Description |
+|-------------|-------------|
+| `LEFT ARM` | Blood pressure cuff on left arm |
+| `RIGHT ARM` | Blood pressure cuff on right arm |
+| `ARM` | Arm (unspecified) |
+| `ORAL` | Oral temperature |
+| `AXILLARY` | Under the armpit (temperature) |
+
+```{r}
+#| label: explore-location
+
+# Check location values
+vs %>%
+  filter(VSTESTCD %in% c("SYSBP", "DIABP", "TEMP")) %>%
+  count(VSTESTCD, VSLOC, name = "Count") %>%
+  arrange(VSTESTCD, desc(Count))
+```
+
+------------------------------------------------------------------------
+
+## Handling Multiple Readings
+
+### The Problem: Multiple Measurements
+
+In many studies, vital signs are measured multiple times at the same visit to ensure accuracy. For blood pressure, it's common to take **3 readings** and use the **average**.
+
+### Creating Sample Data with Multiple Readings
+
+Let's create a dataset that demonstrates this scenario:
+
+```{r}
+#| label: create-multiple-readings
+
+# Create sample data with 3 BP readings per visit
+set.seed(42)
+
+subjects <- c("CDISC01-001-001", "CDISC01-001-002", "CDISC01-001-003")
+visits <- c("SCREENING", "BASELINE", "WEEK 2", "WEEK 4")
+visit_nums <- c(-1, 1, 2, 3)
+
+# Generate VS data with multiple readings per visit
+vs_multiple <- expand_grid(
+  USUBJID = subjects,
+  VISIT_INFO = tibble(VISIT = visits, VISITNUM = visit_nums)
+) %>%
+  unnest(VISIT_INFO) %>%
+  # Create 3 readings per vital sign per visit
+  crossing(
+    READING = 1:3,
+    tibble::tribble(
+      ~VSTESTCD, ~VSTEST,                     ~VSSTRESU, ~BASE_VALUE, ~SD_VALUE,
+      "SYSBP",   "Systolic Blood Pressure",   "mmHg",    125,         10,
+      "DIABP",   "Diastolic Blood Pressure",  "mmHg",    80,          8,
+      "PULSE",   "Pulse Rate",                "beats/min", 72,        8
+    )
+  ) %>%
+  # Generate values with some variation between readings
+  rowwise() %>%
+  mutate(
+    VSORRES = as.character(round(rnorm(1, BASE_VALUE, SD_VALUE), 0)),
+    VSSTRESN = as.numeric(VSORRES),
+    VSSTRESC = VSORRES,
+    VSORRESU = VSSTRESU,
+    VSPOS = "SITTING",
+    VSLOC = ifelse(VSTESTCD %in% c("SYSBP", "DIABP"), "RIGHT ARM", NA_character_)
+  ) %>%
+  ungroup() %>%
+  # Add identifiers
+  mutate(
+    STUDYID = "CDISC01",
+    VSTPT = paste("READING", READING),
+    VSTPTNUM = READING
+  ) %>%
+  group_by(USUBJID) %>%
+  mutate(VSSEQ = row_number()) %>%
+  ungroup() %>%
+  select(STUDYID, USUBJID, VSSEQ, VSTESTCD, VSTEST, 
+         VSORRES, VSORRESU, VSSTRESC, VSSTRESN, VSSTRESU,
+         VSPOS, VSLOC, VISITNUM, VISIT, VSTPT, VSTPTNUM)
+
+cat("Sample VS data with multiple readings:\n")
+cat("Total records:", nrow(vs_multiple), "\n")
+cat("Subjects:", n_distinct(vs_multiple$USUBJID), "\n")
+cat("Visits:", n_distinct(vs_multiple$VISIT), "\n\n")
+
+# Show example for one subject at one visit
+vs_multiple %>%
+  filter(USUBJID == first(vs_multiple$USUBJID), VISIT == "BASELINE") %>%
+  print()
+```
+
+::: callout-note
+## Understanding the Data Structure
+
+Notice that for each subject at each visit, we have:
+
+-   3 readings × 3 tests = **9 records per subject per visit**
+-   Each reading is identified by `VSTPT` and `VSTPTNUM`
+-   This granular data allows for various analysis approaches
+:::
+
+------------------------------------------------------------------------
+
+## Deriving Statistics Across Readings
+
+Now let's derive **mean**, **minimum**, and **maximum** values across the multiple readings.
+
+### Calculate Summary Statistics
+
+```{r}
+#| label: derive-statistics
+
+# Calculate statistics across readings for each subject/visit/test
+vs_summary <- vs_multiple %>%
+  group_by(STUDYID, USUBJID, VSTESTCD, VSTEST, VSSTRESU, 
+           VSPOS, VSLOC, VISITNUM, VISIT) %>%
+  summarise(
+    N_READINGS = n(),
+    VSSTRESN_MEAN = round(mean(VSSTRESN, na.rm = TRUE), 1),
+    VSSTRESN_MIN = min(VSSTRESN, na.rm = TRUE),
+    VSSTRESN_MAX = max(VSSTRESN, na.rm = TRUE),
+    VSSTRESN_SD = round(sd(VSSTRESN, na.rm = TRUE), 2),
+    .groups = "drop"
+  )
+
+cat("Summary statistics by subject/visit/test:\n")
+vs_summary %>%
+  filter(USUBJID == first(vs_summary$USUBJID)) %>%
+  print()
+```
+
+### Create Analysis-Ready Dataset
+
+When creating ADaM ADVS, we typically select **one representative value** from the multiple readings. Common approaches:
+
+```{r}
+#| label: analysis-ready
+
+# Create analysis-ready dataset using MEAN of readings
+vs_analysis <- vs_summary %>%
+  mutate(
+    AVAL = VSSTRESN_MEAN,
+    AVALC = as.character(AVAL),
+    DTYPE = "MEAN"  # Derivation type
+  ) %>%
+  select(STUDYID, USUBJID, VSTESTCD, VSTEST, 
+         VISITNUM, VISIT, VSPOS, VSLOC,
+         AVAL, AVALC, VSSTRESU, N_READINGS, DTYPE)
+
+cat("Analysis-ready dataset (using mean values):\n")
+head(vs_analysis, 12)
+```
+
+::: callout-important
+## ADaM Considerations
+
+When building ADVS (Analysis Dataset for Vital Signs):
+
+-   **AVAL** = Analysis Value (numeric)
+-   **AVALC** = Analysis Value (character)
+-   **DTYPE** = Derivation Type (documents how AVAL was calculated)
+
+Common DTYPE values: "MEAN", "MEDIAN", "LAST", "FIRST", "WORST"
+:::
+
+------------------------------------------------------------------------
+
+## Creating a Wide Format View
+
+For some analyses, having one row per subject per visit (with BP columns side by side) is useful.
+
+### Pivot to Wide Format
+
+```{r}
+#| label: pivot-wide
+
+# Create wide format with one row per subject/visit
+vs_wide <- vs_summary %>%
+  select(USUBJID, VISITNUM, VISIT, VSTESTCD, VSSTRESN_MEAN) %>%
+  pivot_wider(
+    names_from = VSTESTCD,
+    values_from = VSSTRESN_MEAN,
+    names_prefix = "MEAN_"
+  )
+
+cat("Wide format - One row per subject per visit:\n")
+print(vs_wide)
+```
+
+::: callout-tip
+## When to Use Wide Format
+
+Wide format is useful for:
+
+-   **Correlation analysis** (e.g., systolic vs. diastolic BP)
+-   **Patient profiles** (view all vitals at once)
+-   **Exploratory data analysis**
+
+SDTM VS is always in **long format** (one row per measurement).
+:::
+
+------------------------------------------------------------------------
+
+## Complete Example: Building a VS Domain
+
+Let's build a complete VS domain from simulated raw data, similar to what you might receive from an EDC system.
+
+### Step 1: Create Raw Vital Signs Data
+
+```{r}
+#| label: raw-vs-data
+
+# Simulate raw vital signs data as it might come from EDC
+set.seed(123)
+
+subjects <- paste0("CDISC01-001-00", 1:5)
+visits <- c("SCREENING", "BASELINE", "WEEK 2", "WEEK 4", "WEEK 8")
+visit_nums <- c(-1, 1, 2, 3, 4)
+
+# Generate comprehensive VS data
+raw_vs <- expand_grid(
+  USUBJID = subjects,
+  VISIT_INFO = tibble(VISIT = visits, VISITNUM = visit_nums)
+) %>%
+  unnest(VISIT_INFO) %>%
+  # Add vital sign tests with 3 readings each for BP, 1 for others
+  crossing(
+    tibble::tribble(
+      ~TEST, ~TESTCD, ~UNIT,       ~MEAN_VAL, ~SD_VAL, ~N_READ,
+      "Systolic Blood Pressure",  "SYSBP",  "mmHg",      125,     12,    3,
+      "Diastolic Blood Pressure", "DIABP",  "mmHg",      78,       8,    3,
+      "Pulse Rate",               "PULSE",  "beats/min", 72,       8,    1,
+      "Temperature",              "TEMP",   "C",         36.8,   0.3,    1,
+      "Respiratory Rate",         "RESP",   "breaths/min", 16,    2,    1,
+      "Weight",                   "WEIGHT", "kg",        75,      10,    1,
+      "Height",                   "HEIGHT", "cm",        170,     10,    1
+    )
+  ) %>%
+  # Expand for number of readings
+  rowwise() %>%
+  mutate(data = list(tibble(READING = 1:N_READ))) %>%
+  unnest(data) %>%
+  ungroup() %>%
+  # Generate values
+  rowwise() %>%
+  mutate(
+    VALUE = round(rnorm(1, MEAN_VAL, SD_VAL), 1),
+    # Height stays constant within subject
+    VALUE = ifelse(TESTCD == "HEIGHT", round(rnorm(1, 170, 10), 0), VALUE),
+    # Weight stays relatively constant
+    VALUE = ifelse(TESTCD == "WEIGHT", round(rnorm(1, 75 + (VISITNUM * 0.5), 2), 1), VALUE)
+  ) %>%
+  ungroup() %>%
+  # Clean up - HEIGHT only at SCREENING
+  filter(!(TESTCD == "HEIGHT" & VISIT != "SCREENING")) %>%
+  mutate(
+    STUDYID = "CDISC01",
+    VSPOS = case_when(
+      TESTCD %in% c("SYSBP", "DIABP", "PULSE") ~ "SITTING",
+      TRUE ~ NA_character_
+    ),
+    VSLOC = case_when(
+      TESTCD %in% c("SYSBP", "DIABP") ~ "RIGHT ARM",
+      TESTCD == "TEMP" ~ "ORAL",
+      TRUE ~ NA_character_
+    ),
+    VSTPT = ifelse(N_READ > 1, paste("READING", READING), NA_character_),
+    VSTPTNUM = ifelse(N_READ > 1, READING, NA_integer_)
+  )
+
+cat("Raw VS data generated:\n")
+cat("Total records:", nrow(raw_vs), "\n")
+```
+
+### Step 2: Transform to SDTM VS Format
+
+```{r}
+#| label: create-sdtm-vs
+
+# Transform to proper SDTM VS format
+sdtm_vs <- raw_vs %>%
+  # Add required SDTM variables
+  mutate(
+    DOMAIN = "VS",
+    VSTESTCD = TESTCD,
+    VSTEST = TEST,
+    VSORRES = as.character(VALUE),
+    VSORRESU = UNIT,
+    VSSTRESC = VSORRES,
+    VSSTRESN = VALUE,
+    VSSTRESU = UNIT,
+    VSDTC = "2023-03-15",  # Simplified for this example
+    EPOCH = case_when(
+      VISITNUM < 1 ~ "SCREENING",
+      VISITNUM == 1 ~ "TREATMENT",
+      TRUE ~ "TREATMENT"
+    )
+  ) %>%
+  # Add sequence number
+  group_by(USUBJID) %>%
+  mutate(VSSEQ = row_number()) %>%
+  ungroup() %>%
+  # Select and order SDTM variables
+  select(
+    STUDYID, DOMAIN, USUBJID, VSSEQ,
+    VSTESTCD, VSTEST,
+    VSORRES, VSORRESU,
+    VSSTRESC, VSSTRESN, VSSTRESU,
+    VSPOS, VSLOC,
+    VISITNUM, VISIT, VSTPT, VSTPTNUM,
+    EPOCH, VSDTC
+  ) %>%
+  arrange(STUDYID, USUBJID, VISITNUM, VSTESTCD, VSTPTNUM)
+
+cat("SDTM VS domain created:\n")
+cat("Total records:", nrow(sdtm_vs), "\n\n")
+
+# Preview
+head(sdtm_vs, 15)
+```
+
+### Step 3: Validate the VS Domain
+
+```{r}
+#| label: validate-vs
+
+# Validation checks
+cat("=== VS Domain Validation ===\n\n")
+
+# Check 1: Required variables
+required_vars <- c("STUDYID", "DOMAIN", "USUBJID", "VSSEQ", 
+                   "VSTESTCD", "VSTEST", "VSORRES", "VSORRESU")
+present <- required_vars %in% names(sdtm_vs)
+cat("Required variables check:\n")
+for (i in seq_along(required_vars)) {
+  cat("  ", required_vars[i], ":", ifelse(present[i], "✓", "✗"), "\n")
+}
+
+# Check 2: Data completeness
+cat("\nData completeness:\n")
+cat("  Missing VSSTRESN:", sum(is.na(sdtm_vs$VSSTRESN)), "\n")
+cat("  Missing VSPOS (for BP/pulse):", 
+    sum(is.na(sdtm_vs$VSPOS) & sdtm_vs$VSTESTCD %in% c("SYSBP", "DIABP", "PULSE")), "\n")
+
+# Check 3: Value ranges
+cat("\nValue ranges by test:\n")
+sdtm_vs %>%
+  group_by(VSTESTCD, VSTEST, VSSTRESU) %>%
+  summarise(
+    Min = min(VSSTRESN, na.rm = TRUE),
+    Max = max(VSSTRESN, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  print()
+
+# Check 4: Coverage
+cat("\nData coverage:\n")
+cat("  Subjects:", n_distinct(sdtm_vs$USUBJID), "\n")
+cat("  Visits:", n_distinct(sdtm_vs$VISIT), "\n")
+cat("  Tests:", n_distinct(sdtm_vs$VSTESTCD), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Preview: ADaM BDS Structure
+
+The VS domain maps directly to the **ADaM ADVS** dataset using the **BDS (Basic Data Structure)** format. Here's a preview of how this transition works:
+
+### Key ADaM Concepts for ADVS
+
+| SDTM Variable | ADaM Variable | Description |
+|---------------|---------------|-------------|
+| VSSTRESN | AVAL | Analysis value (numeric) |
+| VSSTRESC | AVALC | Analysis value (character) |
+| VISIT | AVISIT | Analysis visit |
+| VISITNUM | AVISITN | Analysis visit number |
+| - | ABLFL | Baseline flag ("Y") |
+| - | BASE | Baseline value |
+| - | CHG | Change from baseline |
+| - | PCHG | Percent change from baseline |
+
+### Mock ADVS Creation
+
+```{r}
+#| label: mock-advs
+
+# Create a simple ADVS preview
+# First, aggregate to one value per subject/visit/test (using mean for BP)
+advs_prep <- sdtm_vs %>%
+  group_by(STUDYID, USUBJID, VSTESTCD, VSTEST, VSSTRESU, VISITNUM, VISIT) %>%
+  summarise(
+    AVAL = round(mean(VSSTRESN, na.rm = TRUE), 1),
+    .groups = "drop"
+  ) %>%
+  rename(PARAMCD = VSTESTCD, PARAM = VSTEST, AVISITN = VISITNUM, AVISIT = VISIT)
+
+# Add baseline flag and value
+advs_preview <- advs_prep %>%
+  group_by(USUBJID, PARAMCD) %>%
+  mutate(
+    # Flag baseline (VISITNUM = 1)
+    ABLFL = ifelse(AVISITN == 1, "Y", NA_character_),
+    # Get baseline value
+    BASE = AVAL[AVISITN == 1][1],
+    # Calculate change from baseline
+    CHG = ifelse(AVISITN >= 1, round(AVAL - BASE, 1), NA_real_),
+    # Calculate percent change
+    PCHG = ifelse(AVISITN >= 1 & BASE != 0, 
+                  round(100 * (AVAL - BASE) / BASE, 1), NA_real_)
+  ) %>%
+  ungroup()
+
+cat("ADVS Preview (BDS Structure):\n")
+advs_preview %>%
+  filter(USUBJID == first(advs_preview$USUBJID), PARAMCD == "SYSBP") %>%
+  select(USUBJID, PARAMCD, AVISITN, AVISIT, AVAL, ABLFL, BASE, CHG, PCHG) %>%
+  print()
+```
+
+::: callout-note
+## Looking Ahead to Week 3
+
+In Week 3 (Days 15-21), we'll use the `admiral` package to properly build ADaM datasets like ADVS. The key admiral functions include:
+
+-   `derive_var_extreme_flag()` - Create baseline flags
+-   `derive_var_base()` - Derive baseline values
+-   `derive_vars_chg()` - Calculate change from baseline
+
+Learn more at: [Admiral ADVS Vignette](https://pharmaverse.github.io/admiral/articles/bds_finding.html)
+:::
+
+------------------------------------------------------------------------
+
+## Deliverable Summary
+
+Today you completed the following:
+
+| Task | Status |
+|------|--------|
+| Understood VS domain structure and repeated measures | ✓ Done |
+| Explored positioning variables (VSPOS, VSLOC) | ✓ Done |
+| Handled multiple readings per visit | ✓ Done |
+| Derived summary statistics (mean, min, max) | ✓ Done |
+| Created wide format view for analysis | ✓ Done |
+| Built a complete VS domain with 5+ vital signs | ✓ Done |
+| Previewed ADaM BDS structure (ADVS) | ✓ Done |
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  **VS is a Findings class domain** - It shares structure with LB (--TESTCD, --ORRES, --STRESN)
+2.  **Repeated measures are common** - Blood pressure often has 3 readings per visit
+3.  **Position matters** - VSPOS (SITTING/STANDING) affects measurements significantly
+4.  **Location matters** - VSLOC (LEFT ARM/RIGHT ARM) should be consistent per protocol
+5.  **Summary statistics are essential** - Choose mean, min, max based on analysis needs
+6.  **VS maps to ADVS** - BDS structure includes baseline, change, and percent change
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   [CDISC SDTM Implementation Guide - VS Domain](https://www.cdisc.org/standards/foundational/sdtm) - Official VS specification
+-   [Admiral ADVS Vignette](https://pharmaverse.github.io/admiral/articles/bds_finding.html) - Building vital signs analysis datasets
+-   [Pharmaverse.org](https://pharmaverse.org) - R packages for clinical data
+-   [tidyr pivot documentation](https://tidyr.tidyverse.org/articles/pivot.html) - Wide/long format transformations
+-   [CDISC ADaM BDS Structure](https://www.cdisc.org/standards/foundational/adam) - Basic Data Structure specification
+
+------------------------------------------------------------------------
+
+## What's Next?
+
+In **Day 10**, we will focus on **AE Domain Mastery & SAE Logic**:
+
+-   Deep dive into severity, causality, and outcomes
+-   Understanding SAE criteria (AESER, AESDTH, AESHOSP)
+-   Deriving AE duration and treatment-emergent flags
+-   Preparing for ADaM ADAE creation

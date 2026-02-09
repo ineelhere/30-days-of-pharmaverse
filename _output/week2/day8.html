@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Indraneel Chakraborty">
+<meta name="dcterms.date" content="2026-02-10">
+
+<title>Day 8: Complex SDTM Domains - LB (Lab Results) – 30 Days of Pharmaverse</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-60d4398d82fec002ccec76571ed06d15.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../styles/site.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">30 Days of Pharmaverse</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../week1/day1.html"> 
+<span class="menu-text">Week 1: SDTM Fundamentals</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../week2/day8.html" aria-current="page"> 
+<span class="menu-text">Week 2: Production SDTM</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ineelhere/30-days-of-pharmaverse"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../week2/day8.html">Day 8: Complex SDTM Domains - LB (Lab Results)</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week2/day8.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Day 8: Complex SDTM Domains - LB (Lab Results)</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week2/day9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 9: VS (Vital Signs) &amp; Repeated Measures</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">1</span> Learning Objectives</a></li>
+  <li><a href="#introduction-to-the-lb-domain" id="toc-introduction-to-the-lb-domain" class="nav-link" data-scroll-target="#introduction-to-the-lb-domain"><span class="header-section-number">2</span> Introduction to the LB Domain</a>
+  <ul class="collapse">
+  <li><a href="#what-is-the-lb-domain" id="toc-what-is-the-lb-domain" class="nav-link" data-scroll-target="#what-is-the-lb-domain"><span class="header-section-number">2.1</span> What is the LB Domain?</a></li>
+  <li><a href="#why-is-lb-important" id="toc-why-is-lb-important" class="nav-link" data-scroll-target="#why-is-lb-important"><span class="header-section-number">2.2</span> Why is LB Important?</a></li>
+  <li><a href="#the-lb-domain-structure" id="toc-the-lb-domain-structure" class="nav-link" data-scroll-target="#the-lb-domain-structure"><span class="header-section-number">2.3</span> The LB Domain Structure</a></li>
+  </ul></li>
+  <li><a href="#package-installation-loading" id="toc-package-installation-loading" class="nav-link" data-scroll-target="#package-installation-loading"><span class="header-section-number">3</span> Package Installation &amp; Loading</a>
+  <ul class="collapse">
+  <li><a href="#required-packages" id="toc-required-packages" class="nav-link" data-scroll-target="#required-packages"><span class="header-section-number">3.1</span> Required Packages</a></li>
+  <li><a href="#install-packages-if-needed" id="toc-install-packages-if-needed" class="nav-link" data-scroll-target="#install-packages-if-needed"><span class="header-section-number">3.2</span> Install Packages (if needed)</a></li>
+  <li><a href="#load-packages" id="toc-load-packages" class="nav-link" data-scroll-target="#load-packages"><span class="header-section-number">3.3</span> Load Packages</a></li>
+  </ul></li>
+  <li><a href="#exploring-pharmaversesdtm-lb-data" id="toc-exploring-pharmaversesdtm-lb-data" class="nav-link" data-scroll-target="#exploring-pharmaversesdtm-lb-data"><span class="header-section-number">4</span> Exploring pharmaversesdtm LB Data</a>
+  <ul class="collapse">
+  <li><a href="#load-the-lb-domain" id="toc-load-the-lb-domain" class="nav-link" data-scroll-target="#load-the-lb-domain"><span class="header-section-number">4.1</span> Load the LB Domain</a></li>
+  <li><a href="#explore-lb-structure" id="toc-explore-lb-structure" class="nav-link" data-scroll-target="#explore-lb-structure"><span class="header-section-number">4.2</span> Explore LB Structure</a></li>
+  <li><a href="#key-lb-variables-explained" id="toc-key-lb-variables-explained" class="nav-link" data-scroll-target="#key-lb-variables-explained"><span class="header-section-number">4.3</span> Key LB Variables Explained</a></li>
+  </ul></li>
+  <li><a href="#understanding-original-vs-standardized-results" id="toc-understanding-original-vs-standardized-results" class="nav-link" data-scroll-target="#understanding-original-vs-standardized-results"><span class="header-section-number">5</span> Understanding Original vs Standardized Results</a>
+  <ul class="collapse">
+  <li><a href="#why-standardization-matters" id="toc-why-standardization-matters" class="nav-link" data-scroll-target="#why-standardization-matters"><span class="header-section-number">5.1</span> Why Standardization Matters</a></li>
+  <li><a href="#the-result-variable-pairs" id="toc-the-result-variable-pairs" class="nav-link" data-scroll-target="#the-result-variable-pairs"><span class="header-section-number">5.2</span> The Result Variable Pairs</a></li>
+  <li><a href="#viewing-original-vs-standardized-values" id="toc-viewing-original-vs-standardized-values" class="nav-link" data-scroll-target="#viewing-original-vs-standardized-values"><span class="header-section-number">5.3</span> Viewing Original vs Standardized Values</a></li>
+  </ul></li>
+  <li><a href="#unit-conversion-a-hands-on-example" id="toc-unit-conversion-a-hands-on-example" class="nav-link" data-scroll-target="#unit-conversion-a-hands-on-example"><span class="header-section-number">6</span> Unit Conversion: A Hands-On Example</a>
+  <ul class="collapse">
+  <li><a href="#common-lab-unit-conversions" id="toc-common-lab-unit-conversions" class="nav-link" data-scroll-target="#common-lab-unit-conversions"><span class="header-section-number">6.1</span> Common Lab Unit Conversions</a></li>
+  <li><a href="#step-by-step-creating-standardized-results" id="toc-step-by-step-creating-standardized-results" class="nav-link" data-scroll-target="#step-by-step-creating-standardized-results"><span class="header-section-number">6.2</span> Step-by-Step: Creating Standardized Results</a></li>
+  <li><a href="#create-a-unit-conversion-function" id="toc-create-a-unit-conversion-function" class="nav-link" data-scroll-target="#create-a-unit-conversion-function"><span class="header-section-number">6.3</span> Create a Unit Conversion Function</a></li>
+  <li><a href="#apply-unit-conversions" id="toc-apply-unit-conversions" class="nav-link" data-scroll-target="#apply-unit-conversions"><span class="header-section-number">6.4</span> Apply Unit Conversions</a></li>
+  </ul></li>
+  <li><a href="#reference-ranges-and-normal-range-indicators" id="toc-reference-ranges-and-normal-range-indicators" class="nav-link" data-scroll-target="#reference-ranges-and-normal-range-indicators"><span class="header-section-number">7</span> Reference Ranges and Normal Range Indicators</a>
+  <ul class="collapse">
+  <li><a href="#what-are-reference-ranges" id="toc-what-are-reference-ranges" class="nav-link" data-scroll-target="#what-are-reference-ranges"><span class="header-section-number">7.1</span> What are Reference Ranges?</a></li>
+  <li><a href="#key-reference-range-variables" id="toc-key-reference-range-variables" class="nav-link" data-scroll-target="#key-reference-range-variables"><span class="header-section-number">7.2</span> Key Reference Range Variables</a></li>
+  <li><a href="#deriving-reference-range-flags" id="toc-deriving-reference-range-flags" class="nav-link" data-scroll-target="#deriving-reference-range-flags"><span class="header-section-number">7.3</span> Deriving Reference Range Flags</a></li>
+  </ul></li>
+  <li><a href="#loinc-coding-concepts" id="toc-loinc-coding-concepts" class="nav-link" data-scroll-target="#loinc-coding-concepts"><span class="header-section-number">8</span> LOINC Coding Concepts</a>
+  <ul class="collapse">
+  <li><a href="#what-is-loinc" id="toc-what-is-loinc" class="nav-link" data-scroll-target="#what-is-loinc"><span class="header-section-number">8.1</span> What is LOINC?</a></li>
+  <li><a href="#how-loinc-integrates-with-sdtm" id="toc-how-loinc-integrates-with-sdtm" class="nav-link" data-scroll-target="#how-loinc-integrates-with-sdtm"><span class="header-section-number">8.2</span> How LOINC Integrates with SDTM</a></li>
+  <li><a href="#example-loinc-codes" id="toc-example-loinc-codes" class="nav-link" data-scroll-target="#example-loinc-codes"><span class="header-section-number">8.3</span> Example LOINC Codes</a></li>
+  </ul></li>
+  <li><a href="#complete-example-building-an-lb-domain" id="toc-complete-example-building-an-lb-domain" class="nav-link" data-scroll-target="#complete-example-building-an-lb-domain"><span class="header-section-number">9</span> Complete Example: Building an LB Domain</a>
+  <ul class="collapse">
+  <li><a href="#step-1-create-comprehensive-raw-data" id="toc-step-1-create-comprehensive-raw-data" class="nav-link" data-scroll-target="#step-1-create-comprehensive-raw-data"><span class="header-section-number">9.1</span> Step 1: Create Comprehensive Raw Data</a></li>
+  <li><a href="#step-2-apply-standardization" id="toc-step-2-apply-standardization" class="nav-link" data-scroll-target="#step-2-apply-standardization"><span class="header-section-number">9.2</span> Step 2: Apply Standardization</a></li>
+  <li><a href="#step-3-validate-the-lb-domain" id="toc-step-3-validate-the-lb-domain" class="nav-link" data-scroll-target="#step-3-validate-the-lb-domain"><span class="header-section-number">9.3</span> Step 3: Validate the LB Domain</a></li>
+  </ul></li>
+  <li><a href="#summary-statistics-for-lb-data" id="toc-summary-statistics-for-lb-data" class="nav-link" data-scroll-target="#summary-statistics-for-lb-data"><span class="header-section-number">10</span> Summary Statistics for LB Data</a></li>
+  <li><a href="#deliverable-summary" id="toc-deliverable-summary" class="nav-link" data-scroll-target="#deliverable-summary"><span class="header-section-number">11</span> Deliverable Summary</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">12</span> Key Takeaways</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">13</span> Resources</a></li>
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next"><span class="header-section-number">14</span> What’s Next?</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Day 8: Complex SDTM Domains - LB (Lab Results)</h1>
+<p class="subtitle lead">Findings Class with Unit Standardization</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Indraneel Chakraborty </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 10, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div style="margin-bottom:12px;">
+<a href="../index.html" class="resource-link">← Back to Roadmap</a>
+</div>
+<section id="learning-objectives" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">1</span> Learning Objectives</h2>
+<p>By the end of Day 8, you will be able to:</p>
+<ol type="1">
+<li>Understand the <strong>LB (Laboratory) domain</strong> structure and its role as a <strong>Findings class</strong> domain</li>
+<li>Identify and explain the key LB variables: <strong>LBTESTCD, LBORRES, LBORRESU, LBSTRESC, LBSTRESN, LBSTRESU</strong></li>
+<li>Perform <strong>unit conversions</strong> (e.g., mg/dL → mmol/L) for standardized results</li>
+<li>Derive <strong>reference range flags</strong> (LBNRIND) and understand normal range variables</li>
+<li>Create a complete LB domain from simulated raw data using <code>dplyr</code> and <code>tidyr</code></li>
+</ol>
+<hr>
+</section>
+<section id="introduction-to-the-lb-domain" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="introduction-to-the-lb-domain"><span class="header-section-number">2</span> Introduction to the LB Domain</h2>
+<section id="what-is-the-lb-domain" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="what-is-the-lb-domain"><span class="header-section-number">2.1</span> What is the LB Domain?</h3>
+<p>The <strong>LB (Laboratory) domain</strong> is one of the most complex and data-rich domains in SDTM. It belongs to the <strong>Findings</strong> class of SDTM domains, which are designed to capture observations or measurements collected during a study.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Findings Class Characteristics
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Findings domains share a common structure:</p>
+<ul>
+<li><strong>–TESTCD</strong>: Short name for the test (e.g., “ALT”, “GLUC”)</li>
+<li><strong>–TEST</strong>: Full descriptive name (e.g., “Alanine Aminotransferase”, “Glucose”)</li>
+<li><strong>–ORRES</strong>: Original result as collected (character)</li>
+<li><strong>–ORRESU</strong>: Original unit of the result</li>
+<li><strong>–STRESC</strong>: Standardized result in character format</li>
+<li><strong>–STRESN</strong>: Standardized result in numeric format</li>
+<li><strong>–STRESU</strong>: Standardized unit</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="why-is-lb-important" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="why-is-lb-important"><span class="header-section-number">2.2</span> Why is LB Important?</h3>
+<p>Laboratory data is fundamental to clinical trials because:</p>
+<ul>
+<li>It provides <strong>objective measurements</strong> of safety (liver enzymes, kidney function)</li>
+<li>It helps assess <strong>efficacy</strong> (biomarkers, disease markers)</li>
+<li>Regulatory agencies require <strong>standardized lab data</strong> for safety reviews</li>
+<li>Lab abnormalities often determine eligibility and safety signals</li>
+</ul>
+</section>
+<section id="the-lb-domain-structure" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="the-lb-domain-structure"><span class="header-section-number">2.3</span> The LB Domain Structure</h3>
+<pre><code>┌──────────────────────────────────────────────────────────────────────────────┐
+│                        LB DOMAIN - KEY VARIABLES                             │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  IDENTIFIER VARIABLES                                                        │
+│    STUDYID    = Study identifier                                             │
+│    USUBJID    = Unique subject identifier (links to DM)                      │
+│    LBSEQ      = Sequence number within subject                               │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  TOPIC VARIABLE                                                              │
+│    LBTESTCD   = Lab test short name (e.g., "ALT", "BILI", "GLUC")            │
+│    LBTEST     = Lab test full name (e.g., "Alanine Aminotransferase")        │
+│    LBCAT      = Category (e.g., "CHEMISTRY", "HEMATOLOGY")                   │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  RESULT VARIABLES (Original)                                                 │
+│    LBORRES    = Result as originally collected (character)                   │
+│    LBORRESU   = Unit of original result                                      │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  RESULT VARIABLES (Standardized)                                             │
+│    LBSTRESC   = Standardized result (character)                              │
+│    LBSTRESN   = Standardized result (numeric)                                │
+│    LBSTRESU   = Standardized unit                                            │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  REFERENCE RANGE VARIABLES                                                   │
+│    LBSTNRLO   = Standard normal range lower limit                            │
+│    LBSTNRHI   = Standard normal range upper limit                            │
+│    LBNRIND    = Normal range indicator (LOW/NORMAL/HIGH)                     │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  TIMING VARIABLES                                                            │
+│    VISITNUM   = Visit number                                                 │
+│    VISIT      = Visit name (e.g., "SCREENING", "WEEK 2")                     │
+│    LBDTC      = Date/time of specimen collection (ISO 8601)                  │
+│    LBDY       = Study day of specimen collection                             │
+└──────────────────────────────────────────────────────────────────────────────┘</code></pre>
+<hr>
+</section>
+</section>
+<section id="package-installation-loading" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="package-installation-loading"><span class="header-section-number">3</span> Package Installation &amp; Loading</h2>
+<section id="required-packages" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="required-packages"><span class="header-section-number">3.1</span> Required Packages</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 73%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Package</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>dplyr</code></td>
+<td>Data manipulation (filter, mutate, joins)</td>
+</tr>
+<tr class="even">
+<td><code>tidyr</code></td>
+<td>Data reshaping (pivot operations)</td>
+</tr>
+<tr class="odd">
+<td><code>pharmaversesdtm</code></td>
+<td>Example SDTM datasets including LB</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="install-packages-if-needed" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="install-packages-if-needed"><span class="header-section-number">3.2</span> Install Packages (if needed)</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install packages if not already installed</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"dplyr"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"dplyr"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"tidyr"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"tidyr"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"pharmaversesdtm"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"pharmaversesdtm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="load-packages" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="load-packages"><span class="header-section-number">3.3</span> Load Packages</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pharmaversesdtm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+</section>
+</section>
+<section id="exploring-pharmaversesdtm-lb-data" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="exploring-pharmaversesdtm-lb-data"><span class="header-section-number">4</span> Exploring pharmaversesdtm LB Data</h2>
+<p>Let’s start by loading and exploring the LB domain from <code>pharmaversesdtm</code>. This is the same data used by production teams at Roche and GSK when developing the <code>admiral</code> package.</p>
+<section id="load-the-lb-domain" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="load-the-lb-domain"><span class="header-section-number">4.1</span> Load the LB Domain</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load LB domain from pharmaversesdtm</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"lb"</span>, <span class="at">package =</span> <span class="st">"pharmaversesdtm"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick overview</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"LB domain dimensions:"</span>, <span class="fu">nrow</span>(lb), <span class="st">"rows x"</span>, <span class="fu">ncol</span>(lb), <span class="st">"columns</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>LB domain dimensions: 59580 rows x 23 columns</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of unique subjects:"</span>, <span class="fu">n_distinct</span>(lb<span class="sc">$</span>USUBJID), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of unique subjects: 254 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of unique tests:"</span>, <span class="fu">n_distinct</span>(lb<span class="sc">$</span>LBTESTCD), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of unique tests: 47 </code></pre>
+</div>
+</div>
+</section>
+<section id="explore-lb-structure" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="explore-lb-structure"><span class="header-section-number">4.2</span> Explore LB Structure</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View the structure of the LB domain</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(lb)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 59,580
+Columns: 23
+$ STUDYID  &lt;chr&gt; "CDISCPILOT01", "CDISCPILOT01", "CDISCPILOT01", "CDISCPILOT01…
+$ DOMAIN   &lt;chr&gt; "LB", "LB", "LB", "LB", "LB", "LB", "LB", "LB", "LB", "LB", "…
+$ USUBJID  &lt;chr&gt; "01-701-1015", "01-701-1015", "01-701-1015", "01-701-1015", "…
+$ LBSEQ    &lt;dbl&gt; 1, 39, 74, 104, 134, 164, 199, 229, 259, 294, 2, 40, 75, 105,…
+$ LBTESTCD &lt;chr&gt; "ALB", "ALB", "ALB", "ALB", "ALB", "ALB", "ALB", "ALB", "ALB"…
+$ LBTEST   &lt;chr&gt; "Albumin", "Albumin", "Albumin", "Albumin", "Albumin", "Album…
+$ LBCAT    &lt;chr&gt; "CHEMISTRY", "CHEMISTRY", "CHEMISTRY", "CHEMISTRY", "CHEMISTR…
+$ LBORRES  &lt;chr&gt; "3.8", "3.9", "3.8", "3.7", "3.8", "3.8", "3.7", "3.7", "3.8"…
+$ LBORRESU &lt;chr&gt; "g/dL", "g/dL", "g/dL", "g/dL", "g/dL", "g/dL", "g/dL", "g/dL…
+$ LBORNRLO &lt;chr&gt; "3.3", "3.3", "3.3", "3.3", "3.3", "3.3", "3.3", "3.3", "3.3"…
+$ LBORNRHI &lt;chr&gt; "4.9", "4.9", "4.9", "4.9", "4.9", "4.9", "4.9", "4.9", "4.9"…
+$ LBSTRESC &lt;chr&gt; "38", "39", "38", "37", "38", "38", "37", "37", "38", "38", "…
+$ LBSTRESN &lt;dbl&gt; 38, 39, 38, 37, 38, 38, 37, 37, 38, 38, 34, 50, 41, 43, 47, 5…
+$ LBSTRESU &lt;chr&gt; "g/L", "g/L", "g/L", "g/L", "g/L", "g/L", "g/L", "g/L", "g/L"…
+$ LBSTNRLO &lt;dbl&gt; 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 35, 35, 35, 35, 35, 3…
+$ LBSTNRHI &lt;dbl&gt; 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 115, 115, 115, 115, 1…
+$ LBNRIND  &lt;chr&gt; "NORMAL", "NORMAL", "NORMAL", "NORMAL", "NORMAL", "NORMAL", "…
+$ LBBLFL   &lt;chr&gt; "Y", NA, NA, NA, NA, NA, NA, NA, NA, NA, "Y", NA, NA, NA, NA,…
+$ VISITNUM &lt;dbl&gt; 1, 4, 5, 7, 8, 9, 10, 11, 12, 13, 1, 4, 5, 7, 8, 9, 10, 11, 1…
+$ VISIT    &lt;chr&gt; "SCREENING 1", "WEEK 2", "WEEK 4", "WEEK 6", "WEEK 8", "WEEK …
+$ VISITDY  &lt;dbl&gt; -7, 14, 28, 42, 56, 84, 112, 140, 168, 182, -7, 14, 28, 42, 5…
+$ LBDTC    &lt;chr&gt; "2013-12-26T14:45", "2014-01-16T13:17", "2014-01-30T08:50", "…
+$ LBDY     &lt;dbl&gt; -7, 15, 29, 42, 63, 84, 126, 140, 168, 182, -7, 15, 29, 42, 6…</code></pre>
+</div>
+</div>
+</section>
+<section id="key-lb-variables-explained" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="key-lb-variables-explained"><span class="header-section-number">4.3</span> Key LB Variables Explained</h3>
+<p>Let’s examine some critical LB variables:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View unique lab tests</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>lb <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(LBTESTCD, LBTEST, LBCAT) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(LBCAT, LBTESTCD) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 3
+   LBTESTCD LBTEST                     LBCAT    
+   &lt;chr&gt;    &lt;chr&gt;                      &lt;chr&gt;    
+ 1 ALB      Albumin                    CHEMISTRY
+ 2 ALP      Alkaline Phosphatase       CHEMISTRY
+ 3 ALT      Alanine Aminotransferase   CHEMISTRY
+ 4 AST      Aspartate Aminotransferase CHEMISTRY
+ 5 BILI     Bilirubin                  CHEMISTRY
+ 6 BUN      Blood Urea Nitrogen        CHEMISTRY
+ 7 CA       Calcium                    CHEMISTRY
+ 8 CHOL     Cholesterol                CHEMISTRY
+ 9 CK       Creatine Kinase            CHEMISTRY
+10 CL       Chloride                   CHEMISTRY
+11 CREAT    Creatinine                 CHEMISTRY
+12 GGT      Gamma Glutamyl Transferase CHEMISTRY
+13 GLUC     Glucose                    CHEMISTRY
+14 K        Potassium                  CHEMISTRY
+15 PHOS     Phosphate                  CHEMISTRY</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Understanding Test Codes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice how <strong>LBTESTCD</strong> is a short, standardized code while <strong>LBTEST</strong> is the full descriptive name. This follows CDISC conventions where:</p>
+<ul>
+<li><strong>Short codes</strong> (LBTESTCD) enable efficient data processing</li>
+<li><strong>Full names</strong> (LBTEST) provide human-readable descriptions</li>
+<li><strong>Categories</strong> (LBCAT) group related tests (CHEMISTRY, HEMATOLOGY, etc.)</li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="understanding-original-vs-standardized-results" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="understanding-original-vs-standardized-results"><span class="header-section-number">5</span> Understanding Original vs Standardized Results</h2>
+<p>One of the most important concepts in the LB domain is the distinction between <strong>original</strong> and <strong>standardized</strong> results.</p>
+<section id="why-standardization-matters" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="why-standardization-matters"><span class="header-section-number">5.1</span> Why Standardization Matters</h3>
+<p>Labs from different sites may report the same test in different units:</p>
+<ul>
+<li>Site A reports Glucose as <strong>90 mg/dL</strong></li>
+<li>Site B reports Glucose as <strong>5.0 mmol/L</strong></li>
+</ul>
+<p>Both values are the same measurement, just in different units! SDTM requires us to <strong>standardize</strong> these values so they can be analyzed together.</p>
+</section>
+<section id="the-result-variable-pairs" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="the-result-variable-pairs"><span class="header-section-number">5.2</span> The Result Variable Pairs</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Original Variable</th>
+<th>Standardized Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>LBORRES</code></td>
+<td><code>LBSTRESC</code></td>
+<td>Result (character format)</td>
+</tr>
+<tr class="even">
+<td>-</td>
+<td><code>LBSTRESN</code></td>
+<td>Result (numeric format)</td>
+</tr>
+<tr class="odd">
+<td><code>LBORRESU</code></td>
+<td><code>LBSTRESU</code></td>
+<td>Unit of measurement</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="viewing-original-vs-standardized-values" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="viewing-original-vs-standardized-values"><span class="header-section-number">5.3</span> Viewing Original vs Standardized Values</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare original and standardized values for a specific test</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>lb <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(LBTESTCD <span class="sc">==</span> <span class="st">"GLUC"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, VISIT, LBORRES, LBORRESU, LBSTRESC, LBSTRESN, LBSTRESU) <span class="sc">%&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 7
+   USUBJID     VISIT       LBORRES LBORRESU LBSTRESC LBSTRESN LBSTRESU
+   &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;   
+ 1 01-701-1015 SCREENING 1 85      mg/dL    4.71835      4.72 mmol/L  
+ 2 01-701-1015 WEEK 2      84      mg/dL    4.66284      4.66 mmol/L  
+ 3 01-701-1015 WEEK 4      79      mg/dL    4.38529      4.39 mmol/L  
+ 4 01-701-1015 WEEK 6      92      mg/dL    5.10692      5.11 mmol/L  
+ 5 01-701-1015 WEEK 8      82      mg/dL    4.55182      4.55 mmol/L  
+ 6 01-701-1015 WEEK 12     87      mg/dL    4.82937      4.83 mmol/L  
+ 7 01-701-1015 WEEK 16     86      mg/dL    4.77386      4.77 mmol/L  
+ 8 01-701-1015 WEEK 20     88      mg/dL    4.88488      4.88 mmol/L  
+ 9 01-701-1015 WEEK 24     81      mg/dL    4.49631      4.50 mmol/L  
+10 01-701-1015 WEEK 26     92      mg/dL    5.10692      5.11 mmol/L  </code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="unit-conversion-a-hands-on-example" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="unit-conversion-a-hands-on-example"><span class="header-section-number">6</span> Unit Conversion: A Hands-On Example</h2>
+<p>Let’s create a practical example of unit conversion. This is one of the most common tasks when building an LB domain from raw lab data.</p>
+<section id="common-lab-unit-conversions" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="common-lab-unit-conversions"><span class="header-section-number">6.1</span> Common Lab Unit Conversions</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Test</th>
+<th>Original Unit</th>
+<th>Standard Unit</th>
+<th>Conversion Factor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Glucose</td>
+<td>mg/dL</td>
+<td>mmol/L</td>
+<td>÷ 18.02</td>
+</tr>
+<tr class="even">
+<td>Creatinine</td>
+<td>mg/dL</td>
+<td>µmol/L</td>
+<td>× 88.42</td>
+</tr>
+<tr class="odd">
+<td>Bilirubin</td>
+<td>mg/dL</td>
+<td>µmol/L</td>
+<td>× 17.10</td>
+</tr>
+<tr class="even">
+<td>Cholesterol</td>
+<td>mg/dL</td>
+<td>mmol/L</td>
+<td>÷ 38.67</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reference for Unit Conversions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a comprehensive list of clinical lab unit conversions, see:</p>
+<ul>
+<li><a href="https://www.ncbi.nlm.nih.gov/books/NBK535333/">National Institutes of Health - Unit Conversion Tables</a></li>
+<li><a href="https://www.cdisc.org/standards/foundational/sdtm">CDISC SEND/SDTM Unit Standards</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="step-by-step-creating-standardized-results" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="step-by-step-creating-standardized-results"><span class="header-section-number">6.2</span> Step-by-Step: Creating Standardized Results</h3>
+<p>Let’s simulate a scenario where we receive raw lab data and need to standardize it.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create simulated raw lab data with mixed units</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>raw_lab <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>USUBJID,           <span class="sc">~</span>LBTESTCD, <span class="sc">~</span>LBTEST,              <span class="sc">~</span>LBORRES, <span class="sc">~</span>LBORRESU, <span class="sc">~</span>VISITNUM, <span class="sc">~</span>VISIT,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01-001-001"</span>,  <span class="st">"GLUC"</span>,    <span class="st">"Glucose"</span>,            <span class="st">"95"</span>,     <span class="st">"mg/dL"</span>,   <span class="dv">1</span>,         <span class="st">"BASELINE"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01-001-001"</span>,  <span class="st">"GLUC"</span>,    <span class="st">"Glucose"</span>,            <span class="st">"5.1"</span>,    <span class="st">"mmol/L"</span>,  <span class="dv">2</span>,         <span class="st">"WEEK 2"</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01-001-001"</span>,  <span class="st">"CREAT"</span>,   <span class="st">"Creatinine"</span>,         <span class="st">"1.2"</span>,    <span class="st">"mg/dL"</span>,   <span class="dv">1</span>,         <span class="st">"BASELINE"</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01-001-001"</span>,  <span class="st">"CREAT"</span>,   <span class="st">"Creatinine"</span>,         <span class="st">"98"</span>,     <span class="st">"umol/L"</span>,  <span class="dv">2</span>,         <span class="st">"WEEK 2"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01-001-002"</span>,  <span class="st">"GLUC"</span>,    <span class="st">"Glucose"</span>,            <span class="st">"102"</span>,    <span class="st">"mg/dL"</span>,   <span class="dv">1</span>,         <span class="st">"BASELINE"</span>,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01-001-002"</span>,  <span class="st">"GLUC"</span>,    <span class="st">"Glucose"</span>,            <span class="st">"88"</span>,     <span class="st">"mg/dL"</span>,   <span class="dv">2</span>,         <span class="st">"WEEK 2"</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01-001-002"</span>,  <span class="st">"BILI"</span>,    <span class="st">"Bilirubin Total"</span>,    <span class="st">"0.8"</span>,    <span class="st">"mg/dL"</span>,   <span class="dv">1</span>,         <span class="st">"BASELINE"</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01-001-002"</span>,  <span class="st">"BILI"</span>,    <span class="st">"Bilirubin Total"</span>,    <span class="st">"1.1"</span>,    <span class="st">"mg/dL"</span>,   <span class="dv">2</span>,         <span class="st">"WEEK 2"</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Raw lab data with mixed units:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Raw lab data with mixed units:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(raw_lab)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 7
+  USUBJID         LBTESTCD LBTEST          LBORRES LBORRESU VISITNUM VISIT   
+  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;   
+1 CDISC01-001-001 GLUC     Glucose         95      mg/dL           1 BASELINE
+2 CDISC01-001-001 GLUC     Glucose         5.1     mmol/L          2 WEEK 2  
+3 CDISC01-001-001 CREAT    Creatinine      1.2     mg/dL           1 BASELINE
+4 CDISC01-001-001 CREAT    Creatinine      98      umol/L          2 WEEK 2  
+5 CDISC01-001-002 GLUC     Glucose         102     mg/dL           1 BASELINE
+6 CDISC01-001-002 GLUC     Glucose         88      mg/dL           2 WEEK 2  
+7 CDISC01-001-002 BILI     Bilirubin Total 0.8     mg/dL           1 BASELINE
+8 CDISC01-001-002 BILI     Bilirubin Total 1.1     mg/dL           2 WEEK 2  </code></pre>
+</div>
+</div>
+</section>
+<section id="create-a-unit-conversion-function" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="create-a-unit-conversion-function"><span class="header-section-number">6.3</span> Create a Unit Conversion Function</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a reusable conversion function</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>convert_lab_units <span class="ot">&lt;-</span> <span class="cf">function</span>(testcd, value, from_unit, to_unit) {</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Convert character value to numeric</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  val <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(value)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Define conversion factors (from original to standard)</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Standard units: Glucose = mmol/L, Creatinine = umol/L, Bilirubin = umol/L</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">case_when</span>(</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Glucose: mg/dL to mmol/L</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    testcd <span class="sc">==</span> <span class="st">"GLUC"</span> <span class="sc">&amp;</span> from_unit <span class="sc">==</span> <span class="st">"mg/dL"</span> <span class="sc">&amp;</span> to_unit <span class="sc">==</span> <span class="st">"mmol/L"</span> <span class="sc">~</span> val <span class="sc">/</span> <span class="fl">18.02</span>,</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Glucose: already in mmol/L</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    testcd <span class="sc">==</span> <span class="st">"GLUC"</span> <span class="sc">&amp;</span> from_unit <span class="sc">==</span> <span class="st">"mmol/L"</span> <span class="sc">&amp;</span> to_unit <span class="sc">==</span> <span class="st">"mmol/L"</span> <span class="sc">~</span> val,</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Creatinine: mg/dL to umol/L</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    testcd <span class="sc">==</span> <span class="st">"CREAT"</span> <span class="sc">&amp;</span> from_unit <span class="sc">==</span> <span class="st">"mg/dL"</span> <span class="sc">&amp;</span> to_unit <span class="sc">==</span> <span class="st">"umol/L"</span> <span class="sc">~</span> val <span class="sc">*</span> <span class="fl">88.42</span>,</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Creatinine: already in umol/L</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    testcd <span class="sc">==</span> <span class="st">"CREAT"</span> <span class="sc">&amp;</span> from_unit <span class="sc">==</span> <span class="st">"umol/L"</span> <span class="sc">&amp;</span> to_unit <span class="sc">==</span> <span class="st">"umol/L"</span> <span class="sc">~</span> val,</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Bilirubin: mg/dL to umol/L</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    testcd <span class="sc">==</span> <span class="st">"BILI"</span> <span class="sc">&amp;</span> from_unit <span class="sc">==</span> <span class="st">"mg/dL"</span> <span class="sc">&amp;</span> to_unit <span class="sc">==</span> <span class="st">"umol/L"</span> <span class="sc">~</span> val <span class="sc">*</span> <span class="fl">17.10</span>,</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Default: no conversion</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> val</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">round</span>(result, <span class="dv">2</span>))</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="apply-unit-conversions" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="apply-unit-conversions"><span class="header-section-number">6.4</span> Apply Unit Conversions</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define standard units for each test</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>standard_units <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>LBTESTCD, <span class="sc">~</span>LBSTRESU,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"GLUC"</span>,    <span class="st">"mmol/L"</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CREAT"</span>,   <span class="st">"umol/L"</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"BILI"</span>,    <span class="st">"umol/L"</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply standardization</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>lab_standardized <span class="ot">&lt;-</span> raw_lab <span class="sc">%&gt;%</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Join to get target standard units</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(standard_units, <span class="at">by =</span> <span class="st">"LBTESTCD"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Apply conversion</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBSTRESN =</span> <span class="fu">convert_lab_units</span>(LBTESTCD, LBORRES, LBORRESU, LBSTRESU),</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBSTRESC =</span> <span class="fu">as.character</span>(LBSTRESN)</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reorder columns for clarity</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, LBTESTCD, LBTEST, VISITNUM, VISIT, </span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>         LBORRES, LBORRESU, LBSTRESC, LBSTRESN, LBSTRESU)</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Standardized lab data:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Standardized lab data:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(lab_standardized)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 10
+  USUBJID      LBTESTCD LBTEST VISITNUM VISIT LBORRES LBORRESU LBSTRESC LBSTRESN
+  &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;
+1 CDISC01-001… GLUC     Gluco…        1 BASE… 95      mg/dL    5.27         5.27
+2 CDISC01-001… GLUC     Gluco…        2 WEEK… 5.1     mmol/L   5.1          5.1 
+3 CDISC01-001… CREAT    Creat…        1 BASE… 1.2     mg/dL    106.1      106.  
+4 CDISC01-001… CREAT    Creat…        2 WEEK… 98      umol/L   98          98   
+5 CDISC01-001… GLUC     Gluco…        1 BASE… 102     mg/dL    5.66         5.66
+6 CDISC01-001… GLUC     Gluco…        2 WEEK… 88      mg/dL    4.88         4.88
+7 CDISC01-001… BILI     Bilir…        1 BASE… 0.8     mg/dL    13.68       13.7 
+8 CDISC01-001… BILI     Bilir…        2 WEEK… 1.1     mg/dL    18.81       18.8 
+# ℹ 1 more variable: LBSTRESU &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Key Learning Point
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice how the <strong>original</strong> values are preserved (<code>LBORRES</code>, <code>LBORRESU</code>) while <strong>standardized</strong> values are derived (<code>LBSTRESC</code>, <code>LBSTRESN</code>, <code>LBSTRESU</code>). This is a fundamental SDTM principle: <strong>never lose the original data!</strong></p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="reference-ranges-and-normal-range-indicators" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="reference-ranges-and-normal-range-indicators"><span class="header-section-number">7</span> Reference Ranges and Normal Range Indicators</h2>
+<section id="what-are-reference-ranges" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="what-are-reference-ranges"><span class="header-section-number">7.1</span> What are Reference Ranges?</h3>
+<p>Reference ranges (also called normal ranges) define the expected values for a lab test in a healthy population. Values outside this range may indicate:</p>
+<ul>
+<li><strong>LOW</strong>: Value below the normal range (potentially abnormal)</li>
+<li><strong>NORMAL</strong>: Value within expected range</li>
+<li><strong>HIGH</strong>: Value above the normal range (potentially abnormal)</li>
+</ul>
+</section>
+<section id="key-reference-range-variables" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="key-reference-range-variables"><span class="header-section-number">7.2</span> Key Reference Range Variables</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>LBSTNRLO</code></td>
+<td>Standard normal range - lower limit</td>
+</tr>
+<tr class="even">
+<td><code>LBSTNRHI</code></td>
+<td>Standard normal range - upper limit</td>
+</tr>
+<tr class="odd">
+<td><code>LBNRIND</code></td>
+<td>Normal range indicator (LOW/NORMAL/HIGH)</td>
+</tr>
+<tr class="even">
+<td><code>LBORNRLO</code></td>
+<td>Original normal range - lower limit</td>
+</tr>
+<tr class="odd">
+<td><code>LBORNRHI</code></td>
+<td>Original normal range - upper limit</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="deriving-reference-range-flags" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="deriving-reference-range-flags"><span class="header-section-number">7.3</span> Deriving Reference Range Flags</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define reference ranges (typically from lab vendor or specifications)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>reference_ranges <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>LBTESTCD, <span class="sc">~</span>LBSTNRLO, <span class="sc">~</span>LBSTNRHI, <span class="sc">~</span>LBSTRESU,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"GLUC"</span>,    <span class="fl">3.9</span>,       <span class="fl">5.6</span>,       <span class="st">"mmol/L"</span>,   <span class="co"># Fasting glucose</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CREAT"</span>,   <span class="dv">62</span>,        <span class="dv">106</span>,       <span class="st">"umol/L"</span>,   <span class="co"># Creatinine (male)</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"BILI"</span>,    <span class="fl">5.1</span>,       <span class="fl">17.0</span>,      <span class="st">"umol/L"</span>    <span class="co"># Total bilirubin</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Join reference ranges and derive LBNRIND</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>lab_with_ranges <span class="ot">&lt;-</span> lab_standardized <span class="sc">%&gt;%</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    reference_ranges <span class="sc">%&gt;%</span> <span class="fu">select</span>(LBTESTCD, LBSTNRLO, LBSTNRHI),</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"LBTESTCD"</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Derive normal range indicator</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBNRIND =</span> <span class="fu">case_when</span>(</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">is.na</span>(LBSTRESN) <span class="sc">~</span> <span class="cn">NA_character_</span>,                    <span class="co"># Missing result</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>      LBSTRESN <span class="sc">&lt;</span> LBSTNRLO <span class="sc">~</span> <span class="st">"LOW"</span>,                        <span class="co"># Below range</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>      LBSTRESN <span class="sc">&gt;</span> LBSTNRHI <span class="sc">~</span> <span class="st">"HIGH"</span>,                       <span class="co"># Above range</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"NORMAL"</span>                                     <span class="co"># Within range</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Display results</span></span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>lab_with_ranges <span class="sc">%&gt;%</span></span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, LBTESTCD, VISIT, LBSTRESN, LBSTRESU, </span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>         LBSTNRLO, LBSTNRHI, LBNRIND)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 8
+  USUBJID         LBTESTCD VISIT    LBSTRESN LBSTRESU LBSTNRLO LBSTNRHI LBNRIND
+  &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  
+1 CDISC01-001-001 GLUC     BASELINE     5.27 mmol/L        3.9      5.6 NORMAL 
+2 CDISC01-001-001 GLUC     WEEK 2       5.1  mmol/L        3.9      5.6 NORMAL 
+3 CDISC01-001-001 CREAT    BASELINE   106.   umol/L       62      106   HIGH   
+4 CDISC01-001-001 CREAT    WEEK 2      98    umol/L       62      106   NORMAL 
+5 CDISC01-001-002 GLUC     BASELINE     5.66 mmol/L        3.9      5.6 HIGH   
+6 CDISC01-001-002 GLUC     WEEK 2       4.88 mmol/L        3.9      5.6 NORMAL 
+7 CDISC01-001-002 BILI     BASELINE    13.7  umol/L        5.1     17   NORMAL 
+8 CDISC01-001-002 BILI     WEEK 2      18.8  umol/L        5.1     17   HIGH   </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Clinical Significance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>LBNRIND</code> variable is critical for safety analyses. It helps identify:</p>
+<ul>
+<li><strong>Clinically significant abnormalities</strong> that may require action</li>
+<li><strong>Trends</strong> in lab values over time (e.g., worsening liver function)</li>
+<li><strong>Treatment-emergent abnormalities</strong> (normal at baseline, abnormal post-treatment)</li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="loinc-coding-concepts" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="loinc-coding-concepts"><span class="header-section-number">8</span> LOINC Coding Concepts</h2>
+<section id="what-is-loinc" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="what-is-loinc"><span class="header-section-number">8.1</span> What is LOINC?</h3>
+<p><strong>LOINC</strong> (Logical Observation Identifiers Names and Codes) is a universal standard for identifying medical laboratory observations. While not always required in SDTM, it enhances interoperability.</p>
+</section>
+<section id="how-loinc-integrates-with-sdtm" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="how-loinc-integrates-with-sdtm"><span class="header-section-number">8.2</span> How LOINC Integrates with SDTM</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>SDTM Variable</th>
+<th>LOINC Equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>LBLOINC</code></td>
+<td>LOINC code for the test</td>
+</tr>
+<tr class="even">
+<td><code>LBTESTCD</code></td>
+<td>Mapped to LOINC component</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-loinc-codes" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="example-loinc-codes"><span class="header-section-number">8.3</span> Example LOINC Codes</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 24%">
+<col style="width: 29%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Test</th>
+<th>LBTESTCD</th>
+<th>LOINC Code</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Glucose</td>
+<td>GLUC</td>
+<td>2339-0</td>
+<td>Glucose [Mass/volume] in Blood</td>
+</tr>
+<tr class="even">
+<td>Creatinine</td>
+<td>CREAT</td>
+<td>2160-0</td>
+<td>Creatinine [Mass/volume] in Serum or Plasma</td>
+</tr>
+<tr class="odd">
+<td>ALT</td>
+<td>ALT</td>
+<td>1742-6</td>
+<td>Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learn More About LOINC
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://loinc.org/">LOINC Official Website</a></li>
+<li><a href="https://loinc.org/search/">Search LOINC Codes</a></li>
+<li><a href="https://www.cdisc.org/kb/articles/loinc-cdisc-lab-test-terminology">LOINC and CDISC Integration Guide</a></li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="complete-example-building-an-lb-domain" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="complete-example-building-an-lb-domain"><span class="header-section-number">9</span> Complete Example: Building an LB Domain</h2>
+<p>Let’s put everything together and build a more complete LB domain from simulated raw data.</p>
+<section id="step-1-create-comprehensive-raw-data" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="step-1-create-comprehensive-raw-data"><span class="header-section-number">9.1</span> Step 1: Create Comprehensive Raw Data</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create more comprehensive raw lab data</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>subjects <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"CDISC01-001-001"</span>, <span class="st">"CDISC01-001-002"</span>, <span class="st">"CDISC01-001-003"</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>              <span class="st">"CDISC01-001-004"</span>, <span class="st">"CDISC01-001-005"</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>visits <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"SCREENING"</span>, <span class="st">"BASELINE"</span>, <span class="st">"WEEK 2"</span>, <span class="st">"WEEK 4"</span>, <span class="st">"WEEK 8"</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>visit_nums <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate raw lab data for 5 subjects across 5 visits</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>raw_lb_data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">USUBJID =</span> subjects,</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">VISIT_INFO =</span> <span class="fu">tibble</span>(<span class="at">VISIT =</span> visits, <span class="at">VISITNUM =</span> visit_nums)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(VISIT_INFO) <span class="sc">%&gt;%</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add lab tests</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">crossing</span>(</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span>LBTESTCD, <span class="sc">~</span>LBTEST,                      <span class="sc">~</span>LBCAT,      <span class="sc">~</span>LBORRESU,</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>      <span class="st">"GLUC"</span>,    <span class="st">"Glucose"</span>,                    <span class="st">"CHEMISTRY"</span>, <span class="st">"mg/dL"</span>,</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>      <span class="st">"CREAT"</span>,   <span class="st">"Creatinine"</span>,                 <span class="st">"CHEMISTRY"</span>, <span class="st">"mg/dL"</span>,</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>      <span class="st">"ALT"</span>,     <span class="st">"Alanine Aminotransferase"</span>,   <span class="st">"CHEMISTRY"</span>, <span class="st">"U/L"</span>,</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>      <span class="st">"AST"</span>,     <span class="st">"Aspartate Aminotransferase"</span>, <span class="st">"CHEMISTRY"</span>, <span class="st">"U/L"</span>,</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>      <span class="st">"BILI"</span>,    <span class="st">"Bilirubin Total"</span>,            <span class="st">"CHEMISTRY"</span>, <span class="st">"mg/dL"</span>,</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>      <span class="st">"WBC"</span>,     <span class="st">"Leukocytes"</span>,                 <span class="st">"HEMATOLOGY"</span>,<span class="st">"10^9/L"</span>,</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>      <span class="st">"RBC"</span>,     <span class="st">"Erythrocytes"</span>,               <span class="st">"HEMATOLOGY"</span>,<span class="st">"10^12/L"</span>,</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>      <span class="st">"HGB"</span>,     <span class="st">"Hemoglobin"</span>,                 <span class="st">"HEMATOLOGY"</span>,<span class="st">"g/dL"</span>,</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>      <span class="st">"PLT"</span>,     <span class="st">"Platelets"</span>,                  <span class="st">"HEMATOLOGY"</span>,<span class="st">"10^9/L"</span>,</span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>      <span class="st">"SODIUM"</span>,  <span class="st">"Sodium"</span>,                     <span class="st">"CHEMISTRY"</span>, <span class="st">"mmol/L"</span></span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate random values within typical ranges</span></span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBORRES =</span> <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">case_when</span>(</span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>      LBTESTCD <span class="sc">==</span> <span class="st">"GLUC"</span>   <span class="sc">~</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">100</span>, <span class="dv">15</span>),</span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>      LBTESTCD <span class="sc">==</span> <span class="st">"CREAT"</span>  <span class="sc">~</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="fl">1.0</span>, <span class="fl">0.2</span>),</span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>      LBTESTCD <span class="sc">==</span> <span class="st">"ALT"</span>    <span class="sc">~</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">30</span>, <span class="dv">10</span>),</span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a>      LBTESTCD <span class="sc">==</span> <span class="st">"AST"</span>    <span class="sc">~</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">28</span>, <span class="dv">8</span>),</span>
+<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a>      LBTESTCD <span class="sc">==</span> <span class="st">"BILI"</span>   <span class="sc">~</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="fl">0.8</span>, <span class="fl">0.3</span>),</span>
+<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a>      LBTESTCD <span class="sc">==</span> <span class="st">"WBC"</span>    <span class="sc">~</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="fl">7.0</span>, <span class="fl">2.0</span>),</span>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a>      LBTESTCD <span class="sc">==</span> <span class="st">"RBC"</span>    <span class="sc">~</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="fl">4.8</span>, <span class="fl">0.5</span>),</span>
+<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a>      LBTESTCD <span class="sc">==</span> <span class="st">"HGB"</span>    <span class="sc">~</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="fl">14.5</span>, <span class="fl">1.5</span>),</span>
+<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a>      LBTESTCD <span class="sc">==</span> <span class="st">"PLT"</span>    <span class="sc">~</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">250</span>, <span class="dv">50</span>),</span>
+<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a>      LBTESTCD <span class="sc">==</span> <span class="st">"SODIUM"</span> <span class="sc">~</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">140</span>, <span class="dv">3</span>),</span>
+<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_real_</span></span>
+<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a>    ), <span class="dv">2</span>))</span>
+<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add STUDYID and sequence</span></span>
+<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">STUDYID =</span> <span class="st">"CDISC01"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(USUBJID) <span class="sc">%&gt;%</span></span>
+<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">LBSEQ =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-55"><a href="#cb27-55" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Raw LB data created:"</span>, <span class="fu">nrow</span>(raw_lb_data), <span class="st">"records</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Raw LB data created: 250 records</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Tests per subject per visit:"</span>, <span class="fu">n_distinct</span>(raw_lb_data<span class="sc">$</span>LBTESTCD), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tests per subject per visit: 10 </code></pre>
+</div>
+</div>
+</section>
+<section id="step-2-apply-standardization" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="step-2-apply-standardization"><span class="header-section-number">9.2</span> Step 2: Apply Standardization</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define standard units and reference ranges for all tests</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>lab_standards <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>LBTESTCD, <span class="sc">~</span>LBSTRESU,  <span class="sc">~</span>LBSTNRLO, <span class="sc">~</span>LBSTNRHI, <span class="sc">~</span>CONV_FACTOR,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"GLUC"</span>,    <span class="st">"mmol/L"</span>,   <span class="fl">3.9</span>,       <span class="fl">5.6</span>,       <span class="fl">0.0555</span>,    <span class="co"># mg/dL to mmol/L</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CREAT"</span>,   <span class="st">"umol/L"</span>,   <span class="dv">62</span>,        <span class="dv">106</span>,       <span class="fl">88.42</span>,     <span class="co"># mg/dL to umol/L</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ALT"</span>,     <span class="st">"U/L"</span>,      <span class="dv">7</span>,         <span class="dv">56</span>,        <span class="fl">1.0</span>,       <span class="co"># No conversion</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AST"</span>,     <span class="st">"U/L"</span>,      <span class="dv">10</span>,        <span class="dv">40</span>,        <span class="fl">1.0</span>,       <span class="co"># No conversion</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"BILI"</span>,    <span class="st">"umol/L"</span>,   <span class="fl">5.1</span>,       <span class="fl">17.0</span>,      <span class="fl">17.10</span>,     <span class="co"># mg/dL to umol/L</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"WBC"</span>,     <span class="st">"10^9/L"</span>,   <span class="fl">4.5</span>,       <span class="fl">11.0</span>,      <span class="fl">1.0</span>,       <span class="co"># No conversion</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"RBC"</span>,     <span class="st">"10^12/L"</span>,  <span class="fl">4.2</span>,       <span class="fl">5.4</span>,       <span class="fl">1.0</span>,       <span class="co"># No conversion</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"HGB"</span>,     <span class="st">"g/dL"</span>,     <span class="fl">12.0</span>,      <span class="fl">17.0</span>,      <span class="fl">1.0</span>,       <span class="co"># No conversion</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"PLT"</span>,     <span class="st">"10^9/L"</span>,   <span class="dv">150</span>,       <span class="dv">400</span>,       <span class="fl">1.0</span>,       <span class="co"># No conversion</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SODIUM"</span>,  <span class="st">"mmol/L"</span>,   <span class="dv">136</span>,       <span class="dv">145</span>,       <span class="fl">1.0</span>        <span class="co"># No conversion</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create complete LB domain</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>lb_complete <span class="ot">&lt;-</span> raw_lb_data <span class="sc">%&gt;%</span></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Join standards</span></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(lab_standards, <span class="at">by =</span> <span class="st">"LBTESTCD"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate standardized numeric result</span></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBSTRESN =</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(LBORRES) <span class="sc">*</span> CONV_FACTOR, <span class="dv">2</span>),</span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBSTRESC =</span> <span class="fu">as.character</span>(LBSTRESN),</span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Derive normal range indicator</span></span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBNRIND =</span> <span class="fu">case_when</span>(</span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">is.na</span>(LBSTRESN) <span class="sc">~</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>      LBSTRESN <span class="sc">&lt;</span> LBSTNRLO <span class="sc">~</span> <span class="st">"LOW"</span>,</span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>      LBSTRESN <span class="sc">&gt;</span> LBSTNRHI <span class="sc">~</span> <span class="st">"HIGH"</span>,</span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"NORMAL"</span></span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add specimen type (typically from raw data, simulated here)</span></span>
+<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">LBSPEC =</span> <span class="st">"SERUM"</span></span>
+<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Select and order columns per SDTM standard</span></span>
+<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a>    STUDYID, USUBJID, LBSEQ,</span>
+<span id="cb31-37"><a href="#cb31-37" aria-hidden="true" tabindex="-1"></a>    LBTESTCD, LBTEST, LBCAT, LBSPEC,</span>
+<span id="cb31-38"><a href="#cb31-38" aria-hidden="true" tabindex="-1"></a>    LBORRES, LBORRESU,</span>
+<span id="cb31-39"><a href="#cb31-39" aria-hidden="true" tabindex="-1"></a>    LBSTRESC, LBSTRESN, LBSTRESU,</span>
+<span id="cb31-40"><a href="#cb31-40" aria-hidden="true" tabindex="-1"></a>    LBSTNRLO, LBSTNRHI, LBNRIND,</span>
+<span id="cb31-41"><a href="#cb31-41" aria-hidden="true" tabindex="-1"></a>    VISITNUM, VISIT</span>
+<span id="cb31-42"><a href="#cb31-42" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb31-43"><a href="#cb31-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(STUDYID, USUBJID, VISITNUM, LBTESTCD)</span>
+<span id="cb31-44"><a href="#cb31-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-45"><a href="#cb31-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview</span></span>
+<span id="cb31-46"><a href="#cb31-46" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Complete LB domain preview:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Complete LB domain preview:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lb_complete, <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 17
+   STUDYID USUBJID  LBSEQ LBTESTCD LBTEST LBCAT LBSPEC LBORRES LBORRESU LBSTRESC
+   &lt;chr&gt;   &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   
+ 1 CDISC01 CDISC01…    11 ALT      Alani… CHEM… SERUM  19.97   U/L      19.97   
+ 2 CDISC01 CDISC01…    12 AST      Aspar… CHEM… SERUM  23.97   U/L      23.97   
+ 3 CDISC01 CDISC01…    13 BILI     Bilir… CHEM… SERUM  0.8     mg/dL    13.68   
+ 4 CDISC01 CDISC01…    14 CREAT    Creat… CHEM… SERUM  0.9     mg/dL    79.58   
+ 5 CDISC01 CDISC01…    15 GLUC     Gluco… CHEM… SERUM  98.71   mg/dL    5.48    
+ 6 CDISC01 CDISC01…    16 HGB      Hemog… HEMA… SERUM  13.3    g/dL     13.3    
+ 7 CDISC01 CDISC01…    17 PLT      Plate… HEMA… SERUM  254.24  10^9/L   254.24  
+ 8 CDISC01 CDISC01…    18 RBC      Eryth… HEMA… SERUM  4.08    10^12/L  4.08    
+ 9 CDISC01 CDISC01…    19 SODIUM   Sodium CHEM… SERUM  135.22  mmol/L   135.22  
+10 CDISC01 CDISC01…    20 WBC      Leuko… HEMA… SERUM  9.17    10^9/L   9.17    
+11 CDISC01 CDISC01…     1 ALT      Alani… CHEM… SERUM  33.63   U/L      33.63   
+12 CDISC01 CDISC01…     2 AST      Aspar… CHEM… SERUM  25.77   U/L      25.77   
+13 CDISC01 CDISC01…     3 BILI     Bilir… CHEM… SERUM  1.37    mg/dL    23.43   
+14 CDISC01 CDISC01…     4 CREAT    Creat… CHEM… SERUM  1.14    mg/dL    100.8   
+15 CDISC01 CDISC01…     5 GLUC     Gluco… CHEM… SERUM  103.09  mg/dL    5.72    
+# ℹ 7 more variables: LBSTRESN &lt;dbl&gt;, LBSTRESU &lt;chr&gt;, LBSTNRLO &lt;dbl&gt;,
+#   LBSTNRHI &lt;dbl&gt;, LBNRIND &lt;chr&gt;, VISITNUM &lt;dbl&gt;, VISIT &lt;chr&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="step-3-validate-the-lb-domain" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="step-3-validate-the-lb-domain"><span class="header-section-number">9.3</span> Step 3: Validate the LB Domain</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Validation checks</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"=== LB Domain Validation ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== LB Domain Validation ===</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 1: All required variables present</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>required_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"STUDYID"</span>, <span class="st">"USUBJID"</span>, <span class="st">"LBSEQ"</span>, <span class="st">"LBTESTCD"</span>, <span class="st">"LBTEST"</span>, </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"LBORRES"</span>, <span class="st">"LBORRESU"</span>, <span class="st">"LBSTRESN"</span>, <span class="st">"LBSTRESU"</span>)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>present <span class="ot">&lt;-</span> required_vars <span class="sc">%in%</span> <span class="fu">names</span>(lb_complete)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Required variables check:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Required variables check:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(required_vars)) {</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"  "</span>, required_vars[i], <span class="st">":"</span>, <span class="fu">ifelse</span>(present[i], <span class="st">"✓"</span>, <span class="st">"✗"</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   STUDYID : ✓ 
+   USUBJID : ✓ 
+   LBSEQ : ✓ 
+   LBTESTCD : ✓ 
+   LBTEST : ✓ 
+   LBORRES : ✓ 
+   LBORRESU : ✓ 
+   LBSTRESN : ✓ 
+   LBSTRESU : ✓ </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 2: No missing USUBJID</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Missing USUBJID:"</span>, <span class="fu">sum</span>(<span class="fu">is.na</span>(lb_complete<span class="sc">$</span>USUBJID)), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Missing USUBJID: 0 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 3: Distribution of LBNRIND</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Normal Range Indicator distribution:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Normal Range Indicator distribution:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(lb_complete<span class="sc">$</span>LBNRIND, <span class="at">useNA =</span> <span class="st">"ifany"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  HIGH    LOW NORMAL 
+    24     12    214 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 4: Unique subjects and visits</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Data coverage:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Data coverage:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Unique subjects:"</span>, <span class="fu">n_distinct</span>(lb_complete<span class="sc">$</span>USUBJID), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Unique subjects: 5 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Unique visits:"</span>, <span class="fu">n_distinct</span>(lb_complete<span class="sc">$</span>VISIT), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Unique visits: 5 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Unique tests:"</span>, <span class="fu">n_distinct</span>(lb_complete<span class="sc">$</span>LBTESTCD), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Unique tests: 10 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Total records:"</span>, <span class="fu">nrow</span>(lb_complete), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Total records: 250 </code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="summary-statistics-for-lb-data" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="summary-statistics-for-lb-data"><span class="header-section-number">10</span> Summary Statistics for LB Data</h2>
+<p>When working with lab data, it’s often useful to generate summary statistics.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary by test and visit</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>lb_summary <span class="ot">&lt;-</span> lb_complete <span class="sc">%&gt;%</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(LBTESTCD, LBTEST, VISIT, LBSTRESU) <span class="sc">%&gt;%</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">N =</span> <span class="fu">n</span>(),</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean =</span> <span class="fu">round</span>(<span class="fu">mean</span>(LBSTRESN, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">round</span>(<span class="fu">sd</span>(LBSTRESN, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Min =</span> <span class="fu">round</span>(<span class="fu">min</span>(LBSTRESN, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Max =</span> <span class="fu">round</span>(<span class="fu">max</span>(LBSTRESN, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>),</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">N_Low =</span> <span class="fu">sum</span>(LBNRIND <span class="sc">==</span> <span class="st">"LOW"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">N_High =</span> <span class="fu">sum</span>(LBNRIND <span class="sc">==</span> <span class="st">"HIGH"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Display chemistry panel at BASELINE</span></span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Chemistry Panel Summary at BASELINE:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Chemistry Panel Summary at BASELINE:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>lb_summary <span class="sc">%&gt;%</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(VISIT <span class="sc">==</span> <span class="st">"BASELINE"</span>, LBTESTCD <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"GLUC"</span>, <span class="st">"CREAT"</span>, <span class="st">"ALT"</span>, <span class="st">"AST"</span>, <span class="st">"BILI"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 11
+  LBTESTCD LBTEST     VISIT LBSTRESU     N  Mean    SD   Min    Max N_Low N_High
+  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;  &lt;int&gt;
+1 ALT      Alanine A… BASE… U/L          5 27.2  10.8  12.8   39.7      0      0
+2 AST      Aspartate… BASE… U/L          5 26.6   5.4  21.0   35.3      0      0
+3 BILI     Bilirubin… BASE… umol/L       5 20.2   7.16 11.1   30.3      0      4
+4 CREAT    Creatinine BASE… umol/L       5 84    12.1  69.0  101.       0      0
+5 GLUC     Glucose    BASE… mmol/L       5  4.95  0.56  4.51   5.72     0      1</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="deliverable-summary" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="deliverable-summary"><span class="header-section-number">11</span> Deliverable Summary</h2>
+<p>Today you completed the following:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Task</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Understood LB domain structure and Findings class</td>
+<td>✓ Done</td>
+</tr>
+<tr class="even">
+<td>Explored key LB variables (LBTESTCD, LBORRES, LBSTRESN, etc.)</td>
+<td>✓ Done</td>
+</tr>
+<tr class="odd">
+<td>Performed unit conversions (mg/dL → mmol/L)</td>
+<td>✓ Done</td>
+</tr>
+<tr class="even">
+<td>Derived reference range flags (LBNRIND)</td>
+<td>✓ Done</td>
+</tr>
+<tr class="odd">
+<td>Created a complete LB domain with 10+ tests</td>
+<td>✓ Done</td>
+</tr>
+<tr class="even">
+<td>Generated summary statistics</td>
+<td>✓ Done</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="key-takeaways" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="key-takeaways"><span class="header-section-number">12</span> Key Takeaways</h2>
+<ol type="1">
+<li><strong>LB is a Findings class domain</strong> - It follows the –TESTCD, –ORRES, –STRESC pattern shared by VS, LB, EG</li>
+<li><strong>Original vs Standardized</strong> - Always preserve original results while creating standardized versions</li>
+<li><strong>Unit conversions are critical</strong> - Labs from different sites may use different units</li>
+<li><strong>Reference ranges enable safety analysis</strong> - LBNRIND flags abnormal values</li>
+<li><strong>LOINC provides universal identification</strong> - Enhances data interoperability</li>
+</ol>
+<hr>
+</section>
+<section id="resources" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="resources"><span class="header-section-number">13</span> Resources</h2>
+<ul>
+<li><a href="https://www.cdisc.org/standards/foundational/sdtm">CDISC SDTM Implementation Guide - LB Domain</a> - Official LB specification</li>
+<li><a href="https://loinc.org/">LOINC Official Website</a> - Medical laboratory codes</li>
+<li><a href="https://www.ncbi.nlm.nih.gov/books/NBK535333/">NIH Unit Conversion Tables</a> - Lab unit conversions</li>
+<li><a href="https://pharmaverse.org">Pharmaverse.org</a> - R packages for clinical data</li>
+<li><a href="https://pharmaverse.github.io/sdtm.oak/">sdtm.oak Documentation</a> - SDTM creation package</li>
+</ul>
+<hr>
+</section>
+<section id="whats-next" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="whats-next"><span class="header-section-number">14</span> What’s Next?</h2>
+<p>In <strong>Day 9</strong>, we will focus on <strong>VS (Vital Signs) &amp; Repeated Measures</strong>:</p>
+<ul>
+<li>Understanding visit-level data and multiple readings per timepoint</li>
+<li>Working with positional variables (VSPOS, VSLOC)</li>
+<li>Deriving statistics across multiple readings</li>
+<li>Preparing for ADaM BDS structure (baseline, change from baseline)</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ineelhere\.github\.io\/30-days-of-pharmaverse\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
