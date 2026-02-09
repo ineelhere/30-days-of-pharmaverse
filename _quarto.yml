@@ -12,8 +12,6 @@ website:
   navbar:
     title: "30 Days of Pharmaverse"
     left:
-      - text: "Home"
-        href: index.html
       - text: "Week 1: SDTM Fundamentals"
         href: week1/day1.html
       - text: "Week 2: Production SDTM"
