@@ -1,0 +1,774 @@
+---
+title: "Day 14: Week 2 Capstone - Metadata-Driven SDTM with metacore & xportr"
+subtitle: "Specification-Driven Workflows for Submission-Ready Data"
+author: "Indraneel Chakraborty"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+    
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+<div style="margin-bottom:12px;"><a href="../index.html" class="resource-link">← Back to Roadmap</a></div>
+
+## Learning Objectives
+
+By the end of Day 14 (Week 2 Capstone), you will be able to:
+
+1.  Load **specification objects** using `metacore` - the Pharmaverse metadata standard
+2.  Use `metatools` to apply metadata checks and select columns from specs
+3.  Use `xportr` to apply **labels, types, formats, lengths**, and variable ordering from specs
+4.  Build an **end-to-end pipeline**: raw data → SDTM → validate → export `.xpt`
+5.  Appreciate why **metadata-driven workflows** are the future of clinical programming
+6.  Understand everything needed before starting **ADaM datasets in Week 3**
+
+------------------------------------------------------------------------
+
+## Why Metadata-Driven Workflows?
+
+### The Problem with Manual Programming
+
+In traditional clinical programming, programmers manually:
+
+-   Assign variable labels (`label(dm$USUBJID) <- "Unique Subject Identifier"`)
+-   Set variable types (character vs numeric)
+-   Order variables in the correct sequence
+-   Set variable lengths for transport files
+
+This is **error-prone**, **tedious**, and **hard to maintain**.
+
+::: callout-important
+## The Metadata-Driven Solution
+
+Instead of hardcoding metadata in your programs, you:
+
+1.  **Define metadata once** in a specification file (Excel, or a `metacore` object)
+2.  **Load metadata** into R using `metacore`
+3.  **Apply metadata** to your datasets using `xportr`/`metatools`
+4.  **Validate** that your datasets match the specification
+
+This ensures:
+
+-   **Consistency** - All datasets follow the same rules
+-   **Reproducibility** - Metadata changes automatically propagate
+-   **Compliance** - Variable labels, types, and lengths match `define.xml`
+:::
+
+------------------------------------------------------------------------
+
+## Package Installation & Loading
+
+### Required Packages
+
+| Package | Purpose |
+|---------|---------|
+| `metacore` | Load and manage dataset specifications |
+| `metatools` | Apply metadata-based transformations and checks |
+| `xportr` | Apply labels, types, formats, lengths; export `.xpt` |
+| `dplyr` | Data manipulation |
+| `pharmaversesdtm` | Example SDTM datasets |
+
+```{r}
+#| label: install-and-load
+
+if (!requireNamespace("dplyr", quietly = TRUE)) suppressMessages(install.packages("dplyr"))
+if (!requireNamespace("lubridate", quietly = TRUE)) suppressMessages(install.packages("lubridate"))
+if (!requireNamespace("pharmaversesdtm", quietly = TRUE)) suppressMessages(install.packages("pharmaversesdtm"))
+if (!requireNamespace("metacore", quietly = TRUE)) suppressMessages(install.packages("metacore"))
+if (!requireNamespace("metatools", quietly = TRUE)) suppressMessages(install.packages("metatools"))
+if (!requireNamespace("xportr", quietly = TRUE)) suppressMessages(install.packages("xportr"))
+
+library(dplyr)
+library(lubridate)
+library(pharmaversesdtm)
+library(metacore)
+library(metatools)
+library(xportr)
+```
+
+------------------------------------------------------------------------
+
+## Understanding metacore
+
+### What is metacore?
+
+**`metacore`** is a Pharmaverse package that provides a standardized way to represent **dataset specifications** in R. Think of it as the bridge between your Excel specification file and your R programs.
+
+### The metacore Object Structure
+
+A `metacore` object contains multiple related tables:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      METACORE OBJECT                                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│  ds_spec        = Dataset-level metadata                                │
+│                   (domain name, label, structure)                       │
+│                                                                         │
+│  ds_vars        = Variable-level metadata                               │
+│                   (which variables belong to which dataset)              │
+│                                                                         │
+│  var_spec       = Variable specifications                               │
+│                   (variable name, label, type, length, format)          │
+│                                                                         │
+│  value_spec     = Value-level metadata                                  │
+│                   (codelist values, decode values)                      │
+│                                                                         │
+│  derivations    = Derivation metadata                                   │
+│                   (how variables are derived)                           │
+│                                                                         │
+│  codelist       = Code list definitions                                 │
+│                   (controlled terminology)                              │
+│                                                                         │
+│  supp           = Supplemental qualifiers                               │
+│                   (SUPP-- domain information)                           │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Creating a metacore Object
+
+In production, you'd load this from an Excel specification. For learning, let's build one:
+
+```{r}
+#| label: create-metacore
+
+# ---- Define Dataset Specs ----
+ds_spec <- tibble::tribble(
+  ~dataset, ~structure,     ~label,
+  "DM",     "One record per subject",  "Demographics",
+  "AE",     "One record per adverse event per subject", "Adverse Events",
+  "EX",     "One record per exposure per subject",      "Exposure"
+)
+
+# ---- Define Variables ----
+ds_vars <- tibble::tribble(
+  ~dataset, ~variable,   ~keep,  ~key_seq, ~order, ~core,
+  "DM",     "STUDYID",   TRUE,   1L,       1L,     "Required",
+  "DM",     "DOMAIN",    TRUE,   NA,       2L,     "Required",
+  "DM",     "USUBJID",   TRUE,   2L,       3L,     "Required",
+  "DM",     "SUBJID",    TRUE,   NA,       4L,     "Required",
+  "DM",     "SITEID",    TRUE,   NA,       5L,     "Required",
+  "DM",     "AGE",       TRUE,   NA,       6L,     "Required",
+  "DM",     "AGEU",      TRUE,   NA,       7L,     "Required",
+  "DM",     "SEX",       TRUE,   NA,       8L,     "Required",
+  "DM",     "RACE",      TRUE,   NA,       9L,     "Required",
+  "DM",     "ETHNIC",    TRUE,   NA,       10L,    "Permissible",
+  "DM",     "ARM",       TRUE,   NA,       11L,    "Required",
+  "DM",     "ARMCD",     TRUE,   NA,       12L,    "Required",
+  "DM",     "ACTARM",    TRUE,   NA,       13L,    "Permissible",
+  "DM",     "ACTARMCD",  TRUE,   NA,       14L,    "Permissible",
+  "DM",     "RFSTDTC",   TRUE,   NA,       15L,    "Expected",
+  "DM",     "RFENDTC",   TRUE,   NA,       16L,    "Expected",
+  "AE",     "STUDYID",   TRUE,   1L,       1L,     "Required",
+  "AE",     "DOMAIN",    TRUE,   NA,       2L,     "Required",
+  "AE",     "USUBJID",   TRUE,   2L,       3L,     "Required",
+  "AE",     "AESEQ",     TRUE,   3L,       4L,     "Required",
+  "AE",     "AETERM",    TRUE,   NA,       5L,     "Required",
+  "AE",     "AEDECOD",   TRUE,   NA,       6L,     "Required",
+  "AE",     "AEBODSYS",  TRUE,   NA,       7L,     "Permissible",
+  "AE",     "AESEV",     TRUE,   NA,       8L,     "Expected",
+  "AE",     "AESER",     TRUE,   NA,       9L,     "Expected",
+  "AE",     "AEREL",     TRUE,   NA,       10L,    "Permissible",
+  "AE",     "AESTDTC",   TRUE,   NA,       11L,    "Expected",
+  "AE",     "AEENDTC",   TRUE,   NA,       12L,    "Permissible"
+)
+
+# ---- Define Variable Specifications ----
+var_spec <- tibble::tribble(
+  ~variable,   ~type,       ~length, ~label,                          ~common_ct,    ~format,
+  "STUDYID",   "text",      12L,     "Study Identifier",             NA,            NA,
+  "DOMAIN",    "text",      2L,      "Domain Abbreviation",          NA,            NA,
+  "USUBJID",   "text",      40L,     "Unique Subject Identifier",    NA,            NA,
+  "SUBJID",    "text",      8L,      "Subject Identifier for the Study", NA,        NA,
+  "SITEID",    "text",      8L,      "Study Site Identifier",        NA,            NA,
+  "AGE",       "integer",   8L,      "Age",                          NA,            NA,
+  "AGEU",      "text",      6L,      "Age Units",                    "AGEU",        NA,
+  "SEX",       "text",      2L,      "Sex",                          "SEX",         NA,
+  "RACE",      "text",      40L,     "Race",                         "RACE",        NA,
+  "ETHNIC",    "text",      40L,     "Ethnicity",                    "ETHNIC",      NA,
+  "ARM",       "text",      40L,     "Planned Arm",                  NA,            NA,
+  "ARMCD",     "text",      20L,     "Planned Arm Code",             NA,            NA,
+  "ACTARM",    "text",      40L,     "Actual Arm",                   NA,            NA,
+  "ACTARMCD",  "text",      20L,     "Actual Arm Code",              NA,            NA,
+  "RFSTDTC",   "text",      20L,     "Subject Reference Start Date/Time", NA,       NA,
+  "RFENDTC",   "text",      20L,     "Subject Reference End Date/Time",   NA,       NA,
+  "AESEQ",     "integer",   8L,      "Sequence Number",              NA,            NA,
+  "AETERM",    "text",      200L,    "Reported Term for the Adverse Event", NA,     NA,
+  "AEDECOD",   "text",      200L,    "Dictionary-Derived Term",      NA,            NA,
+  "AEBODSYS",  "text",      200L,    "Body System or Organ Class",   NA,            NA,
+  "AESEV",     "text",      12L,     "Severity/Intensity",           "AESEV",       NA,
+  "AESER",     "text",      2L,      "Serious Event",                "NY",          NA,
+  "AEREL",     "text",      40L,     "Causality",                    NA,            NA,
+  "AESTDTC",   "text",      20L,     "Start Date/Time of Adverse Event", NA,        NA,
+  "AEENDTC",   "text",      20L,     "End Date/Time of Adverse Event",    NA,        NA
+)
+
+cat("Metadata components created:\n")
+cat("  Dataset specs:", nrow(ds_spec), "datasets\n")
+cat("  Variable assignments:", nrow(ds_vars), "variable-dataset pairs\n")
+cat("  Variable specs:", nrow(var_spec), "unique variables\n")
+```
+
+```{r}
+#| label: build-metacore-object
+
+# Build the metacore object
+# Note: metacore() requires specific table structures
+# For simplicity, we'll work with the individual components directly
+
+cat("In production, you would create the metacore object like this:\n\n")
+cat('mc <- metacore::metacore(\n')
+cat('  ds_spec  = ds_spec,\n')
+cat('  ds_vars  = ds_vars,\n')
+cat('  var_spec = var_spec\n')
+cat(')\n\n')
+
+cat("Or more commonly, load from a specification file:\n\n")
+cat('mc <- metacore::spec_to_metacore("path/to/specs.xlsx")\n')
+```
+
+::: callout-note
+## spec_to_metacore()
+
+The most common way to create a `metacore` object in production is using `spec_to_metacore()`, which reads from a formatted Excel specification file. This spec file is typically created by the study statistician or data standards team and contains all the metadata for every dataset and variable.
+:::
+
+------------------------------------------------------------------------
+
+## Using xportr: The Metadata Application Engine
+
+### What xportr Does
+
+`xportr` is the **workhorse** for making your datasets submission-ready. It applies metadata from your specification to your actual data:
+
+```{r}
+#| label: xportr-overview
+
+cat("xportr: Key Functions\n\n")
+
+xportr_functions <- tibble::tribble(
+  ~Function,            ~What_It_Does,
+  "xportr_type()",      "Coerce variables to the correct type (character/numeric)",
+  "xportr_length()",    "Set variable lengths for SAS transport",
+  "xportr_label()",     "Apply variable labels from specification",
+  "xportr_order()",     "Reorder variables to match specification",
+  "xportr_format()",    "Apply SAS display formats",
+  "xportr_write()",     "Export the dataset as a .xpt (SAS transport) file"
+)
+
+print(xportr_functions)
+```
+
+### Applying xportr Step by Step
+
+Let's work through the full pipeline using the DM domain:
+
+```{r}
+#| label: prepare-dm-for-xportr
+
+# Step 1: Create our DM dataset (from Day 7 capstone approach)
+set.seed(42)
+n_subjects <- 15
+
+raw_dm <- tibble(
+  STUDYID  = "CDISC01",
+  DOMAIN   = "DM",
+  SUBJID   = sprintf("%03d", 1:n_subjects),
+  SITEID   = sample(c("101", "102", "103"), n_subjects, replace = TRUE),
+  AGE      = sample(25:75, n_subjects, replace = TRUE),
+  AGEU     = "YEARS",
+  SEX      = sample(c("M", "F"), n_subjects, replace = TRUE),
+  RACE     = sample(c("WHITE", "BLACK OR AFRICAN AMERICAN", "ASIAN"), 
+                    n_subjects, replace = TRUE),
+  ETHNIC   = sample(c("HISPANIC OR LATINO", "NOT HISPANIC OR LATINO"),
+                    n_subjects, replace = TRUE, prob = c(0.15, 0.85)),
+  ARM      = sample(c("Placebo", "Active 10mg", "Active 20mg"),
+                    n_subjects, replace = TRUE),
+  ARMCD    = NA_character_,
+  ACTARM   = NA_character_,
+  ACTARMCD = NA_character_,
+  RFSTDTC  = as.character(as.Date("2024-01-01") + sample(0:60, n_subjects, replace = TRUE)),
+  RFENDTC  = NA_character_
+) %>%
+  mutate(
+    USUBJID  = paste(STUDYID, SITEID, SUBJID, sep = "-"),
+    ARMCD = case_when(
+      ARM == "Placebo" ~ "PBO",
+      ARM == "Active 10mg" ~ "ACT10",
+      ARM == "Active 20mg" ~ "ACT20"
+    ),
+    ACTARM = ARM,
+    ACTARMCD = ARMCD
+  )
+
+cat("DM dataset before xportr:\n")
+cat("Rows:", nrow(raw_dm), "\n")
+cat("Cols:", ncol(raw_dm), "\n\n")
+glimpse(raw_dm)
+```
+
+### Step 2: Create a Specification for xportr
+
+```{r}
+#| label: create-xportr-spec
+
+# xportr functions accept a metadata dataframe with specific columns
+# Let's create the specification that xportr expects
+
+dm_spec <- tibble::tribble(
+  ~dataset, ~variable,   ~type,       ~label,                               ~length, ~order,  ~format,
+  "DM",     "STUDYID",   "character", "Study Identifier",                   12L,     1L,      NA,
+  "DM",     "DOMAIN",    "character", "Domain Abbreviation",                2L,      2L,      NA,
+  "DM",     "USUBJID",   "character", "Unique Subject Identifier",          40L,     3L,      NA,
+  "DM",     "SUBJID",    "character", "Subject Identifier for the Study",   8L,      4L,      NA,
+  "DM",     "SITEID",    "character", "Study Site Identifier",              8L,      5L,      NA,
+  "DM",     "AGE",       "numeric",   "Age",                                8L,      6L,      NA,
+  "DM",     "AGEU",      "character", "Age Units",                          6L,      7L,      NA,
+  "DM",     "SEX",       "character", "Sex",                                2L,      8L,      NA,
+  "DM",     "RACE",      "character", "Race",                               40L,     9L,      NA,
+  "DM",     "ETHNIC",    "character", "Ethnicity",                          40L,     10L,     NA,
+  "DM",     "ARM",       "character", "Planned Arm",                        40L,     11L,     NA,
+  "DM",     "ARMCD",     "character", "Planned Arm Code",                   20L,     12L,     NA,
+  "DM",     "ACTARM",    "character", "Actual Arm",                         40L,     13L,     NA,
+  "DM",     "ACTARMCD",  "character", "Actual Arm Code",                    20L,     14L,     NA,
+  "DM",     "RFSTDTC",   "character", "Subject Reference Start Date/Time",  20L,     15L,     NA,
+  "DM",     "RFENDTC",   "character", "Subject Reference End Date/Time",    20L,     16L,     NA
+)
+
+cat("DM specification:\n")
+dm_spec %>% select(variable, type, label, length, order) %>% print()
+```
+
+### Step 3: Apply xportr Functions
+
+```{r}
+#| label: apply-xportr
+
+# ---- Apply metadata using the xportr pipeline ----
+
+# Step 3a: Apply variable types
+dm_typed <- raw_dm %>%
+  xportr_type(dm_spec, domain = "DM")
+
+cat("After xportr_type():\n")
+cat("  AGE type:", class(dm_typed$AGE), "\n")
+cat("  STUDYID type:", class(dm_typed$STUDYID), "\n\n")
+
+# Step 3b: Apply variable labels
+dm_labeled <- dm_typed %>%
+  xportr_label(dm_spec, domain = "DM")
+
+cat("After xportr_label():\n")
+# Check labels
+labels_applied <- sapply(dm_labeled, function(x) attr(x, "label"))
+labels_applied <- labels_applied[!is.na(labels_applied)]
+head(data.frame(Variable = names(labels_applied), Label = unname(labels_applied)), 8)
+```
+
+```{r}
+#| label: apply-xportr-order
+
+# Step 3c: Apply variable ordering
+dm_ordered <- dm_labeled %>%
+  xportr_order(dm_spec, domain = "DM")
+
+cat("After xportr_order():\n")
+cat("Variable order:", paste(names(dm_ordered), collapse = ", "), "\n")
+```
+
+```{r}
+#| label: apply-xportr-length
+
+# Step 3d: Apply variable lengths
+dm_lengthed <- dm_ordered %>%
+  xportr_length(dm_spec, domain = "DM")
+
+cat("After xportr_length():\n")
+cat("All metadata applied ✓\n")
+```
+
+### Step 4: Export as .xpt
+
+```{r}
+#| label: export-xpt
+
+# Create output directory
+output_dir <- "output"
+if (!dir.exists(output_dir)) dir.create(output_dir)
+
+# Export using xportr_write
+dm_lengthed %>%
+  xportr_write(file.path(output_dir, "dm.xpt"))
+
+cat("Exported:", file.path(output_dir, "dm.xpt"), "\n")
+cat("File size:", file.size(file.path(output_dir, "dm.xpt")), "bytes\n")
+```
+
+::: callout-tip
+## The xportr Pipeline
+
+In practice, you'd chain all xportr functions together:
+
+```r
+dm_final <- raw_dm %>%
+  xportr_type(spec, domain = "DM") %>%
+  xportr_length(spec, domain = "DM") %>%
+  xportr_label(spec, domain = "DM") %>%
+  xportr_order(spec, domain = "DM") %>%
+  xportr_format(spec, domain = "DM") %>%
+  xportr_write("output/dm.xpt")
+```
+
+This single pipeline takes your raw dataset and makes it submission-ready!
+:::
+
+------------------------------------------------------------------------
+
+## Using metatools for Metadata-Based Checks
+
+### What metatools Provides
+
+`metatools` helps you **work with** metadata - selecting variables, checking CT compliance, and building datasets from specs:
+
+```{r}
+#| label: metatools-overview
+
+cat("metatools: Key Functions\n\n")
+
+metatools_fns <- tibble::tribble(
+  ~Function,                 ~Purpose,
+  "build_from_derived()",    "Create a dataset shell from specification",
+  "check_ct_col()",          "Check if column values match controlled terminology",
+  "check_variables()",       "Verify dataset variables match specification",
+  "combine_supp()",          "Combine SUPP-- with parent domain",
+  "drop_unspec_vars()",      "Remove variables not in the specification"
+)
+
+print(metatools_fns)
+```
+
+------------------------------------------------------------------------
+
+## End-to-End Capstone Pipeline
+
+Let's build a complete pipeline that takes raw data through to validated, exported SDTM:
+
+```{r}
+#| label: capstone-pipeline
+
+cat("=== WEEK 2 CAPSTONE: END-TO-END SDTM PIPELINE ===\n\n")
+
+# ---- STEP 1: Raw Data ----
+cat("Step 1: Generate raw clinical data\n")
+
+set.seed(123)
+n <- 20
+
+# Raw demographics
+raw_demo <- tibble(
+  site    = sample(c("101", "102"), n, replace = TRUE),
+  subject = sprintf("%03d", 1:n),
+  sex     = sample(c("Male", "Female"), n, replace = TRUE),
+  race    = sample(c("White", "Black", "Asian"), n, replace = TRUE, prob = c(0.6, 0.25, 0.15)),
+  age     = sample(25:75, n, replace = TRUE),
+  arm     = sample(c("Placebo", "Drug A 10mg"), n, replace = TRUE),
+  first_dose = as.Date("2024-01-15") + sample(0:45, n, replace = TRUE)
+)
+
+# Raw AEs
+raw_aes <- tibble(
+  site    = sample(raw_demo$site[1:15], 30, replace = TRUE),
+  subject = sample(raw_demo$subject[1:15], 30, replace = TRUE),
+  ae_term = sample(c("Headache", "Nausea", "Dizziness", "Fatigue", "Rash"), 30, replace = TRUE),
+  severity = sample(c("Mild", "Moderate", "Severe"), 30, replace = TRUE, prob = c(0.6, 0.3, 0.1)),
+  serious  = sample(c("No", "Yes"), 30, replace = TRUE, prob = c(0.9, 0.1)),
+  related  = sample(c("Not Related", "Possibly Related"), 30, replace = TRUE),
+  start_day = sample(1:60, 30, replace = TRUE)
+) %>%
+  left_join(raw_demo %>% select(subject, first_dose), by = "subject") %>%
+  mutate(
+    start_date = as.character(first_dose + start_day),
+    end_date   = as.character(first_dose + start_day + sample(1:14, n(), replace = TRUE))
+  )
+
+cat("  Demographics:", nrow(raw_demo), "subjects\n")
+cat("  Adverse Events:", nrow(raw_aes), "records\n\n")
+```
+
+```{r}
+#| label: capstone-step2
+
+# ---- STEP 2: Transform to SDTM ----
+cat("Step 2: Transform to SDTM format\n")
+
+STUDYID <- "CAPSTONE02"
+
+# DM Domain
+sdtm_dm <- raw_demo %>%
+  mutate(
+    STUDYID  = STUDYID,
+    DOMAIN   = "DM",
+    USUBJID  = paste(STUDYID, site, subject, sep = "-"),
+    SUBJID   = subject,
+    SITEID   = site,
+    AGE      = age,
+    AGEU     = "YEARS",
+    SEX      = if_else(sex == "Male", "M", "F"),
+    RACE     = toupper(race),
+    ETHNIC   = "NOT HISPANIC OR LATINO",
+    ARM      = arm,
+    ARMCD    = if_else(arm == "Placebo", "PBO", "DRGA10"),
+    ACTARM   = arm,
+    ACTARMCD = if_else(arm == "Placebo", "PBO", "DRGA10"),
+    RFSTDTC  = as.character(first_dose),
+    RFENDTC  = NA_character_
+  ) %>%
+  select(STUDYID, DOMAIN, USUBJID, SUBJID, SITEID, AGE, AGEU,
+         SEX, RACE, ETHNIC, ARM, ARMCD, ACTARM, ACTARMCD, RFSTDTC, RFENDTC)
+
+# AE Domain
+sdtm_ae <- raw_aes %>%
+  mutate(
+    STUDYID  = STUDYID,
+    DOMAIN   = "AE",
+    USUBJID  = paste(STUDYID, site, subject, sep = "-"),
+    AETERM   = ae_term,
+    AEDECOD  = toupper(ae_term),
+    AEBODSYS = case_when(
+      grepl("Headache|Dizziness", ae_term) ~ "NERVOUS SYSTEM DISORDERS",
+      grepl("Nausea", ae_term) ~ "GASTROINTESTINAL DISORDERS",
+      grepl("Fatigue", ae_term) ~ "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS",
+      grepl("Rash", ae_term) ~ "SKIN AND SUBCUTANEOUS TISSUE DISORDERS"
+    ),
+    AESEV    = toupper(severity),
+    AESER    = if_else(serious == "Yes", "Y", "N"),
+    AEREL    = toupper(related),
+    AESTDTC  = start_date,
+    AEENDTC  = end_date
+  ) %>%
+  arrange(USUBJID, AESTDTC) %>%
+  group_by(USUBJID) %>%
+  mutate(AESEQ = row_number()) %>%
+  ungroup() %>%
+  select(STUDYID, DOMAIN, USUBJID, AESEQ, AETERM, AEDECOD, AEBODSYS,
+         AESEV, AESER, AEREL, AESTDTC, AEENDTC)
+
+cat("  SDTM DM:", nrow(sdtm_dm), "rows x", ncol(sdtm_dm), "cols\n")
+cat("  SDTM AE:", nrow(sdtm_ae), "rows x", ncol(sdtm_ae), "cols\n\n")
+```
+
+```{r}
+#| label: capstone-step3
+
+# ---- STEP 3: Validate ----
+cat("Step 3: Validate SDTM domains\n\n")
+
+# Cross-domain check: All AE subjects in DM
+ae_orphans <- sdtm_ae %>% anti_join(sdtm_dm, by = "USUBJID")
+cat("  Orphan AE records:", nrow(ae_orphans), if_else(nrow(ae_orphans) == 0, "✓", "✗"), "\n")
+
+# Required variable check
+dm_required <- c("STUDYID", "DOMAIN", "USUBJID", "SUBJID", "SITEID",
+                 "AGE", "AGEU", "SEX", "RACE", "ARM", "ARMCD")
+dm_present <- all(dm_required %in% names(sdtm_dm))
+cat("  DM required variables:", if_else(dm_present, "All present ✓", "Missing ✗"), "\n")
+
+ae_required <- c("STUDYID", "DOMAIN", "USUBJID", "AESEQ", "AETERM", "AEDECOD")
+ae_present <- all(ae_required %in% names(sdtm_ae))
+cat("  AE required variables:", if_else(ae_present, "All present ✓", "Missing ✗"), "\n")
+
+# CT check
+valid_sex <- all(sdtm_dm$SEX %in% c("M", "F", "U", "UNDIFFERENTIATED"))
+cat("  SEX controlled terminology:", if_else(valid_sex, "Valid ✓", "Invalid ✗"), "\n")
+
+valid_sev <- all(sdtm_ae$AESEV %in% c("MILD", "MODERATE", "SEVERE"))
+cat("  AESEV controlled terminology:", if_else(valid_sev, "Valid ✓", "Invalid ✗"), "\n")
+
+# Date logic check
+ae_date_issue <- sdtm_ae %>%
+  filter(!is.na(AESTDTC), !is.na(AEENDTC)) %>%
+  filter(AESTDTC > AEENDTC) %>%
+  nrow()
+cat("  AE date logic (start <= end):", if_else(ae_date_issue == 0, "Valid ✓", "Issues ✗"), "\n\n")
+```
+
+```{r}
+#| label: capstone-step4
+
+# ---- STEP 4: Apply Metadata with xportr ----
+cat("Step 4: Apply metadata and export\n\n")
+
+# Use our DM spec from earlier
+dm_final <- sdtm_dm %>%
+  xportr_type(dm_spec, domain = "DM") %>%
+  xportr_length(dm_spec, domain = "DM") %>%
+  xportr_label(dm_spec, domain = "DM") %>%
+  xportr_order(dm_spec, domain = "DM")
+
+cat("  DM metadata applied:\n")
+cat("    Variables:", ncol(dm_final), "\n")
+cat("    Order:", paste(names(dm_final), collapse = " → "), "\n")
+
+# Quick label check
+labels <- sapply(dm_final, function(x) attr(x, "label"))
+cat("    Labels applied:", sum(!is.na(labels)), "of", length(labels), "\n\n")
+```
+
+```{r}
+#| label: capstone-step5
+
+# ---- STEP 5: Export ----
+cat("Step 5: Export as .xpt files\n\n")
+
+output_dir <- "output"
+if (!dir.exists(output_dir)) dir.create(output_dir)
+
+# Export DM
+dm_final %>%
+  xportr_write(file.path(output_dir, "dm.xpt"))
+cat("  ✓ Exported:", file.path(output_dir, "dm.xpt"),
+    "-", file.size(file.path(output_dir, "dm.xpt")), "bytes\n")
+
+# Export AE (with inline metadata)
+ae_spec <- tibble::tribble(
+  ~dataset, ~variable,   ~type,       ~label,                                  ~length, ~order,  ~format,
+  "AE",     "STUDYID",   "character", "Study Identifier",                      12L,     1L,      NA,
+  "AE",     "DOMAIN",    "character", "Domain Abbreviation",                   2L,      2L,      NA,
+  "AE",     "USUBJID",   "character", "Unique Subject Identifier",             40L,     3L,      NA,
+  "AE",     "AESEQ",     "numeric",   "Sequence Number",                       8L,      4L,      NA,
+  "AE",     "AETERM",    "character", "Reported Term for the Adverse Event",   200L,    5L,      NA,
+  "AE",     "AEDECOD",   "character", "Dictionary-Derived Term",               200L,    6L,      NA,
+  "AE",     "AEBODSYS",  "character", "Body System or Organ Class",            200L,    7L,      NA,
+  "AE",     "AESEV",     "character", "Severity/Intensity",                    12L,     8L,      NA,
+  "AE",     "AESER",     "character", "Serious Event",                         2L,      9L,      NA,
+  "AE",     "AEREL",     "character", "Causality",                             40L,     10L,     NA,
+  "AE",     "AESTDTC",   "character", "Start Date/Time of Adverse Event",      20L,     11L,     NA,
+  "AE",     "AEENDTC",   "character", "End Date/Time of Adverse Event",        20L,     12L,     NA
+)
+
+sdtm_ae %>%
+  xportr_type(ae_spec, domain = "AE") %>%
+  xportr_length(ae_spec, domain = "AE") %>%
+  xportr_label(ae_spec, domain = "AE") %>%
+  xportr_order(ae_spec, domain = "AE") %>%
+  xportr_write(file.path(output_dir, "ae.xpt"))
+
+cat("  ✓ Exported:", file.path(output_dir, "ae.xpt"),
+    "-", file.size(file.path(output_dir, "ae.xpt")), "bytes\n")
+```
+
+------------------------------------------------------------------------
+
+## Week 2 Review: Everything You've Learned
+
+```{r}
+#| label: week2-review
+
+cat("=== WEEK 2 COMPLETE REVIEW ===\n\n")
+
+review <- tibble::tribble(
+  ~Day,  ~Topic,                                    ~Key_Skill,
+  "8",   "LB Domain & Unit Standardization",        "Unit conversion, reference ranges, LBNRIND",
+  "9",   "VS & Repeated Measures",                  "Multiple readings, VSPOS, VSTPT, wide format",
+  "10",  "AE Domain Mastery & SAE Logic",           "Severity vs seriousness, TEAE, SAE criteria",
+  "11",  "Disposition & Trial Design",              "DS domain, EPOCH, TA/TV/TS, ADSL preview",
+  "12",  "Data Cuts with datacutr",                 "Patient-level & record-level cuts, ongoing AEs",
+  "13",  "SDTM Validation with sdtmchecks",         "FDA business rules, cross-domain checks",
+  "14",  "Metadata-Driven SDTM (this capstone)",    "metacore, metatools, xportr pipeline"
+)
+
+print(review)
+```
+
+### What You're Now Ready For
+
+::: callout-important
+## Preparation Complete for Week 3: ADaM
+
+You now have a solid foundation in SDTM:
+
+-   ✓ You can build any SDTM domain from raw data
+-   ✓ You understand Controlled Terminology and date derivations
+-   ✓ You can handle complex domains (LB, VS, AE, DS)
+-   ✓ You know how to validate SDTM data
+-   ✓ You can apply metadata and export submission-ready `.xpt` files
+-   ✓ You understand how SDTM maps to ADaM
+
+**In Week 3, we will use `admiral` to build ADaM datasets (ADSL, ADAE, ADVS, ADLB) from the SDTM data you've mastered.**
+:::
+
+------------------------------------------------------------------------
+
+## Deliverable Summary
+
+Today you completed the following:
+
+| Task | Status |
+|------|--------|
+| Understood metacore specification objects | ✓ Done |
+| Created variable specifications for DM and AE | ✓ Done |
+| Applied xportr_type, xportr_label, xportr_order, xportr_length | ✓ Done |
+| Exported submission-ready .xpt files | ✓ Done |
+| Built an end-to-end pipeline: raw → SDTM → validate → export | ✓ Done |
+| Reviewed all Week 2 topics | ✓ Done |
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  **Metadata-driven is the future** - Define once, apply everywhere
+2.  **`metacore` standardizes specs** - One R object for all dataset/variable metadata
+3.  **`xportr` applies metadata** - Types, labels, lengths, ordering, and export
+4.  **`metatools` enables checks** - Verify your data matches the specification
+5.  **The pipeline is reproducible** - Same spec + same code = same output every time
+6.  **You're ready for ADaM** - All SDTM fundamentals are in place
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   [metacore Documentation](https://pharmaverse.github.io/metacore/) - Official metacore package
+-   [metatools Documentation](https://pharmaverse.github.io/metatools/) - Metadata utility functions
+-   [xportr Documentation](https://atorus-research.github.io/xportr/) - SAS transport export
+-   [Admiral Documentation](https://pharmaverse.github.io/admiral/) - ADaM derivation package (Week 3!)
+-   [Pharmaverse.org](https://pharmaverse.org) - R packages for clinical data
+-   [FDA Data Standards Resources](https://www.fda.gov/industry/fda-data-standards-advisory-board) - FDA guidance
+
+------------------------------------------------------------------------
+
+## 🎉 Congratulations! Week 2 Complete!
+
+You've now mastered:
+
+-   **Complex SDTM domains** (LB, VS, AE, DS)
+-   **Production workflows** (data cuts, validation, metadata)
+-   **Pharmaverse tools** (datacutr, sdtmchecks, metacore, xportr)
+-   **Regulatory requirements** (SAE logic, TEAE derivation, controlled terminology)
+
+## What's Next?
+
+**Week 3: ADaM Datasets with Admiral**
+
+-   Using `admiral` to derive ADaM datasets from SDTM
+-   Building ADSL (Subject-Level Analysis Dataset)
+-   Creating BDS datasets: ADVS, ADLB
+-   Deriving baseline, change from baseline, shift tables
+-   ADAE creation with treatment-emergent logic

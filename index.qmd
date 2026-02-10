@@ -59,8 +59,8 @@ packages_map <- list(
   "7" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{sdtm.oak}`](https://cran.r-project.org/package=sdtm.oak), [`{xportr}`](https://cran.r-project.org/package=xportr), [`{haven}`](https://cran.r-project.org/package=haven)",
   "8" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{tidyr}`](https://cran.r-project.org/package=tidyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
   "9" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{tidyr}`](https://cran.r-project.org/package=tidyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
-  "10" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{sdtm.oak}`](https://cran.r-project.org/package=sdtm.oak)",
-  "11" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{sdtm.oak}`](https://cran.r-project.org/package=sdtm.oak)",
+  "10" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
+  "11" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
   "12" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{datacutr}`](https://cran.r-project.org/package=datacutr)",
   "13" = "[`{sdtmchecks}`](https://cran.r-project.org/package=sdtmchecks), [`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
   "14" = "[`{metacore}`](https://cran.r-project.org/package=metacore), [`{metatools}`](https://cran.r-project.org/package=metatools), [`{xportr}`](https://cran.r-project.org/package=xportr), [`{dplyr}`](https://cran.r-project.org/package=dplyr)"

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Indraneel Chakraborty">
-<meta name="dcterms.date" content="2026-02-10">
+<meta name="dcterms.date" content="2026-02-11">
 
 <title>Day 9: VS (Vital Signs) &amp; Repeated Measures – 30 Days of Pharmaverse</title>
 <style>
@@ -129,10 +129,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../week1/day1.html"> 
 <span class="menu-text">Week 1: SDTM Fundamentals</span></a>
   </li>  
@@ -180,6 +176,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../week2/day9.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Day 9: VS (Vital Signs) &amp; Repeated Measures</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week2/day10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 10: AE Domain Mastery &amp; SAE Logic</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week2/day11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 11: Disposition (DS) &amp; Trial Design Domains</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week2/day12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 12: Data Cuts with datacutr</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week2/day13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 13: SDTM Validation with sdtmchecks</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week2/day14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 14: Week 2 Capstone - Metadata-Driven SDTM with metacore &amp; xportr</span></a>
   </div>
 </li>
     </ul>
@@ -277,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 10, 2026</p>
+      <p class="date">February 11, 2026</p>
     </div>
   </div>
   
@@ -418,9 +444,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="3.2" class="anchored" data-anchor-id="install-packages-if-needed"><span class="header-section-number">3.2</span> Install Packages (if needed)</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install packages if not already installed</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"dplyr"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"dplyr"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"tidyr"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"tidyr"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"pharmaversesdtm"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"pharmaversesdtm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"dplyr"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">suppressMessages</span>(<span class="fu">install.packages</span>(<span class="st">"dplyr"</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"tidyr"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">suppressMessages</span>(<span class="fu">install.packages</span>(<span class="st">"tidyr"</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"pharmaversesdtm"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">suppressMessages</span>(<span class="fu">install.packages</span>(<span class="st">"pharmaversesdtm"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="load-packages" class="level3" data-number="3.3">

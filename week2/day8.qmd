@@ -124,9 +124,9 @@ Laboratory data is fundamental to clinical trials because:
 #| label: install-packages
 
 # Install packages if not already installed
-if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
-if (!requireNamespace("tidyr", quietly = TRUE)) install.packages("tidyr")
-if (!requireNamespace("pharmaversesdtm", quietly = TRUE)) install.packages("pharmaversesdtm")
+if (!requireNamespace("dplyr", quietly = TRUE)) suppressMessages(install.packages("dplyr"))
+if (!requireNamespace("tidyr", quietly = TRUE)) suppressMessages(install.packages("tidyr"))
+if (!requireNamespace("pharmaversesdtm", quietly = TRUE)) suppressMessages(install.packages("pharmaversesdtm"))
 ```
 
 ### Load Packages

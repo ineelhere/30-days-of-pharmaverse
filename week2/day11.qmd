@@ -1,0 +1,757 @@
+---
+title: "Day 11: Disposition (DS) & Trial Design Domains"
+subtitle: "Screen Failures, Completers, and Study Structure"
+author: "Indraneel Chakraborty"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+    
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+<div style="margin-bottom:12px;"><a href="../index.html" class="resource-link">← Back to Roadmap</a></div>
+
+## Learning Objectives
+
+By the end of Day 11, you will be able to:
+
+1.  Build the **DS (Disposition) domain** - tracking every subject's journey through the trial
+2.  Understand **EPOCH** and how it relates to study periods (SCREENING, TREATMENT, FOLLOW-UP)
+3.  Derive key disposition variables: **DSDECOD**, **DSSTDTC**, **DSCAT**, and completion flags
+4.  Survey the **Trial Design domains** (TA, TE, TV, TI, TS) and understand what each contains
+5.  Create a **subject disposition flow** - the essential "patient accounting" table
+6.  Understand how DS feeds into the **ADaM ADSL** dataset
+
+------------------------------------------------------------------------
+
+## Why Disposition Matters
+
+The DS domain answers the most fundamental question in a clinical trial: **What happened to each subject?**
+
+::: callout-important
+## Regulatory Requirement
+
+The FDA requires a complete accounting of **every subject** who entered the study:
+
+-   Did they complete the study? → `COMPLETED`
+-   Did they withdraw early? → Why? (adverse event, lost to follow-up, withdrawal by subject, etc.)
+-   Were they a screen failure? → Why? (did not meet inclusion criteria, etc.)
+
+This information feeds into **CONSORT diagrams**, disposition tables, and the ADaM `ADSL` dataset - all critical for regulatory submissions.
+:::
+
+------------------------------------------------------------------------
+
+## Package Installation & Loading
+
+```{r}
+#| label: install-and-load
+
+if (!requireNamespace("dplyr", quietly = TRUE)) suppressMessages(install.packages("dplyr"))
+if (!requireNamespace("lubridate", quietly = TRUE)) suppressMessages(install.packages("lubridate"))
+if (!requireNamespace("tidyr", quietly = TRUE)) suppressMessages(install.packages("tidyr"))
+if (!requireNamespace("pharmaversesdtm", quietly = TRUE)) suppressMessages(install.packages("pharmaversesdtm"))
+
+library(dplyr)
+library(lubridate)
+library(tidyr)
+library(pharmaversesdtm)
+```
+
+------------------------------------------------------------------------
+
+## The DS Domain Structure
+
+### Key Variables
+
+```
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                        DS DOMAIN - KEY VARIABLES                             │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  IDENTIFIER VARIABLES                                                        │
+│    STUDYID    = Study identifier                                             │
+│    USUBJID    = Unique subject identifier                                    │
+│    DSSEQ      = Sequence number within subject                               │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  TOPIC / RESULT VARIABLES                                                    │
+│    DSTERM     = Reported disposition term (as collected)                      │
+│    DSDECOD    = Standardized disposition term (CT)                            │
+│    DSCAT      = Category: "DISPOSITION EVENT" or "PROTOCOL MILESTONE"        │
+│    DSSCAT     = Subcategory: e.g., "STUDY PARTICIPATION", "TREATMENT"        │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  TIMING VARIABLES                                                            │
+│    DSSTDTC    = Date/time of disposition event (ISO 8601)                     │
+│    DSDY       = Study day of disposition event                               │
+│    EPOCH      = Epoch (SCREENING, TREATMENT, FOLLOW-UP)                      │
+│    VISITNUM   = Visit number                                                 │
+│    VISIT      = Visit name                                                   │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Understanding DSCAT and DSSCAT
+
+These categorization variables are critical:
+
+| DSCAT | DSSCAT | DSDECOD Examples |
+|-------|--------|-----------------|
+| `DISPOSITION EVENT` | `STUDY PARTICIPATION` | COMPLETED, SCREEN FAILURE |
+| `DISPOSITION EVENT` | `TREATMENT` | COMPLETED, ADVERSE EVENT, WITHDRAWAL BY SUBJECT |
+| `PROTOCOL MILESTONE` | `INFORMED CONSENT` | INFORMED CONSENT OBTAINED |
+| `PROTOCOL MILESTONE` | `RANDOMIZATION` | RANDOMIZED |
+
+::: callout-note
+## DSCAT vs DSSCAT
+
+Think of it this way:
+
+-   **DSCAT** = The broad type of event (disposition event vs. protocol milestone)
+-   **DSSCAT** = Which part of the study this relates to (study participation vs. treatment)
+
+A subject can have **multiple DS records**: one for each protocol milestone and each disposition decision point.
+:::
+
+------------------------------------------------------------------------
+
+## Exploring DS Data from pharmaversesdtm
+
+```{r}
+#| label: load-ds-data
+
+# Load DS domain
+data("ds", package = "pharmaversesdtm")
+data("dm", package = "pharmaversesdtm")
+
+cat("DS domain dimensions:", nrow(ds), "rows x", ncol(ds), "columns\n")
+cat("Number of unique subjects:", n_distinct(ds$USUBJID), "\n\n")
+
+cat("Variables available:\n")
+cat(paste(names(ds), collapse = ", "), "\n")
+```
+
+```{r}
+#| label: glimpse-ds
+
+dplyr::glimpse(ds)
+```
+
+### Understanding the DS Records
+
+```{r}
+#| label: explore-ds-categories
+
+# What categories exist?
+cat("DS Categories:\n")
+# Use only columns that exist in the dataset
+cat_vars <- intersect(c("DSCAT", "DSSCAT"), names(ds))
+ds %>%
+  count(across(all_of(cat_vars)), name = "Count") %>%
+  arrange(across(all_of(cat_vars)))
+```
+
+```{r}
+#| label: explore-ds-terms
+
+# What disposition terms exist?
+cat("Disposition terms (DSDECOD):\n")
+term_vars <- intersect(c("DSCAT", "DSSCAT", "DSDECOD"), names(ds))
+ds %>%
+  count(across(all_of(term_vars)), name = "Count") %>%
+  arrange(across(all_of(term_vars[term_vars != "DSDECOD"])), desc(Count))
+```
+
+::: callout-tip
+## Reading DS Data
+
+Each subject typically has **multiple records** in DS:
+
+1.  **Informed consent record** - When they signed the ICF
+2.  **Randomization record** - When they were randomized (if applicable)
+3.  **Treatment disposition** - Did they complete treatment? If not, why?
+4.  **Study disposition** - Did they complete the study? If not, why?
+
+These records tell the full story of each subject's journey.
+:::
+
+------------------------------------------------------------------------
+
+## Understanding EPOCH
+
+### What is EPOCH?
+
+**EPOCH** is a variable that indicates which period of the study the data belongs to. It divides the trial into distinct phases:
+
+```
+Timeline:
+────────────────────────────────────────────────────────────────────
+  SCREENING    │   TREATMENT (Run-in)   │   TREATMENT    │   FOLLOW-UP
+  (Pre-study)  │   (Placebo lead-in)    │   (Active)     │   (Post-treatment)
+────────────────────────────────────────────────────────────────────
+```
+
+```{r}
+#| label: epoch-exploration
+
+# Check EPOCH values in DM (EPOCH is often in DM as well)
+if ("EPOCH" %in% names(ds)) {
+  cat("EPOCH values in DS:\n")
+  ds %>%
+    count(EPOCH, name = "Count") %>%
+    arrange(desc(Count))
+} else {
+  cat("EPOCH not found in DS. Checking DM...\n")
+  if ("EPOCH" %in% names(dm)) {
+    cat("EPOCH values in DM:\n")
+    dm %>% count(EPOCH) %>% print()
+  }
+}
+```
+
+### EPOCH in the DM Domain
+
+The DM domain has **EPOCH-related variables** that indicate the last known state of the subject:
+
+```{r}
+#| label: dm-epoch-vars
+
+# Key epoch/disposition-related variables in DM
+dm_disp_vars <- intersect(
+  c("USUBJID", "ARM", "ACTARM", "RFSTDTC", "RFENDTC", "DTHDTC", "DTHFL"),
+  names(dm)
+)
+dm %>%
+  select(all_of(dm_disp_vars)) %>%
+  head(10)
+```
+
+::: callout-note
+## Important DM Variables Related to DS
+
+| Variable | Description |
+|----------|-------------|
+| `RFSTDTC` | Reference start date (first exposure) |
+| `RFENDTC` | Reference end date (last exposure) |
+| `RFXSTDTC` | Date/time of first study treatment |
+| `RFXENDTC` | Date/time of last study treatment |
+| `DTHDTC` | Date of death |
+| `DTHFL` | Death flag (Y/N) |
+| `DSDECOD` | Disposition decoded term (in some implementations) |
+
+These DM variables are **derived from** the DS and EX domain data.
+:::
+
+------------------------------------------------------------------------
+
+## Building a DS Domain from Scratch
+
+Let's simulate raw disposition data and build a complete DS domain:
+
+### Step 1: Create Raw Disposition Data
+
+```{r}
+#| label: raw-disposition
+
+set.seed(42)
+
+n_subjects <- 30
+
+# Generate subject disposition decisions
+raw_disp <- tibble(
+  STUDYID = "CDISC01",
+  USUBJID = paste0("CDISC01-001-", sprintf("%03d", 1:n_subjects)),
+  
+  # Informed consent date
+  CONSENT_DATE = as.Date("2024-01-01") + sample(0:30, n_subjects, replace = TRUE),
+  
+  # Screening result
+  SCREEN_RESULT = sample(
+    c("PASSED", "FAILED"),
+    n_subjects, replace = TRUE, prob = c(0.85, 0.15)
+  ),
+  SCREEN_REASON = if_else(
+    SCREEN_RESULT == "FAILED",
+    sample(c("DID NOT MEET INCLUSION CRITERIA",
+             "EXCLUSION CRITERIA MET",
+             "WITHDREW CONSENT"),
+           n_subjects, replace = TRUE, prob = c(0.5, 0.3, 0.2)),
+    NA_character_
+  ),
+  
+  # Randomization date (only for those who passed screening)
+  RAND_DATE = if_else(
+    SCREEN_RESULT == "PASSED",
+    CONSENT_DATE + sample(7:21, n_subjects, replace = TRUE),
+    as.Date(NA)
+  ),
+  
+  # Treatment arm (only for randomized subjects)
+  ARMCD = if_else(
+    SCREEN_RESULT == "PASSED",
+    sample(c("PBO", "ACT10", "ACT20"), n_subjects, replace = TRUE),
+    NA_character_
+  )
+) %>%
+  # Add first dose date
+  mutate(
+    FIRST_DOSE = if_else(!is.na(RAND_DATE), RAND_DATE + sample(0:3, n(), replace = TRUE), as.Date(NA))
+  )
+
+# Determine treatment disposition for randomized subjects
+raw_disp <- raw_disp %>%
+  mutate(
+    TRT_RESULT = case_when(
+      SCREEN_RESULT == "FAILED" ~ NA_character_,
+      TRUE ~ sample(c("COMPLETED", "ADVERSE EVENT", "WITHDRAWAL BY SUBJECT",
+                       "LOST TO FOLLOW-UP", "PHYSICIAN DECISION"),
+                    n(), replace = TRUE,
+                    prob = c(0.65, 0.12, 0.10, 0.08, 0.05))
+    ),
+    # End of treatment date
+    TRT_END_DATE = case_when(
+      is.na(FIRST_DOSE) ~ as.Date(NA),
+      TRT_RESULT == "COMPLETED" ~ FIRST_DOSE + 84,  # 12-week study
+      TRUE ~ FIRST_DOSE + sample(7:60, n(), replace = TRUE)  # Early termination
+    )
+  )
+
+cat("Raw disposition data:\n")
+cat("Total subjects:", nrow(raw_disp), "\n")
+cat("Screen failures:", sum(raw_disp$SCREEN_RESULT == "FAILED"), "\n")
+cat("Randomized:", sum(raw_disp$SCREEN_RESULT == "PASSED"), "\n\n")
+
+raw_disp %>%
+  select(USUBJID, SCREEN_RESULT, TRT_RESULT) %>%
+  head(10)
+```
+
+### Step 2: Transform to SDTM DS
+
+```{r}
+#| label: build-ds-domain
+
+# Create DS records for each disposition event
+# A subject may have MULTIPLE DS records
+
+# Record 1: Informed Consent
+ds_consent <- raw_disp %>%
+  mutate(
+    DOMAIN   = "DS",
+    DSSEQ    = 1L,
+    DSTERM   = "INFORMED CONSENT OBTAINED",
+    DSDECOD  = "INFORMED CONSENT OBTAINED",
+    DSCAT    = "PROTOCOL MILESTONE",
+    DSSCAT   = "INFORMED CONSENT",
+    DSSTDTC  = as.character(CONSENT_DATE),
+    EPOCH    = "SCREENING"
+  ) %>%
+  select(STUDYID, DOMAIN, USUBJID, DSSEQ, DSTERM, DSDECOD, DSCAT, DSSCAT, DSSTDTC, EPOCH)
+
+# Record 2: Randomization (only for those who passed screening)
+ds_random <- raw_disp %>%
+  filter(SCREEN_RESULT == "PASSED") %>%
+  mutate(
+    DOMAIN   = "DS",
+    DSSEQ    = 2L,
+    DSTERM   = "RANDOMIZED",
+    DSDECOD  = "RANDOMIZED",
+    DSCAT    = "PROTOCOL MILESTONE",
+    DSSCAT   = "RANDOMIZATION",
+    DSSTDTC  = as.character(RAND_DATE),
+    EPOCH    = "SCREENING"
+  ) %>%
+  select(STUDYID, DOMAIN, USUBJID, DSSEQ, DSTERM, DSDECOD, DSCAT, DSSCAT, DSSTDTC, EPOCH)
+
+# Record 3: Treatment Disposition
+ds_treatment <- raw_disp %>%
+  filter(!is.na(TRT_RESULT)) %>%
+  mutate(
+    DOMAIN   = "DS",
+    DSSEQ    = 3L,
+    DSTERM   = TRT_RESULT,
+    DSDECOD  = TRT_RESULT,
+    DSCAT    = "DISPOSITION EVENT",
+    DSSCAT   = "TREATMENT",
+    DSSTDTC  = as.character(TRT_END_DATE),
+    EPOCH    = "TREATMENT"
+  ) %>%
+  select(STUDYID, DOMAIN, USUBJID, DSSEQ, DSTERM, DSDECOD, DSCAT, DSSCAT, DSSTDTC, EPOCH)
+
+# Record 4: Screen Failure disposition
+ds_screenfail <- raw_disp %>%
+  filter(SCREEN_RESULT == "FAILED") %>%
+  mutate(
+    DOMAIN   = "DS",
+    DSSEQ    = 2L,
+    DSTERM   = SCREEN_REASON,
+    DSDECOD  = "SCREEN FAILURE",
+    DSCAT    = "DISPOSITION EVENT",
+    DSSCAT   = "STUDY PARTICIPATION",
+    DSSTDTC  = as.character(CONSENT_DATE + sample(1:14, n(), replace = TRUE)),
+    EPOCH    = "SCREENING"
+  ) %>%
+  select(STUDYID, DOMAIN, USUBJID, DSSEQ, DSTERM, DSDECOD, DSCAT, DSSCAT, DSSTDTC, EPOCH)
+
+# Combine all DS records
+sdtm_ds <- bind_rows(ds_consent, ds_random, ds_treatment, ds_screenfail) %>%
+  # Re-sequence within each subject
+  arrange(STUDYID, USUBJID, DSSTDTC) %>%
+  group_by(USUBJID) %>%
+  mutate(DSSEQ = row_number()) %>%
+  ungroup()
+
+cat("SDTM DS domain created:\n")
+cat("Total records:", nrow(sdtm_ds), "\n")
+cat("Unique subjects:", n_distinct(sdtm_ds$USUBJID), "\n\n")
+
+sdtm_ds %>%
+  filter(USUBJID == first(sdtm_ds$USUBJID)) %>%
+  print()
+```
+
+### Step 3: Validate DS Domain
+
+```{r}
+#| label: validate-ds
+
+cat("=== DS Domain Validation ===\n\n")
+
+# Check 1: Every subject has at least one record
+cat("Subjects with DS records:", n_distinct(sdtm_ds$USUBJID), "\n")
+
+# Check 2: Every subject has informed consent
+consent_check <- sdtm_ds %>%
+  filter(DSDECOD == "INFORMED CONSENT OBTAINED") %>%
+  n_distinct(.$USUBJID)
+cat("Subjects with informed consent:", consent_check, "\n\n")
+
+# Check 3: Disposition summary
+cat("Treatment Disposition Summary:\n")
+sdtm_ds %>%
+  filter(DSCAT == "DISPOSITION EVENT", DSSCAT == "TREATMENT") %>%
+  count(DSDECOD, name = "Count") %>%
+  mutate(Percent = round(100 * Count / sum(Count), 1)) %>%
+  arrange(desc(Count))
+```
+
+------------------------------------------------------------------------
+
+## Subject Disposition Flow
+
+This is one of the most important outputs in a clinical study report:
+
+```{r}
+#| label: disposition-flow
+
+# Create a CONSORT-style flow summary
+cat("=== SUBJECT DISPOSITION FLOW ===\n\n")
+
+n_consented <- n_distinct(sdtm_ds$USUBJID)
+cat("Subjects consented:         ", n_consented, "\n")
+
+n_screened_out <- sdtm_ds %>%
+  filter(DSDECOD == "SCREEN FAILURE") %>%
+  n_distinct(.$USUBJID)
+cat("  Screen failures:           ", n_screened_out, "\n")
+
+# Screen failure reasons
+if (n_screened_out > 0) {
+  sdtm_ds %>%
+    filter(DSDECOD == "SCREEN FAILURE") %>%
+    count(DSTERM, name = "N") %>%
+    arrange(desc(N)) %>%
+    mutate(line = paste0("    - ", DSTERM, ": ", N)) %>%
+    pull(line) %>%
+    cat(sep = "\n")
+  cat("\n")
+}
+
+n_randomized <- sdtm_ds %>%
+  filter(DSDECOD == "RANDOMIZED") %>%
+  n_distinct(.$USUBJID)
+cat("Subjects randomized:        ", n_randomized, "\n")
+
+n_completed <- sdtm_ds %>%
+  filter(DSCAT == "DISPOSITION EVENT", DSSCAT == "TREATMENT", DSDECOD == "COMPLETED") %>%
+  n_distinct(.$USUBJID)
+cat("  Completed treatment:       ", n_completed, "\n")
+
+n_discontinued <- n_randomized - n_completed
+cat("  Discontinued treatment:    ", n_discontinued, "\n")
+
+# Discontinuation reasons
+if (n_discontinued > 0) {
+  sdtm_ds %>%
+    filter(DSCAT == "DISPOSITION EVENT", DSSCAT == "TREATMENT", DSDECOD != "COMPLETED") %>%
+    count(DSDECOD, name = "N") %>%
+    arrange(desc(N)) %>%
+    mutate(line = paste0("    - ", DSDECOD, ": ", N)) %>%
+    pull(line) %>%
+    cat(sep = "\n")
+  cat("\n")
+}
+
+cat("\nCompletion rate:", round(100 * n_completed / n_randomized, 1), "%\n")
+```
+
+------------------------------------------------------------------------
+
+## Trial Design Domains Overview
+
+### What Are Trial Design Domains?
+
+Trial Design domains describe the **structure of the study itself**, not individual subject data. Think of them as the **blueprint** of the clinical trial.
+
+| Domain | Name | Purpose |
+|--------|------|---------|
+| **TA** | Trial Arms | Describes each treatment arm and its sequence of elements |
+| **TE** | Trial Elements | Describes the building blocks of each arm (e.g., washout, treatment) |
+| **TV** | Trial Visits | Lists all planned visits and their timing windows |
+| **TI** | Trial Inclusion/Exclusion | Documents the inclusion/exclusion criteria |
+| **TS** | Trial Summary | Key parameters about the study (phase, indication, design) |
+
+::: callout-note
+## When Do You Need These?
+
+Trial Design domains are **required** for FDA submissions. They provide the **context** for understanding the subject-level data. An FDA reviewer needs to know:
+
+-   What arms existed? (TA)
+-   What was the study schedule? (TV)
+-   What were the eligibility criteria? (TI)
+-   What type of study was this? (TS)
+:::
+
+### TA - Trial Arms
+
+```{r}
+#| label: trial-arms
+
+# Create a Trial Arms (TA) domain example
+ta <- tibble::tribble(
+  ~STUDYID,  ~DOMAIN, ~ARMCD,  ~ARM,           ~TAESSION, ~TATRANS,       ~EPOCH,       ~ELEMENT,
+  "CDISC01", "TA",    "PBO",   "Placebo",      1L,        "No criteria",  "SCREENING",  "Screen",
+  "CDISC01", "TA",    "PBO",   "Placebo",      2L,        "Randomized",   "TREATMENT",  "Placebo",
+  "CDISC01", "TA",    "PBO",   "Placebo",      3L,        "End treatment","FOLLOW-UP",  "Follow-up",
+  "CDISC01", "TA",    "ACT10", "Active 10mg",  1L,        "No criteria",  "SCREENING",  "Screen",
+  "CDISC01", "TA",    "ACT10", "Active 10mg",  2L,        "Randomized",   "TREATMENT",  "Active 10mg",
+  "CDISC01", "TA",    "ACT10", "Active 10mg",  3L,        "End treatment","FOLLOW-UP",  "Follow-up",
+  "CDISC01", "TA",    "ACT20", "Active 20mg",  1L,        "No criteria",  "SCREENING",  "Screen",
+  "CDISC01", "TA",    "ACT20", "Active 20mg",  2L,        "Randomized",   "TREATMENT",  "Active 20mg",
+  "CDISC01", "TA",    "ACT20", "Active 20mg",  3L,        "End treatment","FOLLOW-UP",  "Follow-up"
+)
+
+cat("Trial Arms (TA):\n")
+print(ta)
+```
+
+### TV - Trial Visits
+
+```{r}
+#| label: trial-visits
+
+# Create a Trial Visits (TV) domain example
+tv <- tibble::tribble(
+  ~STUDYID,  ~DOMAIN, ~VISITNUM, ~VISIT,       ~TVSTRL,     ~TVENRL,
+  "CDISC01", "TV",    -1,        "SCREENING",  "Day -21",   "Day -1",
+  "CDISC01", "TV",     1,        "BASELINE",   "Day 1",     "Day 1",
+  "CDISC01", "TV",     2,        "WEEK 2",     "Day 8",     "Day 18",
+  "CDISC01", "TV",     3,        "WEEK 4",     "Day 22",    "Day 32",
+  "CDISC01", "TV",     4,        "WEEK 8",     "Day 50",    "Day 64",
+  "CDISC01", "TV",     5,        "WEEK 12",    "Day 78",    "Day 92",
+  "CDISC01", "TV",     6,        "END OF STUDY","Day 92",   "Day 106"
+)
+
+cat("Trial Visits (TV) - Study Schedule:\n")
+print(tv)
+```
+
+::: callout-tip
+## Visit Windows
+
+Notice `TVSTRL` and `TVENRL` - these define the **visit window**. In practice:
+
+-   A "WEEK 2" visit might be acceptable if it occurs between Day 8 and Day 18
+-   Programming logic must map actual visit dates to planned visits based on these windows
+-   Visits outside windows may be flagged as **unscheduled visits**
+:::
+
+### TS - Trial Summary
+
+```{r}
+#| label: trial-summary
+
+# Create a Trial Summary (TS) domain example
+ts <- tibble::tribble(
+  ~STUDYID,  ~DOMAIN, ~TSSEQ, ~TSPARMCD,  ~TSPARM,                    ~TSVAL,
+  "CDISC01", "TS",    1L,     "ADDON",     "Added on to Existing Treatments", "N",
+  "CDISC01", "TS",    2L,     "SSTDTC",    "Study Start Date",         "2024-01-01",
+  "CDISC01", "TS",    3L,     "SENDTC",    "Study End Date",           "2024-12-31",
+  "CDISC01", "TS",    4L,     "INDIC",     "Trial Indication",        "Type 2 Diabetes Mellitus",
+  "CDISC01", "TS",    5L,     "TRT",       "Investigational Therapy", "Study Drug XYZ",
+  "CDISC01", "TS",    6L,     "TPHASE",    "Trial Phase",             "PHASE III",
+  "CDISC01", "TS",    7L,     "STYPE",     "Study Type",              "INTERVENTIONAL",
+  "CDISC01", "TS",    8L,     "RANDOM",    "Trial is Randomized",     "Y",
+  "CDISC01", "TS",    9L,     "STOTEFFC",  "Study to Evaluate",       "EFFICACY AND SAFETY",
+  "CDISC01", "TS",    10L,    "PCLAS",     "Pharmacological Class",   "SGLT2 INHIBITOR"
+)
+
+cat("Trial Summary (TS) - Key Study Parameters:\n")
+print(ts)
+```
+
+::: callout-note
+## TS Parameters
+
+The TS domain uses a **parameter-value** structure where each row is one study-level parameter. Common parameters include:
+
+-   **TPHASE** - Phase I, II, III, IV
+-   **INDIC** - What disease is being studied
+-   **RANDOM** - Is this a randomized trial
+-   **STYPE** - Interventional vs. Observational
+-   **REGID** - Regulatory registration number (e.g., IND number)
+
+The full list of valid TS parameters is in the [CDISC CT Package](https://www.cancer.gov/research/resources/terminology/cdisc).
+:::
+
+------------------------------------------------------------------------
+
+## How DS Feeds Into ADSL
+
+The DS domain is a primary source for the **ADaM ADSL** (Subject-Level Analysis Dataset). Here's the connection:
+
+```{r}
+#| label: ds-to-adsl-preview
+
+# Preview: Deriving ADSL disposition variables from DS
+adsl_disp <- raw_disp %>%
+  mutate(
+    # Core ADSL variables derived from DS logic
+    RANDFL = if_else(SCREEN_RESULT == "PASSED", "Y", "N"),
+    RANDDT = RAND_DATE,
+    
+    # Treatment completion
+    EOSSTT = case_when(
+      SCREEN_RESULT == "FAILED" ~ "SCREEN FAILURE",
+      TRT_RESULT == "COMPLETED" ~ "COMPLETED",
+      TRUE ~ "DISCONTINUED"
+    ),
+    
+    # Reason for discontinuation
+    DCSREAS = case_when(
+      EOSSTT == "COMPLETED" ~ NA_character_,
+      EOSSTT == "SCREEN FAILURE" ~ SCREEN_REASON,
+      TRUE ~ TRT_RESULT
+    ),
+    
+    # Safety population flag (received at least one dose)
+    SAFFL = if_else(!is.na(FIRST_DOSE), "Y", "N"),
+    
+    # ITT population flag (randomized)
+    ITTFL = RANDFL,
+    
+    # Treatment duration (days)
+    TRTDURD = if_else(
+      !is.na(FIRST_DOSE) & !is.na(TRT_END_DATE),
+      as.numeric(TRT_END_DATE - FIRST_DOSE) + 1,
+      NA_real_
+    )
+  )
+
+cat("ADSL Disposition Variables Preview:\n")
+adsl_disp %>%
+  select(USUBJID, RANDFL, EOSSTT, DCSREAS, SAFFL, ITTFL, TRTDURD) %>%
+  head(10)
+```
+
+```{r}
+#| label: adsl-population-summary
+
+# Population flags summary
+cat("\n=== Analysis Population Summary ===\n")
+cat("Screened:", nrow(adsl_disp), "\n")
+cat("Randomized (ITT):", sum(adsl_disp$ITTFL == "Y"), "\n")
+cat("Safety Population:", sum(adsl_disp$SAFFL == "Y"), "\n\n")
+
+cat("End of Study Status:\n")
+adsl_disp %>%
+  count(EOSSTT, name = "N") %>%
+  mutate(Percent = round(100 * N / sum(N), 1)) %>%
+  arrange(desc(N))
+```
+
+::: callout-important
+## Key ADSL Variables from DS
+
+| ADSL Variable | Source | Description |
+|---------------|--------|-------------|
+| RANDFL | DS (RANDOMIZED record) | Randomized flag (Y/N) |
+| RANDDT | DS (DSSTDTC where DSDECOD = RANDOMIZED) | Randomization date |
+| EOSSTT | DS (treatment disposition) | End of study status |
+| DCSREAS | DS (DSTERM for discontinuation) | Reason for discontinuation |
+| SAFFL | EX (received at least one dose) | Safety population flag |
+| ITTFL | DS (randomized) | ITT population flag |
+| TRTDURD | Derived from EX dates | Treatment duration |
+
+Understanding these mappings is essential for ADaM work in Week 3.
+:::
+
+------------------------------------------------------------------------
+
+## Deliverable Summary
+
+Today you completed the following:
+
+| Task | Status |
+|------|--------|
+| Understood DS domain structure and purpose | ✓ Done |
+| Built a DS domain with consent, randomization, and treatment disposition | ✓ Done |
+| Explored EPOCH and study period concepts | ✓ Done |
+| Surveyed Trial Design domains (TA, TV, TS) | ✓ Done |
+| Created subject disposition flow (CONSORT-style) | ✓ Done |
+| Previewed how DS feeds into ADSL | ✓ Done |
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  **DS is an Events class domain** - Each record is a milestone or disposition event
+2.  **Multiple records per subject** - Consent, randomization, treatment disposition, study disposition
+3.  **DSCAT/DSSCAT distinguish event types** - Milestones vs. disposition decisions
+4.  **EPOCH defines study periods** - Screening, Treatment, Follow-up
+5.  **Trial Design domains are required** - TA, TE, TV, TI, TS describe the study blueprint
+6.  **DS drives ADSL** - Randomization, completion, discontinuation all come from DS
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   [CDISC SDTM Implementation Guide - DS Domain](https://www.cdisc.org/standards/foundational/sdtm) - Official DS specification
+-   [Trial Design Domains Guide](https://www.cdisc.org/standards/foundational/sdtm) - TA, TE, TV, TI, TS specifications
+-   [CONSORT Statement](http://www.consort-statement.org/) - Reporting standards for clinical trials
+-   [Admiral ADSL Vignette](https://pharmaverse.github.io/admiral/articles/adsl.html) - Building ADSL from DS
+-   [Pharmaverse.org](https://pharmaverse.org) - R packages for clinical data
+
+------------------------------------------------------------------------
+
+## What's Next?
+
+In **Day 12**, we will focus on **Data Cuts with datacutr**:
+
+-   What clinical data cuts are and why they matter for interim analyses
+-   Using the `datacutr` package to apply cutoff dates across domains
+-   Handling ongoing AEs, partial dates, and records at the cutoff boundary
+-   Patient-level vs. record-level cut logic

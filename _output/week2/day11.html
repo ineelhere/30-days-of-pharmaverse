@@ -1,0 +1,1859 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Indraneel Chakraborty">
+<meta name="dcterms.date" content="2026-02-11">
+
+<title>Day 11: Disposition (DS) &amp; Trial Design Domains – 30 Days of Pharmaverse</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-60d4398d82fec002ccec76571ed06d15.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../styles/site.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">30 Days of Pharmaverse</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../week1/day1.html"> 
+<span class="menu-text">Week 1: SDTM Fundamentals</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../week2/day8.html" aria-current="page"> 
+<span class="menu-text">Week 2: Production SDTM</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ineelhere/30-days-of-pharmaverse"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../week2/day11.html">Day 11: Disposition (DS) &amp; Trial Design Domains</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week2/day8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 8: Complex SDTM Domains - LB (Lab Results)</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week2/day9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 9: VS (Vital Signs) &amp; Repeated Measures</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week2/day10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 10: AE Domain Mastery &amp; SAE Logic</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week2/day11.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Day 11: Disposition (DS) &amp; Trial Design Domains</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week2/day12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 12: Data Cuts with datacutr</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week2/day13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 13: SDTM Validation with sdtmchecks</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week2/day14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 14: Week 2 Capstone - Metadata-Driven SDTM with metacore &amp; xportr</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">1</span> Learning Objectives</a></li>
+  <li><a href="#why-disposition-matters" id="toc-why-disposition-matters" class="nav-link" data-scroll-target="#why-disposition-matters"><span class="header-section-number">2</span> Why Disposition Matters</a></li>
+  <li><a href="#package-installation-loading" id="toc-package-installation-loading" class="nav-link" data-scroll-target="#package-installation-loading"><span class="header-section-number">3</span> Package Installation &amp; Loading</a></li>
+  <li><a href="#the-ds-domain-structure" id="toc-the-ds-domain-structure" class="nav-link" data-scroll-target="#the-ds-domain-structure"><span class="header-section-number">4</span> The DS Domain Structure</a>
+  <ul class="collapse">
+  <li><a href="#key-variables" id="toc-key-variables" class="nav-link" data-scroll-target="#key-variables"><span class="header-section-number">4.1</span> Key Variables</a></li>
+  <li><a href="#understanding-dscat-and-dsscat" id="toc-understanding-dscat-and-dsscat" class="nav-link" data-scroll-target="#understanding-dscat-and-dsscat"><span class="header-section-number">4.2</span> Understanding DSCAT and DSSCAT</a></li>
+  </ul></li>
+  <li><a href="#exploring-ds-data-from-pharmaversesdtm" id="toc-exploring-ds-data-from-pharmaversesdtm" class="nav-link" data-scroll-target="#exploring-ds-data-from-pharmaversesdtm"><span class="header-section-number">5</span> Exploring DS Data from pharmaversesdtm</a>
+  <ul class="collapse">
+  <li><a href="#understanding-the-ds-records" id="toc-understanding-the-ds-records" class="nav-link" data-scroll-target="#understanding-the-ds-records"><span class="header-section-number">5.1</span> Understanding the DS Records</a></li>
+  </ul></li>
+  <li><a href="#understanding-epoch" id="toc-understanding-epoch" class="nav-link" data-scroll-target="#understanding-epoch"><span class="header-section-number">6</span> Understanding EPOCH</a>
+  <ul class="collapse">
+  <li><a href="#what-is-epoch" id="toc-what-is-epoch" class="nav-link" data-scroll-target="#what-is-epoch"><span class="header-section-number">6.1</span> What is EPOCH?</a></li>
+  <li><a href="#epoch-in-the-dm-domain" id="toc-epoch-in-the-dm-domain" class="nav-link" data-scroll-target="#epoch-in-the-dm-domain"><span class="header-section-number">6.2</span> EPOCH in the DM Domain</a></li>
+  </ul></li>
+  <li><a href="#building-a-ds-domain-from-scratch" id="toc-building-a-ds-domain-from-scratch" class="nav-link" data-scroll-target="#building-a-ds-domain-from-scratch"><span class="header-section-number">7</span> Building a DS Domain from Scratch</a>
+  <ul class="collapse">
+  <li><a href="#step-1-create-raw-disposition-data" id="toc-step-1-create-raw-disposition-data" class="nav-link" data-scroll-target="#step-1-create-raw-disposition-data"><span class="header-section-number">7.1</span> Step 1: Create Raw Disposition Data</a></li>
+  <li><a href="#step-2-transform-to-sdtm-ds" id="toc-step-2-transform-to-sdtm-ds" class="nav-link" data-scroll-target="#step-2-transform-to-sdtm-ds"><span class="header-section-number">7.2</span> Step 2: Transform to SDTM DS</a></li>
+  <li><a href="#step-3-validate-ds-domain" id="toc-step-3-validate-ds-domain" class="nav-link" data-scroll-target="#step-3-validate-ds-domain"><span class="header-section-number">7.3</span> Step 3: Validate DS Domain</a></li>
+  </ul></li>
+  <li><a href="#subject-disposition-flow" id="toc-subject-disposition-flow" class="nav-link" data-scroll-target="#subject-disposition-flow"><span class="header-section-number">8</span> Subject Disposition Flow</a></li>
+  <li><a href="#trial-design-domains-overview" id="toc-trial-design-domains-overview" class="nav-link" data-scroll-target="#trial-design-domains-overview"><span class="header-section-number">9</span> Trial Design Domains Overview</a>
+  <ul class="collapse">
+  <li><a href="#what-are-trial-design-domains" id="toc-what-are-trial-design-domains" class="nav-link" data-scroll-target="#what-are-trial-design-domains"><span class="header-section-number">9.1</span> What Are Trial Design Domains?</a></li>
+  <li><a href="#ta---trial-arms" id="toc-ta---trial-arms" class="nav-link" data-scroll-target="#ta---trial-arms"><span class="header-section-number">9.2</span> TA - Trial Arms</a></li>
+  <li><a href="#tv---trial-visits" id="toc-tv---trial-visits" class="nav-link" data-scroll-target="#tv---trial-visits"><span class="header-section-number">9.3</span> TV - Trial Visits</a></li>
+  <li><a href="#ts---trial-summary" id="toc-ts---trial-summary" class="nav-link" data-scroll-target="#ts---trial-summary"><span class="header-section-number">9.4</span> TS - Trial Summary</a></li>
+  </ul></li>
+  <li><a href="#how-ds-feeds-into-adsl" id="toc-how-ds-feeds-into-adsl" class="nav-link" data-scroll-target="#how-ds-feeds-into-adsl"><span class="header-section-number">10</span> How DS Feeds Into ADSL</a></li>
+  <li><a href="#deliverable-summary" id="toc-deliverable-summary" class="nav-link" data-scroll-target="#deliverable-summary"><span class="header-section-number">11</span> Deliverable Summary</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">12</span> Key Takeaways</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">13</span> Resources</a></li>
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next"><span class="header-section-number">14</span> What’s Next?</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Day 11: Disposition (DS) &amp; Trial Design Domains</h1>
+<p class="subtitle lead">Screen Failures, Completers, and Study Structure</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Indraneel Chakraborty </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 11, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div style="margin-bottom:12px;">
+<a href="../index.html" class="resource-link">← Back to Roadmap</a>
+</div>
+<section id="learning-objectives" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">1</span> Learning Objectives</h2>
+<p>By the end of Day 11, you will be able to:</p>
+<ol type="1">
+<li>Build the <strong>DS (Disposition) domain</strong> - tracking every subject’s journey through the trial</li>
+<li>Understand <strong>EPOCH</strong> and how it relates to study periods (SCREENING, TREATMENT, FOLLOW-UP)</li>
+<li>Derive key disposition variables: <strong>DSDECOD</strong>, <strong>DSSTDTC</strong>, <strong>DSCAT</strong>, and completion flags</li>
+<li>Survey the <strong>Trial Design domains</strong> (TA, TE, TV, TI, TS) and understand what each contains</li>
+<li>Create a <strong>subject disposition flow</strong> - the essential “patient accounting” table</li>
+<li>Understand how DS feeds into the <strong>ADaM ADSL</strong> dataset</li>
+</ol>
+<hr>
+</section>
+<section id="why-disposition-matters" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="why-disposition-matters"><span class="header-section-number">2</span> Why Disposition Matters</h2>
+<p>The DS domain answers the most fundamental question in a clinical trial: <strong>What happened to each subject?</strong></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Regulatory Requirement
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The FDA requires a complete accounting of <strong>every subject</strong> who entered the study:</p>
+<ul>
+<li>Did they complete the study? → <code>COMPLETED</code></li>
+<li>Did they withdraw early? → Why? (adverse event, lost to follow-up, withdrawal by subject, etc.)</li>
+<li>Were they a screen failure? → Why? (did not meet inclusion criteria, etc.)</li>
+</ul>
+<p>This information feeds into <strong>CONSORT diagrams</strong>, disposition tables, and the ADaM <code>ADSL</code> dataset - all critical for regulatory submissions.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="package-installation-loading" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="package-installation-loading"><span class="header-section-number">3</span> Package Installation &amp; Loading</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"dplyr"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">suppressMessages</span>(<span class="fu">install.packages</span>(<span class="st">"dplyr"</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"lubridate"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">suppressMessages</span>(<span class="fu">install.packages</span>(<span class="st">"lubridate"</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"tidyr"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">suppressMessages</span>(<span class="fu">install.packages</span>(<span class="st">"tidyr"</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"pharmaversesdtm"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">suppressMessages</span>(<span class="fu">install.packages</span>(<span class="st">"pharmaversesdtm"</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pharmaversesdtm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+</section>
+<section id="the-ds-domain-structure" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="the-ds-domain-structure"><span class="header-section-number">4</span> The DS Domain Structure</h2>
+<section id="key-variables" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="key-variables"><span class="header-section-number">4.1</span> Key Variables</h3>
+<pre><code>┌──────────────────────────────────────────────────────────────────────────────┐
+│                        DS DOMAIN - KEY VARIABLES                             │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  IDENTIFIER VARIABLES                                                        │
+│    STUDYID    = Study identifier                                             │
+│    USUBJID    = Unique subject identifier                                    │
+│    DSSEQ      = Sequence number within subject                               │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  TOPIC / RESULT VARIABLES                                                    │
+│    DSTERM     = Reported disposition term (as collected)                      │
+│    DSDECOD    = Standardized disposition term (CT)                            │
+│    DSCAT      = Category: "DISPOSITION EVENT" or "PROTOCOL MILESTONE"        │
+│    DSSCAT     = Subcategory: e.g., "STUDY PARTICIPATION", "TREATMENT"        │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  TIMING VARIABLES                                                            │
+│    DSSTDTC    = Date/time of disposition event (ISO 8601)                     │
+│    DSDY       = Study day of disposition event                               │
+│    EPOCH      = Epoch (SCREENING, TREATMENT, FOLLOW-UP)                      │
+│    VISITNUM   = Visit number                                                 │
+│    VISIT      = Visit name                                                   │
+└──────────────────────────────────────────────────────────────────────────────┘</code></pre>
+</section>
+<section id="understanding-dscat-and-dsscat" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="understanding-dscat-and-dsscat"><span class="header-section-number">4.2</span> Understanding DSCAT and DSSCAT</h3>
+<p>These categorization variables are critical:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 25%">
+<col style="width: 53%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>DSCAT</th>
+<th>DSSCAT</th>
+<th>DSDECOD Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>DISPOSITION EVENT</code></td>
+<td><code>STUDY PARTICIPATION</code></td>
+<td>COMPLETED, SCREEN FAILURE</td>
+</tr>
+<tr class="even">
+<td><code>DISPOSITION EVENT</code></td>
+<td><code>TREATMENT</code></td>
+<td>COMPLETED, ADVERSE EVENT, WITHDRAWAL BY SUBJECT</td>
+</tr>
+<tr class="odd">
+<td><code>PROTOCOL MILESTONE</code></td>
+<td><code>INFORMED CONSENT</code></td>
+<td>INFORMED CONSENT OBTAINED</td>
+</tr>
+<tr class="even">
+<td><code>PROTOCOL MILESTONE</code></td>
+<td><code>RANDOMIZATION</code></td>
+<td>RANDOMIZED</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>DSCAT vs DSSCAT
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Think of it this way:</p>
+<ul>
+<li><strong>DSCAT</strong> = The broad type of event (disposition event vs.&nbsp;protocol milestone)</li>
+<li><strong>DSSCAT</strong> = Which part of the study this relates to (study participation vs.&nbsp;treatment)</li>
+</ul>
+<p>A subject can have <strong>multiple DS records</strong>: one for each protocol milestone and each disposition decision point.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="exploring-ds-data-from-pharmaversesdtm" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="exploring-ds-data-from-pharmaversesdtm"><span class="header-section-number">5</span> Exploring DS Data from pharmaversesdtm</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load DS domain</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"ds"</span>, <span class="at">package =</span> <span class="st">"pharmaversesdtm"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"dm"</span>, <span class="at">package =</span> <span class="st">"pharmaversesdtm"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"DS domain dimensions:"</span>, <span class="fu">nrow</span>(ds), <span class="st">"rows x"</span>, <span class="fu">ncol</span>(ds), <span class="st">"columns</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DS domain dimensions: 850 rows x 13 columns</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of unique subjects:"</span>, <span class="fu">n_distinct</span>(ds<span class="sc">$</span>USUBJID), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of unique subjects: 306 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Variables available:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Variables available:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="fu">names</span>(ds), <span class="at">collapse =</span> <span class="st">", "</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>STUDYID, DOMAIN, USUBJID, DSSEQ, DSSPID, DSTERM, DSDECOD, DSCAT, VISITNUM, VISIT, DSDTC, DSSTDTC, DSSTDY </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(ds)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 850
+Columns: 13
+$ STUDYID  &lt;chr&gt; "CDISCPILOT01", "CDISCPILOT01", "CDISCPILOT01", "CDISCPILOT01…
+$ DOMAIN   &lt;chr&gt; "DS", "DS", "DS", "DS", "DS", "DS", "DS", "DS", "DS", "DS", "…
+$ USUBJID  &lt;chr&gt; "01-701-1015", "01-701-1015", "01-701-1015", "01-701-1023", "…
+$ DSSEQ    &lt;int&gt; 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 1, 2, 3, 4…
+$ DSSPID   &lt;chr&gt; NA, NA, NA, NA, "24", NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ DSTERM   &lt;chr&gt; "RANDOMIZED", "PROTOCOL COMPLETED", "FINAL LAB VISIT", "RANDO…
+$ DSDECOD  &lt;chr&gt; "RANDOMIZED", "COMPLETED", "FINAL LAB VISIT", "RANDOMIZED", "…
+$ DSCAT    &lt;chr&gt; "PROTOCOL MILESTONE", "DISPOSITION EVENT", "OTHER EVENT", "PR…
+$ VISITNUM &lt;dbl&gt; 3.0, 13.0, 13.0, 3.0, 5.0, 5.0, 201.0, 3.0, 13.0, 13.0, 3.0, …
+$ VISIT    &lt;chr&gt; "BASELINE", "WEEK 26", "WEEK 26", "BASELINE", "WEEK 4", "WEEK…
+$ DSDTC    &lt;chr&gt; "2014-01-02", "2014-07-02", "2014-07-02T11:45", "2012-08-05",…
+$ DSSTDTC  &lt;chr&gt; "2014-01-02", "2014-07-02", "2014-07-02", "2012-08-05", "2012…
+$ DSSTDY   &lt;dbl&gt; 1, 182, 182, 1, 29, 29, 198, 1, 180, 180, 1, 28, 28, 182, 1, …</code></pre>
+</div>
+</div>
+<section id="understanding-the-ds-records" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="understanding-the-ds-records"><span class="header-section-number">5.1</span> Understanding the DS Records</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What categories exist?</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"DS Categories:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DS Categories:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use only columns that exist in the dataset</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>cat_vars <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">c</span>(<span class="st">"DSCAT"</span>, <span class="st">"DSSCAT"</span>), <span class="fu">names</span>(ds))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>ds <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(cat_vars)), <span class="at">name =</span> <span class="st">"Count"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(cat_vars)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  DSCAT              Count
+  &lt;chr&gt;              &lt;int&gt;
+1 DISPOSITION EVENT    306
+2 OTHER EVENT          290
+3 PROTOCOL MILESTONE   254</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What disposition terms exist?</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Disposition terms (DSDECOD):</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Disposition terms (DSDECOD):</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>term_vars <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">c</span>(<span class="st">"DSCAT"</span>, <span class="st">"DSSCAT"</span>, <span class="st">"DSDECOD"</span>), <span class="fu">names</span>(ds))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ds <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(term_vars)), <span class="at">name =</span> <span class="st">"Count"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(term_vars[term_vars <span class="sc">!=</span> <span class="st">"DSDECOD"</span>])), <span class="fu">desc</span>(Count))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 3
+   DSCAT              DSDECOD                     Count
+   &lt;chr&gt;              &lt;chr&gt;                       &lt;int&gt;
+ 1 DISPOSITION EVENT  COMPLETED                     110
+ 2 DISPOSITION EVENT  ADVERSE EVENT                  92
+ 3 DISPOSITION EVENT  SCREEN FAILURE                 52
+ 4 DISPOSITION EVENT  WITHDRAWAL BY SUBJECT          27
+ 5 DISPOSITION EVENT  STUDY TERMINATED BY SPONSOR     7
+ 6 DISPOSITION EVENT  PROTOCOL VIOLATION              6
+ 7 DISPOSITION EVENT  LACK OF EFFICACY                4
+ 8 DISPOSITION EVENT  DEATH                           3
+ 9 DISPOSITION EVENT  PHYSICIAN DECISION              3
+10 DISPOSITION EVENT  LOST TO FOLLOW-UP               2
+11 OTHER EVENT        FINAL LAB VISIT               254
+12 OTHER EVENT        FINAL RETRIEVAL VISIT          36
+13 PROTOCOL MILESTONE RANDOMIZED                    254</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Reading DS Data
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Each subject typically has <strong>multiple records</strong> in DS:</p>
+<ol type="1">
+<li><strong>Informed consent record</strong> - When they signed the ICF</li>
+<li><strong>Randomization record</strong> - When they were randomized (if applicable)</li>
+<li><strong>Treatment disposition</strong> - Did they complete treatment? If not, why?</li>
+<li><strong>Study disposition</strong> - Did they complete the study? If not, why?</li>
+</ol>
+<p>These records tell the full story of each subject’s journey.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="understanding-epoch" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="understanding-epoch"><span class="header-section-number">6</span> Understanding EPOCH</h2>
+<section id="what-is-epoch" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="what-is-epoch"><span class="header-section-number">6.1</span> What is EPOCH?</h3>
+<p><strong>EPOCH</strong> is a variable that indicates which period of the study the data belongs to. It divides the trial into distinct phases:</p>
+<pre><code>Timeline:
+────────────────────────────────────────────────────────────────────
+  SCREENING    │   TREATMENT (Run-in)   │   TREATMENT    │   FOLLOW-UP
+  (Pre-study)  │   (Placebo lead-in)    │   (Active)     │   (Post-treatment)
+────────────────────────────────────────────────────────────────────</code></pre>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check EPOCH values in DM (EPOCH is often in DM as well)</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="st">"EPOCH"</span> <span class="sc">%in%</span> <span class="fu">names</span>(ds)) {</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"EPOCH values in DS:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  ds <span class="sc">%&gt;%</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(EPOCH, <span class="at">name =</span> <span class="st">"Count"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(Count))</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"EPOCH not found in DS. Checking DM...</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="st">"EPOCH"</span> <span class="sc">%in%</span> <span class="fu">names</span>(dm)) {</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"EPOCH values in DM:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    dm <span class="sc">%&gt;%</span> <span class="fu">count</span>(EPOCH) <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>EPOCH not found in DS. Checking DM...</code></pre>
+</div>
+</div>
+</section>
+<section id="epoch-in-the-dm-domain" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="epoch-in-the-dm-domain"><span class="header-section-number">6.2</span> EPOCH in the DM Domain</h3>
+<p>The DM domain has <strong>EPOCH-related variables</strong> that indicate the last known state of the subject:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Key epoch/disposition-related variables in DM</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>dm_disp_vars <span class="ot">&lt;-</span> <span class="fu">intersect</span>(</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"USUBJID"</span>, <span class="st">"ARM"</span>, <span class="st">"ACTARM"</span>, <span class="st">"RFSTDTC"</span>, <span class="st">"RFENDTC"</span>, <span class="st">"DTHDTC"</span>, <span class="st">"DTHFL"</span>),</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(dm)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>dm <span class="sc">%&gt;%</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(dm_disp_vars)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 7
+   USUBJID     ARM                  ACTARM          RFSTDTC RFENDTC DTHDTC DTHFL
+   &lt;chr&gt;       &lt;chr&gt;                &lt;chr&gt;           &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;
+ 1 01-701-1015 Placebo              Placebo         2014-0… 2014-0… &lt;NA&gt;   &lt;NA&gt; 
+ 2 01-701-1023 Placebo              Placebo         2012-0… 2012-0… &lt;NA&gt;   &lt;NA&gt; 
+ 3 01-701-1028 Xanomeline High Dose Xanomeline Hig… 2013-0… 2014-0… &lt;NA&gt;   &lt;NA&gt; 
+ 4 01-701-1033 Xanomeline Low Dose  Xanomeline Low… 2014-0… 2014-0… &lt;NA&gt;   &lt;NA&gt; 
+ 5 01-701-1034 Xanomeline High Dose Xanomeline Hig… 2014-0… 2014-1… &lt;NA&gt;   &lt;NA&gt; 
+ 6 01-701-1047 Placebo              Placebo         2013-0… 2013-0… &lt;NA&gt;   &lt;NA&gt; 
+ 7 01-701-1057 Screen Failure       Screen Failure  &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt; 
+ 8 01-701-1097 Xanomeline Low Dose  Xanomeline Low… 2014-0… 2014-0… &lt;NA&gt;   &lt;NA&gt; 
+ 9 01-701-1111 Xanomeline Low Dose  Xanomeline Low… 2012-0… 2012-0… &lt;NA&gt;   &lt;NA&gt; 
+10 01-701-1115 Xanomeline Low Dose  Xanomeline Low… 2012-1… 2013-0… &lt;NA&gt;   &lt;NA&gt; </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Important DM Variables Related to DS
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>RFSTDTC</code></td>
+<td>Reference start date (first exposure)</td>
+</tr>
+<tr class="even">
+<td><code>RFENDTC</code></td>
+<td>Reference end date (last exposure)</td>
+</tr>
+<tr class="odd">
+<td><code>RFXSTDTC</code></td>
+<td>Date/time of first study treatment</td>
+</tr>
+<tr class="even">
+<td><code>RFXENDTC</code></td>
+<td>Date/time of last study treatment</td>
+</tr>
+<tr class="odd">
+<td><code>DTHDTC</code></td>
+<td>Date of death</td>
+</tr>
+<tr class="even">
+<td><code>DTHFL</code></td>
+<td>Death flag (Y/N)</td>
+</tr>
+<tr class="odd">
+<td><code>DSDECOD</code></td>
+<td>Disposition decoded term (in some implementations)</td>
+</tr>
+</tbody>
+</table>
+<p>These DM variables are <strong>derived from</strong> the DS and EX domain data.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="building-a-ds-domain-from-scratch" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="building-a-ds-domain-from-scratch"><span class="header-section-number">7</span> Building a DS Domain from Scratch</h2>
+<p>Let’s simulate raw disposition data and build a complete DS domain:</p>
+<section id="step-1-create-raw-disposition-data" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="step-1-create-raw-disposition-data"><span class="header-section-number">7.1</span> Step 1: Create Raw Disposition Data</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>n_subjects <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate subject disposition decisions</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>raw_disp <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">STUDYID =</span> <span class="st">"CDISC01"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">USUBJID =</span> <span class="fu">paste0</span>(<span class="st">"CDISC01-001-"</span>, <span class="fu">sprintf</span>(<span class="st">"%03d"</span>, <span class="dv">1</span><span class="sc">:</span>n_subjects)),</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Informed consent date</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">CONSENT_DATE =</span> <span class="fu">as.Date</span>(<span class="st">"2024-01-01"</span>) <span class="sc">+</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">30</span>, n_subjects, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Screening result</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">SCREEN_RESULT =</span> <span class="fu">sample</span>(</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"PASSED"</span>, <span class="st">"FAILED"</span>),</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    n_subjects, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.85</span>, <span class="fl">0.15</span>)</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">SCREEN_REASON =</span> <span class="fu">if_else</span>(</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>    SCREEN_RESULT <span class="sc">==</span> <span class="st">"FAILED"</span>,</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"DID NOT MEET INCLUSION CRITERIA"</span>,</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>             <span class="st">"EXCLUSION CRITERIA MET"</span>,</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>             <span class="st">"WITHDREW CONSENT"</span>),</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>           n_subjects, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>)),</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA_character_</span></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Randomization date (only for those who passed screening)</span></span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">RAND_DATE =</span> <span class="fu">if_else</span>(</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>    SCREEN_RESULT <span class="sc">==</span> <span class="st">"PASSED"</span>,</span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>    CONSENT_DATE <span class="sc">+</span> <span class="fu">sample</span>(<span class="dv">7</span><span class="sc">:</span><span class="dv">21</span>, n_subjects, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.Date</span>(<span class="cn">NA</span>)</span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Treatment arm (only for randomized subjects)</span></span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">ARMCD =</span> <span class="fu">if_else</span>(</span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>    SCREEN_RESULT <span class="sc">==</span> <span class="st">"PASSED"</span>,</span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"PBO"</span>, <span class="st">"ACT10"</span>, <span class="st">"ACT20"</span>), n_subjects, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA_character_</span></span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add first dose date</span></span>
+<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">FIRST_DOSE =</span> <span class="fu">if_else</span>(<span class="sc">!</span><span class="fu">is.na</span>(RAND_DATE), RAND_DATE <span class="sc">+</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="fu">n</span>(), <span class="at">replace =</span> <span class="cn">TRUE</span>), <span class="fu">as.Date</span>(<span class="cn">NA</span>))</span>
+<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine treatment disposition for randomized subjects</span></span>
+<span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a>raw_disp <span class="ot">&lt;-</span> raw_disp <span class="sc">%&gt;%</span></span>
+<span id="cb26-48"><a href="#cb26-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb26-49"><a href="#cb26-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">TRT_RESULT =</span> <span class="fu">case_when</span>(</span>
+<span id="cb26-50"><a href="#cb26-50" aria-hidden="true" tabindex="-1"></a>      SCREEN_RESULT <span class="sc">==</span> <span class="st">"FAILED"</span> <span class="sc">~</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb26-51"><a href="#cb26-51" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"COMPLETED"</span>, <span class="st">"ADVERSE EVENT"</span>, <span class="st">"WITHDRAWAL BY SUBJECT"</span>,</span>
+<span id="cb26-52"><a href="#cb26-52" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"LOST TO FOLLOW-UP"</span>, <span class="st">"PHYSICIAN DECISION"</span>),</span>
+<span id="cb26-53"><a href="#cb26-53" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">n</span>(), <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb26-54"><a href="#cb26-54" aria-hidden="true" tabindex="-1"></a>                    <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.65</span>, <span class="fl">0.12</span>, <span class="fl">0.10</span>, <span class="fl">0.08</span>, <span class="fl">0.05</span>))</span>
+<span id="cb26-55"><a href="#cb26-55" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb26-56"><a href="#cb26-56" aria-hidden="true" tabindex="-1"></a>    <span class="co"># End of treatment date</span></span>
+<span id="cb26-57"><a href="#cb26-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">TRT_END_DATE =</span> <span class="fu">case_when</span>(</span>
+<span id="cb26-58"><a href="#cb26-58" aria-hidden="true" tabindex="-1"></a>      <span class="fu">is.na</span>(FIRST_DOSE) <span class="sc">~</span> <span class="fu">as.Date</span>(<span class="cn">NA</span>),</span>
+<span id="cb26-59"><a href="#cb26-59" aria-hidden="true" tabindex="-1"></a>      TRT_RESULT <span class="sc">==</span> <span class="st">"COMPLETED"</span> <span class="sc">~</span> FIRST_DOSE <span class="sc">+</span> <span class="dv">84</span>,  <span class="co"># 12-week study</span></span>
+<span id="cb26-60"><a href="#cb26-60" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> FIRST_DOSE <span class="sc">+</span> <span class="fu">sample</span>(<span class="dv">7</span><span class="sc">:</span><span class="dv">60</span>, <span class="fu">n</span>(), <span class="at">replace =</span> <span class="cn">TRUE</span>)  <span class="co"># Early termination</span></span>
+<span id="cb26-61"><a href="#cb26-61" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb26-62"><a href="#cb26-62" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-63"><a href="#cb26-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-64"><a href="#cb26-64" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Raw disposition data:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Raw disposition data:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Total subjects:"</span>, <span class="fu">nrow</span>(raw_disp), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Total subjects: 30 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Screen failures:"</span>, <span class="fu">sum</span>(raw_disp<span class="sc">$</span>SCREEN_RESULT <span class="sc">==</span> <span class="st">"FAILED"</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Screen failures: 5 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Randomized:"</span>, <span class="fu">sum</span>(raw_disp<span class="sc">$</span>SCREEN_RESULT <span class="sc">==</span> <span class="st">"PASSED"</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Randomized: 25 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>raw_disp <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, SCREEN_RESULT, TRT_RESULT) <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 3
+   USUBJID         SCREEN_RESULT TRT_RESULT           
+   &lt;chr&gt;           &lt;chr&gt;         &lt;chr&gt;                
+ 1 CDISC01-001-001 PASSED        WITHDRAWAL BY SUBJECT
+ 2 CDISC01-001-002 PASSED        COMPLETED            
+ 3 CDISC01-001-003 PASSED        COMPLETED            
+ 4 CDISC01-001-004 PASSED        COMPLETED            
+ 5 CDISC01-001-005 PASSED        COMPLETED            
+ 6 CDISC01-001-006 PASSED        COMPLETED            
+ 7 CDISC01-001-007 PASSED        COMPLETED            
+ 8 CDISC01-001-008 FAILED        &lt;NA&gt;                 
+ 9 CDISC01-001-009 PASSED        ADVERSE EVENT        
+10 CDISC01-001-010 PASSED        LOST TO FOLLOW-UP    </code></pre>
+</div>
+</div>
+</section>
+<section id="step-2-transform-to-sdtm-ds" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="step-2-transform-to-sdtm-ds"><span class="header-section-number">7.2</span> Step 2: Transform to SDTM DS</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create DS records for each disposition event</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A subject may have MULTIPLE DS records</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Record 1: Informed Consent</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>ds_consent <span class="ot">&lt;-</span> raw_disp <span class="sc">%&gt;%</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">DOMAIN   =</span> <span class="st">"DS"</span>,</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSSEQ    =</span> <span class="dv">1</span>L,</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSTERM   =</span> <span class="st">"INFORMED CONSENT OBTAINED"</span>,</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSDECOD  =</span> <span class="st">"INFORMED CONSENT OBTAINED"</span>,</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSCAT    =</span> <span class="st">"PROTOCOL MILESTONE"</span>,</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSSCAT   =</span> <span class="st">"INFORMED CONSENT"</span>,</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSSTDTC  =</span> <span class="fu">as.character</span>(CONSENT_DATE),</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">EPOCH    =</span> <span class="st">"SCREENING"</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(STUDYID, DOMAIN, USUBJID, DSSEQ, DSTERM, DSDECOD, DSCAT, DSSCAT, DSSTDTC, EPOCH)</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Record 2: Randomization (only for those who passed screening)</span></span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>ds_random <span class="ot">&lt;-</span> raw_disp <span class="sc">%&gt;%</span></span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(SCREEN_RESULT <span class="sc">==</span> <span class="st">"PASSED"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">DOMAIN   =</span> <span class="st">"DS"</span>,</span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSSEQ    =</span> <span class="dv">2</span>L,</span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSTERM   =</span> <span class="st">"RANDOMIZED"</span>,</span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSDECOD  =</span> <span class="st">"RANDOMIZED"</span>,</span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSCAT    =</span> <span class="st">"PROTOCOL MILESTONE"</span>,</span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSSCAT   =</span> <span class="st">"RANDOMIZATION"</span>,</span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSSTDTC  =</span> <span class="fu">as.character</span>(RAND_DATE),</span>
+<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">EPOCH    =</span> <span class="st">"SCREENING"</span></span>
+<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(STUDYID, DOMAIN, USUBJID, DSSEQ, DSTERM, DSDECOD, DSCAT, DSSCAT, DSSTDTC, EPOCH)</span>
+<span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-33"><a href="#cb36-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Record 3: Treatment Disposition</span></span>
+<span id="cb36-34"><a href="#cb36-34" aria-hidden="true" tabindex="-1"></a>ds_treatment <span class="ot">&lt;-</span> raw_disp <span class="sc">%&gt;%</span></span>
+<span id="cb36-35"><a href="#cb36-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRT_RESULT)) <span class="sc">%&gt;%</span></span>
+<span id="cb36-36"><a href="#cb36-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">DOMAIN   =</span> <span class="st">"DS"</span>,</span>
+<span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSSEQ    =</span> <span class="dv">3</span>L,</span>
+<span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSTERM   =</span> TRT_RESULT,</span>
+<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSDECOD  =</span> TRT_RESULT,</span>
+<span id="cb36-41"><a href="#cb36-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSCAT    =</span> <span class="st">"DISPOSITION EVENT"</span>,</span>
+<span id="cb36-42"><a href="#cb36-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSSCAT   =</span> <span class="st">"TREATMENT"</span>,</span>
+<span id="cb36-43"><a href="#cb36-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSSTDTC  =</span> <span class="fu">as.character</span>(TRT_END_DATE),</span>
+<span id="cb36-44"><a href="#cb36-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">EPOCH    =</span> <span class="st">"TREATMENT"</span></span>
+<span id="cb36-45"><a href="#cb36-45" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb36-46"><a href="#cb36-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(STUDYID, DOMAIN, USUBJID, DSSEQ, DSTERM, DSDECOD, DSCAT, DSSCAT, DSSTDTC, EPOCH)</span>
+<span id="cb36-47"><a href="#cb36-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-48"><a href="#cb36-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Record 4: Screen Failure disposition</span></span>
+<span id="cb36-49"><a href="#cb36-49" aria-hidden="true" tabindex="-1"></a>ds_screenfail <span class="ot">&lt;-</span> raw_disp <span class="sc">%&gt;%</span></span>
+<span id="cb36-50"><a href="#cb36-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(SCREEN_RESULT <span class="sc">==</span> <span class="st">"FAILED"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-51"><a href="#cb36-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb36-52"><a href="#cb36-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">DOMAIN   =</span> <span class="st">"DS"</span>,</span>
+<span id="cb36-53"><a href="#cb36-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSSEQ    =</span> <span class="dv">2</span>L,</span>
+<span id="cb36-54"><a href="#cb36-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSTERM   =</span> SCREEN_REASON,</span>
+<span id="cb36-55"><a href="#cb36-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSDECOD  =</span> <span class="st">"SCREEN FAILURE"</span>,</span>
+<span id="cb36-56"><a href="#cb36-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSCAT    =</span> <span class="st">"DISPOSITION EVENT"</span>,</span>
+<span id="cb36-57"><a href="#cb36-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSSCAT   =</span> <span class="st">"STUDY PARTICIPATION"</span>,</span>
+<span id="cb36-58"><a href="#cb36-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">DSSTDTC  =</span> <span class="fu">as.character</span>(CONSENT_DATE <span class="sc">+</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">14</span>, <span class="fu">n</span>(), <span class="at">replace =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb36-59"><a href="#cb36-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">EPOCH    =</span> <span class="st">"SCREENING"</span></span>
+<span id="cb36-60"><a href="#cb36-60" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb36-61"><a href="#cb36-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(STUDYID, DOMAIN, USUBJID, DSSEQ, DSTERM, DSDECOD, DSCAT, DSSCAT, DSSTDTC, EPOCH)</span>
+<span id="cb36-62"><a href="#cb36-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-63"><a href="#cb36-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all DS records</span></span>
+<span id="cb36-64"><a href="#cb36-64" aria-hidden="true" tabindex="-1"></a>sdtm_ds <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(ds_consent, ds_random, ds_treatment, ds_screenfail) <span class="sc">%&gt;%</span></span>
+<span id="cb36-65"><a href="#cb36-65" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Re-sequence within each subject</span></span>
+<span id="cb36-66"><a href="#cb36-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(STUDYID, USUBJID, DSSTDTC) <span class="sc">%&gt;%</span></span>
+<span id="cb36-67"><a href="#cb36-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(USUBJID) <span class="sc">%&gt;%</span></span>
+<span id="cb36-68"><a href="#cb36-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DSSEQ =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb36-69"><a href="#cb36-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb36-70"><a href="#cb36-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-71"><a href="#cb36-71" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"SDTM DS domain created:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>SDTM DS domain created:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Total records:"</span>, <span class="fu">nrow</span>(sdtm_ds), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Total records: 85 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Unique subjects:"</span>, <span class="fu">n_distinct</span>(sdtm_ds<span class="sc">$</span>USUBJID), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Unique subjects: 30 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>sdtm_ds <span class="sc">%&gt;%</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(USUBJID <span class="sc">==</span> <span class="fu">first</span>(sdtm_ds<span class="sc">$</span>USUBJID)) <span class="sc">%&gt;%</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 10
+  STUDYID DOMAIN USUBJID         DSSEQ DSTERM DSDECOD DSCAT DSSCAT DSSTDTC EPOCH
+  &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;
+1 CDISC01 DS     CDISC01-001-001     1 INFOR… INFORM… PROT… INFOR… 2024-0… SCRE…
+2 CDISC01 DS     CDISC01-001-001     2 RANDO… RANDOM… PROT… RANDO… 2024-0… SCRE…
+3 CDISC01 DS     CDISC01-001-001     3 WITHD… WITHDR… DISP… TREAT… 2024-0… TREA…</code></pre>
+</div>
+</div>
+</section>
+<section id="step-3-validate-ds-domain" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="step-3-validate-ds-domain"><span class="header-section-number">7.3</span> Step 3: Validate DS Domain</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"=== DS Domain Validation ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== DS Domain Validation ===</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 1: Every subject has at least one record</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Subjects with DS records:"</span>, <span class="fu">n_distinct</span>(sdtm_ds<span class="sc">$</span>USUBJID), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Subjects with DS records: 30 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 2: Every subject has informed consent</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>consent_check <span class="ot">&lt;-</span> sdtm_ds <span class="sc">%&gt;%</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(DSDECOD <span class="sc">==</span> <span class="st">"INFORMED CONSENT OBTAINED"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">n_distinct</span>(.<span class="sc">$</span>USUBJID)</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Subjects with informed consent:"</span>, consent_check, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Subjects with informed consent: 30 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 3: Disposition summary</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Treatment Disposition Summary:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Treatment Disposition Summary:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>sdtm_ds <span class="sc">%&gt;%</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(DSCAT <span class="sc">==</span> <span class="st">"DISPOSITION EVENT"</span>, DSSCAT <span class="sc">==</span> <span class="st">"TREATMENT"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(DSDECOD, <span class="at">name =</span> <span class="st">"Count"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Percent =</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> Count <span class="sc">/</span> <span class="fu">sum</span>(Count), <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Count))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  DSDECOD               Count Percent
+  &lt;chr&gt;                 &lt;int&gt;   &lt;dbl&gt;
+1 COMPLETED                19      76
+2 WITHDRAWAL BY SUBJECT     3      12
+3 LOST TO FOLLOW-UP         2       8
+4 ADVERSE EVENT             1       4</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="subject-disposition-flow" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="subject-disposition-flow"><span class="header-section-number">8</span> Subject Disposition Flow</h2>
+<p>This is one of the most important outputs in a clinical study report:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a CONSORT-style flow summary</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"=== SUBJECT DISPOSITION FLOW ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== SUBJECT DISPOSITION FLOW ===</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>n_consented <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(sdtm_ds<span class="sc">$</span>USUBJID)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Subjects consented:         "</span>, n_consented, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Subjects consented:          30 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>n_screened_out <span class="ot">&lt;-</span> sdtm_ds <span class="sc">%&gt;%</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(DSDECOD <span class="sc">==</span> <span class="st">"SCREEN FAILURE"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">n_distinct</span>(.<span class="sc">$</span>USUBJID)</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Screen failures:           "</span>, n_screened_out, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Screen failures:            5 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Screen failure reasons</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (n_screened_out <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  sdtm_ds <span class="sc">%&gt;%</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(DSDECOD <span class="sc">==</span> <span class="st">"SCREEN FAILURE"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(DSTERM, <span class="at">name =</span> <span class="st">"N"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(N)) <span class="sc">%&gt;%</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">line =</span> <span class="fu">paste0</span>(<span class="st">"    - "</span>, DSTERM, <span class="st">": "</span>, N)) <span class="sc">%&gt;%</span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(line) <span class="sc">%&gt;%</span></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    - EXCLUSION CRITERIA MET: 3
+    - DID NOT MEET INCLUSION CRITERIA: 2</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>n_randomized <span class="ot">&lt;-</span> sdtm_ds <span class="sc">%&gt;%</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(DSDECOD <span class="sc">==</span> <span class="st">"RANDOMIZED"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">n_distinct</span>(.<span class="sc">$</span>USUBJID)</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Subjects randomized:        "</span>, n_randomized, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Subjects randomized:         25 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>n_completed <span class="ot">&lt;-</span> sdtm_ds <span class="sc">%&gt;%</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(DSCAT <span class="sc">==</span> <span class="st">"DISPOSITION EVENT"</span>, DSSCAT <span class="sc">==</span> <span class="st">"TREATMENT"</span>, DSDECOD <span class="sc">==</span> <span class="st">"COMPLETED"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">n_distinct</span>(.<span class="sc">$</span>USUBJID)</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Completed treatment:       "</span>, n_completed, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Completed treatment:        19 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>n_discontinued <span class="ot">&lt;-</span> n_randomized <span class="sc">-</span> n_completed</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Discontinued treatment:    "</span>, n_discontinued, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Discontinued treatment:     6 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Discontinuation reasons</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (n_discontinued <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  sdtm_ds <span class="sc">%&gt;%</span></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(DSCAT <span class="sc">==</span> <span class="st">"DISPOSITION EVENT"</span>, DSSCAT <span class="sc">==</span> <span class="st">"TREATMENT"</span>, DSDECOD <span class="sc">!=</span> <span class="st">"COMPLETED"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(DSDECOD, <span class="at">name =</span> <span class="st">"N"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(N)) <span class="sc">%&gt;%</span></span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">line =</span> <span class="fu">paste0</span>(<span class="st">"    - "</span>, DSDECOD, <span class="st">": "</span>, N)) <span class="sc">%&gt;%</span></span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(line) <span class="sc">%&gt;%</span></span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb68-11"><a href="#cb68-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    - WITHDRAWAL BY SUBJECT: 3
+    - LOST TO FOLLOW-UP: 2
+    - ADVERSE EVENT: 1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Completion rate:"</span>, <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> n_completed <span class="sc">/</span> n_randomized, <span class="dv">1</span>), <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Completion rate: 76 %</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="trial-design-domains-overview" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="trial-design-domains-overview"><span class="header-section-number">9</span> Trial Design Domains Overview</h2>
+<section id="what-are-trial-design-domains" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="what-are-trial-design-domains"><span class="header-section-number">9.1</span> What Are Trial Design Domains?</h3>
+<p>Trial Design domains describe the <strong>structure of the study itself</strong>, not individual subject data. Think of them as the <strong>blueprint</strong> of the clinical trial.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 26%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Domain</th>
+<th>Name</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>TA</strong></td>
+<td>Trial Arms</td>
+<td>Describes each treatment arm and its sequence of elements</td>
+</tr>
+<tr class="even">
+<td><strong>TE</strong></td>
+<td>Trial Elements</td>
+<td>Describes the building blocks of each arm (e.g., washout, treatment)</td>
+</tr>
+<tr class="odd">
+<td><strong>TV</strong></td>
+<td>Trial Visits</td>
+<td>Lists all planned visits and their timing windows</td>
+</tr>
+<tr class="even">
+<td><strong>TI</strong></td>
+<td>Trial Inclusion/Exclusion</td>
+<td>Documents the inclusion/exclusion criteria</td>
+</tr>
+<tr class="odd">
+<td><strong>TS</strong></td>
+<td>Trial Summary</td>
+<td>Key parameters about the study (phase, indication, design)</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>When Do You Need These?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Trial Design domains are <strong>required</strong> for FDA submissions. They provide the <strong>context</strong> for understanding the subject-level data. An FDA reviewer needs to know:</p>
+<ul>
+<li>What arms existed? (TA)</li>
+<li>What was the study schedule? (TV)</li>
+<li>What were the eligibility criteria? (TI)</li>
+<li>What type of study was this? (TS)</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ta---trial-arms" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="ta---trial-arms"><span class="header-section-number">9.2</span> TA - Trial Arms</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a Trial Arms (TA) domain example</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>ta <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>STUDYID,  <span class="sc">~</span>DOMAIN, <span class="sc">~</span>ARMCD,  <span class="sc">~</span>ARM,           <span class="sc">~</span>TAESSION, <span class="sc">~</span>TATRANS,       <span class="sc">~</span>EPOCH,       <span class="sc">~</span>ELEMENT,</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TA"</span>,    <span class="st">"PBO"</span>,   <span class="st">"Placebo"</span>,      <span class="dv">1</span>L,        <span class="st">"No criteria"</span>,  <span class="st">"SCREENING"</span>,  <span class="st">"Screen"</span>,</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TA"</span>,    <span class="st">"PBO"</span>,   <span class="st">"Placebo"</span>,      <span class="dv">2</span>L,        <span class="st">"Randomized"</span>,   <span class="st">"TREATMENT"</span>,  <span class="st">"Placebo"</span>,</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TA"</span>,    <span class="st">"PBO"</span>,   <span class="st">"Placebo"</span>,      <span class="dv">3</span>L,        <span class="st">"End treatment"</span>,<span class="st">"FOLLOW-UP"</span>,  <span class="st">"Follow-up"</span>,</span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TA"</span>,    <span class="st">"ACT10"</span>, <span class="st">"Active 10mg"</span>,  <span class="dv">1</span>L,        <span class="st">"No criteria"</span>,  <span class="st">"SCREENING"</span>,  <span class="st">"Screen"</span>,</span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TA"</span>,    <span class="st">"ACT10"</span>, <span class="st">"Active 10mg"</span>,  <span class="dv">2</span>L,        <span class="st">"Randomized"</span>,   <span class="st">"TREATMENT"</span>,  <span class="st">"Active 10mg"</span>,</span>
+<span id="cb72-9"><a href="#cb72-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TA"</span>,    <span class="st">"ACT10"</span>, <span class="st">"Active 10mg"</span>,  <span class="dv">3</span>L,        <span class="st">"End treatment"</span>,<span class="st">"FOLLOW-UP"</span>,  <span class="st">"Follow-up"</span>,</span>
+<span id="cb72-10"><a href="#cb72-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TA"</span>,    <span class="st">"ACT20"</span>, <span class="st">"Active 20mg"</span>,  <span class="dv">1</span>L,        <span class="st">"No criteria"</span>,  <span class="st">"SCREENING"</span>,  <span class="st">"Screen"</span>,</span>
+<span id="cb72-11"><a href="#cb72-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TA"</span>,    <span class="st">"ACT20"</span>, <span class="st">"Active 20mg"</span>,  <span class="dv">2</span>L,        <span class="st">"Randomized"</span>,   <span class="st">"TREATMENT"</span>,  <span class="st">"Active 20mg"</span>,</span>
+<span id="cb72-12"><a href="#cb72-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TA"</span>,    <span class="st">"ACT20"</span>, <span class="st">"Active 20mg"</span>,  <span class="dv">3</span>L,        <span class="st">"End treatment"</span>,<span class="st">"FOLLOW-UP"</span>,  <span class="st">"Follow-up"</span></span>
+<span id="cb72-13"><a href="#cb72-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb72-14"><a href="#cb72-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-15"><a href="#cb72-15" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Trial Arms (TA):</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Trial Arms (TA):</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ta)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 8
+  STUDYID DOMAIN ARMCD ARM         TAESSION TATRANS       EPOCH     ELEMENT    
+  &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;     &lt;chr&gt;      
+1 CDISC01 TA     PBO   Placebo            1 No criteria   SCREENING Screen     
+2 CDISC01 TA     PBO   Placebo            2 Randomized    TREATMENT Placebo    
+3 CDISC01 TA     PBO   Placebo            3 End treatment FOLLOW-UP Follow-up  
+4 CDISC01 TA     ACT10 Active 10mg        1 No criteria   SCREENING Screen     
+5 CDISC01 TA     ACT10 Active 10mg        2 Randomized    TREATMENT Active 10mg
+6 CDISC01 TA     ACT10 Active 10mg        3 End treatment FOLLOW-UP Follow-up  
+7 CDISC01 TA     ACT20 Active 20mg        1 No criteria   SCREENING Screen     
+8 CDISC01 TA     ACT20 Active 20mg        2 Randomized    TREATMENT Active 20mg
+9 CDISC01 TA     ACT20 Active 20mg        3 End treatment FOLLOW-UP Follow-up  </code></pre>
+</div>
+</div>
+</section>
+<section id="tv---trial-visits" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="tv---trial-visits"><span class="header-section-number">9.3</span> TV - Trial Visits</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a Trial Visits (TV) domain example</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>tv <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>STUDYID,  <span class="sc">~</span>DOMAIN, <span class="sc">~</span>VISITNUM, <span class="sc">~</span>VISIT,       <span class="sc">~</span>TVSTRL,     <span class="sc">~</span>TVENRL,</span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TV"</span>,    <span class="sc">-</span><span class="dv">1</span>,        <span class="st">"SCREENING"</span>,  <span class="st">"Day -21"</span>,   <span class="st">"Day -1"</span>,</span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TV"</span>,     <span class="dv">1</span>,        <span class="st">"BASELINE"</span>,   <span class="st">"Day 1"</span>,     <span class="st">"Day 1"</span>,</span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TV"</span>,     <span class="dv">2</span>,        <span class="st">"WEEK 2"</span>,     <span class="st">"Day 8"</span>,     <span class="st">"Day 18"</span>,</span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TV"</span>,     <span class="dv">3</span>,        <span class="st">"WEEK 4"</span>,     <span class="st">"Day 22"</span>,    <span class="st">"Day 32"</span>,</span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TV"</span>,     <span class="dv">4</span>,        <span class="st">"WEEK 8"</span>,     <span class="st">"Day 50"</span>,    <span class="st">"Day 64"</span>,</span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TV"</span>,     <span class="dv">5</span>,        <span class="st">"WEEK 12"</span>,    <span class="st">"Day 78"</span>,    <span class="st">"Day 92"</span>,</span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TV"</span>,     <span class="dv">6</span>,        <span class="st">"END OF STUDY"</span>,<span class="st">"Day 92"</span>,   <span class="st">"Day 106"</span></span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-13"><a href="#cb76-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Trial Visits (TV) - Study Schedule:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Trial Visits (TV) - Study Schedule:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tv)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 6
+  STUDYID DOMAIN VISITNUM VISIT        TVSTRL  TVENRL 
+  &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;  
+1 CDISC01 TV           -1 SCREENING    Day -21 Day -1 
+2 CDISC01 TV            1 BASELINE     Day 1   Day 1  
+3 CDISC01 TV            2 WEEK 2       Day 8   Day 18 
+4 CDISC01 TV            3 WEEK 4       Day 22  Day 32 
+5 CDISC01 TV            4 WEEK 8       Day 50  Day 64 
+6 CDISC01 TV            5 WEEK 12      Day 78  Day 92 
+7 CDISC01 TV            6 END OF STUDY Day 92  Day 106</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Visit Windows
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice <code>TVSTRL</code> and <code>TVENRL</code> - these define the <strong>visit window</strong>. In practice:</p>
+<ul>
+<li>A “WEEK 2” visit might be acceptable if it occurs between Day 8 and Day 18</li>
+<li>Programming logic must map actual visit dates to planned visits based on these windows</li>
+<li>Visits outside windows may be flagged as <strong>unscheduled visits</strong></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="ts---trial-summary" class="level3" data-number="9.4">
+<h3 data-number="9.4" class="anchored" data-anchor-id="ts---trial-summary"><span class="header-section-number">9.4</span> TS - Trial Summary</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a Trial Summary (TS) domain example</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>ts <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>STUDYID,  <span class="sc">~</span>DOMAIN, <span class="sc">~</span>TSSEQ, <span class="sc">~</span>TSPARMCD,  <span class="sc">~</span>TSPARM,                    <span class="sc">~</span>TSVAL,</span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TS"</span>,    <span class="dv">1</span>L,     <span class="st">"ADDON"</span>,     <span class="st">"Added on to Existing Treatments"</span>, <span class="st">"N"</span>,</span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TS"</span>,    <span class="dv">2</span>L,     <span class="st">"SSTDTC"</span>,    <span class="st">"Study Start Date"</span>,         <span class="st">"2024-01-01"</span>,</span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TS"</span>,    <span class="dv">3</span>L,     <span class="st">"SENDTC"</span>,    <span class="st">"Study End Date"</span>,           <span class="st">"2024-12-31"</span>,</span>
+<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TS"</span>,    <span class="dv">4</span>L,     <span class="st">"INDIC"</span>,     <span class="st">"Trial Indication"</span>,        <span class="st">"Type 2 Diabetes Mellitus"</span>,</span>
+<span id="cb80-8"><a href="#cb80-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TS"</span>,    <span class="dv">5</span>L,     <span class="st">"TRT"</span>,       <span class="st">"Investigational Therapy"</span>, <span class="st">"Study Drug XYZ"</span>,</span>
+<span id="cb80-9"><a href="#cb80-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TS"</span>,    <span class="dv">6</span>L,     <span class="st">"TPHASE"</span>,    <span class="st">"Trial Phase"</span>,             <span class="st">"PHASE III"</span>,</span>
+<span id="cb80-10"><a href="#cb80-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TS"</span>,    <span class="dv">7</span>L,     <span class="st">"STYPE"</span>,     <span class="st">"Study Type"</span>,              <span class="st">"INTERVENTIONAL"</span>,</span>
+<span id="cb80-11"><a href="#cb80-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TS"</span>,    <span class="dv">8</span>L,     <span class="st">"RANDOM"</span>,    <span class="st">"Trial is Randomized"</span>,     <span class="st">"Y"</span>,</span>
+<span id="cb80-12"><a href="#cb80-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TS"</span>,    <span class="dv">9</span>L,     <span class="st">"STOTEFFC"</span>,  <span class="st">"Study to Evaluate"</span>,       <span class="st">"EFFICACY AND SAFETY"</span>,</span>
+<span id="cb80-13"><a href="#cb80-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CDISC01"</span>, <span class="st">"TS"</span>,    <span class="dv">10</span>L,    <span class="st">"PCLAS"</span>,     <span class="st">"Pharmacological Class"</span>,   <span class="st">"SGLT2 INHIBITOR"</span></span>
+<span id="cb80-14"><a href="#cb80-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb80-15"><a href="#cb80-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-16"><a href="#cb80-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Trial Summary (TS) - Key Study Parameters:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Trial Summary (TS) - Key Study Parameters:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 6
+   STUDYID DOMAIN TSSEQ TSPARMCD TSPARM                          TSVAL          
+   &lt;chr&gt;   &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                           &lt;chr&gt;          
+ 1 CDISC01 TS         1 ADDON    Added on to Existing Treatments N              
+ 2 CDISC01 TS         2 SSTDTC   Study Start Date                2024-01-01     
+ 3 CDISC01 TS         3 SENDTC   Study End Date                  2024-12-31     
+ 4 CDISC01 TS         4 INDIC    Trial Indication                Type 2 Diabete…
+ 5 CDISC01 TS         5 TRT      Investigational Therapy         Study Drug XYZ 
+ 6 CDISC01 TS         6 TPHASE   Trial Phase                     PHASE III      
+ 7 CDISC01 TS         7 STYPE    Study Type                      INTERVENTIONAL 
+ 8 CDISC01 TS         8 RANDOM   Trial is Randomized             Y              
+ 9 CDISC01 TS         9 STOTEFFC Study to Evaluate               EFFICACY AND S…
+10 CDISC01 TS        10 PCLAS    Pharmacological Class           SGLT2 INHIBITOR</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>TS Parameters
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The TS domain uses a <strong>parameter-value</strong> structure where each row is one study-level parameter. Common parameters include:</p>
+<ul>
+<li><strong>TPHASE</strong> - Phase I, II, III, IV</li>
+<li><strong>INDIC</strong> - What disease is being studied</li>
+<li><strong>RANDOM</strong> - Is this a randomized trial</li>
+<li><strong>STYPE</strong> - Interventional vs.&nbsp;Observational</li>
+<li><strong>REGID</strong> - Regulatory registration number (e.g., IND number)</li>
+</ul>
+<p>The full list of valid TS parameters is in the <a href="https://www.cancer.gov/research/resources/terminology/cdisc">CDISC CT Package</a>.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="how-ds-feeds-into-adsl" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="how-ds-feeds-into-adsl"><span class="header-section-number">10</span> How DS Feeds Into ADSL</h2>
+<p>The DS domain is a primary source for the <strong>ADaM ADSL</strong> (Subject-Level Analysis Dataset). Here’s the connection:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview: Deriving ADSL disposition variables from DS</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>adsl_disp <span class="ot">&lt;-</span> raw_disp <span class="sc">%&gt;%</span></span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Core ADSL variables derived from DS logic</span></span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">RANDFL =</span> <span class="fu">if_else</span>(SCREEN_RESULT <span class="sc">==</span> <span class="st">"PASSED"</span>, <span class="st">"Y"</span>, <span class="st">"N"</span>),</span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">RANDDT =</span> RAND_DATE,</span>
+<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb84-8"><a href="#cb84-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Treatment completion</span></span>
+<span id="cb84-9"><a href="#cb84-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">EOSSTT =</span> <span class="fu">case_when</span>(</span>
+<span id="cb84-10"><a href="#cb84-10" aria-hidden="true" tabindex="-1"></a>      SCREEN_RESULT <span class="sc">==</span> <span class="st">"FAILED"</span> <span class="sc">~</span> <span class="st">"SCREEN FAILURE"</span>,</span>
+<span id="cb84-11"><a href="#cb84-11" aria-hidden="true" tabindex="-1"></a>      TRT_RESULT <span class="sc">==</span> <span class="st">"COMPLETED"</span> <span class="sc">~</span> <span class="st">"COMPLETED"</span>,</span>
+<span id="cb84-12"><a href="#cb84-12" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"DISCONTINUED"</span></span>
+<span id="cb84-13"><a href="#cb84-13" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb84-14"><a href="#cb84-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb84-15"><a href="#cb84-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Reason for discontinuation</span></span>
+<span id="cb84-16"><a href="#cb84-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">DCSREAS =</span> <span class="fu">case_when</span>(</span>
+<span id="cb84-17"><a href="#cb84-17" aria-hidden="true" tabindex="-1"></a>      EOSSTT <span class="sc">==</span> <span class="st">"COMPLETED"</span> <span class="sc">~</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb84-18"><a href="#cb84-18" aria-hidden="true" tabindex="-1"></a>      EOSSTT <span class="sc">==</span> <span class="st">"SCREEN FAILURE"</span> <span class="sc">~</span> SCREEN_REASON,</span>
+<span id="cb84-19"><a href="#cb84-19" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> TRT_RESULT</span>
+<span id="cb84-20"><a href="#cb84-20" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb84-21"><a href="#cb84-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb84-22"><a href="#cb84-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Safety population flag (received at least one dose)</span></span>
+<span id="cb84-23"><a href="#cb84-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">SAFFL =</span> <span class="fu">if_else</span>(<span class="sc">!</span><span class="fu">is.na</span>(FIRST_DOSE), <span class="st">"Y"</span>, <span class="st">"N"</span>),</span>
+<span id="cb84-24"><a href="#cb84-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb84-25"><a href="#cb84-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ITT population flag (randomized)</span></span>
+<span id="cb84-26"><a href="#cb84-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">ITTFL =</span> RANDFL,</span>
+<span id="cb84-27"><a href="#cb84-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb84-28"><a href="#cb84-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Treatment duration (days)</span></span>
+<span id="cb84-29"><a href="#cb84-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">TRTDURD =</span> <span class="fu">if_else</span>(</span>
+<span id="cb84-30"><a href="#cb84-30" aria-hidden="true" tabindex="-1"></a>      <span class="sc">!</span><span class="fu">is.na</span>(FIRST_DOSE) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(TRT_END_DATE),</span>
+<span id="cb84-31"><a href="#cb84-31" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(TRT_END_DATE <span class="sc">-</span> FIRST_DOSE) <span class="sc">+</span> <span class="dv">1</span>,</span>
+<span id="cb84-32"><a href="#cb84-32" aria-hidden="true" tabindex="-1"></a>      <span class="cn">NA_real_</span></span>
+<span id="cb84-33"><a href="#cb84-33" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb84-34"><a href="#cb84-34" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb84-35"><a href="#cb84-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-36"><a href="#cb84-36" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"ADSL Disposition Variables Preview:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ADSL Disposition Variables Preview:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>adsl_disp <span class="sc">%&gt;%</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, RANDFL, EOSSTT, DCSREAS, SAFFL, ITTFL, TRTDURD) <span class="sc">%&gt;%</span></span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 7
+   USUBJID         RANDFL EOSSTT         DCSREAS             SAFFL ITTFL TRTDURD
+   &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;          &lt;chr&gt;               &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
+ 1 CDISC01-001-001 Y      DISCONTINUED   WITHDRAWAL BY SUBJ… Y     Y          56
+ 2 CDISC01-001-002 Y      COMPLETED      &lt;NA&gt;                Y     Y          85
+ 3 CDISC01-001-003 Y      COMPLETED      &lt;NA&gt;                Y     Y          85
+ 4 CDISC01-001-004 Y      COMPLETED      &lt;NA&gt;                Y     Y          85
+ 5 CDISC01-001-005 Y      COMPLETED      &lt;NA&gt;                Y     Y          85
+ 6 CDISC01-001-006 Y      COMPLETED      &lt;NA&gt;                Y     Y          85
+ 7 CDISC01-001-007 Y      COMPLETED      &lt;NA&gt;                Y     Y          85
+ 8 CDISC01-001-008 N      SCREEN FAILURE EXCLUSION CRITERIA… N     N          NA
+ 9 CDISC01-001-009 Y      DISCONTINUED   ADVERSE EVENT       Y     Y          42
+10 CDISC01-001-010 Y      DISCONTINUED   LOST TO FOLLOW-UP   Y     Y          61</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Population flags summary</span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== Analysis Population Summary ===</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Analysis Population Summary ===</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Screened:"</span>, <span class="fu">nrow</span>(adsl_disp), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Screened: 30 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Randomized (ITT):"</span>, <span class="fu">sum</span>(adsl_disp<span class="sc">$</span>ITTFL <span class="sc">==</span> <span class="st">"Y"</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Randomized (ITT): 25 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Safety Population:"</span>, <span class="fu">sum</span>(adsl_disp<span class="sc">$</span>SAFFL <span class="sc">==</span> <span class="st">"Y"</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Safety Population: 25 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"End of Study Status:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>End of Study Status:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>adsl_disp <span class="sc">%&gt;%</span></span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(EOSSTT, <span class="at">name =</span> <span class="st">"N"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Percent =</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> N <span class="sc">/</span> <span class="fu">sum</span>(N), <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(N))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  EOSSTT             N Percent
+  &lt;chr&gt;          &lt;int&gt;   &lt;dbl&gt;
+1 COMPLETED         19    63.3
+2 DISCONTINUED       6    20  
+3 SCREEN FAILURE     5    16.7</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Key ADSL Variables from DS
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 41%">
+<col style="width: 22%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>ADSL Variable</th>
+<th>Source</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RANDFL</td>
+<td>DS (RANDOMIZED record)</td>
+<td>Randomized flag (Y/N)</td>
+</tr>
+<tr class="even">
+<td>RANDDT</td>
+<td>DS (DSSTDTC where DSDECOD = RANDOMIZED)</td>
+<td>Randomization date</td>
+</tr>
+<tr class="odd">
+<td>EOSSTT</td>
+<td>DS (treatment disposition)</td>
+<td>End of study status</td>
+</tr>
+<tr class="even">
+<td>DCSREAS</td>
+<td>DS (DSTERM for discontinuation)</td>
+<td>Reason for discontinuation</td>
+</tr>
+<tr class="odd">
+<td>SAFFL</td>
+<td>EX (received at least one dose)</td>
+<td>Safety population flag</td>
+</tr>
+<tr class="even">
+<td>ITTFL</td>
+<td>DS (randomized)</td>
+<td>ITT population flag</td>
+</tr>
+<tr class="odd">
+<td>TRTDURD</td>
+<td>Derived from EX dates</td>
+<td>Treatment duration</td>
+</tr>
+</tbody>
+</table>
+<p>Understanding these mappings is essential for ADaM work in Week 3.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="deliverable-summary" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="deliverable-summary"><span class="header-section-number">11</span> Deliverable Summary</h2>
+<p>Today you completed the following:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Task</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Understood DS domain structure and purpose</td>
+<td>✓ Done</td>
+</tr>
+<tr class="even">
+<td>Built a DS domain with consent, randomization, and treatment disposition</td>
+<td>✓ Done</td>
+</tr>
+<tr class="odd">
+<td>Explored EPOCH and study period concepts</td>
+<td>✓ Done</td>
+</tr>
+<tr class="even">
+<td>Surveyed Trial Design domains (TA, TV, TS)</td>
+<td>✓ Done</td>
+</tr>
+<tr class="odd">
+<td>Created subject disposition flow (CONSORT-style)</td>
+<td>✓ Done</td>
+</tr>
+<tr class="even">
+<td>Previewed how DS feeds into ADSL</td>
+<td>✓ Done</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="key-takeaways" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="key-takeaways"><span class="header-section-number">12</span> Key Takeaways</h2>
+<ol type="1">
+<li><strong>DS is an Events class domain</strong> - Each record is a milestone or disposition event</li>
+<li><strong>Multiple records per subject</strong> - Consent, randomization, treatment disposition, study disposition</li>
+<li><strong>DSCAT/DSSCAT distinguish event types</strong> - Milestones vs.&nbsp;disposition decisions</li>
+<li><strong>EPOCH defines study periods</strong> - Screening, Treatment, Follow-up</li>
+<li><strong>Trial Design domains are required</strong> - TA, TE, TV, TI, TS describe the study blueprint</li>
+<li><strong>DS drives ADSL</strong> - Randomization, completion, discontinuation all come from DS</li>
+</ol>
+<hr>
+</section>
+<section id="resources" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="resources"><span class="header-section-number">13</span> Resources</h2>
+<ul>
+<li><a href="https://www.cdisc.org/standards/foundational/sdtm">CDISC SDTM Implementation Guide - DS Domain</a> - Official DS specification</li>
+<li><a href="https://www.cdisc.org/standards/foundational/sdtm">Trial Design Domains Guide</a> - TA, TE, TV, TI, TS specifications</li>
+<li><a href="http://www.consort-statement.org/">CONSORT Statement</a> - Reporting standards for clinical trials</li>
+<li><a href="https://pharmaverse.github.io/admiral/articles/adsl.html">Admiral ADSL Vignette</a> - Building ADSL from DS</li>
+<li><a href="https://pharmaverse.org">Pharmaverse.org</a> - R packages for clinical data</li>
+</ul>
+<hr>
+</section>
+<section id="whats-next" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="whats-next"><span class="header-section-number">14</span> What’s Next?</h2>
+<p>In <strong>Day 12</strong>, we will focus on <strong>Data Cuts with datacutr</strong>:</p>
+<ul>
+<li>What clinical data cuts are and why they matter for interim analyses</li>
+<li>Using the <code>datacutr</code> package to apply cutoff dates across domains</li>
+<li>Handling ongoing AEs, partial dates, and records at the cutoff boundary</li>
+<li>Patient-level vs.&nbsp;record-level cut logic</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ineelhere\.github\.io\/30-days-of-pharmaverse\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -1,0 +1,675 @@
+---
+title: "Day 12: Data Cuts with datacutr"
+subtitle: "Applying Clinical Cutoff Dates for Interim & Final Analyses"
+author: "Indraneel Chakraborty"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+    
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+::: {style="margin-bottom:12px;"}
+<a href="../index.html" class="resource-link">← Back to Roadmap</a>
+:::
+
+## Learning Objectives
+
+By the end of Day 12, you will be able to:
+
+1.  Explain what a **clinical data cut** is and why it's essential for submissions
+2.  Understand the difference between **patient-level** and **record-level** data cuts
+3.  Use the **`datacutr`** package to apply cutoff dates across multiple SDTM domains
+4.  Handle edge cases: **ongoing AEs**, **partial dates**, and **records at the cutoff boundary**
+5.  Build a reproducible data cut pipeline that works across DM, AE, LB, and VS domains
+
+------------------------------------------------------------------------
+
+## What is a Data Cut?
+
+### The Problem
+
+Clinical trials collect data **continuously** over months or years. But at some point, you need to **freeze** the data for analysis - this is the **data cutoff**.
+
+```         
+Timeline of a clinical trial:
+────────────────────────────────────────────────────────────────────────
+  First Subject In          Interim Analysis         Final Analysis
+       │                         │                        │
+       ▼                         ▼                        ▼
+  ────────────────────────────────────────────────────────────────────
+  ██████████████████████████│ DATA CUT │████████████████│ DATA CUT │
+                             (Cutoff 1)                  (Cutoff 2)
+                                 │                           │
+                                 ▼                           ▼
+                        Only data BEFORE           Only data BEFORE
+                        this date included         this date included
+```
+
+::: callout-important
+## Why Data Cuts Matter
+
+-   **Regulatory submissions** require data frozen at a specific cutoff date
+-   **Interim analyses** (e.g., for a Data Safety Monitoring Board) need a clean snapshot
+-   **Data integrity** - analyses must be reproducible based on the same data
+-   **Blinding** - in ongoing studies, only data up to the cutoff should be analyzed
+:::
+
+### Types of Data Cuts
+
+| Cut Type | What It Means | Example |
+|----|----|----|
+| **Patient-level cut** | Exclude entire subjects enrolled after cutoff | Subject consented on 2024-07-01, cutoff is 2024-06-15 → exclude entire subject |
+| **Record-level cut** | Keep the subject but remove records after cutoff | Subject enrolled 2024-01-01, AE started 2024-07-01, cutoff 2024-06-15 → keep subject, remove this AE |
+| **Hybrid** | Patient-level for some domains, record-level for others | Common in practice |
+
+------------------------------------------------------------------------
+
+## Package Installation & Loading
+
+```{r}
+#| label: install-and-load
+
+if (!requireNamespace("dplyr", quietly = TRUE)) suppressMessages(install.packages("dplyr"))
+if (!requireNamespace("lubridate", quietly = TRUE)) suppressMessages(install.packages("lubridate"))
+if (!requireNamespace("tidyr", quietly = TRUE)) suppressMessages(install.packages("tidyr"))
+if (!requireNamespace("stringr", quietly = TRUE)) suppressMessages(install.packages("stringr"))
+
+# datacutr is the Pharmaverse package for data cuts
+if (!requireNamespace("datacutr", quietly = TRUE)) suppressMessages(install.packages("datacutr"))
+
+library(dplyr)
+library(lubridate)
+library(tidyr)
+library(stringr)
+library(datacutr)
+```
+
+------------------------------------------------------------------------
+
+## Understanding datacutr
+
+### What is datacutr?
+
+**`datacutr`** is a Pharmaverse package designed to apply clinical data cutoff dates to SDTM datasets in a standardized, reproducible way. It handles the complex logic of:
+
+-   Identifying which date variable to use for each domain
+-   Applying patient-level vs. record-level cuts
+-   Handling special cases (ongoing events, missing dates)
+
+### How datacutr Works
+
+The package uses a **datacut metadata** approach:
+
+1.  You define a **patient-level cutoff date** for each subject
+2.  You specify **which date variable** to cut on for each domain
+3.  `datacutr` applies the cut rules and returns clean datasets
+
+```{r}
+#| label: datacutr-functions
+
+# What functions does datacutr provide?
+cat("Key datacutr functions:\n\n")
+cat("1. create_dcut()        - Create the patient-level datacut dataset\n")
+cat("2. date_cut()           - Flag records for removal (adds DCUT_TEMP_REMOVE)\n")
+cat("3. apply_cut()          - Remove flagged records\n")
+cat("4. special_dm_cut()     - Special handling for DM domain\n")
+cat("5. impute_sdtm()        - Impute partial dates before cutting\n")
+cat("6. impute_dcutdtc()     - Impute partial datacut dates\n")
+cat("7. pt_cut()             - Patient-level cut\n")
+cat("8. process_cut()        - Wrapper function for entire workflow\n")
+```
+
+------------------------------------------------------------------------
+
+## Setting Up Sample Data for Data Cuts
+
+Let's create a realistic multi-domain SDTM dataset to practice data cuts on:
+
+```{r}
+#| label: create-sample-data
+
+set.seed(42)
+
+# ---- Study Parameters ----
+STUDYID <- "CDISC01"
+cutoff_date <- as.Date("2024-06-15")
+
+n_subjects <- 10
+subjects <- paste0("CDISC01-001-", sprintf("%03d", 1:n_subjects))
+
+# ---- DM Domain ----
+dm_sample <- tibble(
+  STUDYID  = STUDYID,
+  DOMAIN   = "DM",
+  USUBJID  = subjects,
+  RFSTDTC  = as.character(as.Date("2024-01-01") + sample(0:120, n_subjects, replace = TRUE)),
+  RFENDTC  = NA_character_,
+  DTHDTC   = NA_character_,  # Required by special_dm_cut()
+  ARM      = sample(c("Placebo", "Active 10mg", "Active 20mg"), n_subjects, replace = TRUE),
+  SEX      = sample(c("M", "F"), n_subjects, replace = TRUE),
+  AGE      = sample(30:70, n_subjects, replace = TRUE),
+  AGEU     = "YEARS"
+) %>%
+  mutate(
+    # Some subjects started AFTER the cutoff (to test patient-level cuts)
+    RFSTDTC = case_when(
+      row_number() == 9 ~ as.character(cutoff_date + 5),
+      row_number() == 10 ~ as.character(cutoff_date + 15),
+      TRUE ~ RFSTDTC
+    )
+  )
+
+cat("DM domain:", nrow(dm_sample), "subjects\n")
+cat("Cutoff date:", as.character(cutoff_date), "\n\n")
+
+# Which subjects started after cutoff?
+dm_sample %>%
+  mutate(AFTER_CUTOFF = ymd(RFSTDTC) > cutoff_date) %>%
+  select(USUBJID, RFSTDTC, ARM, AFTER_CUTOFF)
+```
+
+```{r}
+#| label: create-ae-data
+
+# ---- AE Domain ----
+ae_sample <- tibble(
+  STUDYID = STUDYID,
+  DOMAIN  = "AE",
+  USUBJID = sample(subjects[1:8], 20, replace = TRUE),
+  AETERM  = sample(c("Headache", "Nausea", "Fatigue", "Dizziness", "Rash"), 20, replace = TRUE),
+  AESEV   = sample(c("MILD", "MODERATE", "SEVERE"), 20, replace = TRUE, prob = c(0.6, 0.3, 0.1)),
+  AESER   = sample(c("Y", "N"), 20, replace = TRUE, prob = c(0.1, 0.9))
+) %>%
+  mutate(AEDECOD = AETERM)
+
+# Add dates - some AEs span across or start after cutoff
+ae_sample <- ae_sample %>%
+  left_join(dm_sample %>% select(USUBJID, RFSTDTC), by = "USUBJID") %>%
+  rowwise() %>%
+  mutate(
+    start_offset = sample(1:180, 1),
+    ae_start = ymd(RFSTDTC) + start_offset,
+    AESTDTC = as.character(ae_start),
+    # Some AEs are ongoing (no end date), some end after cutoff
+    ae_end_offset = sample(c(NA, 3, 7, 14, 30, 60, 90), 1),
+    AEENDTC = if_else(!is.na(ae_end_offset),
+                      as.character(ae_start + ae_end_offset),
+                      NA_character_)
+  ) %>%
+  ungroup() %>%
+  group_by(USUBJID) %>%
+  mutate(AESEQ = row_number()) %>%
+  ungroup() %>%
+  select(STUDYID, DOMAIN, USUBJID, AESEQ, AETERM, AEDECOD, AESEV, AESER,
+         AESTDTC, AEENDTC)
+
+cat("AE domain:", nrow(ae_sample), "records\n\n")
+
+# Show which AEs cross the cutoff boundary
+ae_sample %>%
+  mutate(
+    START_VS_CUT = case_when(
+      ymd(AESTDTC) > cutoff_date ~ "AFTER cutoff",
+      ymd(AESTDTC) <= cutoff_date ~ "BEFORE cutoff",
+      TRUE ~ "UNKNOWN"
+    ),
+    END_VS_CUT = case_when(
+      is.na(AEENDTC) ~ "ONGOING",
+      ymd(AEENDTC) > cutoff_date ~ "AFTER cutoff",
+      ymd(AEENDTC) <= cutoff_date ~ "BEFORE cutoff",
+      TRUE ~ "UNKNOWN"
+    )
+  ) %>%
+  count(START_VS_CUT, END_VS_CUT, name = "Count")
+```
+
+```{r}
+#| label: create-lb-data
+
+# ---- LB Domain (simplified) ----
+visits <- tibble(
+  VISITNUM = c(1, 2, 3, 4, 5),
+  VISIT    = c("BASELINE", "WEEK 4", "WEEK 8", "WEEK 12", "WEEK 16")
+)
+
+lb_sample <- expand_grid(
+  USUBJID = subjects[1:8],
+  tibble(
+    LBTESTCD = c("ALT", "CREAT", "GLUC"),
+    LBTEST   = c("Alanine Aminotransferase", "Creatinine", "Glucose")
+  ),
+  visits
+) %>%
+  left_join(dm_sample %>% select(USUBJID, RFSTDTC), by = "USUBJID") %>%
+  mutate(
+    STUDYID  = STUDYID,
+    DOMAIN   = "LB",
+    visit_offset = case_when(
+      VISITNUM == 1 ~ 0,
+      VISITNUM == 2 ~ 28,
+      VISITNUM == 3 ~ 56,
+      VISITNUM == 4 ~ 84,
+      VISITNUM == 5 ~ 112
+    ),
+    LBDTC = as.character(ymd(RFSTDTC) + visit_offset),
+    LBSTRESN = round(rnorm(n(), 50, 15), 1),
+    LBSTRESU = "U/L"
+  ) %>%
+  group_by(USUBJID) %>%
+  mutate(LBSEQ = row_number()) %>%
+  ungroup() %>%
+  select(STUDYID, DOMAIN, USUBJID, LBSEQ, LBTESTCD, LBTEST,
+         LBSTRESN, LBSTRESU, VISITNUM, VISIT, LBDTC)
+
+cat("LB domain:", nrow(lb_sample), "records\n")
+
+# How many LB records are after cutoff?
+cat("LB records after cutoff:", 
+    sum(ymd(lb_sample$LBDTC) > cutoff_date, na.rm = TRUE), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Applying Data Cuts Manually (Understanding the Logic)
+
+Before using `datacutr`, let's understand the logic by implementing cuts manually:
+
+### Patient-Level Cut
+
+```{r}
+#| label: manual-patient-cut
+
+# ---- Patient-Level Cut ----
+# Remove subjects whose first dose date is AFTER the cutoff
+
+# Step 1: Identify subjects to keep
+subjects_to_keep <- dm_sample %>%
+  filter(ymd(RFSTDTC) <= cutoff_date) %>%
+  pull(USUBJID)
+
+cat("Patient-level cut:\n")
+cat("  Subjects before cut:", n_distinct(dm_sample$USUBJID), "\n")
+cat("  Subjects after cut:", length(subjects_to_keep), "\n")
+cat("  Subjects removed:", n_distinct(dm_sample$USUBJID) - length(subjects_to_keep), "\n\n")
+
+# Step 2: Apply to all domains
+dm_cut <- dm_sample %>% filter(USUBJID %in% subjects_to_keep)
+ae_patient_cut <- ae_sample %>% filter(USUBJID %in% subjects_to_keep)
+lb_patient_cut <- lb_sample %>% filter(USUBJID %in% subjects_to_keep)
+
+cat("Records after patient-level cut:\n")
+cat("  DM:", nrow(dm_cut), "\n")
+cat("  AE:", nrow(ae_patient_cut), "(from", nrow(ae_sample), ")\n")
+cat("  LB:", nrow(lb_patient_cut), "(from", nrow(lb_sample), ")\n")
+```
+
+### Record-Level Cut
+
+```{r}
+#| label: manual-record-cut
+
+# ---- Record-Level Cut ----
+# Keep subjects, but remove individual records after cutoff
+
+# AE: Remove AEs that STARTED after cutoff
+ae_record_cut <- ae_patient_cut %>%
+  filter(ymd(AESTDTC) <= cutoff_date)
+
+cat("AE Record-level cut:\n")
+cat("  Records before:", nrow(ae_patient_cut), "\n")
+cat("  Records after:", nrow(ae_record_cut), "\n")
+cat("  Records removed:", nrow(ae_patient_cut) - nrow(ae_record_cut), "\n\n")
+
+# LB: Remove lab results collected after cutoff
+lb_record_cut <- lb_patient_cut %>%
+  filter(ymd(LBDTC) <= cutoff_date)
+
+cat("LB Record-level cut:\n")
+cat("  Records before:", nrow(lb_patient_cut), "\n")
+cat("  Records after:", nrow(lb_record_cut), "\n")
+cat("  Records removed:", nrow(lb_patient_cut) - nrow(lb_record_cut), "\n")
+```
+
+::: callout-warning
+## What About Ongoing AEs at Cutoff?
+
+An AE that **started before** the cutoff but has **no end date** (ongoing) needs special handling:
+
+-   **Keep the AE record** (it started before cutoff)
+-   **Set AEENDTC to the cutoff date** (or leave it blank depending on convention)
+-   **Flag it** as "ongoing at data cutoff"
+
+This is where `datacutr` really helps - it handles these edge cases automatically.
+:::
+
+### Handling Ongoing AEs at Cutoff
+
+```{r}
+#| label: ongoing-ae-handling
+
+# Handle AEs that span the cutoff boundary
+ae_final_cut <- ae_patient_cut %>%
+  mutate(
+    ae_start = ymd(AESTDTC),
+    ae_end   = ymd(AEENDTC)
+  ) %>%
+  # Keep AEs that started on or before cutoff
+  filter(ae_start <= cutoff_date) %>%
+  mutate(
+    # If AE ends AFTER cutoff, truncate the end date to cutoff
+    AEENDTC_ORIG = AEENDTC,
+    AEENDTC = case_when(
+      # AE ends after cutoff → truncate
+      !is.na(ae_end) & ae_end > cutoff_date ~ as.character(cutoff_date),
+      # AE is ongoing → leave as is (still ongoing at cutoff)
+      is.na(ae_end) ~ NA_character_,
+      # AE ended before cutoff → keep original
+      TRUE ~ AEENDTC
+    ),
+    # Flag for records modified by the cut
+    DCUT_TEMP_REMOVE = "N",
+    DCUT_TEMP_DTHCHANGE = if_else(
+      !is.na(AEENDTC_ORIG) & AEENDTC != AEENDTC_ORIG,
+      "Y", "N"
+    )
+  ) %>%
+  select(-ae_start, -ae_end, -AEENDTC_ORIG)
+
+cat("AE handling at cutoff boundary:\n")
+cat("  Records kept:", nrow(ae_final_cut), "\n")
+cat("  Records with modified end dates:", 
+    sum(ae_final_cut$DCUT_TEMP_DTHCHANGE == "Y", na.rm = TRUE), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Using datacutr
+
+Now let's use `datacutr` to do this properly:
+
+### Step 1: Create the Datacut Dataset
+
+```{r}
+#| label: datacutr-create-dcut
+
+# The datacut dataset defines per-patient cutoff dates
+# In simple cases, all subjects have the same cutoff date
+# In complex cases (e.g., rolling enrollment), dates may differ
+
+# For special_dm_cut, we need RFSTDTC and DTHDTC in the dcut dataset
+dcut <- dm_sample %>%
+  select(USUBJID, RFSTDTC, DTHDTC) %>%
+  mutate(
+    DCUTDTC = as.character(cutoff_date),  # Same cutoff for all
+    DCUTDTM = as.POSIXct(paste0(cutoff_date, " 23:59:59"))
+  )
+
+cat("Datacut metadata:\n")
+print(dcut)
+```
+
+### Step 2: Define the Cut Strategy
+
+```{r}
+#| label: datacutr-strategy
+
+# datacutr uses a two-step process:
+# 1. date_cut() flags records (adds DCUT_TEMP_REMOVE)
+# 2. apply_cut() removes flagged records
+
+# For DM: special_dm_cut() handles patient-level cut based on RFSTDTC
+cat("Cut strategy:\n")
+cat("  DM: Patient-level cut on RFSTDTC (first dose date)\n")
+cat("  AE: Record-level cut on AESTDTC (AE start date)\n")
+cat("  LB: Record-level cut on LBDTC (lab collection date)\n\n")
+```
+
+### Step 3: Apply the Cut Using datacutr Functions
+
+```{r}
+#| label: apply-datacutr
+
+# ---- Step 3a: DM Domain ----
+# special_dm_cut handles the patient-level cut for DM
+# It compares RFSTDTC (from dcut) against DCUTDTC
+dm_after_cut <- special_dm_cut(
+  dataset_dm = dm_sample,
+  dataset_cut = dcut
+)
+
+cat("DM after cut:", nrow(dm_after_cut), "subjects (from", nrow(dm_sample), ")\n")
+```
+
+```{r}
+#| label: apply-datacutr-ae
+
+# ---- Step 3b: AE Domain ----
+# date_cut handles record-level cuts and adds DCUT_TEMP_REMOVE flag
+# First, we need to know which subjects passed the DM cut
+subjects_after_dm_cut <- dm_after_cut$USUBJID
+
+ae_for_cut <- ae_sample %>%
+  filter(USUBJID %in% subjects_after_dm_cut)
+
+ae_after_cut_temp <- date_cut(
+  dataset_sdtm = ae_for_cut,
+  sdtm_date_var = AESTDTC,
+  dataset_cut = dcut,
+  cut_var = DCUTDTM
+)
+
+# Apply the cut using apply_cut which removes flagged records
+ae_after_cut <- apply_cut(
+  dsin = ae_after_cut_temp,
+  dcutvar = DCUT_TEMP_REMOVE,
+  dthchangevar = DCUT_TEMP_DTHCHANGE
+)
+
+cat("AE after cut:", nrow(ae_after_cut), "records (from", nrow(ae_sample), ")\n")
+```
+
+```{r}
+#| label: apply-datacutr-lb
+
+# ---- Step 3c: LB Domain ----
+lb_for_cut <- lb_sample %>%
+  filter(USUBJID %in% subjects_after_dm_cut)
+
+lb_after_cut_temp <- date_cut(
+  dataset_sdtm = lb_for_cut,
+  sdtm_date_var = LBDTC,
+  dataset_cut = dcut,
+  cut_var = DCUTDTM
+)
+
+# Apply the cut using apply_cut which removes flagged records
+lb_after_cut <- apply_cut(
+  dsin = lb_after_cut_temp,
+  dcutvar = DCUT_TEMP_REMOVE,
+  dthchangevar = DCUT_TEMP_DTHCHANGE
+)
+
+cat("LB after cut:", nrow(lb_after_cut), "records (from", nrow(lb_sample), ")\n")
+```
+
+### Step 4: Summary of Data Cut
+
+```{r}
+#| label: cut-summary
+
+cat("=== DATA CUT SUMMARY ===\n")
+cat("Cutoff date:", as.character(cutoff_date), "\n\n")
+
+summary_table <- tibble::tribble(
+  ~Domain, ~Before_Cut, ~After_Cut, ~Removed,
+  "DM", nrow(dm_sample), nrow(dm_after_cut), nrow(dm_sample) - nrow(dm_after_cut),
+  "AE", nrow(ae_sample), nrow(ae_after_cut), nrow(ae_sample) - nrow(ae_after_cut),
+  "LB", nrow(lb_sample), nrow(lb_after_cut), nrow(lb_sample) - nrow(lb_after_cut)
+)
+
+print(summary_table)
+```
+
+------------------------------------------------------------------------
+
+## Real-World Data Cut Considerations
+
+### Partial Dates
+
+```{r}
+#| label: partial-dates
+
+# In real data, you'll encounter partial dates
+cat("Common partial date scenarios:\n\n")
+
+partial_examples <- tibble::tribble(
+  ~AESTDTC,       ~Problem,                          ~Solution,
+  "2024-06",       "Day missing",                    "Impute to 1st or last of month",
+  "2024",          "Month and day missing",          "Impute based on SAP rules",
+  "",              "Completely missing",             "Flag for medical review",
+  "2024-06-15",    "Complete date",                  "No imputation needed",
+  "2024-06-UN",    "Day unknown (UN notation)",      "Impute per convention"
+)
+
+print(partial_examples)
+```
+
+::: callout-tip
+## datacutr and Partial Dates
+
+The `datacutr::impute_sdtm()` function can handle partial date imputation before applying the cut. Common imputation strategies:
+
+-   **Conservative (for safety)**: Impute missing day to the **1st of the month** - this maximizes the chance of including the record (more conservative for safety data)
+-   **Conservative (for efficacy)**: Impute missing day to the **last of the month** - interpretation depends on the analysis
+-   **SAP-driven**: Always follow the Statistical Analysis Plan's imputation rules
+:::
+
+### Multiple Cutoff Dates
+
+```{r}
+#| label: multiple-cutoffs
+
+# In some studies, cutoff dates differ by subject (rolling enrollment)
+# or by analysis (interim vs final)
+
+cat("Example: Different cutoffs per analysis:\n\n")
+
+analysis_cuts <- tibble::tribble(
+  ~Analysis,          ~Cutoff_Date,     ~Purpose,
+  "DSMB Review 1",    "2024-03-31",     "Safety review at 50% enrollment",
+  "Interim Analysis",  "2024-06-15",     "Pre-specified interim for efficacy",
+  "Final Analysis",    "2024-12-31",     "Primary analysis for submission"
+)
+
+print(analysis_cuts)
+```
+
+------------------------------------------------------------------------
+
+## Best Practices for Data Cuts
+
+### DO
+
+```{r}
+#| label: best-practices
+
+cat("=== DATA CUT BEST PRACTICES ===\n\n")
+
+best_practices <- tibble::tribble(
+  ~Rule,                                              ~Why,
+  "Document the cutoff date in TS domain",            "Traceability for regulators",
+  "Apply cuts BEFORE creating ADaM datasets",         "ADaM should be based on cut data",
+  "Keep both pre-cut and post-cut datasets",          "Audit trail and reproducibility",
+  "Handle ongoing events explicitly",                 "AEs without end dates need special logic",
+  "Use datacutr for consistency",                     "Avoids manual errors across domains",
+  "Log all records removed by the cut",               "Quality control and transparency",
+  "Validate record counts before and after",          "Ensure no data is accidentally lost"
+)
+
+print(best_practices)
+```
+
+### The Data Cut in the Submission Package
+
+```{r}
+#| label: submission-context
+
+cat("Where the data cut fits in the submission process:\n\n")
+cat("1. Raw data collected continuously\n")
+cat("2. DATABASE LOCK (data cleaning complete)\n")
+cat("3. DATA CUT applied (datacutr)\n")
+cat("4. SDTM datasets created from cut data\n")
+cat("5. ADaM datasets derived from SDTM\n")
+cat("6. TFLs (Tables, Figures, Listings) generated from ADaM\n")
+cat("7. Clinical Study Report written\n")
+cat("8. Submission package assembled (eCTD)\n\n")
+
+cat("The cutoff date is recorded in:\n")
+cat("  - TS domain (TSPARMCD = 'DCUTDTC')\n")
+cat("  - Study report\n")
+cat("  - define.xml\n")
+```
+
+------------------------------------------------------------------------
+
+## Deliverable Summary
+
+Today you completed the following:
+
+| Task | Status |
+|----|----|
+| Understood what data cuts are and why they matter | ✓ Done |
+| Implemented patient-level and record-level cuts manually | ✓ Done |
+| Handled ongoing AEs at the cutoff boundary | ✓ Done |
+| Used `datacutr` functions: `special_dm_cut()`, `date_cut()`, `apply_cut()` | ✓ Done |
+| Learned about partial date imputation | ✓ Done |
+| Reviewed best practices for data cuts | ✓ Done |
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  **Data cuts freeze the data** - Only data before the cutoff is included in the analysis
+2.  **Patient-level cuts** exclude entire subjects; **record-level cuts** exclude individual records
+3.  **Ongoing events need special handling** - AEs that span the cutoff require careful logic
+4.  **`datacutr` standardizes the process** - Avoids manual errors and ensures reproducibility
+5.  **Cuts happen BEFORE SDTM/ADaM** - The cut data is the foundation for all downstream datasets
+6.  **Document everything** - The cutoff date must be recorded in TS and the study report
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   [datacutr Documentation](https://pharmaverse.github.io/datacutr/) - Official datacutr package documentation
+-   [datacutr GitHub](https://github.com/pharmaverse/datacutr) - Source code and examples
+-   [CDISC Implementation Guide - Data Cuts](https://www.cdisc.org/standards/foundational/sdtm) - SDTM guidance
+-   [Pharmaverse.org](https://pharmaverse.org) - R packages for clinical data
+-   [ICH E9(R1)](https://database.ich.org/sites/default/files/E9-R1_Step4_Guideline_2019_1203.pdf) - Estimands and data handling
+
+------------------------------------------------------------------------
+
+## What's Next?
+
+In **Day 13**, we will focus on **SDTM Validation with sdtmchecks**:
+
+-   Why validation is essential before creating ADaM datasets
+-   Running FDA business rules against your SDTM domains
+-   Understanding validation reports and resolving findings
+-   Common SDTM issues and how to fix them

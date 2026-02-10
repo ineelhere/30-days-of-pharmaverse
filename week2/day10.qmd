@@ -1,0 +1,819 @@
+---
+title: "Day 10: AE Domain Mastery & SAE Logic"
+subtitle: "Deep Dive into Severity, Causality, and Outcomes"
+author: "Indraneel Chakraborty"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+    
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+::: {style="margin-bottom:12px;"}
+<a href="../index.html" class="resource-link">← Back to Roadmap</a>
+:::
+
+## Learning Objectives
+
+By the end of Day 10, you will be able to:
+
+1.  Understand the **AE domain** at a production level - beyond the basics covered in Day 7
+2.  Distinguish between **severity grading** (MILD/MODERATE/SEVERE) and **toxicity grading** (CTCAE Grade 1-5)
+3.  Work with all **SAE-related variables**: AESER, AESDTH, AESLIFE, AESHOSP, AESDISAB, AESCONG, AESMIE
+4.  Derive **treatment-emergent adverse events** (TEAEs) - one of the most critical derivations in clinical programming
+5.  Calculate **AE duration** and handle **ongoing AEs** correctly
+6.  Understand how AE data maps to the **ADaM ADAE** dataset
+
+------------------------------------------------------------------------
+
+## Why This Day Matters
+
+On Day 7 we built a basic AE domain as part of the capstone. Today we go **much deeper** - because in production clinical programming, AE data is arguably the **most scrutinized dataset** by regulatory agencies. Getting AE logic wrong can delay a submission or trigger FDA queries.
+
+::: callout-important
+## The Stakes Are High
+
+Adverse event data directly impacts:
+
+-   **Patient safety decisions** - Should the trial continue?
+-   **Drug labeling** - What warnings go on the label?
+-   **Regulatory approval** - Is the risk-benefit profile acceptable?
+-   **Post-marketing surveillance** - What to watch for after approval
+
+Every variable, every flag, every derivation matters.
+:::
+
+------------------------------------------------------------------------
+
+## Package Installation & Loading
+
+### Required Packages
+
+| Package           | Purpose                                   |
+|-------------------|-------------------------------------------|
+| `dplyr`           | Data manipulation (filter, mutate, joins) |
+| `lubridate`       | Date/time arithmetic for AE durations     |
+| `pharmaversesdtm` | Example SDTM datasets including AE and DM |
+
+### Install & Load
+
+```{r}
+#| label: install-and-load
+
+if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
+if (!requireNamespace("lubridate", quietly = TRUE)) install.packages("lubridate")
+if (!requireNamespace("pharmaversesdtm", quietly = TRUE)) install.packages("pharmaversesdtm")
+
+library(dplyr)
+library(lubridate)
+library(pharmaversesdtm)
+```
+
+------------------------------------------------------------------------
+
+## Exploring the AE Domain from pharmaversesdtm
+
+### Load and Inspect
+
+```{r}
+#| label: load-ae-data
+
+# Load AE and DM domains
+data("ae", package = "pharmaversesdtm")
+data("dm", package = "pharmaversesdtm")
+
+cat("AE domain dimensions:", nrow(ae), "rows x", ncol(ae), "columns\n")
+cat("Number of unique subjects:", n_distinct(ae$USUBJID), "\n")
+cat("Variables available:\n")
+cat(paste(names(ae), collapse = ", "), "\n")
+```
+
+### Understanding What Each AE Variable Means
+
+Let's look at the actual data - every column tells a story:
+
+```{r}
+#| label: glimpse-ae
+
+dplyr::glimpse(ae)
+```
+
+::: callout-note
+## AE Variables Quick Reference
+
+Here's what the key variables represent in plain English:
+
+| Variable   | What it means                        | Example                    |
+|------------|--------------------------------------|----------------------------|
+| `AETERM`   | AE as reported by investigator       | "Headache"                 |
+| `AEDECOD`  | Standardized preferred term (MedDRA) | "HEADACHE"                 |
+| `AEBODSYS` | Body system (MedDRA SOC)             | "NERVOUS SYSTEM DISORDERS" |
+| `AESEV`    | Severity: MILD, MODERATE, SEVERE     | "MODERATE"                 |
+| `AESER`    | Is it serious? Y/N                   | "N"                        |
+| `AEREL`    | Related to study drug?               | "POSSIBLY RELATED"         |
+| `AEACN`    | Action taken with study drug         | "DOSE NOT CHANGED"         |
+| `AEOUT`    | Outcome                              | "RECOVERED/RESOLVED"       |
+| `AESTDTC`  | Start date (ISO 8601)                | "2014-01-03"               |
+| `AEENDTC`  | End date (ISO 8601)                  | "2014-01-12"               |
+:::
+
+------------------------------------------------------------------------
+
+## Severity vs. Toxicity Grading
+
+This is a concept that confuses many programmers. Let's clarify it with code.
+
+### Severity Grading (AESEV)
+
+**Severity** describes the *intensity* of the adverse event. It's a clinical judgment:
+
+-   **MILD**: Awareness of event but easily tolerated
+-   **MODERATE**: Discomfort causing interference with usual activity
+-   **SEVERE**: Incapacitating; unable to do usual activities
+
+```{r}
+#| label: severity-distribution
+
+# What severity values exist in our data?
+ae %>%
+  count(AESEV, name = "Count") %>%
+  mutate(Percent = round(100 * Count / sum(Count), 1)) %>%
+  arrange(match(AESEV, c("MILD", "MODERATE", "SEVERE")))
+```
+
+### Toxicity Grading (AETOXGR - CTCAE Scale)
+
+**Toxicity grading** uses the **CTCAE (Common Terminology Criteria for Adverse Events)** scale and is more granular:
+
+| Grade | Description                                                      |
+|-------|------------------------------------------------------------------|
+| 1     | Mild; asymptomatic or mild symptoms                              |
+| 2     | Moderate; minimal, local, or non-invasive intervention indicated |
+| 3     | Severe or medically significant; hospitalization indicated       |
+| 4     | Life-threatening; urgent intervention indicated                  |
+| 5     | Death related to AE                                              |
+
+```{r}
+#| label: toxicity-vs-severity
+
+# Check if AETOXGR exists in our data
+if ("AETOXGR" %in% names(ae)) {
+  ae %>%
+    count(AETOXGR, AESEV) %>%
+    arrange(AETOXGR)
+} else {
+  cat("AETOXGR is not present in the pharmaversesdtm AE dataset.\n")
+  cat("This is common - not all studies use CTCAE grading.\n\n")
+  
+  cat("When AETOXGR IS available, it goes in the AE domain as:\n")
+  cat("  AETOXGR = Toxicity grade (1-5)\n")
+  cat("  AETOXGRS = Toxicity grade from source\n")
+}
+```
+
+::: callout-important
+## Severity ≠ Seriousness
+
+This is the **#1 most common confusion** in clinical programming:
+
+-   **AESEV (Severity)** = How intense is the event? (MILD/MODERATE/SEVERE)
+-   **AESER (Seriousness)** = Does it meet SAE criteria? (Y/N)
+
+A **MILD rash** could be an SAE if it requires hospitalization. A **SEVERE headache** may NOT be an SAE if it resolves quickly with OTC medication.
+
+**Severity describes intensity. Seriousness describes regulatory significance.**
+:::
+
+------------------------------------------------------------------------
+
+## Serious Adverse Events (SAEs)
+
+### What Makes an AE "Serious"?
+
+An adverse event is classified as **serious** (AESER = "Y") if it meets **any** of the following criteria:
+
+```         
+┌─────────────────────────────────────────────────────────────────────┐
+│                   SAE CRITERIA VARIABLES                            │
+├─────────────────────────────────────────────────────────────────────┤
+│  AESER    = "Y" if ANY of the following are "Y":                    │
+│                                                                     │
+│  AESDTH   = Results in Death                                        │
+│  AESLIFE  = Is Life-Threatening                                     │
+│  AESHOSP  = Requires or Prolongs Hospitalization                    │
+│  AESDISAB = Results in Persistent/Significant Disability            │
+│  AESCONG  = Congenital Anomaly/Birth Defect                         │
+│  AESMIE   = Other Medically Important Event                         │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### Exploring SAE Data
+
+```{r}
+#| label: sae-exploration
+
+# How many SAEs in our data?
+ae %>%
+  count(AESER, name = "Count") %>%
+  mutate(Percent = round(100 * Count / sum(Count), 1))
+```
+
+### SAE Criteria Breakdown
+
+```{r}
+#| label: sae-criteria
+
+# Check which SAE criteria variables are available
+sae_vars <- c("AESDTH", "AESLIFE", "AESHOSP", "AESDISAB", "AESCONG", "AESMIE")
+available_sae_vars <- sae_vars[sae_vars %in% names(ae)]
+
+cat("SAE criteria variables available:", paste(available_sae_vars, collapse = ", "), "\n\n")
+
+if (length(available_sae_vars) > 0) {
+  # Show SAE details
+  ae %>%
+    filter(AESER == "Y") %>%
+    select(USUBJID, AEDECOD, AESEV, AESER, any_of(sae_vars)) %>%
+    head(10)
+} else {
+  cat("No SAE criteria sub-variables found in this dataset.\n")
+  cat("In production, you would create them from raw CRF data.\n")
+}
+```
+
+### Simulating SAE Logic from Scratch
+
+Since the practice dataset may not have all SAE sub-variables, let's build the logic ourselves. This is exactly what you'd do on a real study:
+
+```{r}
+#| label: sae-derivation
+
+# Create simulated AE data with SAE criteria
+set.seed(42)
+
+ae_sample <- tibble(
+  USUBJID  = rep(paste0("CDISC01-001-00", 1:5), each = 4),
+  AESEQ    = rep(1:4, 5),
+  AEDECOD  = sample(c("HEADACHE", "NAUSEA", "RASH", "FALL", "PNEUMONIA",
+                       "MYOCARDIAL INFARCTION", "SEIZURE", "ANEMIA"), 20, replace = TRUE),
+  AESEV    = sample(c("MILD", "MODERATE", "SEVERE"), 20, replace = TRUE, 
+                    prob = c(0.5, 0.35, 0.15)),
+  # SAE criteria - simulate realistic probabilities
+  AESDTH   = sample(c("Y", "N"), 20, replace = TRUE, prob = c(0.02, 0.98)),
+  AESLIFE  = sample(c("Y", "N"), 20, replace = TRUE, prob = c(0.05, 0.95)),
+  AESHOSP  = sample(c("Y", "N"), 20, replace = TRUE, prob = c(0.10, 0.90)),
+  AESDISAB = sample(c("Y", "N"), 20, replace = TRUE, prob = c(0.03, 0.97)),
+  AESCONG  = "N",  # Very rare in adult trials
+  AESMIE   = sample(c("Y", "N"), 20, replace = TRUE, prob = c(0.05, 0.95))
+)
+
+# Derive AESER: "Y" if ANY criterion is "Y"
+ae_with_ser <- ae_sample %>%
+  mutate(
+    AESER = case_when(
+      AESDTH   == "Y" ~ "Y",
+      AESLIFE  == "Y" ~ "Y",
+      AESHOSP  == "Y" ~ "Y",
+      AESDISAB == "Y" ~ "Y",
+      AESCONG  == "Y" ~ "Y",
+      AESMIE   == "Y" ~ "Y",
+      TRUE ~ "N"
+    )
+  )
+
+cat("SAE derivation results:\n")
+ae_with_ser %>%
+  count(AESER, name = "Count") %>%
+  mutate(Percent = round(100 * Count / sum(Count), 1))
+```
+
+```{r}
+#| label: sae-detail-view
+
+# View SAE records with their criteria
+cat("\nSAE records detail:\n")
+ae_with_ser %>%
+  filter(AESER == "Y") %>%
+  select(USUBJID, AEDECOD, AESEV, AESER, AESDTH, AESLIFE, AESHOSP, AESDISAB, AESMIE)
+```
+
+::: callout-tip
+## Read the Logic Carefully
+
+The `case_when()` above uses a **waterfall** approach - it checks each criterion in sequence and returns `"Y"` at the first match. This works well for deriving `AESER`, but in production you'd typically use a more explicit approach:
+
+``` r
+AESER = if_else(
+  AESDTH == "Y" | AESLIFE == "Y" | AESHOSP == "Y" | 
+  AESDISAB == "Y" | AESCONG == "Y" | AESMIE == "Y",
+  "Y", "N"
+)
+```
+
+Both approaches give the same result. The `if_else()` version makes the OR-logic more explicit.
+:::
+
+------------------------------------------------------------------------
+
+## Treatment-Emergent Adverse Events (TEAEs)
+
+### What is a TEAE?
+
+A **treatment-emergent adverse event** is an AE that:
+
+1.  **Started on or after the first dose** of study drug, OR
+2.  **Was present before treatment but worsened** after the first dose
+
+This is one of the most important derivations in clinical programming because **most safety analyses focus exclusively on TEAEs**.
+
+### The TEAE Decision Tree
+
+```         
+┌─────────────────────────────────────────────────────────────────────┐
+│                      TEAE DECISION LOGIC                            │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  Is AE Start Date (AESTDTC) >= First Dose Date (RFSTDTC)?          │
+│    YES → TEAE = "Y"                                                │
+│    NO  → Was severity worse than pre-treatment?                     │
+│           YES → TEAE = "Y"                                         │
+│           NO  → TEAE = "N" (Pre-treatment AE, not worsened)        │
+│                                                                     │
+│  Is AE Start Date missing?                                          │
+│    → Compare AE End Date with First Dose Date                       │
+│    → If AEENDTC >= RFSTDTC, treat as potentially TEAE              │
+│    → Flag for medical review                                        │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### Deriving TEAEs in Code
+
+```{r}
+#| label: teae-derivation
+
+# Load DM for reference dates
+data("dm", package = "pharmaversesdtm")
+data("ae", package = "pharmaversesdtm")
+
+# Get reference start date per subject
+ref_dates <- dm %>%
+  select(USUBJID, RFSTDTC) %>%
+  filter(!is.na(RFSTDTC))
+
+cat("Reference dates (first dose) for sample subjects:\n")
+head(ref_dates)
+```
+
+```{r}
+#| label: teae-join-and-derive
+
+# Join AE with reference dates and derive TEAE flag
+ae_with_teae <- ae %>%
+  left_join(ref_dates, by = "USUBJID") %>%
+  mutate(
+    # Parse dates - handle potential partial dates
+    ae_start = ymd(AESTDTC),
+    ref_start = ymd(RFSTDTC),
+    
+    # Core TEAE derivation
+    TRTEMFL = case_when(
+      # Case 1: AE starts on or after first dose
+      !is.na(ae_start) & !is.na(ref_start) & ae_start >= ref_start ~ "Y",
+      
+      # Case 2: AE start date is missing - conservative approach
+      is.na(ae_start) & !is.na(AEENDTC) & !is.na(ref_start) &
+        ymd(AEENDTC) >= ref_start ~ "Y",
+      
+      # Case 3: Both dates available, AE started before treatment
+      !is.na(ae_start) & !is.na(ref_start) & ae_start < ref_start ~ "N",
+      
+      # Case 4: Cannot determine
+      TRUE ~ NA_character_
+    )
+  )
+
+# Summary
+cat("TEAE derivation results:\n")
+ae_with_teae %>%
+  count(TRTEMFL, name = "Count") %>%
+  mutate(Percent = round(100 * Count / sum(Count), 1))
+```
+
+```{r}
+#| label: teae-examples
+
+# Show examples of TEAE vs non-TEAE
+cat("\nSample of TEAE records (started on/after first dose):\n")
+ae_with_teae %>%
+  filter(TRTEMFL == "Y") %>%
+  select(USUBJID, AEDECOD, AESTDTC, RFSTDTC, TRTEMFL) %>%
+  head(5)
+
+cat("\nSample of non-TEAE records (started before first dose):\n")
+ae_with_teae %>%
+  filter(TRTEMFL == "N") %>%
+  select(USUBJID, AEDECOD, AESTDTC, RFSTDTC, TRTEMFL) %>%
+  head(5)
+```
+
+::: callout-warning
+## Partial Dates Are Common
+
+In real clinical data, you will frequently encounter **partial dates** like:
+
+-   `"2014-01"` (month known, day unknown)
+-   `"2014"` (only year known)
+-   `""` or `NA` (completely missing)
+
+The `lubridate::ymd()` function will return `NA` for partial dates. In production, you'd implement **date imputation rules** as specified in the Statistics Analysis Plan (SAP). Common approaches:
+
+-   **Conservative**: Impute to the latest possible date (e.g., first of the month)
+-   **Non-conservative**: Impute to the earliest possible date
+-   **Rule-based**: Use other available information to make the best guess
+:::
+
+------------------------------------------------------------------------
+
+## AE Duration Calculations
+
+### Computing Duration in Days
+
+```{r}
+#| label: ae-duration
+
+# Calculate AE duration
+ae_duration <- ae %>%
+  mutate(
+    ae_start = ymd(AESTDTC),
+    ae_end   = ymd(AEENDTC),
+    
+    # Duration = end - start + 1 (inclusive of start and end day)
+    AEDUR = as.numeric(ae_end - ae_start) + 1,
+    
+    # Flag ongoing AEs (no end date)
+    AEONGO = if_else(is.na(ae_end), "Y", "N")
+  )
+
+# Summary of durations
+cat("AE Duration Summary (days):\n")
+ae_duration %>%
+  filter(!is.na(AEDUR)) %>%
+  summarise(
+    N = n(),
+    Mean = round(mean(AEDUR), 1),
+    Median = median(AEDUR),
+    Min = min(AEDUR),
+    Max = max(AEDUR),
+    SD = round(sd(AEDUR), 1)
+  )
+```
+
+```{r}
+#| label: ongoing-ae-count
+
+# Ongoing AEs
+cat("\nOngoing AEs (no end date):\n")
+ae_duration %>%
+  count(AEONGO, name = "Count") %>%
+  mutate(Percent = round(100 * Count / sum(Count), 1))
+```
+
+::: callout-note
+## The "+1" Rule
+
+Notice we calculate duration as `(end - start) + 1`. This is the standard clinical convention:
+
+-   An AE that starts on Day 5 and ends on Day 5 lasted **1 day** (not 0)
+-   An AE that starts on Day 5 and ends on Day 7 lasted **3 days** (not 2)
+
+This is the same "inclusive" counting rule used for study day calculations.
+:::
+
+------------------------------------------------------------------------
+
+## Causality Assessment
+
+### How Causality Is Determined
+
+Causality (AEREL) indicates whether the AE is related to the study drug. Common categories:
+
+| AEREL Value   | Description                               |
+|---------------|-------------------------------------------|
+| `NOT RELATED` | No reasonable possibility of relationship |
+| `UNLIKELY`    | Doubtful relationship                     |
+| `POSSIBLE`    | Cannot rule out relationship              |
+| `PROBABLE`    | Likely related                            |
+| `DEFINITE`    | Clearly related                           |
+
+```{r}
+#| label: causality-analysis
+
+# Causality distribution
+cat("Causality (AEREL) distribution:\n")
+ae %>%
+  count(AEREL, name = "Count") %>%
+  mutate(Percent = round(100 * Count / sum(Count), 1)) %>%
+  arrange(desc(Count))
+```
+
+### Deriving a Binary Relatedness Flag
+
+For many analyses, we simplify causality into a binary flag:
+
+```{r}
+#| label: relatedness-flag
+
+# In ADaM, we often create a binary related flag
+ae_related <- ae %>%
+  mutate(
+    # RELFL = "Y" if possibly, probably, or definitely related
+    RELFL = case_when(
+      AEREL %in% c("POSSIBLE", "PROBABLE", "DEFINITE") ~ "Y",
+      AEREL %in% c("NOT RELATED", "UNLIKELY") ~ "N",
+      # Handle variations in terminology
+      grepl("RELAT", AEREL, ignore.case = TRUE) ~ "Y",
+      TRUE ~ "N"
+    )
+  )
+
+cat("Binary relatedness flag:\n")
+ae_related %>%
+  count(AEREL, RELFL) %>%
+  arrange(RELFL, desc(n))
+```
+
+------------------------------------------------------------------------
+
+## Action Taken and Outcome
+
+### AEACN - Action Taken with Study Drug
+
+The action taken in response to the AE is captured in `AEACN`:
+
+```{r}
+#| label: action-taken
+
+ae %>%
+  count(AEACN, name = "Count") %>%
+  mutate(Percent = round(100 * Count / sum(Count), 1)) %>%
+  arrange(desc(Count))
+```
+
+### AEOUT - Outcome of the AE
+
+```{r}
+#| label: ae-outcome
+
+ae %>%
+  count(AEOUT, name = "Count") %>%
+  mutate(Percent = round(100 * Count / sum(Count), 1)) %>%
+  arrange(desc(Count))
+```
+
+::: callout-tip
+## Controlled Terminology Matters
+
+All of these variables - `AEACN`, `AEOUT`, `AESEV`, `AESER` - use **CDISC Controlled Terminology**. You can't invent your own values. The allowed values are specified in the [CDISC CT Package](https://www.cancer.gov/research/resources/terminology/cdisc).
+
+For example, valid `AEOUT` values are: - RECOVERED/RESOLVED - RECOVERING/RESOLVING - NOT RECOVERED/NOT RESOLVED - RECOVERED/RESOLVED WITH SEQUELAE - FATAL - UNKNOWN
+:::
+
+------------------------------------------------------------------------
+
+## Complete Example: Production AE Processing
+
+Let's put everything together into a production-quality AE processing pipeline:
+
+```{r}
+#| label: production-ae-pipeline
+
+# ---- Production AE Processing Pipeline ----
+
+# Step 1: Start with raw AE data
+data("ae", package = "pharmaversesdtm")
+data("dm", package = "pharmaversesdtm")
+
+# Step 2: Get reference dates
+ref <- dm %>%
+  select(STUDYID, USUBJID, RFSTDTC, RFENDTC) %>%
+  mutate(
+    ref_start = ymd(RFSTDTC),
+    ref_end   = ymd(RFENDTC)
+  )
+
+# Step 3: Enhance AE data with all derivations
+ae_production <- ae %>%
+  # Join reference dates
+  left_join(ref %>% select(USUBJID, ref_start, ref_end, RFSTDTC), by = "USUBJID") %>%
+  mutate(
+    # Parse dates
+    ae_start = ymd(AESTDTC),
+    ae_end   = ymd(AEENDTC),
+    
+    # ---- TEAE Flag ----
+    TRTEMFL = case_when(
+      !is.na(ae_start) & !is.na(ref_start) & ae_start >= ref_start ~ "Y",
+      is.na(ae_start) & !is.na(ae_end) & !is.na(ref_start) & ae_end >= ref_start ~ "Y",
+      !is.na(ae_start) & !is.na(ref_start) & ae_start < ref_start ~ "N",
+      TRUE ~ NA_character_
+    ),
+    
+    # ---- Study Days ----
+    AESTDY = case_when(
+      !is.na(ae_start) & !is.na(ref_start) & ae_start >= ref_start ~ 
+        as.numeric(ae_start - ref_start) + 1,
+      !is.na(ae_start) & !is.na(ref_start) & ae_start < ref_start ~ 
+        as.numeric(ae_start - ref_start),
+      TRUE ~ NA_real_
+    ),
+    AEENDY = case_when(
+      !is.na(ae_end) & !is.na(ref_start) & ae_end >= ref_start ~ 
+        as.numeric(ae_end - ref_start) + 1,
+      !is.na(ae_end) & !is.na(ref_start) & ae_end < ref_start ~ 
+        as.numeric(ae_end - ref_start),
+      TRUE ~ NA_real_
+    ),
+    
+    # ---- Duration ----
+    AEDUR = if_else(!is.na(ae_start) & !is.na(ae_end),
+                    as.numeric(ae_end - ae_start) + 1,
+                    NA_real_),
+    
+    # ---- Ongoing Flag ----
+    AEONGO = if_else(is.na(ae_end), "Y", "N"),
+    
+    # ---- Binary Relatedness ----
+    RELFL = case_when(
+      AEREL %in% c("POSSIBLE", "PROBABLE", "DEFINITE") ~ "Y",
+      grepl("RELAT", AEREL, ignore.case = TRUE) ~ "Y",
+      TRUE ~ "N"
+    )
+  ) %>%
+  # Clean up helper columns
+  select(-ae_start, -ae_end, -ref_start, -ref_end)
+
+cat("Production AE dataset:\n")
+cat("Total AE records:", nrow(ae_production), "\n")
+cat("TEAEs:", sum(ae_production$TRTEMFL == "Y", na.rm = TRUE), "\n")
+cat("SAEs:", sum(ae_production$AESER == "Y", na.rm = TRUE), "\n")
+cat("Drug-related:", sum(ae_production$RELFL == "Y", na.rm = TRUE), "\n\n")
+```
+
+```{r}
+#| label: production-ae-preview
+
+# Preview the enhanced dataset
+ae_production %>%
+  select(USUBJID, AEDECOD, AESEV, AESER, TRTEMFL, AESTDY, AEDUR, AEONGO, RELFL) %>%
+  head(15)
+```
+
+------------------------------------------------------------------------
+
+## Key AE Counts for Safety Reporting
+
+In clinical study reports, AE tables almost always include these counts:
+
+```{r}
+#| label: ae-safety-summary
+
+# ---- Summary Table: AE Incidence ----
+cat("=== AE Incidence Summary ===\n\n")
+
+# Total subjects
+n_total <- n_distinct(dm$USUBJID)
+n_ae <- n_distinct(ae_production$USUBJID)
+
+cat("Total subjects enrolled:", n_total, "\n")
+cat("Subjects with any AE:", n_ae, 
+    sprintf("(%.1f%%)", 100 * n_ae / n_total), "\n\n")
+
+# TEAE summary
+teae_data <- ae_production %>% filter(TRTEMFL == "Y")
+n_teae <- n_distinct(teae_data$USUBJID)
+cat("Subjects with any TEAE:", n_teae,
+    sprintf("(%.1f%%)", 100 * n_teae / n_total), "\n")
+
+# SAE summary
+sae_data <- ae_production %>% filter(AESER == "Y")
+n_sae <- n_distinct(sae_data$USUBJID)
+cat("Subjects with any SAE:", n_sae,
+    sprintf("(%.1f%%)", 100 * n_sae / n_total), "\n")
+
+# Drug-related TEAE
+rel_teae <- ae_production %>% filter(TRTEMFL == "Y", RELFL == "Y")
+n_rel <- n_distinct(rel_teae$USUBJID)
+cat("Subjects with drug-related TEAE:", n_rel,
+    sprintf("(%.1f%%)", 100 * n_rel / n_total), "\n")
+```
+
+```{r}
+#| label: ae-by-severity
+
+# TEAE by maximum severity
+cat("\nTEAE by Maximum Severity per Subject:\n")
+teae_data %>%
+  mutate(SEV_NUM = case_when(
+    AESEV == "MILD" ~ 1,
+    AESEV == "MODERATE" ~ 2,
+    AESEV == "SEVERE" ~ 3
+  )) %>%
+  group_by(USUBJID) %>%
+  summarise(MAX_SEV = max(SEV_NUM, na.rm = TRUE), .groups = "drop") %>%
+  mutate(MAX_AESEV = case_when(
+    MAX_SEV == 1 ~ "MILD",
+    MAX_SEV == 2 ~ "MODERATE",
+    MAX_SEV == 3 ~ "SEVERE"
+  )) %>%
+  count(MAX_AESEV, name = "N_Subjects") %>%
+  mutate(Percent = round(100 * N_Subjects / n_total, 1)) %>%
+  arrange(match(MAX_AESEV, c("MILD", "MODERATE", "SEVERE")))
+```
+
+------------------------------------------------------------------------
+
+## Preview: From AE to ADAE
+
+The SDTM AE domain feeds into the ADaM **ADAE** dataset. Here's a preview of the key mappings:
+
+| SDTM AE          | ADaM ADAE | Description                            |
+|------------------|-----------|----------------------------------------|
+| AEDECOD          | AEDECOD   | Preferred term (carried forward)       |
+| AEBODSYS         | AEBODSYS  | Body system (carried forward)          |
+| AESEV            | AESEV     | Severity (carried forward)             |
+| AESTDTC → parsed | ASTDT     | Analysis start date (numeric)          |
+| AEENDTC → parsed | AENDT     | Analysis end date (numeric)            |
+| *derived*        | TRTEMFL   | Treatment-emergent flag                |
+| *derived*        | AESEQ_GR  | Worst event selection per subject/term |
+| from DM          | TRT01A    | Actual treatment (from ADSL)           |
+
+::: callout-note
+## Looking Ahead
+
+In Week 3, when we build ADaM datasets with `admiral`, the `derive_var_trtemfl()` function will handle TEAE derivation automatically - but understanding the logic behind it (as we've done today) is essential for debugging and validation.
+:::
+
+------------------------------------------------------------------------
+
+## Deliverable Summary
+
+Today you completed the following:
+
+| Task                                                      | Status |
+|-----------------------------------------------------------|--------|
+| Understood severity vs. toxicity grading                  | ✓ Done |
+| Explored all SAE criteria variables (AESER, AESDTH, etc.) | ✓ Done |
+| Derived SAE flag from sub-criteria using OR-logic         | ✓ Done |
+| Derived treatment-emergent AE (TEAE) flag                 | ✓ Done |
+| Calculated AE duration and identified ongoing AEs         | ✓ Done |
+| Analyzed causality, action taken, and outcome             | ✓ Done |
+| Built a production AE processing pipeline                 | ✓ Done |
+| Generated safety summary counts                           | ✓ Done |
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  **Severity ≠ Seriousness** - A mild AE can be serious; a severe AE may not be serious
+2.  **SAE criteria are additive** - AESER = "Y" if ANY sub-criterion is "Y"
+3.  **TEAEs are the focus** - Most safety analyses exclude pre-treatment AEs
+4.  **Duration uses the +1 rule** - Inclusive of both start and end day
+5.  **Causality is simplified** - Binary related/not-related flags are common in ADaM
+6.  **Controlled Terminology is mandatory** - Use only CDISC-approved values
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   [CDISC SDTM Implementation Guide - AE Domain](https://www.cdisc.org/standards/foundational/sdtm) - Official AE specification
+-   [MedDRA Terminology](https://www.meddra.org/) - Medical Dictionary for Regulatory Activities
+-   [CTCAE v5.0](https://ctep.cancer.gov/protocoldevelopment/electronic_applications/ctc.htm) - Common Terminology Criteria for Adverse Events
+-   [ICH E2A Guidelines](https://www.ich.org/page/safety-guidelines) - Clinical Safety Data Management
+-   [Admiral ADAE Vignette](https://pharmaverse.github.io/admiral/articles/adae.html) - Building ADAE with admiral
+
+------------------------------------------------------------------------
+
+## What's Next?
+
+In **Day 11**, we will focus on **Disposition (DS) & Trial Design Domains**:
+
+-   Understanding the DS domain for screen failures, completers, early terminators
+-   Trial Design domains: TA, TE, TV, TI, TS
+-   Working with EPOCH and milestone variables
+-   Subject flow and disposition summaries
