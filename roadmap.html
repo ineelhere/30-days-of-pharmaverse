@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>30-Day CDISC Clinical Programming Mastery</title>
+<title>30-Day CDISC Clinical Programming Mastery — ADaM & TLF Intensive</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 
@@ -405,7 +405,7 @@
   <div class="header-inner">
     <div class="header-label">Pharmaverse R Onboarding</div>
     <h1>30-Day Clinical Programming Mastery</h1>
-    <p>CDISC · SDTM · ADaM · Admiral · FDA-Ready</p>
+    <p>CDISC · SDTM · Admiral · ADaM Deep Dive · TLF Production · FDA-Ready</p>
   </div>
 </div>
 
@@ -562,159 +562,159 @@ const data = [
   },
   {
     week: 3,
-    title: "ADaM with Admiral",
-    theme: "The Roche-GSK Collaboration: Admiral in Production",
+    title: "ADaM Deep Dive: Admiral Mastery",
+    theme: "Intensive Admiral Build: Every Dataset, Every Pattern",
     days: [
       {
         day: 15,
-        focus: "ADaM Foundations & Admiral Philosophy",
-        topic: "From SDTM to analysis-ready datasets",
-        details: "ADaM structures: ADSL (Subject-Level: one row per subject), BDS (Basic Data Structure: ADLB, ADVS for repeated measures), OCCDS (Occurrence Data Structure: ADAE, ADCM for events). Admiral was jointly developed by Roche and GSK to provide a modularized, tidyverse-style toolbox - NOT a black-box automation tool. Use admiral::use_ad_template() to generate starter scripts for ADSL, ADAE, ADLB, ADVS, ADTTE. Over 50 programmers from 10+ companies have contributed to admiral. Learn the admiral manifesto: readable, modular, traceable.",
-        packages: "admiral, dplyr, pharmaversesdtm",
-        deliverable: "Use use_ad_template('adsl') to generate an ADSL template. Read through the code structure. Document 5 key admiral functions used and their purposes.",
-        resources: "admiral manifesto, admiral 'Get Started' vignette, Posit blog: 'Enabling ADaM in R: Four Perspectives from Admiral Maintainers'"
+        focus: "ADaM Architecture & Admiral Core Engine",
+        topic: "ADaM structures, admiral philosophy, and core derivation patterns",
+        details: "ADaM structures deep dive: ADSL (one row per subject), BDS (one row per subject/parameter/analysis timepoint — ADLB, ADVS, ADEFF), OCCDS (one row per event — ADAE, ADCM). Admiral was co-developed by Roche and GSK as a tidyverse-based, modular, non-black-box toolbox. Master the four core derivation categories: (1) derive_vars_*() for adding variables, (2) derive_var_*() for single variable derivations, (3) derive_param_*() for adding parameters (BDS), (4) derive_extreme_records() / compute_*() for record-level operations. Understand admiral's input-output contract: always start from one source domain, apply derivations sequentially, document every step. Over 50 pharma company programmers co-maintain admiral.",
+        packages: "admiral, dplyr, pharmaversesdtm, pharmaverseadam",
+        deliverable: "Map each of 8 ADaM datasets (ADSL, ADAE, ADLB, ADVS, ADTTE, ADCM, ADEX, ADRS) to their source SDTM domain, ADaM structure type, and 3 key admiral functions used. Document admiral's core function taxonomy.",
+        resources: "admiral manifesto, admiral 'Get Started' vignette, admiral function reference by category, ADaM IG v1.3"
       },
       {
         day: 16,
-        focus: "ADSL - The Foundation of All ADaM",
-        topic: "Subject-level dataset with admiral",
-        details: "ADSL starts with SDTM DM. Use admiral::derive_vars_merged() to add treatment variables from EX (first/last dose dates → TRTSDT/TRTEDT). Derive planned/actual treatment (TRT01P/TRT01A), treatment duration via derive_var_trtdurd(). Create population flags using derive_var_merged_exist_flag(): SAFFL (has ≥1 dose in EX), ITTFL (randomized in DS), PPSFL (completed per protocol). This is the most important ADaM - all other ADaMs link to ADSL via USUBJID. GSK and Roche teams use this exact workflow in production.",
+        focus: "ADSL Part 1 — Treatment & Dates",
+        topic: "Subject-level treatment variables and study dates from EX and DS",
+        details: "ADSL is the foundation every other ADaM merges from. Part 1 focuses on treatment and timeline variables. Start from SDTM DM. Use derive_vars_merged() to pull first dose date (TRTSDT) from EX using mode='first' on EXSTDTC. Pull last dose date (TRTEDT) from EX using mode='last' on EXENDTC. Derive TRT01P/TRT01A (planned/actual treatment) from SDTM randomization data. Use derive_var_trtdurd() for treatment duration in days. Handle screening failures (subjects in DM but not in EX — SAFFL='N'). Get study completion/withdrawal reason from DS using derive_vars_merged() with DSDECOD. Understand why TRTSDT is the single most referenced variable across all ADaMs.",
         packages: "admiral, dplyr, lubridate, pharmaversesdtm",
-        deliverable: "Build a complete ADSL from pharmaversesdtm using admiral functions: derive treatment variables, population flags (SAFFL, ITTFL, PPSFL), study dates, treatment duration",
-        resources: "admiral ADSL vignette, pharmaverse examples: ADSL code, admiral derive_vars_merged() reference"
+        deliverable: "Build ADSL with all treatment and date variables: TRTSDT, TRTEDT, TRT01P, TRT01A, TRTDURD, EOSSTT (end of study status), DCSREAS (discontinuation reason) from DS. Handle subjects with no EX records.",
+        resources: "admiral ADSL vignette, pharmaverse examples ADSL, admiral derive_vars_merged() reference"
       },
       {
         day: 17,
-        focus: "Admiral Core Derivation Functions",
-        topic: "Building blocks for all ADaM datasets",
-        details: "Master admiral's core functions: derive_vars_merged() (add variables from another dataset via join), derive_var_extreme_flag() (flag first/last/min/max records), derive_vars_dt() / derive_vars_dtm() (date/datetime with imputation flags), derive_vars_duration() (calculate duration between dates). Learn Higher Order Functions: call_derivation() (apply same derivation with different parameters), restrict_derivation() (apply derivation to subset), slice_derivation() (conditional logic). These patterns are used in EVERY admiral script.",
+        focus: "ADSL Part 2 — Population Flags & Demographics",
+        topic: "SAFFL, ITTFL, PPSFL derivation and demographic groupings",
+        details: "Population flags determine which subjects appear in which analyses — they are the most scrutinized variables in any submission. SAFFL = 'Y' if subject has ≥1 dose in EX (derive_var_merged_exist_flag with dataset_add=ex). ITTFL = 'Y' if subject was randomized (in DS with DSDECOD='RANDOMIZED'). PPSFL = 'Y' if subject completed per-protocol (no major protocol deviations from PD domain). Derive AGEGR1 (age group: <65, ≥65) using case_when or derive_var_merged_cat(). Derive RACE groupings, BMIBL (baseline BMI from VS), HEIGHTBL/WEIGHTBL (baseline height/weight). Verify flag consistency: SAFFL subjects must have TRTSDT. All flag derivations must reference source SDTM with inline comments.",
         packages: "admiral, dplyr, pharmaversesdtm",
-        deliverable: "Create 10 derivations demonstrating: merged variables, extreme flags, date derivations with imputation, duration, and Higher Order Functions (call_derivation, restrict_derivation)",
-        resources: "admiral Generic Derivations vignette, admiral Higher Order Functions vignette, admiral function reference"
+        deliverable: "Complete ADSL with 3 population flags (SAFFL, ITTFL, PPSFL), AGEGR1 grouping, BMIBL, HEIGHTBL, WEIGHTBL from pharmaversesdtm. Add derivation comments tracing each variable to source domain/variable.",
+        resources: "admiral population flag vignette, ADaM IG ADSL specifications, admiral derive_var_merged_exist_flag() reference"
       },
       {
         day: 18,
-        focus: "ADAE - Occurrence Data Structure",
-        topic: "Adverse events analysis dataset",
-        details: "ADAE follows OCCDS pattern. Start with SDTM AE, merge ADSL variables using derive_vars_merged(). Key derivations: TRTEMFL (treatment-emergent flag: ASTDT >= TRTSDT & ASTDT <= TRTEDT + 30), AVAL (numeric severity: AESEV → 1=MILD, 2=MODERATE, 3=SEVERE), AESER flag, ANL01FL (analysis flag). Use pre-built event_source objects (ae_event, ae_ser_event) with derive_vars_extreme_event() for first occurrence flags. Roche's NEST tern package uses ADAE extensively for safety tables - every variable here maps directly to a table cell.",
-        packages: "admiral, dplyr, lubridate, pharmaversesdtm",
-        deliverable: "Derive a complete ADAE with TRTEMFL, AVAL encoding, duration, SAE flags, first AE flag per subject, and occurrence-level analysis flags",
-        resources: "admiral OCCDS vignette, pharmaverse ADAE example, Roche NEST tern safety table examples"
+        focus: "Admiral HOF & Date Engine",
+        topic: "Higher Order Functions, imputation rules, and the admiral date framework",
+        details: "Higher Order Functions (HOF) are admiral's power tools. call_derivation(): apply same derivation with different parameter inputs (derive ADLB and ADVS baseline flags with one call). restrict_derivation(): apply a derivation only to a subset of records (e.g., derive TRTEMFL only for post-baseline records). slice_derivation(): apply different derivations to different slices (different analysis value logic per PARAMCD). Admiral date framework: derive_vars_dt() converts ISO 8601 character dates with imputation — impute_dtc_dt(dtc, highest_imputation='M') → imputes day to 01, 'Y' → imputes to Jan 01. derive_vars_dtm() for datetime with time imputation. Always generates companion --DTF (date imputation flag) and --TMF (time imputation flag). These HOFs cut code length by 60-70% in production scripts.",
+        packages: "admiral, dplyr, lubridate",
+        deliverable: "Demonstrate all three HOFs: use call_derivation() to derive 4 baseline flags in one call, restrict_derivation() for conditional flag, slice_derivation() with 2 slices. Build a reusable date imputation wrapper using derive_vars_dt() for highest_imputation 'D', 'M', and 'Y'.",
+        resources: "admiral Higher Order Functions vignette, admiral date imputation vignette, admiral derive_vars_dt() reference"
       },
       {
         day: 19,
-        focus: "ADLB - Basic Data Structure",
-        topic: "Lab analysis with baseline and change",
-        details: "ADLB follows BDS pattern for repeated measures. Start with SDTM LB. Use derive_var_extreme_flag() with order = c(AVAL, ADT), mode = 'first' to flag baseline (ABLFL = 'Y'). Derive baseline value ABASE using derive_var_base(). Calculate CHG (change from baseline = AVAL - ABASE) and PCHG (percent change = 100 * (AVAL - ABASE) / ABASE). Add analysis visit (AVISITN) and analysis value (AVAL = LBSTRESN). Handle LOCF imputation. This is core to efficacy analysis - Roche uses admiral's BDS workflow for all TA-specific lab endpoints.",
-        packages: "admiral, dplyr, pharmaversesdtm",
-        deliverable: "Derive ADLB with proper baseline flagging (ABLFL), ABASE, CHG, PCHG, AVISITN structure, and demonstrate LOCF imputation for missing values",
-        resources: "admiral BDS vignette, admiral ADLB vignette, pharmaverse ADLB example"
+        focus: "ADAE — Occurrence Data Structure Mastery",
+        topic: "Treatment-emergent flags, severity encoding, and multi-level analysis flags",
+        details: "ADAE is the central safety dataset — it directly populates every safety TLF. Start from SDTM AE, merge ADSL demographics and treatment dates via derive_vars_merged(). TRTEMFL (treatment-emergent): ASTDT >= TRTSDT AND (AENDT <= TRTEDT+30 OR missing AENDT). AVAL numeric encoding: derive_vars_dt() for ASTDT/AENDT, then case_when(AESEV=='MILD'~1, AESEV=='MODERATE'~2, AESEV=='SEVERE'~3). Use pre-built admiral event sources: ae_event, ae_ser_event (serious), ae_withdrawl_event. derive_vars_extreme_event() for first occurrence per subject (AOCCFL='Y'), first SAE per subject (AOCCSFL='Y'). ANL01FL (primary analysis flag): TRTEMFL='Y' AND STUDYFL='Y'. Derive ADURN (AE duration) with derive_vars_duration(). Every variable here maps 1:1 to a tern table cell.",
+        packages: "admiral, dplyr, lubridate, pharmaversesdtm",
+        deliverable: "Full ADAE with: TRTEMFL, all AVAL severity encodings, AOCCFL/AOCCSFL first-occurrence flags, ANL01FL, ADURN, ASEVN, ASEQ. Include a written traceability table mapping each derived variable to source variable and derivation rule.",
+        resources: "admiral OCCDS vignette, admiral ADAE example code, tern safety tables documentation"
       },
       {
         day: 20,
-        focus: "ADTTE - Time-to-Event Analysis",
-        topic: "Survival analysis with admiral's TTE framework",
-        details: "ADTTE drives Kaplan-Meier curves and Cox regression. Admiral has a dedicated TTE framework: define events with event_source() (e.g., death_event from ADSL where DTHFL=='Y'), define censoring with censor_source() (e.g., lastalive_censor from ADSL where LSTALVDT exists), then use derive_param_tte() to create parameters. Use call_derivation() to derive multiple TTE parameters efficiently (TTAE, TTSERAE, TTSEVAE). PARAMCD identifies the endpoint (e.g., 'TTAE' = Time to First AE), AVAL = time in days, CNSR = censoring indicator (0=event, 1=censored). This is used heavily in oncology - admiral has admiralonco extension for tumor response TTE.",
-        packages: "admiral, dplyr, lubridate",
-        deliverable: "Build ADTTE for 'Time to First SAE' using event_source/censor_source/derive_param_tte, then add 'Time to First AE' using call_derivation()",
-        resources: "admiral BDS Time-to-Event vignette, admiral pre-built TTE source objects, admiralonco package (oncology extension)"
+        focus: "ADLB — BDS Baseline & Change Derivations",
+        topic: "Lab analysis dataset with imputation, shift tables, and toxicity grades",
+        details: "ADLB is the most template-like BDS dataset. Start from SDTM LB, apply ADSL merge. Use derive_var_extreme_flag() with order=list(ADT, AVISITN), mode='last' and filter=ABLFL_cond to flag last pre-treatment record as ABLFL='Y'. derive_var_base(): adds ABASE = AVAL at ABLFL record for all post-baseline rows. derive_var_chg(): CHG = AVAL - ABASE. derive_var_pchg(): PCHG = 100 * (AVAL - ABASE) / ABASE. Derive ANRIND (reference range indicator: LOW/NORMAL/HIGH) from LBSTNRLO/LBSTNRHI. Apply NCI CTCAE toxicity grading using grade_labs(). Handle LOCF: derive_extreme_records(dataset_add = df_locf, ...) to impute missing visits. Structure AVISITN → AVISIT mapping per protocol visit schedule. PARAMCD must match LBTESTCD from SDTM.",
+        packages: "admiral, dplyr, pharmaversesdtm, admiral.labs",
+        deliverable: "Complete ADLB with ABLFL, ABASE, CHG, PCHG, ANRIND, BNRIND (baseline reference range), NCI CTCAE toxicity grades for 5+ parameters, LOCF imputation. Verify CHG is NA at baseline rows.",
+        resources: "admiral BDS vignette, admiral ADLB vignette, admiral grade_labs() reference"
       },
       {
         day: 21,
-        focus: "Week 3 Capstone: Full ADaM Package",
-        topic: "End-to-end SDTM → ADaM with traceability",
-        details: "Build a complete admiral pipeline: pharmaversesdtm SDTM → ADSL → ADAE → ADLB → ADTTE. Use use_ad_template() for each dataset as scaffolding. Ensure every derivation is traceable back to SDTM (document source dataset, variable, and logic in comments). Run admiral validation checks. Verify population flags (SAFFL, ITTFL) are consistent across all ADaMs. Export with xportr_write() as .xpt. This is exactly how production teams at Roche, GSK, J&J, and others create regulatory-ready ADaM packages. Your code should be readable by another programmer - that's the admiral philosophy.",
-        packages: "admiral, dplyr, lubridate, xportr, pharmaversesdtm",
-        deliverable: "Produce a complete, validated ADaM package (ADSL + 3 analysis datasets) with full traceability documentation, consistent population flags, and .xpt export",
-        resources: "admiral full workflow examples, pharmaverse E2E example site, xportr documentation, admiral Programming Strategy"
+        focus: "ADVS — Vital Signs BDS & Multi-Parameter Handling",
+        topic: "BDS for repeated vital sign measures with analysis visit mapping",
+        details: "ADVS shares BDS structure with ADLB but has patterns specific to vital signs. Start from SDTM VS. Each VSTESTCD becomes a PARAMCD. Derive AVALC (character analysis value) alongside AVAL. Analysis visit mapping is critical: derive_vars_joined() maps VISIT → AVISITN using a protocol visit schedule lookup table — this is non-trivial because VS visits may not perfectly align with protocol visits. Derive last-observation-carried-forward (LOCF) for missing scheduled visits. ABLFL flagging: last pre-treatment record per PARAMCD. Critical new function: derive_var_obs_number() for ASEQ sequencing. Derive ATPTN (analysis timepoint number) and ATPT (timepoint label) for within-visit timepoints (e.g., pre-dose, 1hr post-dose). Important for pharmacokinetics-adjacent datasets.",
+        packages: "admiral, dplyr, lubridate, pharmaversesdtm",
+        deliverable: "ADVS with 5+ vital sign parameters, AVALC, analysis visit mapping from protocol schedule, ABLFL, ABASE, CHG, PCHG, ATPTN/ATPT for within-visit timepoints, ASEQ sequencing",
+        resources: "admiral ADVS vignette, pharmaverse examples ADVS, admiral derive_vars_joined() reference"
       }
     ]
   },
   {
     week: 4,
-    title: "TLGs, Validation & Production",
-    theme: "Roche NEST, Validation, and Industry Readiness",
+    title: "ADaM Advanced & TLF Production",
+    theme: "ADTTE, ADCM, TLF Stack: Roche NEST, GSK tfrmt, Validation",
     days: [
       {
         day: 22,
-        focus: "rtables - Roche's Table Engine",
-        topic: "Regulatory-grade clinical tables",
-        details: "rtables is Roche's flagship package for creating TLGs (Tables, Listings, Graphs). It uses a tree-based structure for complex nested tables. Practice: basic_table() to define structure, split_cols_by() for column splits (e.g., treatment arm), split_rows_by() for row splits (e.g., by SOC), analyze() to add analysis functions (count, mean, etc.). Use rtables::as_html() to export. Roche, J&J, and other companies use rtables in production for regulatory submissions. It integrates seamlessly with admiral ADaM datasets - ADAE goes straight into safety summary tables.",
-        packages: "rtables, admiral, dplyr, pharmaverseadam",
-        deliverable: "Create 3 regulatory-style tables using rtables: demographics summary by treatment arm, AE summary by SOC/PT, and baseline lab characteristics",
-        resources: "rtables documentation, Roche R/Pharma 2022 rtables workshop, J&J NEST collaboration blog"
+        focus: "ADTTE — Time-to-Event Framework",
+        topic: "Admiral's TTE engine: event_source, censor_source, derive_param_tte",
+        details: "ADTTE powers Kaplan-Meier and Cox regression analyses. Admiral provides a complete TTE framework. event_source(): defines when the event occurs — e.g., death_event uses ADSL where DTHFL=='Y', with AVAL = DTHDT - TRTSDT + 1. censor_source(): defines censoring — e.g., last_alive_censor = ADSL where LSTALVDT is not missing, AVAL = LSTALVDT - TRTSDT + 1, CNSR=1. derive_param_tte(): combines one or more event_sources + censor_sources to create one PARAMCD. CNSR=0 for events, CNSR=1 for censored. EVNTDESC describes the event. SRCDOM/SRCVAR trace to source. Use call_derivation() to derive multiple TTE endpoints efficiently: TTAE (time to first AE), TTSERAE (time to first SAE), TTSEVAE (time to first severe AE). The admiralonco extension provides tumor-specific TTE (CRSP, PFS, OS).",
+        packages: "admiral, dplyr, lubridate, admiralonco",
+        deliverable: "ADTTE with 4 parameters: TTAE, TTSERAE, TTDTH, and TTSEVAE using call_derivation(). Include traceability: SRCDOM, SRCVAR, SRCSEQ. Verify CNSR=0 only when event_date < censor_date. Add EVNTDESC and CENSRDTM.",
+        resources: "admiral TTE vignette, admiral event_source/censor_source reference, admiralonco package docs"
       },
       {
         day: 23,
-        focus: "tern - Analysis Components on rtables",
-        topic: "Reusable statistical summaries",
-        details: "tern builds on rtables to provide pre-built analysis functions for clinical trials: summarize_num_patients(), count_occurrences(), analyze_vars(). It's part of Roche's NEST ecosystem. Use tern with admiral ADaM datasets for instant regulatory tables. Practice creating: patient disposition table, adverse event frequency table, shift tables for lab values. The Roche-J&J collaboration enhanced tern's testing using pharmaverseadam data - the same workflow you're using now. This is production-level code used at multiple companies.",
-        packages: "tern, rtables, admiral, pharmaverseadam",
-        deliverable: "Use tern to create 3 analysis tables: patient disposition using summarize_num_patients(), AE incidence using count_occurrences(), lab shift table using analyze_vars()",
-        resources: "tern documentation, Roche NEST website, R Consortium: 'Roche NEST and Admiral Teams Collaboration'"
+        focus: "ADCM — Concomitant Medications (OCCDS)",
+        topic: "Medication timing relative to treatment, ongoing flags, ATC coding",
+        details: "ADCM follows OCCDS and tracks all medications relative to treatment periods. Start from SDTM CM, merge ADSL treatment dates. CMPREFL (pre-treatment): ASTDT < TRTSDT. CMDURFL (ongoing): AENDT missing or AENDT > TRTEDT. CMCONFL (concomitant during treatment): ASTDT <= TRTEDT AND (AENDT >= TRTSDT OR missing). Derive ASTDT/AENDT from CMDTC using derive_vars_dt(). ATC coding: ATCCD/ATCD variables for ATC level 1-4 hierarchy — WHO Drug Dictionary. Use derive_var_extreme_flag() for first concomitant med per ATC class. Pre-existing medications: CMPREVFL = ASTDT < TRTSDT AND (AENDT >= TRTSDT OR missing). ADCM is used in safety sections alongside ADAE to contextualize AE causality.",
+        packages: "admiral, dplyr, lubridate, pharmaversesdtm",
+        deliverable: "Complete ADCM with CMPREFL, CMDURFL, CMCONFL, CMPREVFL period flags, ASTDT/AENDT imputed, ATC hierarchy variables, first-occurrence flag per subject per ATC1 class. Document all flag logic with truth table.",
+        resources: "admiral ADCM vignette, ADaM IG OCCDS spec, WHO ATC classification guide"
       },
       {
         day: 24,
-        focus: "tfrmt - GSK's Table Formatting Language",
-        topic: "Display metadata for tables",
-        details: "tfrmt (table format) is GSK's package for defining table display metadata separately from data processing. It provides a grammar for formatting: decimal places, alignment, headers, footnotes, indentation. Use tfrmt with dplyr-summarized data (doesn't require rtables). Practice: tfrmt() to define format, apply_tfrmt() to apply it. This separation of data logic and display logic is critical for maintaining large TLG libraries. GSK uses tfrmt in production and it integrates with the metacore metadata stack.",
-        packages: "tfrmt, dplyr, admiral",
-        deliverable: "Create a tfrmt specification for a demographics table. Apply it to admiral ADSL data. Export formatted table as GT or flextable output.",
-        resources: "tfrmt documentation, GSK rstudio::conf(2022) tfrmt presentation, tfrmt GitHub examples"
+        focus: "ADEX — Exposure & Dose Intensity",
+        topic: "Treatment exposure analysis with cumulative dose and compliance",
+        details: "ADEX tracks what treatment was actually received. Start from SDTM EX. BDS structure with PARAMCD for each exposure metric: DOSE (actual dose per administration), DOSEINMT (dose intensity: actual/planned), TDOSE (total cumulative dose). Derive AVAL for each PARAMCD. Use derive_param_exposure() for cumulative parameters computed across records. Dose modifications: flag dose reductions (DXREDFL: EXDOSE < planned dose) and interruptions (gaps between EX records > protocol window). derive_vars_duration() for EXDURDUR (duration of each exposure interval). Compute TDOSE (total cumulative dose = sum of DOSE × EXDURDY). ADEX feeds directly into dose-response analyses and is required for safety-by-exposure subgroups.",
+        packages: "admiral, dplyr, lubridate, pharmaversesdtm",
+        deliverable: "ADEX with PARAMCD for DOSE, DOSEINMT, TDOSE using derive_param_exposure(). Flag dose reductions and interruptions. Verify TDOSE equals sum of dose×duration per subject.",
+        resources: "admiral ADEX vignette, ADaM IG exposure dataset guidance"
       },
       {
         day: 25,
-        focus: "teal - Interactive Analysis Apps",
-        topic: "Roche's exploratory dashboard framework",
-        details: "teal is Roche's framework for creating interactive Shiny apps for clinical data exploration. It uses teal modules (teal.modules.clinical, teal.modules.general) to build patient profiles, safety dashboards, efficacy plots. Practice: init() to initialize app, teal_data() to load ADaM datasets, teal modules for filtering and analysis. Roche uses teal extensively for exploratory analysis before locking datasets. It's integrated with the NEST stack - rtables tables become interactive. Visit teal.gallery for live examples of patient-level analysis apps.",
-        packages: "teal, teal.modules.clinical, admiral",
-        deliverable: "Build a simple teal app with admiral ADaM datasets: add data filtering, a demographics table module, and an AE explorer module. Deploy locally.",
-        resources: "teal documentation, teal.gallery (deployed apps), Roche NEST teal overview"
+        focus: "rtables & tern — TLF Engine",
+        topic: "Regulatory-grade tables from ADaM with the Roche NEST stack",
+        details: "rtables + tern is the gold standard for clinical trial tables. rtables tree model: basic_table() sets column structure, split_cols_by('TRT01A') for treatment arm columns, split_rows_by('AEBODSYS') for nested rows, analyze() calls tern functions. Key tern functions: summarize_num_patients() for subject counts, count_occurrences() for AE frequency with % and CI, analyze_vars() for continuous summary (mean, SD, median, range). tern automatically handles: column N denominators, formatting (decimal places, brackets), footnotes. Build the 3 most common TLFs: (1) Demographic and baseline table (ADSL via analyze_vars + tabulate_survival_subgroups), (2) AE summary by SOC/PT (ADAE via count_occurrences), (3) Lab shift table (ADLB via count_occurrences for shift category). RTF/PDF export via rtf2 or r2rtf.",
+        packages: "rtables, tern, admiral, dplyr, pharmaverseadam",
+        deliverable: "Produce 3 fully-formatted regulatory TLFs from your ADaM package: demographics+baseline table (ADSL), AE incidence summary by SOC/PT (ADAE with TRTEMFL filter), lab toxicity grade shift table (ADLB). Export as HTML and RTF.",
+        resources: "rtables documentation, tern documentation, Roche NEST website, R/Pharma 2022 tern workshop"
       },
       {
         day: 26,
-        focus: "Validation: testthat, xportr, logrx",
-        topic: "GxP-compliant validation workflows",
-        details: "Validation is mandatory for regulatory submissions. Use testthat for unit testing derivations (test that SAFFL subjects all have EX records). Use xportr validation functions (xportr_type(), xportr_length()) to check dataset conformance before export. Use logrx to automatically log all R script execution with session info, package versions, and warnings - critical for FDA reproducibility requirements. Run logrx::axecute() to execute and log your ADaM scripts. The R Validation Hub provides industry guidance on package risk assessment using riskmetric.",
-        packages: "testthat, xportr, logrx, riskmetric",
-        deliverable: "Write 15+ testthat unit tests for your ADaM package (ADSL flags, ADAE TRTEMFL, ADLB baseline). Run xportr validation. Execute all scripts with logrx and generate validation logs.",
-        resources: "testthat documentation, logrx documentation, R Validation Hub white paper, xportr validation vignette"
+        focus: "tfrmt & Advanced TLF Formatting",
+        topic: "GSK's display metadata language and complex table layouts",
+        details: "tfrmt separates data preparation from table display — critical for large TLG libraries where the same format must apply across 100+ tables. tfrmt() defines: body_plan() with frmt_structure() for each row/column combination, col_plan() for column ordering and spanning headers, sorting_cols() for row sort order, footnote_plan() for automatic footnotes, page_plan() for pagination. Apply tfrmt to dplyr-summarized analysis results (ark format). Practice: create a tfrmt spec for a standard demographics table, apply it to ADSL summary data, export to gt/flextable. Also learn tidytlg (J&J/Eli Lilly): tlg_output() pipeline with entab() for clinical listings. The separation of formatting from derivation is how large programming teams maintain consistency across 500+ TLGs.",
+        packages: "tfrmt, dplyr, gt, flextable, tidytlg",
+        deliverable: "Build a tfrmt specification covering demographics (continuous + categorical) and apply to 3 treatment-arm comparisons. Additionally create one tidytlg listing from ADAE. Export both as formatted outputs.",
+        resources: "tfrmt documentation, GSK rstudio::conf(2022) tfrmt talk, tidytlg documentation, tfrmt gallery"
       },
       {
         day: 27,
-        focus: "Reproducibility: renv, Git, pkglite",
-        topic: "Freezing environments for submission",
-        details: "FDA requires fully reproducible analyses. Use renv to lock package versions (renv::snapshot() creates renv.lock). Use Git for version control with branches and code review (critical for GxP). Use pkglite to bundle R packages for submission environments - it creates a text representation of package source code for transfer to FDA. Practice: initialize renv, create renv.lock, set up Git repo with .gitignore, create pkglite package bundle. This is exactly how Roche, GSK, and other companies manage production code.",
-        packages: "renv, pkglite, git (via RStudio)",
-        deliverable: "Convert your ADaM project into a fully reproducible setup: renv.lock with frozen versions, Git repo with clean history and branches, pkglite bundle of key packages",
-        resources: "renv documentation, pkglite documentation, Happy Git with R, FDA Study Data Technical Conformance Guide"
+        focus: "Clinical Listings & Graphs",
+        topic: "Regulatory listings with rlistings and KM curves with ggsurvfit",
+        details: "Listings are the L in TLF — patient-level line listings for regulatory review. Use rlistings (part of NEST): as_listing() on a data frame, with add_listing_col() for formatted columns, split_into_pages() for pagination, export_as_rtf(). Build: AE listing (per subject: USUBJID, TRTSDT, ASTDT, AETERM, AESEV, AESER, AEOUT, AEREL), lab out-of-range listing (ADLB where ANRIND != 'NORMAL'), death listing (ADSL where DTHFL='Y'). For graphs: use ggsurvfit for Kaplan-Meier curves from ADTTE (ggsurvfit() + add_risktable() + add_confidence_interval()). ggplot2 forest plots for subgroup analysis using ADSL-derived subgroups. These are the exact outputs produced for regulatory submission appendices.",
+        packages: "rlistings, ggsurvfit, ggplot2, dplyr, admiral",
+        deliverable: "Produce: AE patient-level listing, lab abnormality listing with pagination, KM survival curve from ADTTE with risk table and 95% CI, subgroup forest plot for 4 demographic subgroups from ADSL.",
+        resources: "rlistings documentation, ggsurvfit documentation, ggplot2 reference, Roche NEST submission examples"
       },
       {
         day: 28,
-        focus: "Mock eSub Package Assembly",
-        topic: "Simulate FDA electronic submission",
-        details: "Assemble a complete mock eSub package: SDTM datasets (.xpt via xportr with metadata), ADaM datasets (.xpt via xportr with metacore specs), Define.xml (dataset/variable metadata), Analysis Results Metadata (ARM), validation logs (testthat results, xportr checks), logrx execution logs, sample TLGs (rtables/tern outputs). Structure folders per FDA eCTD guidelines. Review against the Study Data Technical Conformance Guide. This is your portfolio piece - a complete end-to-end submission-ready package.",
-        packages: "xportr, metacore, logrx, rtables, tern",
-        deliverable: "A complete mock eSub folder: SDTM (8+ domains), ADaM (4+ datasets), metadata files, validation logs, logrx logs, 5+ TLGs - reviewed against FDA checklist",
-        resources: "FDA Study Data Technical Conformance Guide, FDA eSub portal guidance, pharmaverse E2E example, CDISC Define.xml spec"
+        focus: "Validation & Full ADaM QC",
+        topic: "testthat unit testing, xportr export, logrx audit logs",
+        details: "Production ADaM requires validated, auditable code. Use testthat to write unit tests for every critical derivation: test_that('SAFFL only flags subjects with EX', expect_true(all(adsl[adsl$SAFFL=='Y',]$USUBJID %in% ex$USUBJID))). Write 20+ tests covering: TRTEMFL logic (no pre-baseline events), ABLFL uniqueness (exactly 1 baseline per USUBJID/PARAMCD), CHG=NA at ABLFL rows, CNSR values in ADTTE (only 0 or 1), population flag consistency across ADaMs. xportr full pipeline: xportr_type() → xportr_length() → xportr_label() → xportr_order() → xportr_write() to produce submission-ready .xpt. logrx::axecute() wraps every ADaM script: logs start/end time, R version, all package versions, warnings, errors, environment. These logs satisfy FDA reproducibility requirements.",
+        packages: "testthat, xportr, logrx, metacore",
+        deliverable: "Test suite: 20+ testthat tests for ADSL+ADAE+ADLB+ADTTE with 100% pass rate. Export all 6 ADaM datasets as .xpt via xportr with metadata applied. Run logrx on each script and produce execution log files.",
+        resources: "testthat documentation, xportr validation vignette, logrx documentation, R Validation Hub white paper"
       },
       {
         day: 29,
-        focus: "Industry Landscape & Career Prep",
-        topic: "Pharmaverse ecosystem and job market",
-        details: "Understand the pharmaverse landscape: Roche (rtables/tern/teal), GSK (admiral co-dev/tfrmt/xportr), J&J (tidytlg collaboration), Atorus (Tplyr/pharmaRTF), Merck (r2rtf/pkglite), Novartis (openpharma org). Learn about the R Consortium Submissions Working Group (successful R-based FDA submissions). Review common interview topics: admiral derivation patterns, CDISC standards knowledge, validation approaches, reproducibility practices. Pharmaverse is backed by the industry - contributing to these packages is career development. Join pharmaverse Slack to connect with maintainers at these companies.",
-        packages: "- (career & community)",
-        deliverable: "Write answers to 10 clinical programming interview questions with admiral/rtables code examples. Join pharmaverse Slack. Contribute a GitHub issue or PR to any pharmaverse package.",
-        resources: "pharmaverse Slack invite, R Consortium blog posts, admiral contribution model, pharmaverse blog, industry job boards"
+        focus: "teal Interactive Analysis App",
+        topic: "Roche NEST Shiny framework for clinical data exploration",
+        details: "teal is Roche's Shiny-based framework for building interactive clinical data exploration apps. It uses a module system: teal_data() loads ADaM datasets, init() assembles the app, then modules handle specific analyses. Use teal.modules.clinical for clinical-trial-specific modules: tm_t_summary() for demographics table (wraps tern), tm_t_events() for AE explorer, tm_g_km() for Kaplan-Meier. teal.data handles data filtering with automatic cross-dataset filter propagation — filter ADSL by SAFFL='Y' and ADAE automatically inherits the filter. Add custom modules with module() wrapper around any Shiny server/UI code. teal.gallery shows complete deployed examples. This is how Roche and partners run exploratory analysis during a trial — analysts can slice data by subgroup and see rtables/tern outputs update live.",
+        packages: "teal, teal.modules.clinical, teal.data, tern, rtables",
+        deliverable: "Build and run locally a teal app using your ADaM package: demographics summary tab (ADSL), AE incidence explorer tab (ADAE), KM curve tab (ADTTE). Add filter for SAFFL and treatment arm that propagates across all tabs.",
+        resources: "teal documentation, teal.gallery, Roche NEST overview, teal.modules.clinical reference"
       },
       {
         day: 30,
-        focus: "Capstone: Full E2E Project",
-        topic: "Portfolio-ready clinical programming showcase",
-        details: "Execute a complete end-to-end project: Raw simulated data → SDTM (8+ domains via sdtm.oak + xportr) → ADaM (ADSL, ADAE, ADLB, ADTTE via admiral templates) → TLGs (5+ tables via rtables/tern) → Validation (testthat + xportr + sdtmchecks) → Metadata (metacore/metatools) → Logs (logrx) → eSub export. Document every derivation with traceability. Use Git with clean commits. Create a README explaining the workflow. This is a showcase project for job applications - it demonstrates you can work in the pharmaverse stack used by Roche, GSK, J&J, and other top pharma companies.",
-        packages: "admiral, sdtm.oak, xportr, metacore, rtables, tern, testthat, logrx, renv",
-        deliverable: "A fully documented, Git-versioned, validated, end-to-end clinical programming project using the complete pharmaverse stack - portfolio-ready with README",
-        resources: "pharmaverse.github.io/examples full E2E workflow, all 30 days accumulated knowledge, CDISC standards, FDA guidance"
+        focus: "ADaM + TLF Integration Capstone",
+        topic: "Complete SDTM→ADaM→TLF pipeline with full traceability",
+        details: "Final intensive: connect everything from the past 30 days into a coherent, documented, production-style workflow. pharmaversesdtm → ADSL (population flags, treatment dates) → ADAE (TRTEMFL, occurrence flags) → ADLB (baseline, CHG, toxicity grades) → ADTTE (3 TTE endpoints) → ADCM (period flags). Then: ADSL → demographics TLF (tern), ADAE → safety AE table + listing (tern + rlistings), ADLB → shift table + lab listings, ADTTE → KM curve (ggsurvfit). Apply xportr to export all ADaMs as .xpt with metacore metadata. Run logrx on all scripts. Write testthat tests for every ADaM flag. Document derivation traceability (source domain, source variable, rule) for every derived variable. The output is a miniature but complete ADaM+TLF package equivalent to what clinical programming teams deliver for an NDA section.",
+        packages: "admiral, rtables, tern, rlistings, xportr, logrx, testthat, metacore, ggsurvfit",
+        deliverable: "Complete ADaM package (6 datasets) + TLF package (demographics table, AE summary table, AE listing, lab shift table, KM curve) with xportr-exported .xpt files, logrx audit logs, testthat test suite, and a derivation traceability matrix documenting all derived variables across all ADaMs.",
+        resources: "pharmaverse.github.io/examples, admiral full workflow, NEST documentation, all 30-day accumulated knowledge, ADaM IG"
       }
     ]
   }
@@ -809,7 +809,7 @@ function renderContent() {
         <tbody>
           ${week.days.map((d, idx) => {
             const isExp = expandedDay === d.day;
-            const hasPkgs = d.packages !== '-' && d.packages !== '- (conceptual)' && d.packages !== '- (review & preparation)';
+            const hasPkgs = d.packages !== '-' && d.packages !== '- (conceptual)' && d.packages !== '- (review & preparation)' && d.packages !== '- (career & community)';
             const pkgList = hasPkgs ? d.packages.split(', ') : [];
             const isConceptual = d.packages.includes('conceptual') || d.packages.includes('review');
 
