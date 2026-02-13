@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Indraneel Chakraborty">
-<meta name="dcterms.date" content="2026-02-11">
+<meta name="dcterms.date" content="2026-02-14">
 
 <title>Day 14: Week 2 Capstone - Metadata-Driven SDTM with metacore &amp; xportr – 30 Days of Pharmaverse</title>
 <style>
@@ -281,7 +281,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 11, 2026</p>
+      <p class="date">February 14, 2026</p>
     </div>
   </div>
   
@@ -294,7 +294,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div style="margin-bottom:12px;">
-<a href="../index.html" class="resource-link">← Back to Roadmap</a>
+<p><a href="../index.html" class="resource-link">← Back to Roadmap</a></p>
 </div>
 <section id="learning-objectives" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">1</span> Learning Objectives</h2>
@@ -354,6 +354,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="required-packages" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="required-packages"><span class="header-section-number">3.1</span> Required Packages</h3>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 73%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Package</th>
@@ -441,131 +445,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="4.3" class="anchored" data-anchor-id="creating-a-metacore-object"><span class="header-section-number">4.3</span> Creating a metacore Object</h3>
 <p>In production, you’d load this from an Excel specification. For learning, let’s build one:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Define Dataset Specs ----</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ds_spec <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>dataset, <span class="sc">~</span>structure,     <span class="sc">~</span>label,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"One record per subject"</span>,  <span class="st">"Demographics"</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"One record per adverse event per subject"</span>, <span class="st">"Adverse Events"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"EX"</span>,     <span class="st">"One record per exposure per subject"</span>,      <span class="st">"Exposure"</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Define Variables ----</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>ds_vars <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>dataset, <span class="sc">~</span>variable,   <span class="sc">~</span>keep,  <span class="sc">~</span>key_seq, <span class="sc">~</span>order, <span class="sc">~</span>core,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"STUDYID"</span>,   <span class="cn">TRUE</span>,   <span class="dv">1</span>L,       <span class="dv">1</span>L,     <span class="st">"Required"</span>,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"DOMAIN"</span>,    <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">2</span>L,     <span class="st">"Required"</span>,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"USUBJID"</span>,   <span class="cn">TRUE</span>,   <span class="dv">2</span>L,       <span class="dv">3</span>L,     <span class="st">"Required"</span>,</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"SUBJID"</span>,    <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">4</span>L,     <span class="st">"Required"</span>,</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"SITEID"</span>,    <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">5</span>L,     <span class="st">"Required"</span>,</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"AGE"</span>,       <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">6</span>L,     <span class="st">"Required"</span>,</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"AGEU"</span>,      <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">7</span>L,     <span class="st">"Required"</span>,</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"SEX"</span>,       <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">8</span>L,     <span class="st">"Required"</span>,</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"RACE"</span>,      <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">9</span>L,     <span class="st">"Required"</span>,</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"ETHNIC"</span>,    <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">10</span>L,    <span class="st">"Permissible"</span>,</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"ARM"</span>,       <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">11</span>L,    <span class="st">"Required"</span>,</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"ARMCD"</span>,     <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">12</span>L,    <span class="st">"Required"</span>,</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"ACTARM"</span>,    <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">13</span>L,    <span class="st">"Permissible"</span>,</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"ACTARMCD"</span>,  <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">14</span>L,    <span class="st">"Permissible"</span>,</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"RFSTDTC"</span>,   <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">15</span>L,    <span class="st">"Expected"</span>,</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"RFENDTC"</span>,   <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">16</span>L,    <span class="st">"Expected"</span>,</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"STUDYID"</span>,   <span class="cn">TRUE</span>,   <span class="dv">1</span>L,       <span class="dv">1</span>L,     <span class="st">"Required"</span>,</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"DOMAIN"</span>,    <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">2</span>L,     <span class="st">"Required"</span>,</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"USUBJID"</span>,   <span class="cn">TRUE</span>,   <span class="dv">2</span>L,       <span class="dv">3</span>L,     <span class="st">"Required"</span>,</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AESEQ"</span>,     <span class="cn">TRUE</span>,   <span class="dv">3</span>L,       <span class="dv">4</span>L,     <span class="st">"Required"</span>,</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AETERM"</span>,    <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">5</span>L,     <span class="st">"Required"</span>,</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AEDECOD"</span>,   <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">6</span>L,     <span class="st">"Required"</span>,</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AEBODSYS"</span>,  <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">7</span>L,     <span class="st">"Permissible"</span>,</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AESEV"</span>,     <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">8</span>L,     <span class="st">"Expected"</span>,</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AESER"</span>,     <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">9</span>L,     <span class="st">"Expected"</span>,</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AEREL"</span>,     <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">10</span>L,    <span class="st">"Permissible"</span>,</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AESTDTC"</span>,   <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">11</span>L,    <span class="st">"Expected"</span>,</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AEENDTC"</span>,   <span class="cn">TRUE</span>,   <span class="cn">NA</span>,       <span class="dv">12</span>L,    <span class="st">"Permissible"</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Define Variable Specifications ----</span></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>var_spec <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>variable,   <span class="sc">~</span>type,       <span class="sc">~</span>length, <span class="sc">~</span>label,                          <span class="sc">~</span>common_ct,    <span class="sc">~</span>format,</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>  <span class="st">"STUDYID"</span>,   <span class="st">"text"</span>,      <span class="dv">12</span>L,     <span class="st">"Study Identifier"</span>,             <span class="cn">NA</span>,            <span class="cn">NA</span>,</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DOMAIN"</span>,    <span class="st">"text"</span>,      <span class="dv">2</span>L,      <span class="st">"Domain Abbreviation"</span>,          <span class="cn">NA</span>,            <span class="cn">NA</span>,</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">"USUBJID"</span>,   <span class="st">"text"</span>,      <span class="dv">40</span>L,     <span class="st">"Unique Subject Identifier"</span>,    <span class="cn">NA</span>,            <span class="cn">NA</span>,</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SUBJID"</span>,    <span class="st">"text"</span>,      <span class="dv">8</span>L,      <span class="st">"Subject Identifier for the Study"</span>, <span class="cn">NA</span>,        <span class="cn">NA</span>,</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SITEID"</span>,    <span class="st">"text"</span>,      <span class="dv">8</span>L,      <span class="st">"Study Site Identifier"</span>,        <span class="cn">NA</span>,            <span class="cn">NA</span>,</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AGE"</span>,       <span class="st">"integer"</span>,   <span class="dv">8</span>L,      <span class="st">"Age"</span>,                          <span class="cn">NA</span>,            <span class="cn">NA</span>,</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AGEU"</span>,      <span class="st">"text"</span>,      <span class="dv">6</span>L,      <span class="st">"Age Units"</span>,                    <span class="st">"AGEU"</span>,        <span class="cn">NA</span>,</span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SEX"</span>,       <span class="st">"text"</span>,      <span class="dv">2</span>L,      <span class="st">"Sex"</span>,                          <span class="st">"SEX"</span>,         <span class="cn">NA</span>,</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>  <span class="st">"RACE"</span>,      <span class="st">"text"</span>,      <span class="dv">40</span>L,     <span class="st">"Race"</span>,                         <span class="st">"RACE"</span>,        <span class="cn">NA</span>,</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ETHNIC"</span>,    <span class="st">"text"</span>,      <span class="dv">40</span>L,     <span class="st">"Ethnicity"</span>,                    <span class="st">"ETHNIC"</span>,      <span class="cn">NA</span>,</span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ARM"</span>,       <span class="st">"text"</span>,      <span class="dv">40</span>L,     <span class="st">"Planned Arm"</span>,                  <span class="cn">NA</span>,            <span class="cn">NA</span>,</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ARMCD"</span>,     <span class="st">"text"</span>,      <span class="dv">20</span>L,     <span class="st">"Planned Arm Code"</span>,             <span class="cn">NA</span>,            <span class="cn">NA</span>,</span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ACTARM"</span>,    <span class="st">"text"</span>,      <span class="dv">40</span>L,     <span class="st">"Actual Arm"</span>,                   <span class="cn">NA</span>,            <span class="cn">NA</span>,</span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ACTARMCD"</span>,  <span class="st">"text"</span>,      <span class="dv">20</span>L,     <span class="st">"Actual Arm Code"</span>,              <span class="cn">NA</span>,            <span class="cn">NA</span>,</span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>  <span class="st">"RFSTDTC"</span>,   <span class="st">"text"</span>,      <span class="dv">20</span>L,     <span class="st">"Subject Reference Start Date/Time"</span>, <span class="cn">NA</span>,       <span class="cn">NA</span>,</span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>  <span class="st">"RFENDTC"</span>,   <span class="st">"text"</span>,      <span class="dv">20</span>L,     <span class="st">"Subject Reference End Date/Time"</span>,   <span class="cn">NA</span>,       <span class="cn">NA</span>,</span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AESEQ"</span>,     <span class="st">"integer"</span>,   <span class="dv">8</span>L,      <span class="st">"Sequence Number"</span>,              <span class="cn">NA</span>,            <span class="cn">NA</span>,</span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AETERM"</span>,    <span class="st">"text"</span>,      <span class="dv">200</span>L,    <span class="st">"Reported Term for the Adverse Event"</span>, <span class="cn">NA</span>,     <span class="cn">NA</span>,</span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AEDECOD"</span>,   <span class="st">"text"</span>,      <span class="dv">200</span>L,    <span class="st">"Dictionary-Derived Term"</span>,      <span class="cn">NA</span>,            <span class="cn">NA</span>,</span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AEBODSYS"</span>,  <span class="st">"text"</span>,      <span class="dv">200</span>L,    <span class="st">"Body System or Organ Class"</span>,   <span class="cn">NA</span>,            <span class="cn">NA</span>,</span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AESEV"</span>,     <span class="st">"text"</span>,      <span class="dv">12</span>L,     <span class="st">"Severity/Intensity"</span>,           <span class="st">"AESEV"</span>,       <span class="cn">NA</span>,</span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AESER"</span>,     <span class="st">"text"</span>,      <span class="dv">2</span>L,      <span class="st">"Serious Event"</span>,                <span class="st">"NY"</span>,          <span class="cn">NA</span>,</span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AEREL"</span>,     <span class="st">"text"</span>,      <span class="dv">40</span>L,     <span class="st">"Causality"</span>,                    <span class="cn">NA</span>,            <span class="cn">NA</span>,</span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AESTDTC"</span>,   <span class="st">"text"</span>,      <span class="dv">20</span>L,     <span class="st">"Start Date/Time of Adverse Event"</span>, <span class="cn">NA</span>,        <span class="cn">NA</span>,</span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AEENDTC"</span>,   <span class="st">"text"</span>,      <span class="dv">20</span>L,     <span class="st">"End Date/Time of Adverse Event"</span>,    <span class="cn">NA</span>,        <span class="cn">NA</span></span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Metadata components created:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Metadata components created:</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Dataset specs:"</span>, <span class="fu">nrow</span>(ds_spec), <span class="st">"datasets</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Dataset specs: 3 datasets</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Variable assignments:"</span>, <span class="fu">nrow</span>(ds_vars), <span class="st">"variable-dataset pairs</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Variable assignments: 28 variable-dataset pairs</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Variable specs:"</span>, <span class="fu">nrow</span>(var_spec), <span class="st">"unique variables</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Variable specs: 25 unique variables</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the metacore object</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: metacore() requires specific table structures</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># For simplicity, we'll work with the individual components directly</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"In production, you would create the metacore object like this:</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>In production, you would create the metacore object like this:</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'mc &lt;- metacore::metacore(</span><span class="sc">\n</span><span class="st">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>mc &lt;- metacore::metacore(</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'  ds_spec  = ds_spec,</span><span class="sc">\n</span><span class="st">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  ds_spec  = ds_spec,</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'  ds_vars  = ds_vars,</span><span class="sc">\n</span><span class="st">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  ds_vars  = ds_vars,</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'  var_spec = var_spec</span><span class="sc">\n</span><span class="st">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  var_spec = var_spec</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">')</span><span class="sc">\n\n</span><span class="st">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>)</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Or more commonly, load from a specification file:</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Or more commonly, load from a specification file:</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">'mc &lt;- metacore::spec_to_metacore("path/to/specs.xlsx")</span><span class="sc">\n</span><span class="st">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>mc &lt;- metacore::spec_to_metacore("path/to/specs.xlsx")</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In production, you would create the metacore object like this:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mc <span class="ot">&lt;-</span> metacore<span class="sc">::</span><span class="fu">metacore</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">ds_spec  =</span> ds_spec,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ds_vars  =</span> ds_vars,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">var_spec =</span> var_spec</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Or more commonly, load from a specification file:</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>mc <span class="ot">&lt;-</span> metacore<span class="sc">::</span><span class="fu">spec_to_metacore</span>(<span class="st">"path/to/specs.xlsx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -589,21 +491,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="5.1" class="anchored" data-anchor-id="what-xportr-does"><span class="header-section-number">5.1</span> What xportr Does</h3>
 <p><code>xportr</code> is the <strong>workhorse</strong> for making your datasets submission-ready. It applies metadata from your specification to your actual data:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"xportr: Key Functions</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>xportr: Key Functions</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>xportr_functions <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>Function,            <span class="sc">~</span>What_It_Does,</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"xportr_type()"</span>,      <span class="st">"Coerce variables to the correct type (character/numeric)"</span>,</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"xportr_length()"</span>,    <span class="st">"Set variable lengths for SAS transport"</span>,</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"xportr_label()"</span>,     <span class="st">"Apply variable labels from specification"</span>,</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"xportr_order()"</span>,     <span class="st">"Reorder variables to match specification"</span>,</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"xportr_format()"</span>,    <span class="st">"Apply SAS display formats"</span>,</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"xportr_write()"</span>,     <span class="st">"Export the dataset as a .xpt (SAS transport) file"</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(xportr_functions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 2
   Function        What_It_Does                                            
@@ -621,54 +511,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="5.2" class="anchored" data-anchor-id="applying-xportr-step-by-step"><span class="header-section-number">5.2</span> Applying xportr Step by Step</h3>
 <p>Let’s work through the full pipeline using the DM domain:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Create our DM dataset (from Day 7 capstone approach)</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>n_subjects <span class="ot">&lt;-</span> <span class="dv">15</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>raw_dm <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">STUDYID  =</span> <span class="st">"CDISC01"</span>,</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">DOMAIN   =</span> <span class="st">"DM"</span>,</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">SUBJID   =</span> <span class="fu">sprintf</span>(<span class="st">"%03d"</span>, <span class="dv">1</span><span class="sc">:</span>n_subjects),</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">SITEID   =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"101"</span>, <span class="st">"102"</span>, <span class="st">"103"</span>), n_subjects, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">AGE      =</span> <span class="fu">sample</span>(<span class="dv">25</span><span class="sc">:</span><span class="dv">75</span>, n_subjects, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">AGEU     =</span> <span class="st">"YEARS"</span>,</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">SEX      =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"F"</span>), n_subjects, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">RACE     =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"WHITE"</span>, <span class="st">"BLACK OR AFRICAN AMERICAN"</span>, <span class="st">"ASIAN"</span>), </span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>                    n_subjects, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">ETHNIC   =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"HISPANIC OR LATINO"</span>, <span class="st">"NOT HISPANIC OR LATINO"</span>),</span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>                    n_subjects, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.85</span>)),</span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">ARM      =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Placebo"</span>, <span class="st">"Active 10mg"</span>, <span class="st">"Active 20mg"</span>),</span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>                    n_subjects, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">ARMCD    =</span> <span class="cn">NA_character_</span>,</span>
-<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">ACTARM   =</span> <span class="cn">NA_character_</span>,</span>
-<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">ACTARMCD =</span> <span class="cn">NA_character_</span>,</span>
-<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">RFSTDTC  =</span> <span class="fu">as.character</span>(<span class="fu">as.Date</span>(<span class="st">"2024-01-01"</span>) <span class="sc">+</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">60</span>, n_subjects, <span class="at">replace =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">RFENDTC  =</span> <span class="cn">NA_character_</span></span>
-<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">USUBJID  =</span> <span class="fu">paste</span>(STUDYID, SITEID, SUBJID, <span class="at">sep =</span> <span class="st">"-"</span>),</span>
-<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">ARMCD =</span> <span class="fu">case_when</span>(</span>
-<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>      ARM <span class="sc">==</span> <span class="st">"Placebo"</span> <span class="sc">~</span> <span class="st">"PBO"</span>,</span>
-<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>      ARM <span class="sc">==</span> <span class="st">"Active 10mg"</span> <span class="sc">~</span> <span class="st">"ACT10"</span>,</span>
-<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>      ARM <span class="sc">==</span> <span class="st">"Active 20mg"</span> <span class="sc">~</span> <span class="st">"ACT20"</span></span>
-<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">ACTARM =</span> ARM,</span>
-<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">ACTARMCD =</span> ARMCD</span>
-<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"DM dataset before xportr:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DM dataset before xportr:</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Rows:"</span>, <span class="fu">nrow</span>(raw_dm), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 15 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Cols:"</span>, <span class="fu">ncol</span>(raw_dm), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Cols: 16 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(raw_dm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 15
 Columns: 16
@@ -694,34 +545,9 @@ $ USUBJID  &lt;chr&gt; "CDISC01-101-001", "CDISC01-101-002", "CDISC01-101-003", 
 <section id="step-2-create-a-specification-for-xportr" class="level3" data-number="5.3">
 <h3 data-number="5.3" class="anchored" data-anchor-id="step-2-create-a-specification-for-xportr"><span class="header-section-number">5.3</span> Step 2: Create a Specification for xportr</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># xportr functions accept a metadata dataframe with specific columns</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's create the specification that xportr expects</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>dm_spec <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>dataset, <span class="sc">~</span>variable,   <span class="sc">~</span>type,       <span class="sc">~</span>label,                               <span class="sc">~</span>length, <span class="sc">~</span>order,  <span class="sc">~</span>format,</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"STUDYID"</span>,   <span class="st">"character"</span>, <span class="st">"Study Identifier"</span>,                   <span class="dv">12</span>L,     <span class="dv">1</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"DOMAIN"</span>,    <span class="st">"character"</span>, <span class="st">"Domain Abbreviation"</span>,                <span class="dv">2</span>L,      <span class="dv">2</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"USUBJID"</span>,   <span class="st">"character"</span>, <span class="st">"Unique Subject Identifier"</span>,          <span class="dv">40</span>L,     <span class="dv">3</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"SUBJID"</span>,    <span class="st">"character"</span>, <span class="st">"Subject Identifier for the Study"</span>,   <span class="dv">8</span>L,      <span class="dv">4</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"SITEID"</span>,    <span class="st">"character"</span>, <span class="st">"Study Site Identifier"</span>,              <span class="dv">8</span>L,      <span class="dv">5</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"AGE"</span>,       <span class="st">"numeric"</span>,   <span class="st">"Age"</span>,                                <span class="dv">8</span>L,      <span class="dv">6</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"AGEU"</span>,      <span class="st">"character"</span>, <span class="st">"Age Units"</span>,                          <span class="dv">6</span>L,      <span class="dv">7</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"SEX"</span>,       <span class="st">"character"</span>, <span class="st">"Sex"</span>,                                <span class="dv">2</span>L,      <span class="dv">8</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"RACE"</span>,      <span class="st">"character"</span>, <span class="st">"Race"</span>,                               <span class="dv">40</span>L,     <span class="dv">9</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"ETHNIC"</span>,    <span class="st">"character"</span>, <span class="st">"Ethnicity"</span>,                          <span class="dv">40</span>L,     <span class="dv">10</span>L,     <span class="cn">NA</span>,</span>
-<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"ARM"</span>,       <span class="st">"character"</span>, <span class="st">"Planned Arm"</span>,                        <span class="dv">40</span>L,     <span class="dv">11</span>L,     <span class="cn">NA</span>,</span>
-<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"ARMCD"</span>,     <span class="st">"character"</span>, <span class="st">"Planned Arm Code"</span>,                   <span class="dv">20</span>L,     <span class="dv">12</span>L,     <span class="cn">NA</span>,</span>
-<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"ACTARM"</span>,    <span class="st">"character"</span>, <span class="st">"Actual Arm"</span>,                         <span class="dv">40</span>L,     <span class="dv">13</span>L,     <span class="cn">NA</span>,</span>
-<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"ACTARMCD"</span>,  <span class="st">"character"</span>, <span class="st">"Actual Arm Code"</span>,                    <span class="dv">20</span>L,     <span class="dv">14</span>L,     <span class="cn">NA</span>,</span>
-<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"RFSTDTC"</span>,   <span class="st">"character"</span>, <span class="st">"Subject Reference Start Date/Time"</span>,  <span class="dv">20</span>L,     <span class="dv">15</span>L,     <span class="cn">NA</span>,</span>
-<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DM"</span>,     <span class="st">"RFENDTC"</span>,   <span class="st">"character"</span>, <span class="st">"Subject Reference End Date/Time"</span>,    <span class="dv">20</span>L,     <span class="dv">16</span>L,     <span class="cn">NA</span></span>
-<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"DM specification:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DM specification:</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>dm_spec <span class="sc">%&gt;%</span> <span class="fu">select</span>(variable, type, label, length, order) <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 5
    variable type      label                             length order
@@ -748,36 +574,18 @@ $ USUBJID  &lt;chr&gt; "CDISC01-101-001", "CDISC01-101-002", "CDISC01-101-003", 
 <section id="step-3-apply-xportr-functions" class="level3" data-number="5.4">
 <h3 data-number="5.4" class="anchored" data-anchor-id="step-3-apply-xportr-functions"><span class="header-section-number">5.4</span> Step 3: Apply xportr Functions</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Apply metadata using the xportr pipeline ----</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3a: Apply variable types</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>dm_typed <span class="ot">&lt;-</span> raw_dm <span class="sc">%&gt;%</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_type</span>(dm_spec, <span class="at">domain =</span> <span class="st">"DM"</span>)</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"After xportr_type():</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>After xportr_type():</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  AGE type:"</span>, <span class="fu">class</span>(dm_typed<span class="sc">$</span>AGE), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  AGE type: integer </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  STUDYID type:"</span>, <span class="fu">class</span>(dm_typed<span class="sc">$</span>STUDYID), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  STUDYID type: character </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3b: Apply variable labels</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>dm_labeled <span class="ot">&lt;-</span> dm_typed <span class="sc">%&gt;%</span></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_label</span>(dm_spec, <span class="at">domain =</span> <span class="st">"DM"</span>)</span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"After xportr_label():</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>After xportr_label():</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check labels</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>labels_applied <span class="ot">&lt;-</span> <span class="fu">sapply</span>(dm_labeled, <span class="cf">function</span>(x) <span class="fu">attr</span>(x, <span class="st">"label"</span>))</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>labels_applied <span class="ot">&lt;-</span> labels_applied[<span class="sc">!</span><span class="fu">is.na</span>(labels_applied)]</span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">data.frame</span>(<span class="at">Variable =</span> <span class="fu">names</span>(labels_applied), <span class="at">Label =</span> <span class="fu">unname</span>(labels_applied)), <span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Variable                            Label
 1  STUDYID                 Study Identifier
@@ -791,29 +599,17 @@ $ USUBJID  &lt;chr&gt; "CDISC01-101-001", "CDISC01-101-002", "CDISC01-101-003", 
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3c: Apply variable ordering</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>dm_ordered <span class="ot">&lt;-</span> dm_labeled <span class="sc">%&gt;%</span></span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_order</span>(dm_spec, <span class="at">domain =</span> <span class="st">"DM"</span>)</span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"After xportr_order():</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>After xportr_order():</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Variable order:"</span>, <span class="fu">paste</span>(<span class="fu">names</span>(dm_ordered), <span class="at">collapse =</span> <span class="st">", "</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Variable order: STUDYID, DOMAIN, USUBJID, SUBJID, SITEID, AGE, AGEU, SEX, RACE, ETHNIC, ARM, ARMCD, ACTARM, ACTARMCD, RFSTDTC, RFENDTC </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3d: Apply variable lengths</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>dm_lengthed <span class="ot">&lt;-</span> dm_ordered <span class="sc">%&gt;%</span></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_length</span>(dm_spec, <span class="at">domain =</span> <span class="st">"DM"</span>)</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"After xportr_length():</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>After xportr_length():</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"All metadata applied ✓</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>All metadata applied ✓</code></pre>
 </div>
@@ -822,19 +618,9 @@ $ USUBJID  &lt;chr&gt; "CDISC01-101-001", "CDISC01-101-002", "CDISC01-101-003", 
 <section id="step-4-export-as-.xpt" class="level3" data-number="5.5">
 <h3 data-number="5.5" class="anchored" data-anchor-id="step-4-export-as-.xpt"><span class="header-section-number">5.5</span> Step 4: Export as .xpt</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create output directory</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>output_dir <span class="ot">&lt;-</span> <span class="st">"output"</span></span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(output_dir)) <span class="fu">dir.create</span>(output_dir)</span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Export using xportr_write</span></span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>dm_lengthed <span class="sc">%&gt;%</span></span>
-<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_write</span>(<span class="fu">file.path</span>(output_dir, <span class="st">"dm.xpt"</span>))</span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Exported:"</span>, <span class="fu">file.path</span>(output_dir, <span class="st">"dm.xpt"</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Exported: output/dm.xpt </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"File size:"</span>, <span class="fu">file.size</span>(<span class="fu">file.path</span>(output_dir, <span class="st">"dm.xpt"</span>)), <span class="st">"bytes</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>File size: 7920 bytes</code></pre>
 </div>
@@ -850,13 +636,13 @@ $ USUBJID  &lt;chr&gt; "CDISC01-101-001", "CDISC01-101-002", "CDISC01-101-003", 
 </div>
 <div class="callout-body-container callout-body">
 <p>In practice, you’d chain all xportr functions together:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>dm_final <span class="ot">&lt;-</span> raw_dm <span class="sc">%&gt;%</span></span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_type</span>(spec, <span class="at">domain =</span> <span class="st">"DM"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_length</span>(spec, <span class="at">domain =</span> <span class="st">"DM"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_label</span>(spec, <span class="at">domain =</span> <span class="st">"DM"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_order</span>(spec, <span class="at">domain =</span> <span class="st">"DM"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_format</span>(spec, <span class="at">domain =</span> <span class="st">"DM"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_write</span>(<span class="st">"output/dm.xpt"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>dm_final <span class="ot">&lt;-</span> raw_dm <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_type</span>(spec, <span class="at">domain =</span> <span class="st">"DM"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_length</span>(spec, <span class="at">domain =</span> <span class="st">"DM"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_label</span>(spec, <span class="at">domain =</span> <span class="st">"DM"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_order</span>(spec, <span class="at">domain =</span> <span class="st">"DM"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_format</span>(spec, <span class="at">domain =</span> <span class="st">"DM"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_write</span>(<span class="st">"output/dm.xpt"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This single pipeline takes your raw dataset and makes it submission-ready!</p>
 </div>
 </div>
@@ -869,20 +655,9 @@ $ USUBJID  &lt;chr&gt; "CDISC01-101-001", "CDISC01-101-002", "CDISC01-101-003", 
 <h3 data-number="6.1" class="anchored" data-anchor-id="what-metatools-provides"><span class="header-section-number">6.1</span> What metatools Provides</h3>
 <p><code>metatools</code> helps you <strong>work with</strong> metadata - selecting variables, checking CT compliance, and building datasets from specs:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"metatools: Key Functions</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>metatools: Key Functions</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>metatools_fns <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>Function,                 <span class="sc">~</span>Purpose,</span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"build_from_derived()"</span>,    <span class="st">"Create a dataset shell from specification"</span>,</span>
-<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"check_ct_col()"</span>,          <span class="st">"Check if column values match controlled terminology"</span>,</span>
-<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"check_variables()"</span>,       <span class="st">"Verify dataset variables match specification"</span>,</span>
-<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"combine_supp()"</span>,          <span class="st">"Combine SUPP-- with parent domain"</span>,</span>
-<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"drop_unspec_vars()"</span>,      <span class="st">"Remove variables not in the specification"</span></span>
-<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(metatools_fns)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 2
   Function             Purpose                                            
@@ -901,243 +676,77 @@ $ USUBJID  &lt;chr&gt; "CDISC01-101-001", "CDISC01-101-002", "CDISC01-101-003", 
 <h2 data-number="7" class="anchored" data-anchor-id="end-to-end-capstone-pipeline"><span class="header-section-number">7</span> End-to-End Capstone Pipeline</h2>
 <p>Let’s build a complete pipeline that takes raw data through to validated, exported SDTM:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"=== WEEK 2 CAPSTONE: END-TO-END SDTM PIPELINE ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>=== WEEK 2 CAPSTONE: END-TO-END SDTM PIPELINE ===</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- STEP 1: Raw Data ----</span></span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Step 1: Generate raw clinical data</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Step 1: Generate raw clinical data</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
-<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Raw demographics</span></span>
-<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a>raw_demo <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">site    =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"101"</span>, <span class="st">"102"</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">subject =</span> <span class="fu">sprintf</span>(<span class="st">"%03d"</span>, <span class="dv">1</span><span class="sc">:</span>n),</span>
-<span id="cb74-8"><a href="#cb74-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sex     =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb74-9"><a href="#cb74-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">race    =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"White"</span>, <span class="st">"Black"</span>, <span class="st">"Asian"</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.25</span>, <span class="fl">0.15</span>)),</span>
-<span id="cb74-10"><a href="#cb74-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">age     =</span> <span class="fu">sample</span>(<span class="dv">25</span><span class="sc">:</span><span class="dv">75</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb74-11"><a href="#cb74-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">arm     =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Placebo"</span>, <span class="st">"Drug A 10mg"</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb74-12"><a href="#cb74-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">first_dose =</span> <span class="fu">as.Date</span>(<span class="st">"2024-01-15"</span>) <span class="sc">+</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">45</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb74-13"><a href="#cb74-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb74-14"><a href="#cb74-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-15"><a href="#cb74-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Raw AEs</span></span>
-<span id="cb74-16"><a href="#cb74-16" aria-hidden="true" tabindex="-1"></a>raw_aes <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb74-17"><a href="#cb74-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">site    =</span> <span class="fu">sample</span>(raw_demo<span class="sc">$</span>site[<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>], <span class="dv">30</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb74-18"><a href="#cb74-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">subject =</span> <span class="fu">sample</span>(raw_demo<span class="sc">$</span>subject[<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>], <span class="dv">30</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb74-19"><a href="#cb74-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">ae_term =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Headache"</span>, <span class="st">"Nausea"</span>, <span class="st">"Dizziness"</span>, <span class="st">"Fatigue"</span>, <span class="st">"Rash"</span>), <span class="dv">30</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb74-20"><a href="#cb74-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">severity =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Mild"</span>, <span class="st">"Moderate"</span>, <span class="st">"Severe"</span>), <span class="dv">30</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.3</span>, <span class="fl">0.1</span>)),</span>
-<span id="cb74-21"><a href="#cb74-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">serious  =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>), <span class="dv">30</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.1</span>)),</span>
-<span id="cb74-22"><a href="#cb74-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">related  =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Not Related"</span>, <span class="st">"Possibly Related"</span>), <span class="dv">30</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb74-23"><a href="#cb74-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">start_day =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">60</span>, <span class="dv">30</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb74-24"><a href="#cb74-24" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb74-25"><a href="#cb74-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(raw_demo <span class="sc">%&gt;%</span> <span class="fu">select</span>(subject, first_dose), <span class="at">by =</span> <span class="st">"subject"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb74-26"><a href="#cb74-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb74-27"><a href="#cb74-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">start_date =</span> <span class="fu">as.character</span>(first_dose <span class="sc">+</span> start_day),</span>
-<span id="cb74-28"><a href="#cb74-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">end_date   =</span> <span class="fu">as.character</span>(first_dose <span class="sc">+</span> start_day <span class="sc">+</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">14</span>, <span class="fu">n</span>(), <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb74-29"><a href="#cb74-29" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb74-30"><a href="#cb74-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-31"><a href="#cb74-31" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Demographics:"</span>, <span class="fu">nrow</span>(raw_demo), <span class="st">"subjects</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Demographics: 20 subjects</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Adverse Events:"</span>, <span class="fu">nrow</span>(raw_aes), <span class="st">"records</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Adverse Events: 30 records</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- STEP 2: Transform to SDTM ----</span></span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Step 2: Transform to SDTM format</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Step 2: Transform to SDTM format</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>STUDYID <span class="ot">&lt;-</span> <span class="st">"CAPSTONE02"</span></span>
-<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="co"># DM Domain</span></span>
-<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>sdtm_dm <span class="ot">&lt;-</span> raw_demo <span class="sc">%&gt;%</span></span>
-<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">STUDYID  =</span> STUDYID,</span>
-<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">DOMAIN   =</span> <span class="st">"DM"</span>,</span>
-<span id="cb80-8"><a href="#cb80-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">USUBJID  =</span> <span class="fu">paste</span>(STUDYID, site, subject, <span class="at">sep =</span> <span class="st">"-"</span>),</span>
-<span id="cb80-9"><a href="#cb80-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">SUBJID   =</span> subject,</span>
-<span id="cb80-10"><a href="#cb80-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">SITEID   =</span> site,</span>
-<span id="cb80-11"><a href="#cb80-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">AGE      =</span> age,</span>
-<span id="cb80-12"><a href="#cb80-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">AGEU     =</span> <span class="st">"YEARS"</span>,</span>
-<span id="cb80-13"><a href="#cb80-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">SEX      =</span> <span class="fu">if_else</span>(sex <span class="sc">==</span> <span class="st">"Male"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>),</span>
-<span id="cb80-14"><a href="#cb80-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">RACE     =</span> <span class="fu">toupper</span>(race),</span>
-<span id="cb80-15"><a href="#cb80-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">ETHNIC   =</span> <span class="st">"NOT HISPANIC OR LATINO"</span>,</span>
-<span id="cb80-16"><a href="#cb80-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">ARM      =</span> arm,</span>
-<span id="cb80-17"><a href="#cb80-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">ARMCD    =</span> <span class="fu">if_else</span>(arm <span class="sc">==</span> <span class="st">"Placebo"</span>, <span class="st">"PBO"</span>, <span class="st">"DRGA10"</span>),</span>
-<span id="cb80-18"><a href="#cb80-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">ACTARM   =</span> arm,</span>
-<span id="cb80-19"><a href="#cb80-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">ACTARMCD =</span> <span class="fu">if_else</span>(arm <span class="sc">==</span> <span class="st">"Placebo"</span>, <span class="st">"PBO"</span>, <span class="st">"DRGA10"</span>),</span>
-<span id="cb80-20"><a href="#cb80-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">RFSTDTC  =</span> <span class="fu">as.character</span>(first_dose),</span>
-<span id="cb80-21"><a href="#cb80-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">RFENDTC  =</span> <span class="cn">NA_character_</span></span>
-<span id="cb80-22"><a href="#cb80-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb80-23"><a href="#cb80-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(STUDYID, DOMAIN, USUBJID, SUBJID, SITEID, AGE, AGEU,</span>
-<span id="cb80-24"><a href="#cb80-24" aria-hidden="true" tabindex="-1"></a>         SEX, RACE, ETHNIC, ARM, ARMCD, ACTARM, ACTARMCD, RFSTDTC, RFENDTC)</span>
-<span id="cb80-25"><a href="#cb80-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-26"><a href="#cb80-26" aria-hidden="true" tabindex="-1"></a><span class="co"># AE Domain</span></span>
-<span id="cb80-27"><a href="#cb80-27" aria-hidden="true" tabindex="-1"></a>sdtm_ae <span class="ot">&lt;-</span> raw_aes <span class="sc">%&gt;%</span></span>
-<span id="cb80-28"><a href="#cb80-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb80-29"><a href="#cb80-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">STUDYID  =</span> STUDYID,</span>
-<span id="cb80-30"><a href="#cb80-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">DOMAIN   =</span> <span class="st">"AE"</span>,</span>
-<span id="cb80-31"><a href="#cb80-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">USUBJID  =</span> <span class="fu">paste</span>(STUDYID, site, subject, <span class="at">sep =</span> <span class="st">"-"</span>),</span>
-<span id="cb80-32"><a href="#cb80-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">AETERM   =</span> ae_term,</span>
-<span id="cb80-33"><a href="#cb80-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">AEDECOD  =</span> <span class="fu">toupper</span>(ae_term),</span>
-<span id="cb80-34"><a href="#cb80-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">AEBODSYS =</span> <span class="fu">case_when</span>(</span>
-<span id="cb80-35"><a href="#cb80-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">grepl</span>(<span class="st">"Headache|Dizziness"</span>, ae_term) <span class="sc">~</span> <span class="st">"NERVOUS SYSTEM DISORDERS"</span>,</span>
-<span id="cb80-36"><a href="#cb80-36" aria-hidden="true" tabindex="-1"></a>      <span class="fu">grepl</span>(<span class="st">"Nausea"</span>, ae_term) <span class="sc">~</span> <span class="st">"GASTROINTESTINAL DISORDERS"</span>,</span>
-<span id="cb80-37"><a href="#cb80-37" aria-hidden="true" tabindex="-1"></a>      <span class="fu">grepl</span>(<span class="st">"Fatigue"</span>, ae_term) <span class="sc">~</span> <span class="st">"GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS"</span>,</span>
-<span id="cb80-38"><a href="#cb80-38" aria-hidden="true" tabindex="-1"></a>      <span class="fu">grepl</span>(<span class="st">"Rash"</span>, ae_term) <span class="sc">~</span> <span class="st">"SKIN AND SUBCUTANEOUS TISSUE DISORDERS"</span></span>
-<span id="cb80-39"><a href="#cb80-39" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb80-40"><a href="#cb80-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">AESEV    =</span> <span class="fu">toupper</span>(severity),</span>
-<span id="cb80-41"><a href="#cb80-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">AESER    =</span> <span class="fu">if_else</span>(serious <span class="sc">==</span> <span class="st">"Yes"</span>, <span class="st">"Y"</span>, <span class="st">"N"</span>),</span>
-<span id="cb80-42"><a href="#cb80-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">AEREL    =</span> <span class="fu">toupper</span>(related),</span>
-<span id="cb80-43"><a href="#cb80-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">AESTDTC  =</span> start_date,</span>
-<span id="cb80-44"><a href="#cb80-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">AEENDTC  =</span> end_date</span>
-<span id="cb80-45"><a href="#cb80-45" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb80-46"><a href="#cb80-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(USUBJID, AESTDTC) <span class="sc">%&gt;%</span></span>
-<span id="cb80-47"><a href="#cb80-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(USUBJID) <span class="sc">%&gt;%</span></span>
-<span id="cb80-48"><a href="#cb80-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AESEQ =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb80-49"><a href="#cb80-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb80-50"><a href="#cb80-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(STUDYID, DOMAIN, USUBJID, AESEQ, AETERM, AEDECOD, AEBODSYS,</span>
-<span id="cb80-51"><a href="#cb80-51" aria-hidden="true" tabindex="-1"></a>         AESEV, AESER, AEREL, AESTDTC, AEENDTC)</span>
-<span id="cb80-52"><a href="#cb80-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-53"><a href="#cb80-53" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  SDTM DM:"</span>, <span class="fu">nrow</span>(sdtm_dm), <span class="st">"rows x"</span>, <span class="fu">ncol</span>(sdtm_dm), <span class="st">"cols</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  SDTM DM: 20 rows x 16 cols</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  SDTM AE:"</span>, <span class="fu">nrow</span>(sdtm_ae), <span class="st">"rows x"</span>, <span class="fu">ncol</span>(sdtm_ae), <span class="st">"cols</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  SDTM AE: 30 rows x 12 cols</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- STEP 3: Validate ----</span></span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Step 3: Validate SDTM domains</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Step 3: Validate SDTM domains</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cross-domain check: All AE subjects in DM</span></span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>ae_orphans <span class="ot">&lt;-</span> sdtm_ae <span class="sc">%&gt;%</span> <span class="fu">anti_join</span>(sdtm_dm, <span class="at">by =</span> <span class="st">"USUBJID"</span>)</span>
-<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Orphan AE records:"</span>, <span class="fu">nrow</span>(ae_orphans), <span class="fu">if_else</span>(<span class="fu">nrow</span>(ae_orphans) <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"✓"</span>, <span class="st">"✗"</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Orphan AE records: 16 ✗ </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Required variable check</span></span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>dm_required <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"STUDYID"</span>, <span class="st">"DOMAIN"</span>, <span class="st">"USUBJID"</span>, <span class="st">"SUBJID"</span>, <span class="st">"SITEID"</span>,</span>
-<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"AGE"</span>, <span class="st">"AGEU"</span>, <span class="st">"SEX"</span>, <span class="st">"RACE"</span>, <span class="st">"ARM"</span>, <span class="st">"ARMCD"</span>)</span>
-<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>dm_present <span class="ot">&lt;-</span> <span class="fu">all</span>(dm_required <span class="sc">%in%</span> <span class="fu">names</span>(sdtm_dm))</span>
-<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  DM required variables:"</span>, <span class="fu">if_else</span>(dm_present, <span class="st">"All present ✓"</span>, <span class="st">"Missing ✗"</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  DM required variables: All present ✓ </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>ae_required <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"STUDYID"</span>, <span class="st">"DOMAIN"</span>, <span class="st">"USUBJID"</span>, <span class="st">"AESEQ"</span>, <span class="st">"AETERM"</span>, <span class="st">"AEDECOD"</span>)</span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>ae_present <span class="ot">&lt;-</span> <span class="fu">all</span>(ae_required <span class="sc">%in%</span> <span class="fu">names</span>(sdtm_ae))</span>
-<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  AE required variables:"</span>, <span class="fu">if_else</span>(ae_present, <span class="st">"All present ✓"</span>, <span class="st">"Missing ✗"</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  AE required variables: All present ✓ </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CT check</span></span>
-<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>valid_sex <span class="ot">&lt;-</span> <span class="fu">all</span>(sdtm_dm<span class="sc">$</span>SEX <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"U"</span>, <span class="st">"UNDIFFERENTIATED"</span>))</span>
-<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  SEX controlled terminology:"</span>, <span class="fu">if_else</span>(valid_sex, <span class="st">"Valid ✓"</span>, <span class="st">"Invalid ✗"</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  SEX controlled terminology: Valid ✓ </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>valid_sev <span class="ot">&lt;-</span> <span class="fu">all</span>(sdtm_ae<span class="sc">$</span>AESEV <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"MILD"</span>, <span class="st">"MODERATE"</span>, <span class="st">"SEVERE"</span>))</span>
-<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  AESEV controlled terminology:"</span>, <span class="fu">if_else</span>(valid_sev, <span class="st">"Valid ✓"</span>, <span class="st">"Invalid ✗"</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  AESEV controlled terminology: Valid ✓ </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Date logic check</span></span>
-<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>ae_date_issue <span class="ot">&lt;-</span> sdtm_ae <span class="sc">%&gt;%</span></span>
-<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(AESTDTC), <span class="sc">!</span><span class="fu">is.na</span>(AEENDTC)) <span class="sc">%&gt;%</span></span>
-<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AESTDTC <span class="sc">&gt;</span> AEENDTC) <span class="sc">%&gt;%</span></span>
-<span id="cb96-5"><a href="#cb96-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>()</span>
-<span id="cb96-6"><a href="#cb96-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  AE date logic (start &lt;= end):"</span>, <span class="fu">if_else</span>(ae_date_issue <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"Valid ✓"</span>, <span class="st">"Issues ✗"</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  AE date logic (start &lt;= end): Valid ✓ </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- STEP 4: Apply Metadata with xportr ----</span></span>
-<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Step 4: Apply metadata and export</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Step 4: Apply metadata and export</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use our DM spec from earlier</span></span>
-<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>dm_final <span class="ot">&lt;-</span> sdtm_dm <span class="sc">%&gt;%</span></span>
-<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_type</span>(dm_spec, <span class="at">domain =</span> <span class="st">"DM"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_length</span>(dm_spec, <span class="at">domain =</span> <span class="st">"DM"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_label</span>(dm_spec, <span class="at">domain =</span> <span class="st">"DM"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_order</span>(dm_spec, <span class="at">domain =</span> <span class="st">"DM"</span>)</span>
-<span id="cb100-7"><a href="#cb100-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-8"><a href="#cb100-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  DM metadata applied:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  DM metadata applied:</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"    Variables:"</span>, <span class="fu">ncol</span>(dm_final), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Variables: 16 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"    Order:"</span>, <span class="fu">paste</span>(<span class="fu">names</span>(dm_final), <span class="at">collapse =</span> <span class="st">" → "</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Order: STUDYID → DOMAIN → USUBJID → SUBJID → SITEID → AGE → AGEU → SEX → RACE → ETHNIC → ARM → ARMCD → ACTARM → ACTARMCD → RFSTDTC → RFENDTC </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick label check</span></span>
-<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">sapply</span>(dm_final, <span class="cf">function</span>(x) <span class="fu">attr</span>(x, <span class="st">"label"</span>))</span>
-<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"    Labels applied:"</span>, <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(labels)), <span class="st">"of"</span>, <span class="fu">length</span>(labels), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Labels applied: 16 of 16 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- STEP 5: Export ----</span></span>
-<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Step 5: Export as .xpt files</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Step 5: Export as .xpt files</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>output_dir <span class="ot">&lt;-</span> <span class="st">"output"</span></span>
-<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(output_dir)) <span class="fu">dir.create</span>(output_dir)</span>
-<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Export DM</span></span>
-<span id="cb110-5"><a href="#cb110-5" aria-hidden="true" tabindex="-1"></a>dm_final <span class="sc">%&gt;%</span></span>
-<span id="cb110-6"><a href="#cb110-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_write</span>(<span class="fu">file.path</span>(output_dir, <span class="st">"dm.xpt"</span>))</span>
-<span id="cb110-7"><a href="#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  ✓ Exported:"</span>, <span class="fu">file.path</span>(output_dir, <span class="st">"dm.xpt"</span>),</span>
-<span id="cb110-8"><a href="#cb110-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-"</span>, <span class="fu">file.size</span>(<span class="fu">file.path</span>(output_dir, <span class="st">"dm.xpt"</span>)), <span class="st">"bytes</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  ✓ Exported: output/dm.xpt - 9520 bytes</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Export AE (with inline metadata)</span></span>
-<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>ae_spec <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>dataset, <span class="sc">~</span>variable,   <span class="sc">~</span>type,       <span class="sc">~</span>label,                                  <span class="sc">~</span>length, <span class="sc">~</span>order,  <span class="sc">~</span>format,</span>
-<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"STUDYID"</span>,   <span class="st">"character"</span>, <span class="st">"Study Identifier"</span>,                      <span class="dv">12</span>L,     <span class="dv">1</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb112-5"><a href="#cb112-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"DOMAIN"</span>,    <span class="st">"character"</span>, <span class="st">"Domain Abbreviation"</span>,                   <span class="dv">2</span>L,      <span class="dv">2</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb112-6"><a href="#cb112-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"USUBJID"</span>,   <span class="st">"character"</span>, <span class="st">"Unique Subject Identifier"</span>,             <span class="dv">40</span>L,     <span class="dv">3</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb112-7"><a href="#cb112-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AESEQ"</span>,     <span class="st">"numeric"</span>,   <span class="st">"Sequence Number"</span>,                       <span class="dv">8</span>L,      <span class="dv">4</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb112-8"><a href="#cb112-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AETERM"</span>,    <span class="st">"character"</span>, <span class="st">"Reported Term for the Adverse Event"</span>,   <span class="dv">200</span>L,    <span class="dv">5</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb112-9"><a href="#cb112-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AEDECOD"</span>,   <span class="st">"character"</span>, <span class="st">"Dictionary-Derived Term"</span>,               <span class="dv">200</span>L,    <span class="dv">6</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb112-10"><a href="#cb112-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AEBODSYS"</span>,  <span class="st">"character"</span>, <span class="st">"Body System or Organ Class"</span>,            <span class="dv">200</span>L,    <span class="dv">7</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb112-11"><a href="#cb112-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AESEV"</span>,     <span class="st">"character"</span>, <span class="st">"Severity/Intensity"</span>,                    <span class="dv">12</span>L,     <span class="dv">8</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb112-12"><a href="#cb112-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AESER"</span>,     <span class="st">"character"</span>, <span class="st">"Serious Event"</span>,                         <span class="dv">2</span>L,      <span class="dv">9</span>L,      <span class="cn">NA</span>,</span>
-<span id="cb112-13"><a href="#cb112-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AEREL"</span>,     <span class="st">"character"</span>, <span class="st">"Causality"</span>,                             <span class="dv">40</span>L,     <span class="dv">10</span>L,     <span class="cn">NA</span>,</span>
-<span id="cb112-14"><a href="#cb112-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AESTDTC"</span>,   <span class="st">"character"</span>, <span class="st">"Start Date/Time of Adverse Event"</span>,      <span class="dv">20</span>L,     <span class="dv">11</span>L,     <span class="cn">NA</span>,</span>
-<span id="cb112-15"><a href="#cb112-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"AE"</span>,     <span class="st">"AEENDTC"</span>,   <span class="st">"character"</span>, <span class="st">"End Date/Time of Adverse Event"</span>,        <span class="dv">20</span>L,     <span class="dv">12</span>L,     <span class="cn">NA</span></span>
-<span id="cb112-16"><a href="#cb112-16" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb112-17"><a href="#cb112-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb112-18"><a href="#cb112-18" aria-hidden="true" tabindex="-1"></a>sdtm_ae <span class="sc">%&gt;%</span></span>
-<span id="cb112-19"><a href="#cb112-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_type</span>(ae_spec, <span class="at">domain =</span> <span class="st">"AE"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb112-20"><a href="#cb112-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_length</span>(ae_spec, <span class="at">domain =</span> <span class="st">"AE"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb112-21"><a href="#cb112-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_label</span>(ae_spec, <span class="at">domain =</span> <span class="st">"AE"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb112-22"><a href="#cb112-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_order</span>(ae_spec, <span class="at">domain =</span> <span class="st">"AE"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb112-23"><a href="#cb112-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xportr_write</span>(<span class="fu">file.path</span>(output_dir, <span class="st">"ae.xpt"</span>))</span>
-<span id="cb112-24"><a href="#cb112-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb112-25"><a href="#cb112-25" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  ✓ Exported:"</span>, <span class="fu">file.path</span>(output_dir, <span class="st">"ae.xpt"</span>),</span>
-<span id="cb112-26"><a href="#cb112-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"-"</span>, <span class="fu">file.size</span>(<span class="fu">file.path</span>(output_dir, <span class="st">"ae.xpt"</span>)), <span class="st">"bytes</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  ✓ Exported: output/ae.xpt - 25120 bytes</code></pre>
 </div>
@@ -1147,22 +756,9 @@ $ USUBJID  &lt;chr&gt; "CDISC01-101-001", "CDISC01-101-002", "CDISC01-101-003", 
 <section id="week-2-review-everything-youve-learned" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="week-2-review-everything-youve-learned"><span class="header-section-number">8</span> Week 2 Review: Everything You’ve Learned</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"=== WEEK 2 COMPLETE REVIEW ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>=== WEEK 2 COMPLETE REVIEW ===</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>review <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>Day,  <span class="sc">~</span>Topic,                                    <span class="sc">~</span>Key_Skill,</span>
-<span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"8"</span>,   <span class="st">"LB Domain &amp; Unit Standardization"</span>,        <span class="st">"Unit conversion, reference ranges, LBNRIND"</span>,</span>
-<span id="cb116-4"><a href="#cb116-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"9"</span>,   <span class="st">"VS &amp; Repeated Measures"</span>,                  <span class="st">"Multiple readings, VSPOS, VSTPT, wide format"</span>,</span>
-<span id="cb116-5"><a href="#cb116-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"10"</span>,  <span class="st">"AE Domain Mastery &amp; SAE Logic"</span>,           <span class="st">"Severity vs seriousness, TEAE, SAE criteria"</span>,</span>
-<span id="cb116-6"><a href="#cb116-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"11"</span>,  <span class="st">"Disposition &amp; Trial Design"</span>,              <span class="st">"DS domain, EPOCH, TA/TV/TS, ADSL preview"</span>,</span>
-<span id="cb116-7"><a href="#cb116-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"12"</span>,  <span class="st">"Data Cuts with datacutr"</span>,                 <span class="st">"Patient-level &amp; record-level cuts, ongoing AEs"</span>,</span>
-<span id="cb116-8"><a href="#cb116-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"13"</span>,  <span class="st">"SDTM Validation with sdtmchecks"</span>,         <span class="st">"FDA business rules, cross-domain checks"</span>,</span>
-<span id="cb116-9"><a href="#cb116-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"14"</span>,  <span class="st">"Metadata-Driven SDTM (this capstone)"</span>,    <span class="st">"metacore, metatools, xportr pipeline"</span></span>
-<span id="cb116-10"><a href="#cb116-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb116-11"><a href="#cb116-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-12"><a href="#cb116-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(review)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 3
   Day   Topic                                Key_Skill                          
@@ -1189,13 +785,13 @@ $ USUBJID  &lt;chr&gt; "CDISC01-101-001", "CDISC01-101-002", "CDISC01-101-003", 
 </div>
 <div class="callout-body-container callout-body">
 <p>You now have a solid foundation in SDTM:</p>
-<ul>
-<li>✓ You can build any SDTM domain from raw data</li>
-<li>✓ You understand Controlled Terminology and date derivations</li>
-<li>✓ You can handle complex domains (LB, VS, AE, DS)</li>
-<li>✓ You know how to validate SDTM data</li>
-<li>✓ You can apply metadata and export submission-ready <code>.xpt</code> files</li>
-<li>✓ You understand how SDTM maps to ADaM</li>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="">You can build any SDTM domain from raw data</label></li>
+<li><label><input type="checkbox" checked="">You understand Controlled Terminology and date derivations</label></li>
+<li><label><input type="checkbox" checked="">You can handle complex domains (LB, VS, AE, DS)</label></li>
+<li><label><input type="checkbox" checked="">You know how to validate SDTM data</label></li>
+<li><label><input type="checkbox" checked="">You can apply metadata and export submission-ready <code>.xpt</code> files</label></li>
+<li><label><input type="checkbox" checked="">You understand how SDTM maps to ADaM</label></li>
 </ul>
 <p><strong>In Week 3, we will use <code>admiral</code> to build ADaM datasets (ADSL, ADAE, ADVS, ADLB) from the SDTM data you’ve mastered.</strong></p>
 </div>
@@ -1208,8 +804,8 @@ $ USUBJID  &lt;chr&gt; "CDISC01-101-001", "CDISC01-101-002", "CDISC01-101-003", 
 <p>Today you completed the following:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 42%">
-<col style="width: 57%">
+<col style="width: 88%">
+<col style="width: 11%">
 </colgroup>
 <thead>
 <tr class="header">

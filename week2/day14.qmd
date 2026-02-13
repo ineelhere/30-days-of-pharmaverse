@@ -25,7 +25,9 @@ execute:
   message: false
 ---
 
-<div style="margin-bottom:12px;"><a href="../index.html" class="resource-link">← Back to Roadmap</a></div>
+::: {style="margin-bottom:12px;"}
+<a href="../index.html" class="resource-link">← Back to Roadmap</a>
+:::
 
 ## Learning Objectives
 
@@ -76,13 +78,13 @@ This ensures:
 
 ### Required Packages
 
-| Package | Purpose |
-|---------|---------|
-| `metacore` | Load and manage dataset specifications |
-| `metatools` | Apply metadata-based transformations and checks |
-| `xportr` | Apply labels, types, formats, lengths; export `.xpt` |
-| `dplyr` | Data manipulation |
-| `pharmaversesdtm` | Example SDTM datasets |
+| Package           | Purpose                                              |
+|-------------------|------------------------------------------------------|
+| `metacore`        | Load and manage dataset specifications               |
+| `metatools`       | Apply metadata-based transformations and checks      |
+| `xportr`          | Apply labels, types, formats, lengths; export `.xpt` |
+| `dplyr`           | Data manipulation                                    |
+| `pharmaversesdtm` | Example SDTM datasets                                |
 
 ```{r}
 #| label: install-and-load
@@ -114,7 +116,7 @@ library(xportr)
 
 A `metacore` object contains multiple related tables:
 
-```
+```         
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                      METACORE OBJECT                                    │
 ├─────────────────────────────────────────────────────────────────────────┤
@@ -149,6 +151,7 @@ In production, you'd load this from an Excel specification. For learning, let's 
 
 ```{r}
 #| label: create-metacore
+#| echo: false
 
 # ---- Define Dataset Specs ----
 ds_spec <- tibble::tribble(
@@ -229,20 +232,18 @@ cat("  Variable specs:", nrow(var_spec), "unique variables\n")
 
 ```{r}
 #| label: build-metacore-object
+#| eval: false
+#| echo: true
 
-# Build the metacore object
-# Note: metacore() requires specific table structures
-# For simplicity, we'll work with the individual components directly
+# In production, you would create the metacore object like this:
+mc <- metacore::metacore(
+  ds_spec  = ds_spec,
+  ds_vars  = ds_vars,
+  var_spec = var_spec
+)
 
-cat("In production, you would create the metacore object like this:\n\n")
-cat('mc <- metacore::metacore(\n')
-cat('  ds_spec  = ds_spec,\n')
-cat('  ds_vars  = ds_vars,\n')
-cat('  var_spec = var_spec\n')
-cat(')\n\n')
-
-cat("Or more commonly, load from a specification file:\n\n")
-cat('mc <- metacore::spec_to_metacore("path/to/specs.xlsx")\n')
+# Or more commonly, load from a specification file:
+mc <- metacore::spec_to_metacore("path/to/specs.xlsx")
 ```
 
 ::: callout-note
@@ -261,6 +262,7 @@ The most common way to create a `metacore` object in production is using `spec_t
 
 ```{r}
 #| label: xportr-overview
+#| echo: false
 
 cat("xportr: Key Functions\n\n")
 
@@ -283,6 +285,7 @@ Let's work through the full pipeline using the DM domain:
 
 ```{r}
 #| label: prepare-dm-for-xportr
+#| echo: false
 
 # Step 1: Create our DM dataset (from Day 7 capstone approach)
 set.seed(42)
@@ -329,6 +332,7 @@ glimpse(raw_dm)
 
 ```{r}
 #| label: create-xportr-spec
+#| echo: false
 
 # xportr functions accept a metadata dataframe with specific columns
 # Let's create the specification that xportr expects
@@ -361,6 +365,7 @@ dm_spec %>% select(variable, type, label, length, order) %>% print()
 
 ```{r}
 #| label: apply-xportr
+#| echo: false
 
 # ---- Apply metadata using the xportr pipeline ----
 
@@ -385,6 +390,7 @@ head(data.frame(Variable = names(labels_applied), Label = unname(labels_applied)
 
 ```{r}
 #| label: apply-xportr-order
+#| echo: false
 
 # Step 3c: Apply variable ordering
 dm_ordered <- dm_labeled %>%
@@ -396,6 +402,7 @@ cat("Variable order:", paste(names(dm_ordered), collapse = ", "), "\n")
 
 ```{r}
 #| label: apply-xportr-length
+#| echo: false
 
 # Step 3d: Apply variable lengths
 dm_lengthed <- dm_ordered %>%
@@ -409,6 +416,7 @@ cat("All metadata applied ✓\n")
 
 ```{r}
 #| label: export-xpt
+#| echo: false
 
 # Create output directory
 output_dir <- "output"
@@ -427,7 +435,7 @@ cat("File size:", file.size(file.path(output_dir, "dm.xpt")), "bytes\n")
 
 In practice, you'd chain all xportr functions together:
 
-```r
+``` r
 dm_final <- raw_dm %>%
   xportr_type(spec, domain = "DM") %>%
   xportr_length(spec, domain = "DM") %>%
@@ -450,6 +458,7 @@ This single pipeline takes your raw dataset and makes it submission-ready!
 
 ```{r}
 #| label: metatools-overview
+#| echo: false
 
 cat("metatools: Key Functions\n\n")
 
@@ -473,6 +482,7 @@ Let's build a complete pipeline that takes raw data through to validated, export
 
 ```{r}
 #| label: capstone-pipeline
+#| echo: false
 
 cat("=== WEEK 2 CAPSTONE: END-TO-END SDTM PIPELINE ===\n\n")
 
@@ -515,6 +525,7 @@ cat("  Adverse Events:", nrow(raw_aes), "records\n\n")
 
 ```{r}
 #| label: capstone-step2
+#| echo: false
 
 # ---- STEP 2: Transform to SDTM ----
 cat("Step 2: Transform to SDTM format\n")
@@ -577,6 +588,7 @@ cat("  SDTM AE:", nrow(sdtm_ae), "rows x", ncol(sdtm_ae), "cols\n\n")
 
 ```{r}
 #| label: capstone-step3
+#| echo: false
 
 # ---- STEP 3: Validate ----
 cat("Step 3: Validate SDTM domains\n\n")
@@ -612,6 +624,7 @@ cat("  AE date logic (start <= end):", if_else(ae_date_issue == 0, "Valid ✓", 
 
 ```{r}
 #| label: capstone-step4
+#| echo: false
 
 # ---- STEP 4: Apply Metadata with xportr ----
 cat("Step 4: Apply metadata and export\n\n")
@@ -634,6 +647,7 @@ cat("    Labels applied:", sum(!is.na(labels)), "of", length(labels), "\n\n")
 
 ```{r}
 #| label: capstone-step5
+#| echo: false
 
 # ---- STEP 5: Export ----
 cat("Step 5: Export as .xpt files\n\n")
@@ -681,6 +695,7 @@ cat("  ✓ Exported:", file.path(output_dir, "ae.xpt"),
 
 ```{r}
 #| label: week2-review
+#| echo: false
 
 cat("=== WEEK 2 COMPLETE REVIEW ===\n\n")
 
@@ -705,12 +720,12 @@ print(review)
 
 You now have a solid foundation in SDTM:
 
--   ✓ You can build any SDTM domain from raw data
--   ✓ You understand Controlled Terminology and date derivations
--   ✓ You can handle complex domains (LB, VS, AE, DS)
--   ✓ You know how to validate SDTM data
--   ✓ You can apply metadata and export submission-ready `.xpt` files
--   ✓ You understand how SDTM maps to ADaM
+-   [x] You can build any SDTM domain from raw data
+-   [x] You understand Controlled Terminology and date derivations
+-   [x] You can handle complex domains (LB, VS, AE, DS)
+-   [x] You know how to validate SDTM data
+-   [x] You can apply metadata and export submission-ready `.xpt` files
+-   [x] You understand how SDTM maps to ADaM
 
 **In Week 3, we will use `admiral` to build ADaM datasets (ADSL, ADAE, ADVS, ADLB) from the SDTM data you've mastered.**
 :::
@@ -721,14 +736,14 @@ You now have a solid foundation in SDTM:
 
 Today you completed the following:
 
-| Task | Status |
-|------|--------|
-| Understood metacore specification objects | ✓ Done |
-| Created variable specifications for DM and AE | ✓ Done |
+| Task                                                           | Status |
+|----------------------------------------------------------------|--------|
+| Understood metacore specification objects                      | ✓ Done |
+| Created variable specifications for DM and AE                  | ✓ Done |
 | Applied xportr_type, xportr_label, xportr_order, xportr_length | ✓ Done |
-| Exported submission-ready .xpt files | ✓ Done |
-| Built an end-to-end pipeline: raw → SDTM → validate → export | ✓ Done |
-| Reviewed all Week 2 topics | ✓ Done |
+| Exported submission-ready .xpt files                           | ✓ Done |
+| Built an end-to-end pipeline: raw → SDTM → validate → export   | ✓ Done |
+| Reviewed all Week 2 topics                                     | ✓ Done |
 
 ------------------------------------------------------------------------
 
