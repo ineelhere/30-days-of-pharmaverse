@@ -39,7 +39,7 @@ execute:
 
 Welcome to **30 Days of Pharmaverse**. This project is a hands-on exploration of the modern clinical data science stack, designed for programmers and data scientists who want to dive deep into CDISC standards using the open-source Pharmaverse ecosystem.
 
-Instead of a traditional course, think of this as a **guided tour** or a **developer's log**. Each day, we tackle a specific concept — from setting up a working environment to building complex ADaM datasets and producing TLF outputs — using industry-standard R packages like `admiral`, `xportr`, `metacore`, `rtables`, `tern`, and more.
+Instead of a traditional course, think of this as a **guided tour** or a **developer's log**. Each day, we tackle a specific concept - from setting up a working environment to building complex ADaM datasets and producing TLF outputs - using industry-standard R packages like `admiral`, `xportr`, `metacore`, `rtables`, `tern`, and more.
 
 ```{r}
 #| echo: false
@@ -50,7 +50,7 @@ suppressPackageStartupMessages(library(yaml))
 
 # Define packages for each day with CRAN links
 packages_map <- list(
-  # Week 1 — SDTM Fundamentals & Core R Skills
+  # Week 1 - SDTM Fundamentals & Core R Skills
   "1"  = "[`{admiral}`](https://cran.r-project.org/package=admiral), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm), [`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{haven}`](https://cran.r-project.org/package=haven), [`{xportr}`](https://cran.r-project.org/package=xportr)",
   "2"  = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{tidyr}`](https://cran.r-project.org/package=tidyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
   "3"  = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
@@ -59,7 +59,7 @@ packages_map <- list(
   "6"  = "[`{sdtm.oak}`](https://cran.r-project.org/package=sdtm.oak), [`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
   "7"  = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{sdtm.oak}`](https://cran.r-project.org/package=sdtm.oak), [`{xportr}`](https://cran.r-project.org/package=xportr), [`{haven}`](https://cran.r-project.org/package=haven)",
 
-  # Week 2 — Production SDTM & Validation
+  # Week 2 - Production SDTM & Validation
   "8"  = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{tidyr}`](https://cran.r-project.org/package=tidyr), [`{sdtm.oak}`](https://cran.r-project.org/package=sdtm.oak), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
   "9"  = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{tidyr}`](https://cran.r-project.org/package=tidyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
   "10" = "[`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{sdtm.oak}`](https://cran.r-project.org/package=sdtm.oak)",
@@ -68,7 +68,7 @@ packages_map <- list(
   "13" = "[`{sdtmchecks}`](https://cran.r-project.org/package=sdtmchecks), [`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
   "14" = "[`{metacore}`](https://cran.r-project.org/package=metacore), [`{metatools}`](https://cran.r-project.org/package=metatools), [`{xportr}`](https://cran.r-project.org/package=xportr), [`{dplyr}`](https://cran.r-project.org/package=dplyr)",
 
-  # Week 3 — ADaM Deep Dive & Admiral Mastery
+  # Week 3 - ADaM Deep Dive & Admiral Mastery
   "15" = "[`{admiral}`](https://cran.r-project.org/package=admiral), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm), [`{pharmaverseadam}`](https://cran.r-project.org/package=pharmaverseadam), [`{dplyr}`](https://cran.r-project.org/package=dplyr)",
   "16" = "[`{admiral}`](https://cran.r-project.org/package=admiral), [`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
   "17" = "[`{admiral}`](https://cran.r-project.org/package=admiral), [`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
@@ -77,7 +77,7 @@ packages_map <- list(
   "20" = "[`{admiral}`](https://cran.r-project.org/package=admiral), [`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
   "21" = "[`{admiral}`](https://cran.r-project.org/package=admiral), [`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
 
-  # Week 4 — ADaM Advanced & TLF Production
+  # Week 4 - ADaM Advanced & TLF Production
   "22" = "[`{admiral}`](https://cran.r-project.org/package=admiral), [`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate)",
   "23" = "[`{admiral}`](https://cran.r-project.org/package=admiral), [`{admiralonco}`](https://cran.r-project.org/package=admiralonco), [`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{lubridate}`](https://cran.r-project.org/package=lubridate), [`{pharmaversesdtm}`](https://cran.r-project.org/package=pharmaversesdtm)",
   "24" = "[`{cards}`](https://cran.r-project.org/package=cards), [`{cardx}`](https://cran.r-project.org/package=cardx), [`{pharmaverseadam}`](https://cran.r-project.org/package=pharmaverseadam), [`{dplyr}`](https://cran.r-project.org/package=dplyr), [`{ggsurvfit}`](https://cran.r-project.org/package=ggsurvfit)",
@@ -184,11 +184,11 @@ install.packages(c("admiral", "pharmaversesdtm", "pharmaverseadam",
 # ADaM extensions
 install.packages("admiralonco")
 
-# TLF — tables
+# TLF - tables
 install.packages(c("rtables", "tern", "r2rtf", "flextable", "officer",
                    "gtsummary", "tfrmt", "Tplyr", "rlistings"))
 
-# TLF — figures
+# TLF - figures
 install.packages(c("ggplot2", "ggsurvfit", "patchwork"))
 
 # ARD & QC
@@ -205,21 +205,21 @@ This project is a **personal initiative** created for **learning and exploratory
 
 **Learners are strongly encouraged to:**
 
-1. **Think critically** — Don't just copy-paste code. Understand *why* each step exists.
-2. **Verify independently** — Check code against official Pharmaverse documentation and CDISC standards.
-3. **Test thoroughly** — Validate any code in your own environment before use in any context.
-4. **Consult experts** — When implementing for real clinical trials, seek guidance from qualified statisticians and data managers.
+1. **Think critically** - Don't just copy-paste code. Understand *why* each step exists.
+2. **Verify independently** - Check code against official Pharmaverse documentation and CDISC standards.
+3. **Test thoroughly** - Validate any code in your own environment before use in any context.
+4. **Consult experts** - When implementing for real clinical trials, seek guidance from qualified statisticians and data managers.
 
 The views, opinions, code, and materials shared in this project are solely for exploratory and learning purposes and do not guarantee accuracy, correctness, or compliance with any standard. They do not represent the positions of any external organisation and should not be treated as guidance for any formal or regulated use without independent verification.
 
 ## Community & Resources
 
-- [Pharmaverse.org](https://pharmaverse.org) — The central hub for open-source clinical R packages.
-- [CDISC.org](https://www.cdisc.org) — The official standards body for clinical data.
-- [Admiral Documentation](https://pharmaverse.github.io/admiral/) — The flagship ADaM derivation package.
-- [r4csr.org](https://r4csr.org) — Open-access book: *R for Clinical Study Reports* (Zhang et al.).
-- [pharmaverse TLG Catalogue](https://pharmaverse.github.io/TLG-Catalog) — Reference TLF outputs from the pharmaverse stack.
-- [R Consortium R Submission Working Group](https://rconsortium.github.io/submissions-wg/) — Ongoing work on R-based submissions (pilot projects, not formal FDA guidance).
+- [Pharmaverse.org](https://pharmaverse.org) - The central hub for open-source clinical R packages.
+- [CDISC.org](https://www.cdisc.org) - The official standards body for clinical data.
+- [Admiral Documentation](https://pharmaverse.github.io/admiral/) - The flagship ADaM derivation package.
+- [r4csr.org](https://r4csr.org) - Open-access book: *R for Clinical Study Reports* (Zhang et al.).
+- [pharmaverse TLG Catalogue](https://pharmaverse.github.io/TLG-Catalog) - Reference TLF outputs from the pharmaverse stack.
+- [R Consortium R Submission Working Group](https://rconsortium.github.io/submissions-wg/) - Ongoing work on R-based submissions (pilot projects, not formal FDA guidance).
 
 ___
 

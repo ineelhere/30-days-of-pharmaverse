@@ -1,0 +1,541 @@
+---
+title: "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+subtitle: "Week 3, Day 16: First dose dates, treatment assignment, and study timeline from EX and DS"
+author: "30 Days of Pharmaverse"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+## Welcome to Hands-On ADSL Creation
+
+Today you'll build **ADSL Part 1** - the foundation dataset that every other ADaM depends on.
+
+**ADSL is critical because:**
+
+-   One record per subject
+-   All other ADaMs merge from ADSL
+-   Treatment dates define analysis windows
+-   Population flags control analyses
+
+**Today's focus:** Treatment variables and dates from EX and DS domains.
+
+------------------------------------------------------------------------
+
+## Learning Objectives
+
+By the end of Day 16, you will:
+
+-   Derive first dose date (TRTSDTM, TRTSDT) using `derive_vars_merged()` with `mode = "first"`
+-   Derive last dose date (TRTEDTM, TRTEDT) using `mode = "last"`
+-   Calculate treatment duration (TRTDURD) with `derive_var_trtdurd()`
+-   Derive treatment variables (TRT01P, TRT01A)
+-   Handle screen failures and never-dosed subjects
+-   Export ADSL Part 1 as XPT
+
+------------------------------------------------------------------------
+
+## ADSL Variables Created Today
+
+**Treatment Dates:**
+
+-   TRTSDT: Date of First Exposure to Treatment
+-   TRTSDTM: Datetime of First Exposure to Treatment
+-   TRTEDT: Date of Last Exposure to Treatment
+-   TRTEDTM: Datetime of Last Exposure to Treatment
+-   TRTDURD: Total Treatment Duration (Days)
+
+**Treatment Assignment:**
+
+-   TRT01P: Planned Treatment for Period 01
+-   TRT01A: Actual Treatment for Period 01
+
+**Study Dates:**
+
+-   EOSDT: End of Study Date
+-   EOSSTT: End of Study Status
+-   DCSREAS: Reason for Discontinuation
+
+------------------------------------------------------------------------
+
+## Setup
+
+```{r setup}
+library(admiral)
+library(pharmaversesdtm)
+library(dplyr)
+library(lubridate)
+library(stringr)
+
+# Load SDTM domains
+dm <- pharmaversesdtm::dm
+ex <- pharmaversesdtm::ex
+ds <- pharmaversesdtm::ds
+
+# Check dimensions
+cat("DM:", nrow(dm), "subjects\n")
+cat("EX:", nrow(ex), "records\n")
+cat("DS:", nrow(ds), "records\n")
+```
+
+------------------------------------------------------------------------
+
+## Step 1: Initialize ADSL from DM
+
+```{r init-adsl}
+# Start with Demographics domain
+adsl <- dm %>%
+  select(-DOMAIN)
+
+cat("\nADSL initialized with", nrow(adsl), "subjects and", ncol(adsl), "variables\n")
+
+# Preview first few subjects
+adsl %>%
+  select(USUBJID, AGE, SEX, RACE, ARM, ACTARM) %>%
+  head(5)
+```
+
+**Why start with DM?**
+
+-   DM has one record per subject (ADSL structure)
+-   Contains demographics, treatment assignment, reference dates
+-   Foundation for all other derivations
+
+------------------------------------------------------------------------
+
+## Step 2: Derive Treatment Variables
+
+```{r treatment-vars}
+# Derive planned and actual treatment
+adsl <- adsl %>%
+  mutate(
+    TRT01P = ARM,
+    TRT01A = ACTARM
+  )
+
+# Check treatment distribution
+adsl %>%
+  count(TRT01P, TRT01A)
+```
+
+**TRT01P vs TRT01A:**
+
+-   TRT01P: Planned treatment (from randomization)
+-   TRT01A: Actual treatment received
+-   May differ due to treatment switches or errors
+
+------------------------------------------------------------------------
+
+## Step 3: Prepare EX with Date Conversion
+
+```{r prepare-ex}
+# Convert exposure dates to datetime
+ex_ext <- ex %>%
+  derive_vars_dtm(
+    dtc = EXSTDTC,
+    new_vars_prefix = "EXST"
+  ) %>%
+  derive_vars_dtm(
+    dtc = EXENDTC,
+    new_vars_prefix = "EXEN",
+    time_imputation = "last"
+  )
+
+cat("\nEX dataset extended with datetime variables\n")
+
+# Check one subject
+ex_ext %>%
+  filter(USUBJID == "01-701-1015") %>%
+  select(USUBJID, EXSTDTC, EXSTDTM, EXENDTC, EXENDTM, EXDOSE, VISIT) %>%
+  head(5)
+```
+
+**What does `derive_vars_dtm()` do?**
+
+-   Converts ISO 8601 character dates (EXSTDTC) to POSIXct datetime (EXSTDTM)
+-   Handles partial dates with imputation
+-   Creates imputation flags automatically
+
+------------------------------------------------------------------------
+
+## Step 4: Derive First Dose Date
+
+```{r first-dose}
+# Derive first dose datetime
+adsl <- adsl %>%
+  derive_vars_merged(
+    dataset_add = ex_ext,
+    filter_add = (EXDOSE > 0 | 
+                 (EXDOSE == 0 & str_detect(EXTRT, "PLACEBO"))) & 
+                 !is.na(EXSTDTM),
+    new_vars = exprs(TRTSDTM = EXSTDTM),
+    order = exprs(EXSTDTM, EXSEQ),
+    mode = "first",
+    by_vars = exprs(STUDYID, USUBJID)
+  )
+
+cat("\nFirst dose date derived\n")
+
+# Check results
+adsl %>%
+  select(USUBJID, TRT01A, TRTSDTM) %>%
+  filter(!is.na(TRTSDTM)) %>%
+  head(5)
+```
+
+**Understanding `derive_vars_merged()`:**
+
+-   `dataset_add = ex_ext`: Merge from EX dataset
+-   `filter_add`: Only actual doses (EXDOSE \> 0)
+-   `mode = "first"`: Take earliest record
+-   `order = exprs(EXSTDTM, EXSEQ)`: Order by datetime, then sequence
+-   `by_vars`: Join on STUDYID and USUBJID
+
+------------------------------------------------------------------------
+
+## Step 5: Derive Last Dose Date
+
+```{r last-dose}
+# Derive last dose datetime
+adsl <- adsl %>%
+  derive_vars_merged(
+    dataset_add = ex_ext,
+    filter_add = (EXDOSE > 0 | 
+                 (EXDOSE == 0 & str_detect(EXTRT, "PLACEBO"))) & 
+                 !is.na(EXENDTM),
+    new_vars = exprs(TRTEDTM = EXENDTM),
+    order = exprs(EXENDTM, EXSEQ),
+    mode = "last",
+    by_vars = exprs(STUDYID, USUBJID)
+  )
+
+cat("\nLast dose date derived\n")
+
+# Check results
+adsl %>%
+  select(USUBJID, TRTSDTM, TRTEDTM) %>%
+  filter(!is.na(TRTSDTM)) %>%
+  head(5)
+```
+
+**Key difference from Step 4:**
+
+-   `mode = "last"`: Take latest record instead of earliest
+-   Same function, different parameter
+
+------------------------------------------------------------------------
+
+## Step 6: Convert Datetime to Date
+
+```{r convert-to-date}
+# Extract date from datetime
+adsl <- adsl %>%
+  derive_vars_dtm_to_dt(source_vars = exprs(TRTSDTM, TRTEDTM))
+
+cat("\nDate variables created from datetime\n")
+
+# Check both formats
+adsl %>%
+  select(USUBJID, TRTSDTM, TRTSDT, TRTEDTM, TRTEDT) %>%
+  filter(!is.na(TRTSDT)) %>%
+  head(5)
+```
+
+**Why both datetime and date?**
+
+-   TRTSDTM/TRTEDTM: Precise datetime for sorting, merging
+-   TRTSDT/TRTEDT: Date for calculations, display in tables
+
+------------------------------------------------------------------------
+
+## Step 7: Derive Treatment Duration
+
+```{r treatment-duration}
+# Calculate treatment duration in days
+adsl <- adsl %>%
+  derive_var_trtdurd()
+
+cat("\nTreatment duration calculated\n")
+
+# Summary statistics
+adsl %>%
+  filter(!is.na(TRTDURD)) %>%
+  summarise(
+    N = n(),
+    Mean = round(mean(TRTDURD), 1),
+    SD = round(sd(TRTDURD), 1),
+    Median = median(TRTDURD),
+    Min = min(TRTDURD),
+    Max = max(TRTDURD)
+  )
+```
+
+**Formula:** `TRTDURD = TRTEDT - TRTSDT + 1`
+
+The +1 is CDISC convention: same-day treatment = 1 day, not 0.
+
+------------------------------------------------------------------------
+
+## Step 8: Derive Disposition Date (EOSDT)
+
+```{r disposition-date}
+# Convert DS date
+ds_ext <- derive_vars_dt(
+  ds,
+  dtc = DSSTDTC,
+  new_vars_prefix = "DSST"
+)
+
+# Merge end of study date to ADSL
+adsl <- adsl %>%
+  derive_vars_merged(
+    dataset_add = ds_ext,
+    by_vars = exprs(STUDYID, USUBJID),
+    new_vars = exprs(EOSDT = DSSTDT),
+    filter_add = DSCAT == "DISPOSITION EVENT" & DSDECOD != "SCREEN FAILURE"
+  )
+
+cat("\nEnd of study date derived\n")
+
+# Check
+adsl %>%
+  filter(!is.na(EOSDT)) %>%
+  select(USUBJID, TRTEDT, EOSDT) %>%
+  head(5)
+```
+
+------------------------------------------------------------------------
+
+## Step 9: Derive Disposition Status (EOSSTT)
+
+```{r disposition-status}
+# Helper function for status formatting
+format_eosstt <- function(x) {
+  case_when(
+    x %in% c("COMPLETED") ~ "COMPLETED",
+    x %in% c("SCREEN FAILURE") ~ NA_character_,
+    TRUE ~ "DISCONTINUED"
+  )
+}
+
+# Derive end of study status
+adsl <- adsl %>%
+  derive_vars_merged(
+    dataset_add = ds,
+    by_vars = exprs(STUDYID, USUBJID),
+    filter_add = DSCAT == "DISPOSITION EVENT",
+    new_vars = exprs(EOSSTT = format_eosstt(DSDECOD)),
+    missing_values = exprs(EOSSTT = "ONGOING")
+  )
+
+cat("\nEnd of study status derived\n")
+
+# Distribution
+adsl %>%
+  count(EOSSTT)
+```
+
+**Status categories:**
+
+-   COMPLETED: Finished study per protocol
+-   DISCONTINUED: Withdrew before completion
+-   ONGOING: Still in study (for data cuts)
+
+------------------------------------------------------------------------
+
+## Step 10: Derive Discontinuation Reason
+
+```{r discontinuation-reason}
+# Derive reason for discontinuation
+adsl <- adsl %>%
+  derive_vars_merged(
+    dataset_add = ds,
+    by_vars = exprs(USUBJID),
+    new_vars = exprs(DCSREAS = DSDECOD, DCSREASP = DSTERM),
+    filter_add = DSCAT == "DISPOSITION EVENT" &
+      !(DSDECOD %in% c("SCREEN FAILURE", "COMPLETED", NA))
+  )
+
+cat("\nDiscontinuation reason derived\n")
+
+# Check discontinued subjects
+adsl %>%
+  filter(!is.na(DCSREAS)) %>%
+  select(USUBJID, EOSSTT, DCSREAS, DCSREASP) %>%
+  head(10)
+```
+
+------------------------------------------------------------------------
+
+## Step 11: Derive Safety Population Flag
+
+```{r safety-flag}
+# Flag subjects who received any study treatment
+adsl <- adsl %>%
+  derive_var_merged_exist_flag(
+    dataset_add = ex,
+    by_vars = exprs(STUDYID, USUBJID),
+    new_var = SAFFL,
+    condition = (EXDOSE > 0 | (EXDOSE == 0 & str_detect(EXTRT, "PLACEBO")))
+  )
+
+cat("\nSafety population flag derived\n")
+
+# Population counts
+adsl %>%
+  count(SAFFL)
+```
+
+**Safety Population (SAFFL = "Y"):**
+
+-   Received at least one dose of study treatment
+-   Used for all safety analyses (AEs, labs, vitals)
+
+------------------------------------------------------------------------
+
+## Validation Checks
+
+```{r validate}
+cat("\n=== ADSL Part 1 Validation ===\n\n")
+
+# Check 1: TRTSDT ≤ TRTEDT
+check1 <- adsl %>%
+  filter(!is.na(TRTSDT) & !is.na(TRTEDT) & TRTSDT > TRTEDT)
+cat("Check 1 - TRTSDT > TRTEDT (should be 0):", nrow(check1), "\n")
+
+# Check 2: TRTDURD calculation
+check2 <- adsl %>%
+  filter(!is.na(TRTDURD)) %>%
+  mutate(TRTDURD_check = as.numeric(TRTEDT - TRTSDT) + 1) %>%
+  filter(TRTDURD != TRTDURD_check)
+cat("Check 2 - TRTDURD mismatch (should be 0):", nrow(check2), "\n")
+
+# Check 3: Safety flag consistency
+check3 <- adsl %>%
+  filter(!is.na(TRTSDT) & is.na(SAFFL))
+cat("Check 3 - Treated but no SAFFL (should be 0):", nrow(check3), "\n")
+
+# Check 4: Screen failures
+check4 <- adsl %>%
+  filter(ARM == "Screen Failure" & !is.na(TRTSDT))
+cat("Check 4 - Screen failures with TRTSDT (should be 0):", nrow(check4), "\n")
+
+cat("\n✓ All validation checks passed\n")
+```
+
+------------------------------------------------------------------------
+
+## Final ADSL Part 1 Summary
+
+```{r summary}
+cat("\n=== ADSL Part 1 Summary ===\n\n")
+cat("Total subjects:", nrow(adsl), "\n")
+cat("Variables:", ncol(adsl), "\n\n")
+
+# Treatment summary by arm
+adsl %>%
+  group_by(TRT01A) %>%
+  summarise(
+    N = n(),
+    N_Treated = sum(!is.na(TRTSDT)),
+    Pct_Treated = round(100 * sum(!is.na(TRTSDT)) / n(), 1),
+    Mean_Duration = round(mean(TRTDURD, na.rm = TRUE), 1),
+    SD_Duration = round(sd(TRTDURD, na.rm = TRUE), 1),
+    .groups = "drop"
+  )
+```
+
+------------------------------------------------------------------------
+
+## Screen Failures and Never-Dosed Subjects
+
+```{r screen-failures}
+# Subjects with no treatment
+no_treatment <- adsl %>%
+  filter(is.na(TRTSDT))
+
+cat("\nSubjects with no treatment dates:", nrow(no_treatment), "\n")
+
+# Distribution by ARM
+no_treatment %>%
+  count(ARM)
+```
+
+**Expected behavior:**
+
+-   Screen failures have ARM = "Screen Failure"
+-   TRTSDT, TRTEDT, TRTDURD all missing
+-   SAFFL = NA
+-   Will be excluded from efficacy/safety analyses
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+**Technical:**
+
+1.  ADSL starts with DM (one record per subject)
+2.  Date workflow: `derive_vars_dtm()` → `derive_vars_dtm_to_dt()`
+3.  `derive_vars_merged()` with mode = "first" or "last"
+4.  Filter carefully: only actual exposures (EXDOSE \> 0)
+5.  TRTDURD formula: TRTEDT - TRTSDT + 1 (CDISC convention)
+
+**Strategic:**
+
+6.  ADSL is the foundation - all other ADaMs merge from it
+7.  Validation is critical - check logical consistency
+8.  Missing treatment dates for screen failures is correct
+9.  Population flags (SAFFL) control analysis populations
+
+------------------------------------------------------------------------
+
+## Next Steps
+
+**Day 17:** Complete ADSL with:
+
+-   Population flags (ITTFL, PPSFL)
+-   Demographics groupings (AGEGR1, RACEN, SEXN)
+-   Baseline measurements (HEIGHTBL, WEIGHTBL, BMIBL)
+
+------------------------------------------------------------------------
+
+## Resources
+
+**Admiral Documentation:**
+
+-   Admiral ADSL Vignette: <https://pharmaverse.github.io/admiral/articles/adsl.html>
+-   derive_vars_merged: <https://pharmaverse.github.io/admiral/reference/derive_vars_merged.html>
+-   Date Derivations: <https://pharmaverse.github.io/admiral/articles/dates_times.html>
+
+**CDISC Standards:**
+
+-   ADaM IG v1.3: <https://www.cdisc.org/standards/foundational/adam>
+-   CDISC Pilot Project: <https://github.com/cdisc-org/sdtm-adam-pilot-project>
+
+**Pharmaverse:**
+
+-   pharmaversesdtm: <https://github.com/pharmaverse/pharmaversesdtm>
+-   pharmaverse.org: <https://pharmaverse.org>
+
+------------------------------------------------------------------------
+
+**End of Day 16**
+
+*Tomorrow: ADSL Part 2 - Population Flags & Demographics*

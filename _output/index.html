@@ -225,7 +225,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="exploration-roadmap" class="level2">
 <h2 class="anchored" data-anchor-id="exploration-roadmap">Exploration Roadmap</h2>
 <p>Welcome to <strong>30 Days of Pharmaverse</strong>. This project is a hands-on exploration of the modern clinical data science stack, designed for programmers and data scientists who want to dive deep into CDISC standards using the open-source Pharmaverse ecosystem.</p>
-<p>Instead of a traditional course, think of this as a <strong>guided tour</strong> or a <strong>developer’s log</strong>. Each day, we tackle a specific concept — from setting up a working environment to building complex ADaM datasets and producing TLF outputs — using industry-standard R packages like <code>admiral</code>, <code>xportr</code>, <code>metacore</code>, <code>rtables</code>, <code>tern</code>, and more.</p>
+<p>Instead of a traditional course, think of this as a <strong>guided tour</strong> or a <strong>developer’s log</strong>. Each day, we tackle a specific concept - from setting up a working environment to building complex ADaM datasets and producing TLF outputs - using industry-standard R packages like <code>admiral</code>, <code>xportr</code>, <code>metacore</code>, <code>rtables</code>, <code>tern</code>, and more.</p>
 <section id="week-1-sdtm-fundamentals-core-r-skills" class="level3">
 <h3 class="anchored" data-anchor-id="week-1-sdtm-fundamentals-core-r-skills">Week 1: SDTM Fundamentals &amp; Core R Skills</h3>
 <table class="caption-top table">
@@ -358,6 +358,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Week 3, Day 15: Understanding ADaM Structures, Admiral Philosophy, and Core Derivation Patterns</td>
 <td><a href="https://cran.r-project.org/package=admiral"><code>{admiral}</code></a>, <a href="https://cran.r-project.org/package=pharmaversesdtm"><code>{pharmaversesdtm}</code></a>, <a href="https://cran.r-project.org/package=pharmaverseadam"><code>{pharmaverseadam}</code></a>, <a href="https://cran.r-project.org/package=dplyr"><code>{dplyr}</code></a></td>
 </tr>
+<tr class="even">
+<td><strong><a href="week3/day16.html">Day 16</a></strong></td>
+<td>ADSL Part 1 - Treatment Variables &amp; Dates</td>
+<td>Week 3, Day 16: First dose dates, treatment assignment, and study timeline from EX and DS</td>
+<td><a href="https://cran.r-project.org/package=admiral"><code>{admiral}</code></a>, <a href="https://cran.r-project.org/package=dplyr"><code>{dplyr}</code></a>, <a href="https://cran.r-project.org/package=lubridate"><code>{lubridate}</code></a>, <a href="https://cran.r-project.org/package=pharmaversesdtm"><code>{pharmaversesdtm}</code></a></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -386,11 +392,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ADaM extensions</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"admiralonco"</span>)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># TLF — tables</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># TLF - tables</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"rtables"</span>, <span class="st">"tern"</span>, <span class="st">"r2rtf"</span>, <span class="st">"flextable"</span>, <span class="st">"officer"</span>,</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"gtsummary"</span>, <span class="st">"tfrmt"</span>, <span class="st">"Tplyr"</span>, <span class="st">"rlistings"</span>))</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># TLF — figures</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># TLF - figures</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"ggplot2"</span>, <span class="st">"ggsurvfit"</span>, <span class="st">"patchwork"</span>))</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># ARD &amp; QC</span></span>
@@ -406,22 +412,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p><strong>Learners are strongly encouraged to:</strong></p>
 <ol type="1">
-<li><strong>Think critically</strong> — Don’t just copy-paste code. Understand <em>why</em> each step exists.</li>
-<li><strong>Verify independently</strong> — Check code against official Pharmaverse documentation and CDISC standards.</li>
-<li><strong>Test thoroughly</strong> — Validate any code in your own environment before use in any context.</li>
-<li><strong>Consult experts</strong> — When implementing for real clinical trials, seek guidance from qualified statisticians and data managers.</li>
+<li><strong>Think critically</strong> - Don’t just copy-paste code. Understand <em>why</em> each step exists.</li>
+<li><strong>Verify independently</strong> - Check code against official Pharmaverse documentation and CDISC standards.</li>
+<li><strong>Test thoroughly</strong> - Validate any code in your own environment before use in any context.</li>
+<li><strong>Consult experts</strong> - When implementing for real clinical trials, seek guidance from qualified statisticians and data managers.</li>
 </ol>
 <p>The views, opinions, code, and materials shared in this project are solely for exploratory and learning purposes and do not guarantee accuracy, correctness, or compliance with any standard. They do not represent the positions of any external organisation and should not be treated as guidance for any formal or regulated use without independent verification.</p>
 </section>
 <section id="community-resources" class="level2">
 <h2 class="anchored" data-anchor-id="community-resources">Community &amp; Resources</h2>
 <ul>
-<li><a href="https://pharmaverse.org">Pharmaverse.org</a> — The central hub for open-source clinical R packages.</li>
-<li><a href="https://www.cdisc.org">CDISC.org</a> — The official standards body for clinical data.</li>
-<li><a href="https://pharmaverse.github.io/admiral/">Admiral Documentation</a> — The flagship ADaM derivation package.</li>
-<li><a href="https://r4csr.org">r4csr.org</a> — Open-access book: <em>R for Clinical Study Reports</em> (Zhang et al.).</li>
-<li><a href="https://pharmaverse.github.io/TLG-Catalog">pharmaverse TLG Catalogue</a> — Reference TLF outputs from the pharmaverse stack.</li>
-<li><a href="https://rconsortium.github.io/submissions-wg/">R Consortium R Submission Working Group</a> — Ongoing work on R-based submissions (pilot projects, not formal FDA guidance).</li>
+<li><a href="https://pharmaverse.org">Pharmaverse.org</a> - The central hub for open-source clinical R packages.</li>
+<li><a href="https://www.cdisc.org">CDISC.org</a> - The official standards body for clinical data.</li>
+<li><a href="https://pharmaverse.github.io/admiral/">Admiral Documentation</a> - The flagship ADaM derivation package.</li>
+<li><a href="https://r4csr.org">r4csr.org</a> - Open-access book: <em>R for Clinical Study Reports</em> (Zhang et al.).</li>
+<li><a href="https://pharmaverse.github.io/TLG-Catalog">pharmaverse TLG Catalogue</a> - Reference TLF outputs from the pharmaverse stack.</li>
+<li><a href="https://rconsortium.github.io/submissions-wg/">R Consortium R Submission Working Group</a> - Ongoing work on R-based submissions (pilot projects, not formal FDA guidance).</li>
 </ul>
 <hr>
 <p><strong>Curated by:</strong> Indraneel Chakraborty | <strong>Last Updated:</strong> February 2026</p>

@@ -1,0 +1,541 @@
+---
+title: "Day 17: ADSL Part 2 - Population Flags & Demographics"
+subtitle: "Week 3, Day 17: SAFFL, ITTFL, demographic groupings, and baseline measurements"
+author: "30 Days of Pharmaverse"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+## Welcome to ADSL Part 2
+
+Today we **complete ADSL** by adding population flags, demographic groupings, and baseline measurements.
+
+**What we'll add:**
+
+-   Population flags (SAFFL, ITTFL)
+-   Demographics groupings (AGEGR1, SEXN, RACEN)
+-   Baseline measurements (HEIGHT, WEIGHT, BMI)
+
+------------------------------------------------------------------------
+
+## Setup and Load Day 16 ADSL
+
+```{r setup}
+library(admiral)
+library(pharmaversesdtm)
+library(dplyr)
+library(lubridate)
+library(stringr)
+library(xportr)
+
+# Load SDTM domains
+dm <- pharmaversesdtm::dm
+ex <- pharmaversesdtm::ex
+ds <- pharmaversesdtm::ds
+vs <- pharmaversesdtm::vs
+
+cat("Loaded SDTM domains\n")
+```
+
+### Rebuild ADSL Part 1 from Day 16
+
+```{r rebuild-adsl-part1}
+# Start with DM
+adsl <- dm %>%
+  select(-DOMAIN)
+
+# Treatment variables
+adsl <- adsl %>%
+  mutate(
+    TRT01P = ARM,
+    TRT01A = ACTARM
+  )
+
+# Prepare EX with dates
+ex_ext <- ex %>%
+  derive_vars_dtm(dtc = EXSTDTC, new_vars_prefix = "EXST") %>%
+  derive_vars_dtm(dtc = EXENDTC, new_vars_prefix = "EXEN", time_imputation = "last")
+
+# First dose date
+adsl <- adsl %>%
+  derive_vars_merged(
+    dataset_add = ex_ext,
+    filter_add = (EXDOSE > 0 | (EXDOSE == 0 & str_detect(EXTRT, "PLACEBO"))) & !is.na(EXSTDTM),
+    new_vars = exprs(TRTSDTM = EXSTDTM),
+    order = exprs(EXSTDTM, EXSEQ),
+    mode = "first",
+    by_vars = exprs(STUDYID, USUBJID)
+  )
+
+# Last dose date
+adsl <- adsl %>%
+  derive_vars_merged(
+    dataset_add = ex_ext,
+    filter_add = (EXDOSE > 0 | (EXDOSE == 0 & str_detect(EXTRT, "PLACEBO"))) & !is.na(EXENDTM),
+    new_vars = exprs(TRTEDTM = EXENDTM),
+    order = exprs(EXENDTM, EXSEQ),
+    mode = "last",
+    by_vars = exprs(STUDYID, USUBJID)
+  )
+
+# Convert to dates
+adsl <- adsl %>%
+  derive_vars_dtm_to_dt(source_vars = exprs(TRTSDTM, TRTEDTM))
+
+# Treatment duration
+adsl <- adsl %>%
+  derive_var_trtdurd()
+
+cat("\nADSL Part 1 rebuilt:", nrow(adsl), "subjects\n")
+```
+
+------------------------------------------------------------------------
+
+## Step 1: Derive Safety Population Flag (SAFFL)
+
+**Safety Population:** Subjects who received at least one dose of study treatment.
+
+```{r safety-flag}
+# Derive SAFFL
+adsl <- adsl %>%
+  derive_var_merged_exist_flag(
+    dataset_add = ex,
+    by_vars = exprs(STUDYID, USUBJID),
+    new_var = SAFFL,
+    condition = (EXDOSE > 0 | (EXDOSE == 0 & str_detect(EXTRT, "PLACEBO")))
+  )
+
+cat("\nSafety population flag derived\n")
+
+# Distribution
+adsl %>%
+  count(SAFFL, TRT01A)
+```
+
+**Logic:**
+
+-   SAFFL = "Y" if subject has any EX record with EXDOSE \> 0
+-   Used for safety analyses (AEs, labs, vitals)
+
+------------------------------------------------------------------------
+
+## Step 2: Derive ITT Population Flag (ITTFL)
+
+**Intent-to-Treat Population:** Randomized subjects.
+
+```{r itt-flag}
+# Derive ITTFL
+adsl <- adsl %>%
+  derive_var_merged_exist_flag(
+    dataset_add = ds,
+    by_vars = exprs(STUDYID, USUBJID),
+    new_var = ITTFL,
+    condition = DSDECOD == "RANDOMIZED"
+  )
+
+cat("\nITT population flag derived\n")
+
+# Distribution
+adsl %>%
+  count(ITTFL, SAFFL)
+```
+
+**Logic:**
+
+-   ITTFL = "Y" if randomization event exists in DS
+-   Used for efficacy analyses
+
+------------------------------------------------------------------------
+
+## Step 3: Create Age Groupings
+
+```{r age-groups}
+# Derive age group categories
+adsl <- adsl %>%
+  mutate(
+    AGEGR1 = case_when(
+      AGE < 65 ~ "<65",
+      AGE >= 65 & AGE < 75 ~ "65-74",
+      AGE >= 75 ~ ">=75",
+      TRUE ~ NA_character_
+    ),
+    AGEGR1N = case_when(
+      AGE < 65 ~ 1,
+      AGE >= 65 & AGE < 75 ~ 2,
+      AGE >= 75 ~ 3,
+      TRUE ~ NA_real_
+    )
+  )
+
+cat("\nAge groupings created\n")
+
+# Distribution
+adsl %>%
+  count(AGEGR1, AGEGR1N)
+```
+
+**Age Groups:**
+
+-   \<65: Younger adults (N=1)
+
+-   65-74: Older adults (N=2)
+
+-   
+
+    > =75: Elderly (N=3)
+
+------------------------------------------------------------------------
+
+## Step 4: Derive Numeric Demographics
+
+```{r numeric-demographics}
+# Numeric versions of categorical variables
+adsl <- adsl %>%
+  mutate(
+    SEXN = case_when(
+      SEX == "F" ~ 1,
+      SEX == "M" ~ 2,
+      TRUE ~ NA_real_
+    ),
+    RACEN = case_when(
+      RACE == "AMERICAN INDIAN OR ALASKA NATIVE" ~ 1,
+      RACE == "ASIAN" ~ 2,
+      RACE == "BLACK OR AFRICAN AMERICAN" ~ 3,
+      RACE == "NATIVE HAWAIIAN OR OTHER PACIFIC ISLANDER" ~ 4,
+      RACE == "WHITE" ~ 5,
+      RACE == "MULTIPLE" ~ 6,
+      TRUE ~ NA_real_
+    )
+  )
+
+cat("\nNumeric demographics derived\n")
+
+# Check mappings
+adsl %>%
+  count(SEX, SEXN)
+
+adsl %>%
+  count(RACE, RACEN) %>%
+  head(10)
+```
+
+**Why numeric versions?**
+
+-   Enable table sorting
+-   Required for some stats procedures
+-   Standard across studies
+
+------------------------------------------------------------------------
+
+## Step 5: Prepare VS for Baseline Merging
+
+```{r prepare-vs}
+# Filter VS for baseline
+vs_bl <- vs %>%
+  filter(VISIT %in% c("BASELINE", "SCREENING") | VISITNUM == 0) %>%
+  derive_vars_dt(dtc = VSDTC, new_vars_prefix = "VS")
+
+# Available baseline measurements
+vs_bl %>%
+  count(VSTESTCD)
+```
+
+------------------------------------------------------------------------
+
+## Step 6: Derive Baseline Height
+
+```{r baseline-height}
+# Merge baseline height
+adsl <- adsl %>%
+  derive_vars_merged(
+    dataset_add = vs_bl,
+    by_vars = exprs(STUDYID, USUBJID),
+    filter_add = VSTESTCD == "HEIGHT" & !is.na(VSSTRESN),
+    new_vars = exprs(HEIGHTBL = VSSTRESN),
+    order = exprs(VSDT),
+    mode = "last"
+  )
+
+cat("\nBaseline height merged\n")
+
+# Summary
+adsl %>%
+  filter(!is.na(HEIGHTBL)) %>%
+  summarise(
+    N = n(),
+    Mean = round(mean(HEIGHTBL), 1),
+    SD = round(sd(HEIGHTBL), 1),
+    Median = median(HEIGHTBL),
+    Min = min(HEIGHTBL),
+    Max = max(HEIGHTBL)
+  )
+```
+
+**Logic:** Take last height at or before baseline
+
+------------------------------------------------------------------------
+
+## Step 7: Derive Baseline Weight
+
+```{r baseline-weight}
+# Merge baseline weight
+adsl <- adsl %>%
+  derive_vars_merged(
+    dataset_add = vs_bl,
+    by_vars = exprs(STUDYID, USUBJID),
+    filter_add = VSTESTCD == "WEIGHT" & !is.na(VSSTRESN),
+    new_vars = exprs(WEIGHTBL = VSSTRESN),
+    order = exprs(VSDT),
+    mode = "last"
+  )
+
+cat("\nBaseline weight merged\n")
+
+# Summary
+adsl %>%
+  filter(!is.na(WEIGHTBL)) %>%
+  summarise(
+    N = n(),
+    Mean = round(mean(WEIGHTBL), 1),
+    SD = round(sd(WEIGHTBL), 1),
+    Median = median(WEIGHTBL),
+    Min = min(WEIGHTBL),
+    Max = max(WEIGHTBL)
+  )
+```
+
+------------------------------------------------------------------------
+
+## Step 8: Calculate Baseline BMI
+
+```{r baseline-bmi}
+# Calculate BMI
+adsl <- adsl %>%
+  mutate(
+    BMIBL = case_when(
+      !is.na(HEIGHTBL) & !is.na(WEIGHTBL) ~ round(WEIGHTBL / (HEIGHTBL / 100)^2, 1),
+      TRUE ~ NA_real_
+    )
+  )
+
+cat("\nBaseline BMI calculated\n")
+
+# Summary
+adsl %>%
+  filter(!is.na(BMIBL)) %>%
+  summarise(
+    N = n(),
+    Mean = round(mean(BMIBL), 1),
+    SD = round(sd(BMIBL), 1),
+    Median = median(BMIBL),
+    Min = min(BMIBL),
+    Max = max(BMIBL)
+  )
+```
+
+**Formula:** BMI = Weight (kg) / (Height (m))²
+
+------------------------------------------------------------------------
+
+## Step 9: Create BMI Groups
+
+```{r bmi-groups}
+# BMI groupings
+adsl <- adsl %>%
+  mutate(
+    BMIBLGR1 = case_when(
+      BMIBL < 18.5 ~ "<18.5",
+      BMIBL >= 18.5 & BMIBL < 25 ~ "18.5-<25",
+      BMIBL >= 25 & BMIBL < 30 ~ "25-<30",
+      BMIBL >= 30 ~ ">=30",
+      TRUE ~ NA_character_
+    )
+  )
+
+# Distribution
+adsl %>%
+  count(BMIBLGR1)
+```
+
+**BMI Categories:**
+
+-   \<18.5: Underweight
+
+-   18.5-\<25: Normal
+
+-   25-\<30: Overweight
+
+-   
+
+    > =30: Obese
+
+------------------------------------------------------------------------
+
+## Validation Checks
+
+```{r validate}
+cat("\n=== ADSL Validation ===\n\n")
+
+# Check 1: SAFFL consistency
+check1 <- adsl %>%
+  filter(SAFFL == "Y" & is.na(TRTSDT))
+cat("Check 1 - SAFFL='Y' but no TRTSDT:", nrow(check1), "\n")
+
+# Check 2: Age groups
+check2 <- adsl %>%
+  filter(!is.na(AGEGR1) & is.na(AGEGR1N))
+cat("Check 2 - AGEGR1 without AGEGR1N:", nrow(check2), "\n")
+
+# Check 3: BMI calculation
+check3 <- adsl %>%
+  filter(!is.na(BMIBL)) %>%
+  mutate(
+    BMI_check = round(WEIGHTBL / (HEIGHTBL / 100)^2, 1),
+    Match = abs(BMIBL - BMI_check) < 0.1
+  ) %>%
+  filter(!Match)
+cat("Check 3 - BMI mismatch:", nrow(check3), "\n")
+
+# Check 4: Numeric demographics
+check4 <- adsl %>%
+  filter(!is.na(SEX) & is.na(SEXN))
+cat("Check 4 - SEX without SEXN:", nrow(check4), "\n")
+
+cat("\n✓ Validation complete\n")
+```
+
+------------------------------------------------------------------------
+
+## Complete ADSL Summary
+
+```{r final-summary}
+cat("\n=== Complete ADSL ===\n\n")
+cat("Total subjects:", nrow(adsl), "\n")
+cat("Variables:", ncol(adsl), "\n\n")
+
+# Population flags
+cat("Population Flags:\n")
+adsl %>%
+  summarise(
+    SAFFL_Y = sum(SAFFL == "Y", na.rm = TRUE),
+    ITTFL_Y = sum(ITTFL == "Y", na.rm = TRUE)
+  )
+
+# Demographics by treatment (Safety population)
+cat("\nDemographics by Treatment (Safety Population):\n")
+adsl %>%
+  filter(SAFFL == "Y") %>%
+  group_by(TRT01A) %>%
+  summarise(
+    N = n(),
+    Age_Mean = round(mean(AGE), 1),
+    Age_SD = round(sd(AGE), 1),
+    Female_N = sum(SEX == "F"),
+    Female_Pct = round(100 * sum(SEX == "F") / n(), 1),
+    BMI_Mean = round(mean(BMIBL, na.rm = TRUE), 1),
+    .groups = "drop"
+  )
+```
+
+------------------------------------------------------------------------
+
+## Export Complete ADSL
+
+```{r export}
+# Apply variable labels
+attr(adsl$SAFFL, "label") <- "Safety Population Flag"
+attr(adsl$ITTFL, "label") <- "Intent-to-Treat Population Flag"
+attr(adsl$AGEGR1, "label") <- "Age Group 1"
+attr(adsl$AGEGR1N, "label") <- "Age Group 1 (N)"
+attr(adsl$SEXN, "label") <- "Sex (N)"
+attr(adsl$RACEN, "label") <- "Race (N)"
+attr(adsl$HEIGHTBL, "label") <- "Baseline Height (cm)"
+attr(adsl$WEIGHTBL, "label") <- "Baseline Weight (kg)"
+attr(adsl$BMIBL, "label") <- "Baseline Body Mass Index"
+attr(adsl$BMIBLGR1, "label") <- "Baseline BMI Group 1"
+
+# Export as XPT
+xportr_write(adsl, path = "adsl.xpt", domain = "ADSL")
+
+cat("\n✓ ADSL exported to: adsl.xpt\n")
+```
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+**Population Flags:**
+
+1.  SAFFL = received treatment (from EX)
+2.  ITTFL = randomized (from DS)
+3.  Both derived with `derive_var_merged_exist_flag()`
+
+**Demographics:**
+
+4.  Always create numeric versions (AGEGR1N, SEXN, RACEN)
+5.  Numeric enables sorting and statistics
+6.  Character for display in tables
+
+**Baseline Measurements:**
+
+7.  Merge from VS using `derive_vars_merged()`
+8.  Take last baseline measurement
+9.  Calculate BMI from HEIGHT and WEIGHT
+
+**Validation:**
+
+10. Check flag consistency (SAFFL="Y" must have TRTSDT)
+11. Verify calculations (BMI formula)
+12. Ensure char/numeric pairs match
+
+------------------------------------------------------------------------
+
+## Next Steps
+
+**Day 18:** ADAE (Adverse Events) - OCCDS structure\
+**Day 19:** ADLB (Labs) - BDS with baseline\
+**Day 20:** ADVS (Vitals) - BDS with visits\
+**Day 21:** ADTTE (Time-to-Event)
+
+ADSL is complete - ready for all other ADaMs!
+
+------------------------------------------------------------------------
+
+## Resources
+
+**Admiral:**
+
+-   ADSL Vignette: <https://pharmaverse.github.io/admiral/articles/adsl.html>
+-   derive_var_merged_exist_flag: <https://pharmaverse.github.io/admiral/reference/derive_var_merged_exist_flag.html>
+
+**CDISC:**
+
+-   ADaM IG v1.3: <https://www.cdisc.org/standards/foundational/adam>
+
+**Pharmaverse:**
+
+-   pharmaverse.org: <https://pharmaverse.org>
+
+------------------------------------------------------------------------
+
+**End of Day 17**
+
+*Tomorrow: ADAE (Adverse Events)*

@@ -47,6 +47,8 @@ website:
       title: "Week 3: ADaM Deep Dive"
       contents:
         - week3/day15.qmd
+        - week3/day16.qmd
+        - week3/day17.qmd
 
 format:
   html:

@@ -4,14 +4,14 @@
     "href": "index.html",
     "title": "30 Days of Pharmaverse",
     "section": "",
-    "text": "Welcome to 30 Days of Pharmaverse. This project is a hands-on exploration of the modern clinical data science stack, designed for programmers and data scientists who want to dive deep into CDISC standards using the open-source Pharmaverse ecosystem.\nInstead of a traditional course, think of this as a guided tour or a developer’s log. Each day, we tackle a specific concept — from setting up a working environment to building complex ADaM datasets and producing TLF outputs — using industry-standard R packages like admiral, xportr, metacore, rtables, tern, and more.\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 1\nEnvironment Setup & First SDTM Code\nSDTM Programming Walkthrough\n{admiral}, {pharmaversesdtm}, {dplyr}, {haven}, {xportr}\n\n\nDay 2\nSDTM Domain Structure & Tidyverse Mastery\nUnderstanding SDTM Domain Classes Through Code\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 3\nControlled Terminology & MedDRA Coding\nBuilding AE Codelists in R\n{dplyr}, {pharmaversesdtm}\n\n\nDay 4\nClinical Date Derivations with lubridate\nStudy Day, Duration, and Partial Date Imputation\n{lubridate}, {dplyr}, {pharmaversesdtm}\n\n\nDay 5\nAdvanced Tidyverse: Pivoting & Joining\nReshaping SDTM Data for Analysis\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 6\nIntroduction to sdtm.oak\nEDC-to-SDTM Transformation Patterns\n{sdtm.oak}, {dplyr}, {pharmaversesdtm}\n\n\nDay 7\nWeek 1 Capstone: End-to-End SDTM Script\nBuild DM, AE, EX from Scratch with xportr\n{dplyr}, {lubridate}, {sdtm.oak}, {xportr}, {haven}\n\n\n\n\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 8\nComplex SDTM Domains - LB (Lab Results)\nFindings Class with Unit Standardization\n{dplyr}, {tidyr}, {sdtm.oak}, {pharmaversesdtm}\n\n\nDay 9\nVS (Vital Signs) & Repeated Measures\nVisit-Level Data and Positional Readings\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 10\nAE Domain Mastery & SAE Logic\nDeep Dive into Severity, Causality, and Outcomes\n{dplyr}, {lubridate}, {sdtm.oak}\n\n\nDay 11\nDisposition (DS) & Trial Design Domains\nScreen Failures, Completers, and Study Structure\n{dplyr}, {lubridate}, {sdtm.oak}\n\n\nDay 12\nData Cuts with datacutr\nApplying Clinical Cutoff Dates for Interim & Final Analyses\n{dplyr}, {lubridate}, {datacutr}\n\n\nDay 13\nSDTM Validation with sdtmchecks\nRunning FDA Business Rules Against Your Domains\n{sdtmchecks}, {dplyr}, {pharmaversesdtm}\n\n\nDay 14\nWeek 2 Capstone - Metadata-Driven SDTM with metacore & xportr\nSpecification-Driven Workflows for Submission-Ready Data\n{metacore}, {metatools}, {xportr}, {dplyr}\n\n\n\n\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 15\nADaM Architecture & Admiral Core Engine\nWeek 3, Day 15: Understanding ADaM Structures, Admiral Philosophy, and Core Derivation Patterns\n{admiral}, {pharmaversesdtm}, {pharmaverseadam}, {dplyr}"
+    "text": "Welcome to 30 Days of Pharmaverse. This project is a hands-on exploration of the modern clinical data science stack, designed for programmers and data scientists who want to dive deep into CDISC standards using the open-source Pharmaverse ecosystem.\nInstead of a traditional course, think of this as a guided tour or a developer’s log. Each day, we tackle a specific concept - from setting up a working environment to building complex ADaM datasets and producing TLF outputs - using industry-standard R packages like admiral, xportr, metacore, rtables, tern, and more.\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 1\nEnvironment Setup & First SDTM Code\nSDTM Programming Walkthrough\n{admiral}, {pharmaversesdtm}, {dplyr}, {haven}, {xportr}\n\n\nDay 2\nSDTM Domain Structure & Tidyverse Mastery\nUnderstanding SDTM Domain Classes Through Code\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 3\nControlled Terminology & MedDRA Coding\nBuilding AE Codelists in R\n{dplyr}, {pharmaversesdtm}\n\n\nDay 4\nClinical Date Derivations with lubridate\nStudy Day, Duration, and Partial Date Imputation\n{lubridate}, {dplyr}, {pharmaversesdtm}\n\n\nDay 5\nAdvanced Tidyverse: Pivoting & Joining\nReshaping SDTM Data for Analysis\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 6\nIntroduction to sdtm.oak\nEDC-to-SDTM Transformation Patterns\n{sdtm.oak}, {dplyr}, {pharmaversesdtm}\n\n\nDay 7\nWeek 1 Capstone: End-to-End SDTM Script\nBuild DM, AE, EX from Scratch with xportr\n{dplyr}, {lubridate}, {sdtm.oak}, {xportr}, {haven}\n\n\n\n\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 8\nComplex SDTM Domains - LB (Lab Results)\nFindings Class with Unit Standardization\n{dplyr}, {tidyr}, {sdtm.oak}, {pharmaversesdtm}\n\n\nDay 9\nVS (Vital Signs) & Repeated Measures\nVisit-Level Data and Positional Readings\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 10\nAE Domain Mastery & SAE Logic\nDeep Dive into Severity, Causality, and Outcomes\n{dplyr}, {lubridate}, {sdtm.oak}\n\n\nDay 11\nDisposition (DS) & Trial Design Domains\nScreen Failures, Completers, and Study Structure\n{dplyr}, {lubridate}, {sdtm.oak}\n\n\nDay 12\nData Cuts with datacutr\nApplying Clinical Cutoff Dates for Interim & Final Analyses\n{dplyr}, {lubridate}, {datacutr}\n\n\nDay 13\nSDTM Validation with sdtmchecks\nRunning FDA Business Rules Against Your Domains\n{sdtmchecks}, {dplyr}, {pharmaversesdtm}\n\n\nDay 14\nWeek 2 Capstone - Metadata-Driven SDTM with metacore & xportr\nSpecification-Driven Workflows for Submission-Ready Data\n{metacore}, {metatools}, {xportr}, {dplyr}\n\n\n\n\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 15\nADaM Architecture & Admiral Core Engine\nWeek 3, Day 15: Understanding ADaM Structures, Admiral Philosophy, and Core Derivation Patterns\n{admiral}, {pharmaversesdtm}, {pharmaverseadam}, {dplyr}\n\n\nDay 16\nADSL Part 1 - Treatment Variables & Dates\nWeek 3, Day 16: First dose dates, treatment assignment, and study timeline from EX and DS\n{admiral}, {dplyr}, {lubridate}, {pharmaversesdtm}"
   },
   {
     "objectID": "index.html#exploration-roadmap",
     "href": "index.html#exploration-roadmap",
     "title": "30 Days of Pharmaverse",
     "section": "",
-    "text": "Welcome to 30 Days of Pharmaverse. This project is a hands-on exploration of the modern clinical data science stack, designed for programmers and data scientists who want to dive deep into CDISC standards using the open-source Pharmaverse ecosystem.\nInstead of a traditional course, think of this as a guided tour or a developer’s log. Each day, we tackle a specific concept — from setting up a working environment to building complex ADaM datasets and producing TLF outputs — using industry-standard R packages like admiral, xportr, metacore, rtables, tern, and more.\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 1\nEnvironment Setup & First SDTM Code\nSDTM Programming Walkthrough\n{admiral}, {pharmaversesdtm}, {dplyr}, {haven}, {xportr}\n\n\nDay 2\nSDTM Domain Structure & Tidyverse Mastery\nUnderstanding SDTM Domain Classes Through Code\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 3\nControlled Terminology & MedDRA Coding\nBuilding AE Codelists in R\n{dplyr}, {pharmaversesdtm}\n\n\nDay 4\nClinical Date Derivations with lubridate\nStudy Day, Duration, and Partial Date Imputation\n{lubridate}, {dplyr}, {pharmaversesdtm}\n\n\nDay 5\nAdvanced Tidyverse: Pivoting & Joining\nReshaping SDTM Data for Analysis\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 6\nIntroduction to sdtm.oak\nEDC-to-SDTM Transformation Patterns\n{sdtm.oak}, {dplyr}, {pharmaversesdtm}\n\n\nDay 7\nWeek 1 Capstone: End-to-End SDTM Script\nBuild DM, AE, EX from Scratch with xportr\n{dplyr}, {lubridate}, {sdtm.oak}, {xportr}, {haven}\n\n\n\n\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 8\nComplex SDTM Domains - LB (Lab Results)\nFindings Class with Unit Standardization\n{dplyr}, {tidyr}, {sdtm.oak}, {pharmaversesdtm}\n\n\nDay 9\nVS (Vital Signs) & Repeated Measures\nVisit-Level Data and Positional Readings\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 10\nAE Domain Mastery & SAE Logic\nDeep Dive into Severity, Causality, and Outcomes\n{dplyr}, {lubridate}, {sdtm.oak}\n\n\nDay 11\nDisposition (DS) & Trial Design Domains\nScreen Failures, Completers, and Study Structure\n{dplyr}, {lubridate}, {sdtm.oak}\n\n\nDay 12\nData Cuts with datacutr\nApplying Clinical Cutoff Dates for Interim & Final Analyses\n{dplyr}, {lubridate}, {datacutr}\n\n\nDay 13\nSDTM Validation with sdtmchecks\nRunning FDA Business Rules Against Your Domains\n{sdtmchecks}, {dplyr}, {pharmaversesdtm}\n\n\nDay 14\nWeek 2 Capstone - Metadata-Driven SDTM with metacore & xportr\nSpecification-Driven Workflows for Submission-Ready Data\n{metacore}, {metatools}, {xportr}, {dplyr}\n\n\n\n\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 15\nADaM Architecture & Admiral Core Engine\nWeek 3, Day 15: Understanding ADaM Structures, Admiral Philosophy, and Core Derivation Patterns\n{admiral}, {pharmaversesdtm}, {pharmaverseadam}, {dplyr}"
+    "text": "Welcome to 30 Days of Pharmaverse. This project is a hands-on exploration of the modern clinical data science stack, designed for programmers and data scientists who want to dive deep into CDISC standards using the open-source Pharmaverse ecosystem.\nInstead of a traditional course, think of this as a guided tour or a developer’s log. Each day, we tackle a specific concept - from setting up a working environment to building complex ADaM datasets and producing TLF outputs - using industry-standard R packages like admiral, xportr, metacore, rtables, tern, and more.\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 1\nEnvironment Setup & First SDTM Code\nSDTM Programming Walkthrough\n{admiral}, {pharmaversesdtm}, {dplyr}, {haven}, {xportr}\n\n\nDay 2\nSDTM Domain Structure & Tidyverse Mastery\nUnderstanding SDTM Domain Classes Through Code\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 3\nControlled Terminology & MedDRA Coding\nBuilding AE Codelists in R\n{dplyr}, {pharmaversesdtm}\n\n\nDay 4\nClinical Date Derivations with lubridate\nStudy Day, Duration, and Partial Date Imputation\n{lubridate}, {dplyr}, {pharmaversesdtm}\n\n\nDay 5\nAdvanced Tidyverse: Pivoting & Joining\nReshaping SDTM Data for Analysis\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 6\nIntroduction to sdtm.oak\nEDC-to-SDTM Transformation Patterns\n{sdtm.oak}, {dplyr}, {pharmaversesdtm}\n\n\nDay 7\nWeek 1 Capstone: End-to-End SDTM Script\nBuild DM, AE, EX from Scratch with xportr\n{dplyr}, {lubridate}, {sdtm.oak}, {xportr}, {haven}\n\n\n\n\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 8\nComplex SDTM Domains - LB (Lab Results)\nFindings Class with Unit Standardization\n{dplyr}, {tidyr}, {sdtm.oak}, {pharmaversesdtm}\n\n\nDay 9\nVS (Vital Signs) & Repeated Measures\nVisit-Level Data and Positional Readings\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 10\nAE Domain Mastery & SAE Logic\nDeep Dive into Severity, Causality, and Outcomes\n{dplyr}, {lubridate}, {sdtm.oak}\n\n\nDay 11\nDisposition (DS) & Trial Design Domains\nScreen Failures, Completers, and Study Structure\n{dplyr}, {lubridate}, {sdtm.oak}\n\n\nDay 12\nData Cuts with datacutr\nApplying Clinical Cutoff Dates for Interim & Final Analyses\n{dplyr}, {lubridate}, {datacutr}\n\n\nDay 13\nSDTM Validation with sdtmchecks\nRunning FDA Business Rules Against Your Domains\n{sdtmchecks}, {dplyr}, {pharmaversesdtm}\n\n\nDay 14\nWeek 2 Capstone - Metadata-Driven SDTM with metacore & xportr\nSpecification-Driven Workflows for Submission-Ready Data\n{metacore}, {metatools}, {xportr}, {dplyr}\n\n\n\n\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 15\nADaM Architecture & Admiral Core Engine\nWeek 3, Day 15: Understanding ADaM Structures, Admiral Philosophy, and Core Derivation Patterns\n{admiral}, {pharmaversesdtm}, {pharmaverseadam}, {dplyr}\n\n\nDay 16\nADSL Part 1 - Treatment Variables & Dates\nWeek 3, Day 16: First dose dates, treatment assignment, and study timeline from EX and DS\n{admiral}, {dplyr}, {lubridate}, {pharmaversesdtm}"
   },
   {
     "objectID": "index.html#what-youll-explore",
@@ -25,21 +25,21 @@
     "href": "index.html#the-toolkit",
     "title": "30 Days of Pharmaverse",
     "section": "The Toolkit",
-    "text": "The Toolkit\nPrerequisites: - Comfort with R and the tidyverse - A curiosity about clinical trials and data standards\nCore Packages:\n# SDTM layer\ninstall.packages(c(\"admiral\", \"pharmaversesdtm\", \"pharmaverseadam\",\n                   \"sdtm.oak\", \"sdtmchecks\", \"datacutr\",\n                   \"metacore\", \"metatools\", \"xportr\", \"haven\"))\n\n# ADaM extensions\ninstall.packages(\"admiralonco\")\n\n# TLF — tables\ninstall.packages(c(\"rtables\", \"tern\", \"r2rtf\", \"flextable\", \"officer\",\n                   \"gtsummary\", \"tfrmt\", \"Tplyr\", \"rlistings\"))\n\n# TLF — figures\ninstall.packages(c(\"ggplot2\", \"ggsurvfit\", \"patchwork\"))\n\n# ARD & QC\ninstall.packages(c(\"cards\", \"cardx\", \"testthat\", \"logrx\"))"
+    "text": "The Toolkit\nPrerequisites: - Comfort with R and the tidyverse - A curiosity about clinical trials and data standards\nCore Packages:\n# SDTM layer\ninstall.packages(c(\"admiral\", \"pharmaversesdtm\", \"pharmaverseadam\",\n                   \"sdtm.oak\", \"sdtmchecks\", \"datacutr\",\n                   \"metacore\", \"metatools\", \"xportr\", \"haven\"))\n\n# ADaM extensions\ninstall.packages(\"admiralonco\")\n\n# TLF - tables\ninstall.packages(c(\"rtables\", \"tern\", \"r2rtf\", \"flextable\", \"officer\",\n                   \"gtsummary\", \"tfrmt\", \"Tplyr\", \"rlistings\"))\n\n# TLF - figures\ninstall.packages(c(\"ggplot2\", \"ggsurvfit\", \"patchwork\"))\n\n# ARD & QC\ninstall.packages(c(\"cards\", \"cardx\", \"testthat\", \"logrx\"))"
   },
   {
     "objectID": "index.html#important-disclaimer",
     "href": "index.html#important-disclaimer",
     "title": "30 Days of Pharmaverse",
     "section": "⚠️ Important Disclaimer",
-    "text": "⚠️ Important Disclaimer\nThis project is a personal initiative created for learning and exploratory purposes only. It is in no way affiliated with, endorsed by, sponsored by, funded by, or assisted by any organisation or company at any capacity.\n\nThis project draws heavily from open-source projects, Pharmaverse examples, public repositories, and official CDISC documentation.\nSignificant portions of the code and content have been created with assistance from Large Language Models (LLMs) and refined through human review and intervention.\nExamples and patterns are adapted from established best practices in the R and clinical programming communities.\n\nLearners are strongly encouraged to:\n\nThink critically — Don’t just copy-paste code. Understand why each step exists.\nVerify independently — Check code against official Pharmaverse documentation and CDISC standards.\nTest thoroughly — Validate any code in your own environment before use in any context.\nConsult experts — When implementing for real clinical trials, seek guidance from qualified statisticians and data managers.\n\nThe views, opinions, code, and materials shared in this project are solely for exploratory and learning purposes and do not guarantee accuracy, correctness, or compliance with any standard. They do not represent the positions of any external organisation and should not be treated as guidance for any formal or regulated use without independent verification."
+    "text": "⚠️ Important Disclaimer\nThis project is a personal initiative created for learning and exploratory purposes only. It is in no way affiliated with, endorsed by, sponsored by, funded by, or assisted by any organisation or company at any capacity.\n\nThis project draws heavily from open-source projects, Pharmaverse examples, public repositories, and official CDISC documentation.\nSignificant portions of the code and content have been created with assistance from Large Language Models (LLMs) and refined through human review and intervention.\nExamples and patterns are adapted from established best practices in the R and clinical programming communities.\n\nLearners are strongly encouraged to:\n\nThink critically - Don’t just copy-paste code. Understand why each step exists.\nVerify independently - Check code against official Pharmaverse documentation and CDISC standards.\nTest thoroughly - Validate any code in your own environment before use in any context.\nConsult experts - When implementing for real clinical trials, seek guidance from qualified statisticians and data managers.\n\nThe views, opinions, code, and materials shared in this project are solely for exploratory and learning purposes and do not guarantee accuracy, correctness, or compliance with any standard. They do not represent the positions of any external organisation and should not be treated as guidance for any formal or regulated use without independent verification."
   },
   {
     "objectID": "index.html#community-resources",
     "href": "index.html#community-resources",
     "title": "30 Days of Pharmaverse",
     "section": "Community & Resources",
-    "text": "Community & Resources\n\nPharmaverse.org — The central hub for open-source clinical R packages.\nCDISC.org — The official standards body for clinical data.\nAdmiral Documentation — The flagship ADaM derivation package.\nr4csr.org — Open-access book: R for Clinical Study Reports (Zhang et al.).\npharmaverse TLG Catalogue — Reference TLF outputs from the pharmaverse stack.\nR Consortium R Submission Working Group — Ongoing work on R-based submissions (pilot projects, not formal FDA guidance).\n\n\nCurated by: Indraneel Chakraborty | Last Updated: February 2026"
+    "text": "Community & Resources\n\nPharmaverse.org - The central hub for open-source clinical R packages.\nCDISC.org - The official standards body for clinical data.\nAdmiral Documentation - The flagship ADaM derivation package.\nr4csr.org - Open-access book: R for Clinical Study Reports (Zhang et al.).\npharmaverse TLG Catalogue - Reference TLF outputs from the pharmaverse stack.\nR Consortium R Submission Working Group - Ongoing work on R-based submissions (pilot projects, not formal FDA guidance).\n\n\nCurated by: Indraneel Chakraborty | Last Updated: February 2026"
   },
   {
     "objectID": "week1/day7.html",
@@ -2580,6 +2580,479 @@
     "crumbs": [
       "Week 3: ADaM Deep Dive",
       "Day 15: ADaM Architecture & Admiral Core Engine"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html",
+    "href": "week3/day16.html",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "",
+    "text": "Today you’ll build ADSL Part 1 - the foundation dataset that every other ADaM depends on.\nADSL is critical because:\n\nOne record per subject\nAll other ADaMs merge from ADSL\nTreatment dates define analysis windows\nPopulation flags control analyses\n\nToday’s focus: Treatment variables and dates from EX and DS domains.",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#welcome-to-hands-on-adsl-creation",
+    "href": "week3/day16.html#welcome-to-hands-on-adsl-creation",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "",
+    "text": "Today you’ll build ADSL Part 1 - the foundation dataset that every other ADaM depends on.\nADSL is critical because:\n\nOne record per subject\nAll other ADaMs merge from ADSL\nTreatment dates define analysis windows\nPopulation flags control analyses\n\nToday’s focus: Treatment variables and dates from EX and DS domains.",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#setup",
+    "href": "week3/day16.html#setup",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "4 Setup",
+    "text": "4 Setup\n\nlibrary(admiral)\nlibrary(pharmaversesdtm)\nlibrary(dplyr)\nlibrary(lubridate)\nlibrary(stringr)\n\n# Load SDTM domains\ndm &lt;- pharmaversesdtm::dm\nex &lt;- pharmaversesdtm::ex\nds &lt;- pharmaversesdtm::ds\n\n# Check dimensions\ncat(\"DM:\", nrow(dm), \"subjects\\n\")\n\nDM: 306 subjects\n\ncat(\"EX:\", nrow(ex), \"records\\n\")\n\nEX: 591 records\n\ncat(\"DS:\", nrow(ds), \"records\\n\")\n\nDS: 850 records",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#step-1-initialize-adsl-from-dm",
+    "href": "week3/day16.html#step-1-initialize-adsl-from-dm",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "5 Step 1: Initialize ADSL from DM",
+    "text": "5 Step 1: Initialize ADSL from DM\n\n# Start with Demographics domain\nadsl &lt;- dm %&gt;%\n  select(-DOMAIN)\n\ncat(\"\\nADSL initialized with\", nrow(adsl), \"subjects and\", ncol(adsl), \"variables\\n\")\n\n\nADSL initialized with 306 subjects and 25 variables\n\n# Preview first few subjects\nadsl %&gt;%\n  select(USUBJID, AGE, SEX, RACE, ARM, ACTARM) %&gt;%\n  head(5)\n\n# A tibble: 5 × 6\n  USUBJID       AGE SEX   RACE  ARM                  ACTARM              \n  &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;               \n1 01-701-1015    63 F     WHITE Placebo              Placebo             \n2 01-701-1023    64 M     WHITE Placebo              Placebo             \n3 01-701-1028    71 M     WHITE Xanomeline High Dose Xanomeline High Dose\n4 01-701-1033    74 M     WHITE Xanomeline Low Dose  Xanomeline Low Dose \n5 01-701-1034    77 F     WHITE Xanomeline High Dose Xanomeline High Dose\n\n\nWhy start with DM?\n\nDM has one record per subject (ADSL structure)\nContains demographics, treatment assignment, reference dates\nFoundation for all other derivations",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#step-2-derive-treatment-variables",
+    "href": "week3/day16.html#step-2-derive-treatment-variables",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "6 Step 2: Derive Treatment Variables",
+    "text": "6 Step 2: Derive Treatment Variables\n\n# Derive planned and actual treatment\nadsl &lt;- adsl %&gt;%\n  mutate(\n    TRT01P = ARM,\n    TRT01A = ACTARM\n  )\n\n# Check treatment distribution\nadsl %&gt;%\n  count(TRT01P, TRT01A)\n\n# A tibble: 5 × 3\n  TRT01P               TRT01A                   n\n  &lt;chr&gt;                &lt;chr&gt;                &lt;int&gt;\n1 Placebo              Placebo                 86\n2 Screen Failure       Screen Failure          52\n3 Xanomeline High Dose Xanomeline High Dose    72\n4 Xanomeline High Dose Xanomeline Low Dose     12\n5 Xanomeline Low Dose  Xanomeline Low Dose     84\n\n\nTRT01P vs TRT01A:\n\nTRT01P: Planned treatment (from randomization)\nTRT01A: Actual treatment received\nMay differ due to treatment switches or errors",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#step-3-prepare-ex-with-date-conversion",
+    "href": "week3/day16.html#step-3-prepare-ex-with-date-conversion",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "7 Step 3: Prepare EX with Date Conversion",
+    "text": "7 Step 3: Prepare EX with Date Conversion\n\n# Convert exposure dates to datetime\nex_ext &lt;- ex %&gt;%\n  derive_vars_dtm(\n    dtc = EXSTDTC,\n    new_vars_prefix = \"EXST\"\n  ) %&gt;%\n  derive_vars_dtm(\n    dtc = EXENDTC,\n    new_vars_prefix = \"EXEN\",\n    time_imputation = \"last\"\n  )\n\ncat(\"\\nEX dataset extended with datetime variables\\n\")\n\n\nEX dataset extended with datetime variables\n\n# Check one subject\nex_ext %&gt;%\n  filter(USUBJID == \"01-701-1015\") %&gt;%\n  select(USUBJID, EXSTDTC, EXSTDTM, EXENDTC, EXENDTM, EXDOSE, VISIT) %&gt;%\n  head(5)\n\n# A tibble: 3 × 7\n  USUBJID   EXSTDTC EXSTDTM             EXENDTC EXENDTM             EXDOSE VISIT\n  &lt;chr&gt;     &lt;chr&gt;   &lt;dttm&gt;              &lt;chr&gt;   &lt;dttm&gt;               &lt;dbl&gt; &lt;chr&gt;\n1 01-701-1… 2014-0… 2014-01-02 00:00:00 2014-0… 2014-01-16 23:59:59      0 BASE…\n2 01-701-1… 2014-0… 2014-01-17 00:00:00 2014-0… 2014-06-18 23:59:59      0 WEEK…\n3 01-701-1… 2014-0… 2014-06-19 00:00:00 2014-0… 2014-07-02 23:59:59      0 WEEK…\n\n\nWhat does derive_vars_dtm() do?\n\nConverts ISO 8601 character dates (EXSTDTC) to POSIXct datetime (EXSTDTM)\nHandles partial dates with imputation\nCreates imputation flags automatically",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#step-4-derive-first-dose-date",
+    "href": "week3/day16.html#step-4-derive-first-dose-date",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "8 Step 4: Derive First Dose Date",
+    "text": "8 Step 4: Derive First Dose Date\n\n# Derive first dose datetime\nadsl &lt;- adsl %&gt;%\n  derive_vars_merged(\n    dataset_add = ex_ext,\n    filter_add = (EXDOSE &gt; 0 | \n                 (EXDOSE == 0 & str_detect(EXTRT, \"PLACEBO\"))) & \n                 !is.na(EXSTDTM),\n    new_vars = exprs(TRTSDTM = EXSTDTM),\n    order = exprs(EXSTDTM, EXSEQ),\n    mode = \"first\",\n    by_vars = exprs(STUDYID, USUBJID)\n  )\n\ncat(\"\\nFirst dose date derived\\n\")\n\n\nFirst dose date derived\n\n# Check results\nadsl %&gt;%\n  select(USUBJID, TRT01A, TRTSDTM) %&gt;%\n  filter(!is.na(TRTSDTM)) %&gt;%\n  head(5)\n\n# A tibble: 5 × 3\n  USUBJID     TRT01A               TRTSDTM            \n  &lt;chr&gt;       &lt;chr&gt;                &lt;dttm&gt;             \n1 01-701-1015 Placebo              2014-01-02 00:00:00\n2 01-701-1023 Placebo              2012-08-05 00:00:00\n3 01-701-1028 Xanomeline High Dose 2013-07-19 00:00:00\n4 01-701-1033 Xanomeline Low Dose  2014-03-18 00:00:00\n5 01-701-1034 Xanomeline High Dose 2014-07-01 00:00:00\n\n\nUnderstanding derive_vars_merged():\n\ndataset_add = ex_ext: Merge from EX dataset\nfilter_add: Only actual doses (EXDOSE &gt; 0)\nmode = \"first\": Take earliest record\norder = exprs(EXSTDTM, EXSEQ): Order by datetime, then sequence\nby_vars: Join on STUDYID and USUBJID",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#step-5-derive-last-dose-date",
+    "href": "week3/day16.html#step-5-derive-last-dose-date",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "9 Step 5: Derive Last Dose Date",
+    "text": "9 Step 5: Derive Last Dose Date\n\n# Derive last dose datetime\nadsl &lt;- adsl %&gt;%\n  derive_vars_merged(\n    dataset_add = ex_ext,\n    filter_add = (EXDOSE &gt; 0 | \n                 (EXDOSE == 0 & str_detect(EXTRT, \"PLACEBO\"))) & \n                 !is.na(EXENDTM),\n    new_vars = exprs(TRTEDTM = EXENDTM),\n    order = exprs(EXENDTM, EXSEQ),\n    mode = \"last\",\n    by_vars = exprs(STUDYID, USUBJID)\n  )\n\ncat(\"\\nLast dose date derived\\n\")\n\n\nLast dose date derived\n\n# Check results\nadsl %&gt;%\n  select(USUBJID, TRTSDTM, TRTEDTM) %&gt;%\n  filter(!is.na(TRTSDTM)) %&gt;%\n  head(5)\n\n# A tibble: 5 × 3\n  USUBJID     TRTSDTM             TRTEDTM            \n  &lt;chr&gt;       &lt;dttm&gt;              &lt;dttm&gt;             \n1 01-701-1015 2014-01-02 00:00:00 2014-07-02 23:59:59\n2 01-701-1023 2012-08-05 00:00:00 2012-09-01 23:59:59\n3 01-701-1028 2013-07-19 00:00:00 2014-01-14 23:59:59\n4 01-701-1033 2014-03-18 00:00:00 2014-03-31 23:59:59\n5 01-701-1034 2014-07-01 00:00:00 2014-12-30 23:59:59\n\n\nKey difference from Step 4:\n\nmode = \"last\": Take latest record instead of earliest\nSame function, different parameter",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#step-6-convert-datetime-to-date",
+    "href": "week3/day16.html#step-6-convert-datetime-to-date",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "10 Step 6: Convert Datetime to Date",
+    "text": "10 Step 6: Convert Datetime to Date\n\n# Extract date from datetime\nadsl &lt;- adsl %&gt;%\n  derive_vars_dtm_to_dt(source_vars = exprs(TRTSDTM, TRTEDTM))\n\ncat(\"\\nDate variables created from datetime\\n\")\n\n\nDate variables created from datetime\n\n# Check both formats\nadsl %&gt;%\n  select(USUBJID, TRTSDTM, TRTSDT, TRTEDTM, TRTEDT) %&gt;%\n  filter(!is.na(TRTSDT)) %&gt;%\n  head(5)\n\n# A tibble: 5 × 5\n  USUBJID     TRTSDTM             TRTSDT     TRTEDTM             TRTEDT    \n  &lt;chr&gt;       &lt;dttm&gt;              &lt;date&gt;     &lt;dttm&gt;              &lt;date&gt;    \n1 01-701-1015 2014-01-02 00:00:00 2014-01-02 2014-07-02 23:59:59 2014-07-02\n2 01-701-1023 2012-08-05 00:00:00 2012-08-05 2012-09-01 23:59:59 2012-09-01\n3 01-701-1028 2013-07-19 00:00:00 2013-07-19 2014-01-14 23:59:59 2014-01-14\n4 01-701-1033 2014-03-18 00:00:00 2014-03-18 2014-03-31 23:59:59 2014-03-31\n5 01-701-1034 2014-07-01 00:00:00 2014-07-01 2014-12-30 23:59:59 2014-12-30\n\n\nWhy both datetime and date?\n\nTRTSDTM/TRTEDTM: Precise datetime for sorting, merging\nTRTSDT/TRTEDT: Date for calculations, display in tables",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#step-7-derive-treatment-duration",
+    "href": "week3/day16.html#step-7-derive-treatment-duration",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "11 Step 7: Derive Treatment Duration",
+    "text": "11 Step 7: Derive Treatment Duration\n\n# Calculate treatment duration in days\nadsl &lt;- adsl %&gt;%\n  derive_var_trtdurd()\n\ncat(\"\\nTreatment duration calculated\\n\")\n\n\nTreatment duration calculated\n\n# Summary statistics\nadsl %&gt;%\n  filter(!is.na(TRTDURD)) %&gt;%\n  summarise(\n    N = n(),\n    Mean = round(mean(TRTDURD), 1),\n    SD = round(sd(TRTDURD), 1),\n    Median = median(TRTDURD),\n    Min = min(TRTDURD),\n    Max = max(TRTDURD)\n  )\n\n# A tibble: 1 × 6\n      N  Mean    SD Median   Min   Max\n  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1   252  115.  70.7    132     1   212\n\n\nFormula: TRTDURD = TRTEDT - TRTSDT + 1\nThe +1 is CDISC convention: same-day treatment = 1 day, not 0.",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#step-8-derive-disposition-date-eosdt",
+    "href": "week3/day16.html#step-8-derive-disposition-date-eosdt",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "12 Step 8: Derive Disposition Date (EOSDT)",
+    "text": "12 Step 8: Derive Disposition Date (EOSDT)\n\n# Convert DS date\nds_ext &lt;- derive_vars_dt(\n  ds,\n  dtc = DSSTDTC,\n  new_vars_prefix = \"DSST\"\n)\n\n# Merge end of study date to ADSL\nadsl &lt;- adsl %&gt;%\n  derive_vars_merged(\n    dataset_add = ds_ext,\n    by_vars = exprs(STUDYID, USUBJID),\n    new_vars = exprs(EOSDT = DSSTDT),\n    filter_add = DSCAT == \"DISPOSITION EVENT\" & DSDECOD != \"SCREEN FAILURE\"\n  )\n\ncat(\"\\nEnd of study date derived\\n\")\n\n\nEnd of study date derived\n\n# Check\nadsl %&gt;%\n  filter(!is.na(EOSDT)) %&gt;%\n  select(USUBJID, TRTEDT, EOSDT) %&gt;%\n  head(5)\n\n# A tibble: 5 × 3\n  USUBJID     TRTEDT     EOSDT     \n  &lt;chr&gt;       &lt;date&gt;     &lt;date&gt;    \n1 01-701-1015 2014-07-02 2014-07-02\n2 01-701-1023 2012-09-01 2012-09-02\n3 01-701-1028 2014-01-14 2014-01-14\n4 01-701-1033 2014-03-31 2014-04-14\n5 01-701-1034 2014-12-30 2014-12-30",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#step-9-derive-disposition-status-eosstt",
+    "href": "week3/day16.html#step-9-derive-disposition-status-eosstt",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "13 Step 9: Derive Disposition Status (EOSSTT)",
+    "text": "13 Step 9: Derive Disposition Status (EOSSTT)\n\n# Helper function for status formatting\nformat_eosstt &lt;- function(x) {\n  case_when(\n    x %in% c(\"COMPLETED\") ~ \"COMPLETED\",\n    x %in% c(\"SCREEN FAILURE\") ~ NA_character_,\n    TRUE ~ \"DISCONTINUED\"\n  )\n}\n\n# Derive end of study status\nadsl &lt;- adsl %&gt;%\n  derive_vars_merged(\n    dataset_add = ds,\n    by_vars = exprs(STUDYID, USUBJID),\n    filter_add = DSCAT == \"DISPOSITION EVENT\",\n    new_vars = exprs(EOSSTT = format_eosstt(DSDECOD)),\n    missing_values = exprs(EOSSTT = \"ONGOING\")\n  )\n\ncat(\"\\nEnd of study status derived\\n\")\n\n\nEnd of study status derived\n\n# Distribution\nadsl %&gt;%\n  count(EOSSTT)\n\n# A tibble: 3 × 2\n  EOSSTT           n\n  &lt;chr&gt;        &lt;int&gt;\n1 COMPLETED      110\n2 DISCONTINUED   144\n3 &lt;NA&gt;            52\n\n\nStatus categories:\n\nCOMPLETED: Finished study per protocol\nDISCONTINUED: Withdrew before completion\nONGOING: Still in study (for data cuts)",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#step-10-derive-discontinuation-reason",
+    "href": "week3/day16.html#step-10-derive-discontinuation-reason",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "14 Step 10: Derive Discontinuation Reason",
+    "text": "14 Step 10: Derive Discontinuation Reason\n\n# Derive reason for discontinuation\nadsl &lt;- adsl %&gt;%\n  derive_vars_merged(\n    dataset_add = ds,\n    by_vars = exprs(USUBJID),\n    new_vars = exprs(DCSREAS = DSDECOD, DCSREASP = DSTERM),\n    filter_add = DSCAT == \"DISPOSITION EVENT\" &\n      !(DSDECOD %in% c(\"SCREEN FAILURE\", \"COMPLETED\", NA))\n  )\n\ncat(\"\\nDiscontinuation reason derived\\n\")\n\n\nDiscontinuation reason derived\n\n# Check discontinued subjects\nadsl %&gt;%\n  filter(!is.na(DCSREAS)) %&gt;%\n  select(USUBJID, EOSSTT, DCSREAS, DCSREASP) %&gt;%\n  head(10)\n\n# A tibble: 10 × 4\n   USUBJID     EOSSTT       DCSREAS                     DCSREASP                \n   &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;                       &lt;chr&gt;                   \n 1 01-701-1023 DISCONTINUED ADVERSE EVENT               ADVERSE EVENT           \n 2 01-701-1033 DISCONTINUED STUDY TERMINATED BY SPONSOR SPONSOR DECISION (STUDY…\n 3 01-701-1047 DISCONTINUED ADVERSE EVENT               ADVERSE EVENT           \n 4 01-701-1111 DISCONTINUED ADVERSE EVENT               ADVERSE EVENT           \n 5 01-701-1115 DISCONTINUED ADVERSE EVENT               ADVERSE EVENT           \n 6 01-701-1146 DISCONTINUED ADVERSE EVENT               ADVERSE EVENT           \n 7 01-701-1180 DISCONTINUED ADVERSE EVENT               ADVERSE EVENT           \n 8 01-701-1181 DISCONTINUED ADVERSE EVENT               ADVERSE EVENT           \n 9 01-701-1188 DISCONTINUED ADVERSE EVENT               ADVERSE EVENT           \n10 01-701-1211 DISCONTINUED DEATH                       DEATH",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#step-11-derive-safety-population-flag",
+    "href": "week3/day16.html#step-11-derive-safety-population-flag",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "15 Step 11: Derive Safety Population Flag",
+    "text": "15 Step 11: Derive Safety Population Flag\n\n# Flag subjects who received any study treatment\nadsl &lt;- adsl %&gt;%\n  derive_var_merged_exist_flag(\n    dataset_add = ex,\n    by_vars = exprs(STUDYID, USUBJID),\n    new_var = SAFFL,\n    condition = (EXDOSE &gt; 0 | (EXDOSE == 0 & str_detect(EXTRT, \"PLACEBO\")))\n  )\n\ncat(\"\\nSafety population flag derived\\n\")\n\n\nSafety population flag derived\n\n# Population counts\nadsl %&gt;%\n  count(SAFFL)\n\n# A tibble: 2 × 2\n  SAFFL     n\n  &lt;chr&gt; &lt;int&gt;\n1 Y       254\n2 &lt;NA&gt;     52\n\n\nSafety Population (SAFFL = “Y”):\n\nReceived at least one dose of study treatment\nUsed for all safety analyses (AEs, labs, vitals)",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#validation",
+    "href": "week3/day16.html#validation",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "14 Validation",
+    "text": "14 Validation\n\ncat(\"\\n=== ADSL Part 1 Validation ===\\n\\n\")\n\n\n=== ADSL Part 1 Validation ===\n\n# Check 1: TRTSDT ≤ TRTEDT\ncheck1 &lt;- adsl %&gt;%\n  filter(!is.na(TRTSDT) & !is.na(TRTEDT) & TRTSDT &gt; TRTEDT)\ncat(\"TRTSDT &gt; TRTEDT:\", nrow(check1), \"\\n\")\n\nTRTSDT &gt; TRTEDT: 0 \n\n# Check 2: TRTDURD calculation\ncheck2 &lt;- adsl %&gt;%\n  filter(!is.na(TRTDURD)) %&gt;%\n  mutate(TRTDURD_check = as.numeric(TRTEDT - TRTSDT) + 1) %&gt;%\n  filter(TRTDURD != TRTDURD_check)\ncat(\"TRTDURD mismatch:\", nrow(check2), \"\\n\")\n\nTRTDURD mismatch: 0 \n\n# Check 3: Safety flag consistency\ncheck3 &lt;- adsl %&gt;%\n  filter(!is.na(TRTSDT) & is.na(SAFFL))\ncat(\"Treated but no SAFFL:\", nrow(check3), \"\\n\")\n\nTreated but no SAFFL: 0 \n\ncat(\"\\n✓ Validation complete\\n\")\n\n\n✓ Validation complete",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#final-summary",
+    "href": "week3/day16.html#final-summary",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "15 Final Summary",
+    "text": "15 Final Summary\n\ncat(\"\\n=== ADSL Part 1 Summary ===\\n\\n\")\n\n\n=== ADSL Part 1 Summary ===\n\ncat(\"Total subjects:\", nrow(adsl), \"\\n\")\n\nTotal subjects: 306 \n\n# Treatment summary\nadsl %&gt;%\n  group_by(TRT01A) %&gt;%\n  summarise(\n    N = n(),\n    N_Treated = sum(!is.na(TRTSDT)),\n    Mean_Duration = round(mean(TRTDURD, na.rm = TRUE), 1),\n    .groups = \"drop\"\n  ) %&gt;%\n  knitr::kable(caption = \"Treatment Summary by Arm\")\n\n\nTreatment Summary by Arm\n\n\nTRT01A\nN\nN_Treated\nMean_Duration\n\n\n\n\nPlacebo\n86\n86\n149.5\n\n\nScreen Failure\n52\n0\nNaN\n\n\nXanomeline High Dose\n72\n72\n112.2\n\n\nXanomeline Low Dose\n96\n96\n86.8",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#key-takeaways",
+    "href": "week3/day16.html#key-takeaways",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "19 Key Takeaways",
+    "text": "19 Key Takeaways\nTechnical:\n\nADSL starts with DM (one record per subject)\nDate workflow: derive_vars_dtm() → derive_vars_dtm_to_dt()\nderive_vars_merged() with mode = “first” or “last”\nFilter carefully: only actual exposures (EXDOSE &gt; 0)\nTRTDURD formula: TRTEDT - TRTSDT + 1 (CDISC convention)\n\nStrategic:\n\nADSL is the foundation - all other ADaMs merge from it\nValidation is critical - check logical consistency\nMissing treatment dates for screen failures is correct\nPopulation flags (SAFFL) control analysis populations",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#next-steps-day-17",
+    "href": "week3/day16.html#next-steps-day-17",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "17 Next Steps: Day 17",
+    "text": "17 Next Steps: Day 17\nTomorrow: Complete ADSL with demographics and baseline measurements",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#resources",
+    "href": "week3/day16.html#resources",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "21 Resources",
+    "text": "21 Resources\nAdmiral Documentation:\n\nAdmiral ADSL Vignette: https://pharmaverse.github.io/admiral/articles/adsl.html\nderive_vars_merged: https://pharmaverse.github.io/admiral/reference/derive_vars_merged.html\nDate Derivations: https://pharmaverse.github.io/admiral/articles/dates_times.html\n\nCDISC Standards:\n\nADaM IG v1.3: https://www.cdisc.org/standards/foundational/adam\nCDISC Pilot Project: https://github.com/cdisc-org/sdtm-adam-pilot-project\n\nPharmaverse:\n\npharmaversesdtm: https://github.com/pharmaverse/pharmaversesdtm\npharmaverse.org: https://pharmaverse.org\n\n\nEnd of Day 16\nTomorrow: ADSL Part 2 - Population Flags & Demographics",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#learning-objectives",
+    "href": "week3/day16.html#learning-objectives",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "2 Learning Objectives",
+    "text": "2 Learning Objectives\nBy the end of Day 16, you will:\n\nDerive first dose date (TRTSDTM, TRTSDT) using derive_vars_merged() with mode = \"first\"\nDerive last dose date (TRTEDTM, TRTEDT) using mode = \"last\"\nCalculate treatment duration (TRTDURD) with derive_var_trtdurd()\nDerive treatment variables (TRT01P, TRT01A)\nHandle screen failures and never-dosed subjects\nExport ADSL Part 1 as XPT",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#adsl-variables-created-today",
+    "href": "week3/day16.html#adsl-variables-created-today",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "3 ADSL Variables Created Today",
+    "text": "3 ADSL Variables Created Today\nTreatment Dates:\n\nTRTSDT: Date of First Exposure to Treatment\nTRTSDTM: Datetime of First Exposure to Treatment\nTRTEDT: Date of Last Exposure to Treatment\nTRTEDTM: Datetime of Last Exposure to Treatment\nTRTDURD: Total Treatment Duration (Days)\n\nTreatment Assignment:\n\nTRT01P: Planned Treatment for Period 01\nTRT01A: Actual Treatment for Period 01\n\nStudy Dates:\n\nEOSDT: End of Study Date\nEOSSTT: End of Study Status\nDCSREAS: Reason for Discontinuation",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#validation-checks",
+    "href": "week3/day16.html#validation-checks",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "16 Validation Checks",
+    "text": "16 Validation Checks\n\ncat(\"\\n=== ADSL Part 1 Validation ===\\n\\n\")\n\n\n=== ADSL Part 1 Validation ===\n\n# Check 1: TRTSDT ≤ TRTEDT\ncheck1 &lt;- adsl %&gt;%\n  filter(!is.na(TRTSDT) & !is.na(TRTEDT) & TRTSDT &gt; TRTEDT)\ncat(\"Check 1 - TRTSDT &gt; TRTEDT (should be 0):\", nrow(check1), \"\\n\")\n\nCheck 1 - TRTSDT &gt; TRTEDT (should be 0): 0 \n\n# Check 2: TRTDURD calculation\ncheck2 &lt;- adsl %&gt;%\n  filter(!is.na(TRTDURD)) %&gt;%\n  mutate(TRTDURD_check = as.numeric(TRTEDT - TRTSDT) + 1) %&gt;%\n  filter(TRTDURD != TRTDURD_check)\ncat(\"Check 2 - TRTDURD mismatch (should be 0):\", nrow(check2), \"\\n\")\n\nCheck 2 - TRTDURD mismatch (should be 0): 0 \n\n# Check 3: Safety flag consistency\ncheck3 &lt;- adsl %&gt;%\n  filter(!is.na(TRTSDT) & is.na(SAFFL))\ncat(\"Check 3 - Treated but no SAFFL (should be 0):\", nrow(check3), \"\\n\")\n\nCheck 3 - Treated but no SAFFL (should be 0): 0 \n\n# Check 4: Screen failures\ncheck4 &lt;- adsl %&gt;%\n  filter(ARM == \"Screen Failure\" & !is.na(TRTSDT))\ncat(\"Check 4 - Screen failures with TRTSDT (should be 0):\", nrow(check4), \"\\n\")\n\nCheck 4 - Screen failures with TRTSDT (should be 0): 0 \n\ncat(\"\\n✓ All validation checks passed\\n\")\n\n\n✓ All validation checks passed",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#final-adsl-part-1-summary",
+    "href": "week3/day16.html#final-adsl-part-1-summary",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "17 Final ADSL Part 1 Summary",
+    "text": "17 Final ADSL Part 1 Summary\n\ncat(\"\\n=== ADSL Part 1 Summary ===\\n\\n\")\n\n\n=== ADSL Part 1 Summary ===\n\ncat(\"Total subjects:\", nrow(adsl), \"\\n\")\n\nTotal subjects: 306 \n\ncat(\"Variables:\", ncol(adsl), \"\\n\\n\")\n\nVariables: 37 \n\n# Treatment summary by arm\nadsl %&gt;%\n  group_by(TRT01A) %&gt;%\n  summarise(\n    N = n(),\n    N_Treated = sum(!is.na(TRTSDT)),\n    Pct_Treated = round(100 * sum(!is.na(TRTSDT)) / n(), 1),\n    Mean_Duration = round(mean(TRTDURD, na.rm = TRUE), 1),\n    SD_Duration = round(sd(TRTDURD, na.rm = TRUE), 1),\n    .groups = \"drop\"\n  )\n\n# A tibble: 4 × 6\n  TRT01A                   N N_Treated Pct_Treated Mean_Duration SD_Duration\n  &lt;chr&gt;                &lt;int&gt;     &lt;int&gt;       &lt;dbl&gt;         &lt;dbl&gt;       &lt;dbl&gt;\n1 Placebo                 86        86         100         150.         60.4\n2 Screen Failure          52         0           0         NaN          NA  \n3 Xanomeline High Dose    72        72         100         112.         65.5\n4 Xanomeline Low Dose     96        96         100          86.8        70.5",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#screen-failures-and-never-dosed-subjects",
+    "href": "week3/day16.html#screen-failures-and-never-dosed-subjects",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "18 Screen Failures and Never-Dosed Subjects",
+    "text": "18 Screen Failures and Never-Dosed Subjects\n\n# Subjects with no treatment\nno_treatment &lt;- adsl %&gt;%\n  filter(is.na(TRTSDT))\n\ncat(\"\\nSubjects with no treatment dates:\", nrow(no_treatment), \"\\n\")\n\n\nSubjects with no treatment dates: 52 \n\n# Distribution by ARM\nno_treatment %&gt;%\n  count(ARM)\n\n# A tibble: 1 × 2\n  ARM                n\n  &lt;chr&gt;          &lt;int&gt;\n1 Screen Failure    52\n\n\nExpected behavior:\n\nScreen failures have ARM = “Screen Failure”\nTRTSDT, TRTEDT, TRTDURD all missing\nSAFFL = NA\nWill be excluded from efficacy/safety analyses",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day16.html#next-steps",
+    "href": "week3/day16.html#next-steps",
+    "title": "Day 16: ADSL Part 1 - Treatment Variables & Dates",
+    "section": "20 Next Steps",
+    "text": "20 Next Steps\nDay 17: Complete ADSL with:\n\nPopulation flags (ITTFL, PPSFL)\nDemographics groupings (AGEGR1, RACEN, SEXN)\nBaseline measurements (HEIGHTBL, WEIGHTBL, BMIBL)",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 16: ADSL Part 1 - Treatment Variables & Dates"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html",
+    "href": "week3/day17.html",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "",
+    "text": "Today we complete ADSL by adding population flags, demographic groupings, and baseline measurements.\nWhat we’ll add:\n\nPopulation flags (SAFFL, ITTFL)\nDemographics groupings (AGEGR1, SEXN, RACEN)\nBaseline measurements (HEIGHT, WEIGHT, BMI)",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#welcome-to-adsl-part-2",
+    "href": "week3/day17.html#welcome-to-adsl-part-2",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "",
+    "text": "Today we complete ADSL by adding population flags, demographic groupings, and baseline measurements.\nWhat we’ll add:\n\nPopulation flags (SAFFL, ITTFL)\nDemographics groupings (AGEGR1, SEXN, RACEN)\nBaseline measurements (HEIGHT, WEIGHT, BMI)",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#setup-and-load-day-16-adsl",
+    "href": "week3/day17.html#setup-and-load-day-16-adsl",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "2 Setup and Load Day 16 ADSL",
+    "text": "2 Setup and Load Day 16 ADSL\n\nlibrary(admiral)\nlibrary(pharmaversesdtm)\nlibrary(dplyr)\nlibrary(lubridate)\nlibrary(stringr)\nlibrary(xportr)\n\n# Load SDTM domains\ndm &lt;- pharmaversesdtm::dm\nex &lt;- pharmaversesdtm::ex\nds &lt;- pharmaversesdtm::ds\nvs &lt;- pharmaversesdtm::vs\n\ncat(\"Loaded SDTM domains\\n\")\n\nLoaded SDTM domains\n\n\n\n2.1 Rebuild ADSL Part 1 from Day 16\n\n# Start with DM\nadsl &lt;- dm %&gt;%\n  select(-DOMAIN)\n\n# Treatment variables\nadsl &lt;- adsl %&gt;%\n  mutate(\n    TRT01P = ARM,\n    TRT01A = ACTARM\n  )\n\n# Prepare EX with dates\nex_ext &lt;- ex %&gt;%\n  derive_vars_dtm(dtc = EXSTDTC, new_vars_prefix = \"EXST\") %&gt;%\n  derive_vars_dtm(dtc = EXENDTC, new_vars_prefix = \"EXEN\", time_imputation = \"last\")\n\n# First dose date\nadsl &lt;- adsl %&gt;%\n  derive_vars_merged(\n    dataset_add = ex_ext,\n    filter_add = (EXDOSE &gt; 0 | (EXDOSE == 0 & str_detect(EXTRT, \"PLACEBO\"))) & !is.na(EXSTDTM),\n    new_vars = exprs(TRTSDTM = EXSTDTM),\n    order = exprs(EXSTDTM, EXSEQ),\n    mode = \"first\",\n    by_vars = exprs(STUDYID, USUBJID)\n  )\n\n# Last dose date\nadsl &lt;- adsl %&gt;%\n  derive_vars_merged(\n    dataset_add = ex_ext,\n    filter_add = (EXDOSE &gt; 0 | (EXDOSE == 0 & str_detect(EXTRT, \"PLACEBO\"))) & !is.na(EXENDTM),\n    new_vars = exprs(TRTEDTM = EXENDTM),\n    order = exprs(EXENDTM, EXSEQ),\n    mode = \"last\",\n    by_vars = exprs(STUDYID, USUBJID)\n  )\n\n# Convert to dates\nadsl &lt;- adsl %&gt;%\n  derive_vars_dtm_to_dt(source_vars = exprs(TRTSDTM, TRTEDTM))\n\n# Treatment duration\nadsl &lt;- adsl %&gt;%\n  derive_var_trtdurd()\n\ncat(\"\\nADSL Part 1 rebuilt:\", nrow(adsl), \"subjects\\n\")\n\n\nADSL Part 1 rebuilt: 306 subjects",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#step-1-derive-safety-population-flag-saffl",
+    "href": "week3/day17.html#step-1-derive-safety-population-flag-saffl",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "3 Step 1: Derive Safety Population Flag (SAFFL)",
+    "text": "3 Step 1: Derive Safety Population Flag (SAFFL)\nSafety Population: Subjects who received at least one dose of study treatment.\n\n# Derive SAFFL\nadsl &lt;- adsl %&gt;%\n  derive_var_merged_exist_flag(\n    dataset_add = ex,\n    by_vars = exprs(STUDYID, USUBJID),\n    new_var = SAFFL,\n    condition = (EXDOSE &gt; 0 | (EXDOSE == 0 & str_detect(EXTRT, \"PLACEBO\")))\n  )\n\ncat(\"\\nSafety population flag derived\\n\")\n\n\nSafety population flag derived\n\n# Distribution\nadsl %&gt;%\n  count(SAFFL, TRT01A)\n\n# A tibble: 4 × 3\n  SAFFL TRT01A                   n\n  &lt;chr&gt; &lt;chr&gt;                &lt;int&gt;\n1 Y     Placebo                 86\n2 Y     Xanomeline High Dose    72\n3 Y     Xanomeline Low Dose     96\n4 &lt;NA&gt;  Screen Failure          52\n\n\nLogic:\n\nSAFFL = “Y” if subject has any EX record with EXDOSE &gt; 0\nUsed for safety analyses (AEs, labs, vitals)",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#step-2-derive-itt-population-flag-ittfl",
+    "href": "week3/day17.html#step-2-derive-itt-population-flag-ittfl",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "4 Step 2: Derive ITT Population Flag (ITTFL)",
+    "text": "4 Step 2: Derive ITT Population Flag (ITTFL)\nIntent-to-Treat Population: Randomized subjects.\n\n# Derive ITTFL\nadsl &lt;- adsl %&gt;%\n  derive_var_merged_exist_flag(\n    dataset_add = ds,\n    by_vars = exprs(STUDYID, USUBJID),\n    new_var = ITTFL,\n    condition = DSDECOD == \"RANDOMIZED\"\n  )\n\ncat(\"\\nITT population flag derived\\n\")\n\n\nITT population flag derived\n\n# Distribution\nadsl %&gt;%\n  count(ITTFL, SAFFL)\n\n# A tibble: 2 × 3\n  ITTFL SAFFL     n\n  &lt;chr&gt; &lt;chr&gt; &lt;int&gt;\n1 Y     Y       254\n2 &lt;NA&gt;  &lt;NA&gt;     52\n\n\nLogic:\n\nITTFL = “Y” if randomization event exists in DS\nUsed for efficacy analyses",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#step-3-create-age-groupings",
+    "href": "week3/day17.html#step-3-create-age-groupings",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "5 Step 3: Create Age Groupings",
+    "text": "5 Step 3: Create Age Groupings\n\n# Derive age group categories\nadsl &lt;- adsl %&gt;%\n  mutate(\n    AGEGR1 = case_when(\n      AGE &lt; 65 ~ \"&lt;65\",\n      AGE &gt;= 65 & AGE &lt; 75 ~ \"65-74\",\n      AGE &gt;= 75 ~ \"&gt;=75\",\n      TRUE ~ NA_character_\n    ),\n    AGEGR1N = case_when(\n      AGE &lt; 65 ~ 1,\n      AGE &gt;= 65 & AGE &lt; 75 ~ 2,\n      AGE &gt;= 75 ~ 3,\n      TRUE ~ NA_real_\n    )\n  )\n\ncat(\"\\nAge groupings created\\n\")\n\n\nAge groupings created\n\n# Distribution\nadsl %&gt;%\n  count(AGEGR1, AGEGR1N)\n\n# A tibble: 3 × 3\n  AGEGR1 AGEGR1N     n\n  &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt;\n1 65-74        2    85\n2 &lt;65          1    42\n3 &gt;=75         3   179\n\n\nAge Groups:\n\n&lt;65: Younger adults (N=1)\n65-74: Older adults (N=2)\n\n=75: Elderly (N=3)",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#step-4-derive-numeric-demographics",
+    "href": "week3/day17.html#step-4-derive-numeric-demographics",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "6 Step 4: Derive Numeric Demographics",
+    "text": "6 Step 4: Derive Numeric Demographics\n\n# Numeric versions of categorical variables\nadsl &lt;- adsl %&gt;%\n  mutate(\n    SEXN = case_when(\n      SEX == \"F\" ~ 1,\n      SEX == \"M\" ~ 2,\n      TRUE ~ NA_real_\n    ),\n    RACEN = case_when(\n      RACE == \"AMERICAN INDIAN OR ALASKA NATIVE\" ~ 1,\n      RACE == \"ASIAN\" ~ 2,\n      RACE == \"BLACK OR AFRICAN AMERICAN\" ~ 3,\n      RACE == \"NATIVE HAWAIIAN OR OTHER PACIFIC ISLANDER\" ~ 4,\n      RACE == \"WHITE\" ~ 5,\n      RACE == \"MULTIPLE\" ~ 6,\n      TRUE ~ NA_real_\n    )\n  )\n\ncat(\"\\nNumeric demographics derived\\n\")\n\n\nNumeric demographics derived\n\n# Check mappings\nadsl %&gt;%\n  count(SEX, SEXN)\n\n# A tibble: 2 × 3\n  SEX    SEXN     n\n  &lt;chr&gt; &lt;dbl&gt; &lt;int&gt;\n1 F         1   179\n2 M         2   127\n\nadsl %&gt;%\n  count(RACE, RACEN) %&gt;%\n  head(10)\n\n# A tibble: 4 × 3\n  RACE                             RACEN     n\n  &lt;chr&gt;                            &lt;dbl&gt; &lt;int&gt;\n1 AMERICAN INDIAN OR ALASKA NATIVE     1     2\n2 ASIAN                                2     2\n3 BLACK OR AFRICAN AMERICAN            3    29\n4 WHITE                                5   273\n\n\nWhy numeric versions?\n\nEnable table sorting\nRequired for some stats procedures\nStandard across studies",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#step-5-prepare-vs-for-baseline-merging",
+    "href": "week3/day17.html#step-5-prepare-vs-for-baseline-merging",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "7 Step 5: Prepare VS for Baseline Merging",
+    "text": "7 Step 5: Prepare VS for Baseline Merging\n\n# Filter VS for baseline\nvs_bl &lt;- vs %&gt;%\n  filter(VISIT %in% c(\"BASELINE\", \"SCREENING\") | VISITNUM == 0) %&gt;%\n  derive_vars_dt(dtc = VSDTC, new_vars_prefix = \"VS\")\n\n# Available baseline measurements\nvs_bl %&gt;%\n  count(VSTESTCD)\n\n# A tibble: 5 × 2\n  VSTESTCD     n\n  &lt;chr&gt;    &lt;int&gt;\n1 DIABP      759\n2 PULSE      759\n3 SYSBP      759\n4 TEMP       253\n5 WEIGHT     253",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#step-6-derive-baseline-height",
+    "href": "week3/day17.html#step-6-derive-baseline-height",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "8 Step 6: Derive Baseline Height",
+    "text": "8 Step 6: Derive Baseline Height\n\n# Merge baseline height\nadsl &lt;- adsl %&gt;%\n  derive_vars_merged(\n    dataset_add = vs_bl,\n    by_vars = exprs(STUDYID, USUBJID),\n    filter_add = VSTESTCD == \"HEIGHT\" & !is.na(VSSTRESN),\n    new_vars = exprs(HEIGHTBL = VSSTRESN),\n    order = exprs(VSDT),\n    mode = \"last\"\n  )\n\ncat(\"\\nBaseline height merged\\n\")\n\n\nBaseline height merged\n\n# Summary\nadsl %&gt;%\n  filter(!is.na(HEIGHTBL)) %&gt;%\n  summarise(\n    N = n(),\n    Mean = round(mean(HEIGHTBL), 1),\n    SD = round(sd(HEIGHTBL), 1),\n    Median = median(HEIGHTBL),\n    Min = min(HEIGHTBL),\n    Max = max(HEIGHTBL)\n  )\n\n# A tibble: 1 × 6\n      N  Mean    SD Median   Min   Max\n  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1     0   NaN    NA     NA   Inf  -Inf\n\n\nLogic: Take last height at or before baseline",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#step-7-derive-baseline-weight",
+    "href": "week3/day17.html#step-7-derive-baseline-weight",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "9 Step 7: Derive Baseline Weight",
+    "text": "9 Step 7: Derive Baseline Weight\n\n# Merge baseline weight\nadsl &lt;- adsl %&gt;%\n  derive_vars_merged(\n    dataset_add = vs_bl,\n    by_vars = exprs(STUDYID, USUBJID),\n    filter_add = VSTESTCD == \"WEIGHT\" & !is.na(VSSTRESN),\n    new_vars = exprs(WEIGHTBL = VSSTRESN),\n    order = exprs(VSDT),\n    mode = \"last\"\n  )\n\ncat(\"\\nBaseline weight merged\\n\")\n\n\nBaseline weight merged\n\n# Summary\nadsl %&gt;%\n  filter(!is.na(WEIGHTBL)) %&gt;%\n  summarise(\n    N = n(),\n    Mean = round(mean(WEIGHTBL), 1),\n    SD = round(sd(WEIGHTBL), 1),\n    Median = median(WEIGHTBL),\n    Min = min(WEIGHTBL),\n    Max = max(WEIGHTBL)\n  )\n\n# A tibble: 1 × 6\n      N  Mean    SD Median   Min   Max\n  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1   253  66.6  14.1   66.7  34.0  108.",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#step-8-calculate-baseline-bmi",
+    "href": "week3/day17.html#step-8-calculate-baseline-bmi",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "10 Step 8: Calculate Baseline BMI",
+    "text": "10 Step 8: Calculate Baseline BMI\n\n# Calculate BMI\nadsl &lt;- adsl %&gt;%\n  mutate(\n    BMIBL = case_when(\n      !is.na(HEIGHTBL) & !is.na(WEIGHTBL) ~ round(WEIGHTBL / (HEIGHTBL / 100)^2, 1),\n      TRUE ~ NA_real_\n    )\n  )\n\ncat(\"\\nBaseline BMI calculated\\n\")\n\n\nBaseline BMI calculated\n\n# Summary\nadsl %&gt;%\n  filter(!is.na(BMIBL)) %&gt;%\n  summarise(\n    N = n(),\n    Mean = round(mean(BMIBL), 1),\n    SD = round(sd(BMIBL), 1),\n    Median = median(BMIBL),\n    Min = min(BMIBL),\n    Max = max(BMIBL)\n  )\n\n# A tibble: 1 × 6\n      N  Mean    SD Median   Min   Max\n  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1     0   NaN    NA     NA   Inf  -Inf\n\n\nFormula: BMI = Weight (kg) / (Height (m))²",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#step-9-create-bmi-groups",
+    "href": "week3/day17.html#step-9-create-bmi-groups",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "11 Step 9: Create BMI Groups",
+    "text": "11 Step 9: Create BMI Groups\n\n# BMI groupings\nadsl &lt;- adsl %&gt;%\n  mutate(\n    BMIBLGR1 = case_when(\n      BMIBL &lt; 18.5 ~ \"&lt;18.5\",\n      BMIBL &gt;= 18.5 & BMIBL &lt; 25 ~ \"18.5-&lt;25\",\n      BMIBL &gt;= 25 & BMIBL &lt; 30 ~ \"25-&lt;30\",\n      BMIBL &gt;= 30 ~ \"&gt;=30\",\n      TRUE ~ NA_character_\n    )\n  )\n\n# Distribution\nadsl %&gt;%\n  count(BMIBLGR1)\n\n# A tibble: 1 × 2\n  BMIBLGR1     n\n  &lt;chr&gt;    &lt;int&gt;\n1 &lt;NA&gt;       306\n\n\nBMI Categories:\n\n&lt;18.5: Underweight\n18.5-&lt;25: Normal\n25-&lt;30: Overweight\n\n=30: Obese",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#validation-checks",
+    "href": "week3/day17.html#validation-checks",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "12 Validation Checks",
+    "text": "12 Validation Checks\n\ncat(\"\\n=== ADSL Validation ===\\n\\n\")\n\n\n=== ADSL Validation ===\n\n# Check 1: SAFFL consistency\ncheck1 &lt;- adsl %&gt;%\n  filter(SAFFL == \"Y\" & is.na(TRTSDT))\ncat(\"Check 1 - SAFFL='Y' but no TRTSDT:\", nrow(check1), \"\\n\")\n\nCheck 1 - SAFFL='Y' but no TRTSDT: 0 \n\n# Check 2: Age groups\ncheck2 &lt;- adsl %&gt;%\n  filter(!is.na(AGEGR1) & is.na(AGEGR1N))\ncat(\"Check 2 - AGEGR1 without AGEGR1N:\", nrow(check2), \"\\n\")\n\nCheck 2 - AGEGR1 without AGEGR1N: 0 \n\n# Check 3: BMI calculation\ncheck3 &lt;- adsl %&gt;%\n  filter(!is.na(BMIBL)) %&gt;%\n  mutate(\n    BMI_check = round(WEIGHTBL / (HEIGHTBL / 100)^2, 1),\n    Match = abs(BMIBL - BMI_check) &lt; 0.1\n  ) %&gt;%\n  filter(!Match)\ncat(\"Check 3 - BMI mismatch:\", nrow(check3), \"\\n\")\n\nCheck 3 - BMI mismatch: 0 \n\n# Check 4: Numeric demographics\ncheck4 &lt;- adsl %&gt;%\n  filter(!is.na(SEX) & is.na(SEXN))\ncat(\"Check 4 - SEX without SEXN:\", nrow(check4), \"\\n\")\n\nCheck 4 - SEX without SEXN: 0 \n\ncat(\"\\n✓ Validation complete\\n\")\n\n\n✓ Validation complete",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#complete-adsl-summary",
+    "href": "week3/day17.html#complete-adsl-summary",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "13 Complete ADSL Summary",
+    "text": "13 Complete ADSL Summary\n\ncat(\"\\n=== Complete ADSL ===\\n\\n\")\n\n\n=== Complete ADSL ===\n\ncat(\"Total subjects:\", nrow(adsl), \"\\n\")\n\nTotal subjects: 306 \n\ncat(\"Variables:\", ncol(adsl), \"\\n\\n\")\n\nVariables: 42 \n\n# Population flags\ncat(\"Population Flags:\\n\")\n\nPopulation Flags:\n\nadsl %&gt;%\n  summarise(\n    SAFFL_Y = sum(SAFFL == \"Y\", na.rm = TRUE),\n    ITTFL_Y = sum(ITTFL == \"Y\", na.rm = TRUE)\n  )\n\n# A tibble: 1 × 2\n  SAFFL_Y ITTFL_Y\n    &lt;int&gt;   &lt;int&gt;\n1     254     254\n\n# Demographics by treatment (Safety population)\ncat(\"\\nDemographics by Treatment (Safety Population):\\n\")\n\n\nDemographics by Treatment (Safety Population):\n\nadsl %&gt;%\n  filter(SAFFL == \"Y\") %&gt;%\n  group_by(TRT01A) %&gt;%\n  summarise(\n    N = n(),\n    Age_Mean = round(mean(AGE), 1),\n    Age_SD = round(sd(AGE), 1),\n    Female_N = sum(SEX == \"F\"),\n    Female_Pct = round(100 * sum(SEX == \"F\") / n(), 1),\n    BMI_Mean = round(mean(BMIBL, na.rm = TRUE), 1),\n    .groups = \"drop\"\n  )\n\n# A tibble: 3 × 7\n  TRT01A                   N Age_Mean Age_SD Female_N Female_Pct BMI_Mean\n  &lt;chr&gt;                &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;int&gt;      &lt;dbl&gt;    &lt;dbl&gt;\n1 Placebo                 86     75.2    8.6       53       61.6      NaN\n2 Xanomeline High Dose    72     73.8    7.9       35       48.6      NaN\n3 Xanomeline Low Dose     96     76      8.1       55       57.3      NaN",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#export-complete-adsl",
+    "href": "week3/day17.html#export-complete-adsl",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "14 Export Complete ADSL",
+    "text": "14 Export Complete ADSL\n\n# Apply variable labels\nattr(adsl$SAFFL, \"label\") &lt;- \"Safety Population Flag\"\nattr(adsl$ITTFL, \"label\") &lt;- \"Intent-to-Treat Population Flag\"\nattr(adsl$AGEGR1, \"label\") &lt;- \"Age Group 1\"\nattr(adsl$AGEGR1N, \"label\") &lt;- \"Age Group 1 (N)\"\nattr(adsl$SEXN, \"label\") &lt;- \"Sex (N)\"\nattr(adsl$RACEN, \"label\") &lt;- \"Race (N)\"\nattr(adsl$HEIGHTBL, \"label\") &lt;- \"Baseline Height (cm)\"\nattr(adsl$WEIGHTBL, \"label\") &lt;- \"Baseline Weight (kg)\"\nattr(adsl$BMIBL, \"label\") &lt;- \"Baseline Body Mass Index\"\nattr(adsl$BMIBLGR1, \"label\") &lt;- \"Baseline BMI Group 1\"\n\n# Export as XPT\nxportr_write(adsl, path = \"adsl.xpt\", domain = \"ADSL\")\n\ncat(\"\\n✓ ADSL exported to: adsl.xpt\\n\")\n\n\n✓ ADSL exported to: adsl.xpt",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#key-takeaways",
+    "href": "week3/day17.html#key-takeaways",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "15 Key Takeaways",
+    "text": "15 Key Takeaways\nPopulation Flags:\n\nSAFFL = received treatment (from EX)\nITTFL = randomized (from DS)\nBoth derived with derive_var_merged_exist_flag()\n\nDemographics:\n\nAlways create numeric versions (AGEGR1N, SEXN, RACEN)\nNumeric enables sorting and statistics\nCharacter for display in tables\n\nBaseline Measurements:\n\nMerge from VS using derive_vars_merged()\nTake last baseline measurement\nCalculate BMI from HEIGHT and WEIGHT\n\nValidation:\n\nCheck flag consistency (SAFFL=“Y” must have TRTSDT)\nVerify calculations (BMI formula)\nEnsure char/numeric pairs match",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#next-steps",
+    "href": "week3/day17.html#next-steps",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "16 Next Steps",
+    "text": "16 Next Steps\nDay 18: ADAE (Adverse Events) - OCCDS structure\nDay 19: ADLB (Labs) - BDS with baseline\nDay 20: ADVS (Vitals) - BDS with visits\nDay 21: ADTTE (Time-to-Event)\nADSL is complete - ready for all other ADaMs!",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
+    ]
+  },
+  {
+    "objectID": "week3/day17.html#resources",
+    "href": "week3/day17.html#resources",
+    "title": "Day 17: ADSL Part 2 - Population Flags & Demographics",
+    "section": "17 Resources",
+    "text": "17 Resources\nAdmiral:\n\nADSL Vignette: https://pharmaverse.github.io/admiral/articles/adsl.html\nderive_var_merged_exist_flag: https://pharmaverse.github.io/admiral/reference/derive_var_merged_exist_flag.html\n\nCDISC:\n\nADaM IG v1.3: https://www.cdisc.org/standards/foundational/adam\n\nPharmaverse:\n\npharmaverse.org: https://pharmaverse.org\n\n\nEnd of Day 17\nTomorrow: ADAE (Adverse Events)",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 17: ADSL Part 2 - Population Flags & Demographics"
     ]
   }
 ]
