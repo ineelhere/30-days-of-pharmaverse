@@ -16,6 +16,8 @@ website:
         href: week1/day1.html
       - text: "Week 2: Production SDTM"
         href: week2/day8.html
+      - text: "Week 3: ADaM Deep Dive"
+        href: week3/day15.html
     right:
       - icon: github
         href: https://github.com/ineelhere/30-days-of-pharmaverse
@@ -41,6 +43,10 @@ website:
         - week2/day12.qmd
         - week2/day13.qmd
         - week2/day14.qmd
+    - id: week2
+      title: "Week 3: ADaM Deep Dive"
+      contents:
+        - week3/day15.qmd
 
 format:
   html:

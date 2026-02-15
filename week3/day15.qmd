@@ -5,50 +5,56 @@ author: "30 Days of Pharmaverse"
 date: today
 format:
   html:
+    theme:
+      light: cosmo
+
     toc: true
     toc-depth: 3
-    code-fold: show
-    code-tools: true
-    code-link: true
-    theme: cosmo
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
     highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+    
+editor: visual
 execute:
   echo: true
+  eval: true
   warning: false
   message: false
 ---
 
 ## Welcome to Week 3: ADaM Deep Dive & Admiral Mastery
 
-**Week 3 Overview:**
-After mastering SDTM creation and validation in Weeks 1-2, we now transition to **ADaM (Analysis Data Model)** - the analysis-ready datasets that feed directly into regulatory Tables, Listings, and Figures (TLFs).
+**Week 3 Overview:** After mastering SDTM creation and validation in Weeks 1-2, we now transition to **ADaM (Analysis Data Model)** - the analysis-ready datasets that feed directly into regulatory Tables, Listings, and Figures (TLFs).
 
 This week is **intensive** - we'll use the `{admiral}` package to build every major ADaM dataset type. Admiral was co-developed by Roche and GSK as a **tidyverse-based, modular, non-black-box toolbox** for ADaM creation, and is now maintained by 50+ pharma company programmers across the pharmaverse community.
 
 **Day 15 is foundational** - today we learn the **architecture** before building datasets tomorrow.
 
----
+------------------------------------------------------------------------
 
 ## 1 Learning Objectives
 
 By the end of Day 15, you will be able to:
 
-- **Understand the three ADaM data structures:** ADSL (subject-level), BDS (Basic Data Structure), and OCCDS (Occurrence Data Structure)
-- **Explain Admiral's design philosophy:** Modular, transparent, tidyverse-native, and cross-company collaborative
-- **Master Admiral's four core derivation function categories:** `derive_vars_*`, `derive_var_*`, `derive_param_*`, and `derive_extreme_*`
-- **Map each of 8 key ADaM datasets** to their source SDTM domain, ADaM structure type, and key Admiral functions
-- **Navigate Admiral's function taxonomy** to quickly find the right function for any derivation task
-- **Understand Admiral's input-output contract** and how functions compose sequentially
+-   **Understand the three ADaM data structures:** ADSL (subject-level), BDS (Basic Data Structure), and OCCDS (Occurrence Data Structure)
+-   **Explain Admiral's design philosophy:** Modular, transparent, tidyverse-native, and cross-company collaborative
+-   **Master Admiral's four core derivation function categories:** `derive_vars_*`, `derive_var_*`, `derive_param_*`, and `derive_extreme_*`
+-   **Map each of 8 key ADaM datasets** to their source SDTM domain, ADaM structure type, and key Admiral functions
+-   **Navigate Admiral's function taxonomy** to quickly find the right function for any derivation task
+-   **Understand Admiral's input-output contract** and how functions compose sequentially
 
 **Clinical Context:** Today is conceptual but critical. Understanding ADaM architecture prevents hours of debugging later. Knowing which Admiral functions to use for which patterns makes you 10x more efficient in Days 16-30.
 
----
+------------------------------------------------------------------------
 
 ## 2 What is ADaM? (Deep Dive)
 
 ### ADaM in the Regulatory Workflow
 
-```
+```         
 Clinical Trial → EDC Data → SDTM (Tabulation) → ADaM (Analysis) → TLFs → Regulatory Submission
                                                       ↑
                                               Admiral creates this
@@ -58,30 +64,23 @@ Clinical Trial → EDC Data → SDTM (Tabulation) → ADaM (Analysis) → TLFs �
 
 ### Why ADaM Exists
 
-**SDTM limitations for analysis:**
-- One record per observation (not per analysis unit)
-- No derived variables (change from baseline, treatment-emergent flags)
-- No baseline or analysis visit structure
-- Not optimized for statistical procedures
+**SDTM limitations for analysis:** - One record per observation (not per analysis unit) - No derived variables (change from baseline, treatment-emergent flags) - No baseline or analysis visit structure - Not optimized for statistical procedures
 
-**ADaM solves this by:**
-- Structuring data for analysis (one row per subject/parameter/timepoint)
-- Adding derived variables (flags, categories, calculated values)
-- Ensuring traceability back to SDTM
-- Enabling direct input to SAS PROC or R statistical functions
+**ADaM solves this by:** - Structuring data for analysis (one row per subject/parameter/timepoint) - Adding derived variables (flags, categories, calculated values) - Ensuring traceability back to SDTM - Enabling direct input to SAS PROC or R statistical functions
 
 ### ADaM Fundamental Principles (CDISC ADaM IG)
 
-1. **Analysis-ready:** Data can be directly input to statistical procedures
-2. **Self-contained:** All variables needed for analysis are in one dataset
-3. **Traceable:** Every value traces back to SDTM source
-4. **One record per analysis unit:** Structure depends on analysis type
-5. **Standardized naming:** Consistent variable names across studies
+1.  **Analysis-ready:** Data can be directly input to statistical procedures
+2.  **Self-contained:** All variables needed for analysis are in one dataset
+3.  **Traceable:** Every value traces back to SDTM source
+4.  **One record per analysis unit:** Structure depends on analysis type
+5.  **Standardized naming:** Consistent variable names across studies
 
 **Clinical Example:**
 
 **In SDTM (LB - Laboratory):**
-```
+
+```         
 USUBJID  LBTESTCD  LBSTRESN  LBDTC        VISIT
 001      ALT       45        2024-01-15   Baseline
 001      ALT       52        2024-02-15   Week 4
@@ -89,20 +88,17 @@ USUBJID  LBTESTCD  LBSTRESN  LBDTC        VISIT
 ```
 
 **In ADaM (ADLB - BDS structure):**
-```
+
+```         
 USUBJID  PARAMCD  AVISIT    AVAL  ABLFL  BASE  CHG  ANRIND
 001      ALT      Baseline  45    Y      45    NA   NORMAL
 001      ALT      Week 4    52    N      45    7    NORMAL
 001      ALT      Week 8    48    N      45    3    NORMAL
 ```
 
-**Analysis benefit:**
-- Baseline flag (ABLFL) clearly identifies reference measurement
-- Change from baseline (CHG) pre-calculated
-- Reference range indicator (ANRIND) ready for shift tables
-- Structure enables `lm(CHG ~ AVISIT + BASE, data = adlb_filtered)`
+**Analysis benefit:** - Baseline flag (ABLFL) clearly identifies reference measurement - Change from baseline (CHG) pre-calculated - Reference range indicator (ANRIND) ready for shift tables - Structure enables `lm(CHG ~ AVISIT + BASE, data = adlb_filtered)`
 
----
+------------------------------------------------------------------------
 
 ## 3 The Three ADaM Data Structures
 
@@ -112,31 +108,17 @@ CDISC defines **three primary ADaM structures**. Understanding which structure t
 
 **Structure:** **One record per subject**
 
-**Purpose:** 
-- Demographics and baseline characteristics
-- Treatment assignment (planned and actual)
-- Population flags (Safety, ITT, Per-Protocol)
-- Study dates and disposition
-- **Foundation for all other ADaM datasets**
+**Purpose:** - Demographics and baseline characteristics - Treatment assignment (planned and actual) - Population flags (Safety, ITT, Per-Protocol) - Study dates and disposition - **Foundation for all other ADaM datasets**
 
-**Key Variables:**
-- Identifiers: `USUBJID`, `SUBJID`, `SITEID`
-- Demographics: `AGE`, `SEX`, `RACE`, `ETHNIC`
-- Treatment: `TRT01P`, `TRT01A`, `TRTSDT`, `TRTEDT`
-- Flags: `SAFFL`, `ITTFL`, `COMPLFL`
-- Disposition: `EOSSTT`, `DCSREAS`
+**Key Variables:** - Identifiers: `USUBJID`, `SUBJID`, `SITEID` - Demographics: `AGE`, `SEX`, `RACE`, `ETHNIC` - Treatment: `TRT01P`, `TRT01A`, `TRTSDT`, `TRTEDT` - Flags: `SAFFL`, `ITTFL`, `COMPLFL` - Disposition: `EOSSTT`, `DCSREAS`
 
-**SDTM Sources:** 
-- Primary: `DM` (Demographics)
-- Secondary: `EX` (Exposure for treatment dates), `DS` (Disposition), `VS`/`LB` (baseline values)
+**SDTM Sources:** - Primary: `DM` (Demographics) - Secondary: `EX` (Exposure for treatment dates), `DS` (Disposition), `VS`/`LB` (baseline values)
 
-**Clinical Use:**
-- Demographic tables (Table 14.1.1 in submissions)
-- Population definitions for all analyses
-- Subgroup definitions (age groups, sex, baseline severity)
+**Clinical Use:** - Demographic tables (Table 14.1.1 in submissions) - Population definitions for all analyses - Subgroup definitions (age groups, sex, baseline severity)
 
 **Example Record:**
-```
+
+```         
 USUBJID: "01-701-1015"
 AGE: 75, SEX: "F", RACE: "WHITE"
 TRT01P: "Xanomeline High Dose", TRT01A: "Xanomeline High Dose"
@@ -149,33 +131,21 @@ EOSSTT: "COMPLETED"
 
 **Structure:** **One record per subject per parameter per analysis timepoint**
 
-**Purpose:**
-- Repeated measures over time (labs, vital signs, efficacy scales)
-- Baseline identification and change from baseline
-- Reference range and shift analysis
+**Purpose:** - Repeated measures over time (labs, vital signs, efficacy scales) - Baseline identification and change from baseline - Reference range and shift analysis
 
-**Key Variables:**
-- `PARAMCD`/`PARAM`: Parameter identifier (e.g., "ALT", "DIABP")
-- `AVAL`/`AVALC`: Analysis value (numeric/character)
-- `AVISIT`/`AVISITN`: Analysis visit
-- `ABLFL`: Baseline flag (Y for baseline record)
-- `BASE`: Baseline value (carried forward to all post-baseline)
-- `CHG`: Change from baseline (`AVAL - BASE`)
-- `ANRIND`: Analysis reference range indicator (LOW/NORMAL/HIGH)
+**Key Variables:** - `PARAMCD`/`PARAM`: Parameter identifier (e.g., "ALT", "DIABP") - `AVAL`/`AVALC`: Analysis value (numeric/character) - `AVISIT`/`AVISITN`: Analysis visit - `ABLFL`: Baseline flag (Y for baseline record) - `BASE`: Baseline value (carried forward to all post-baseline) - `CHG`: Change from baseline (`AVAL - BASE`) - `ANRIND`: Analysis reference range indicator (LOW/NORMAL/HIGH)
 
-**SDTM Sources:**
-- `LB` → `ADLB` (Lab results)
-- `VS` → `ADVS` (Vital signs)
-- `QS` → `ADQS` (Questionnaires)
-- `EG` → `ADEG` (ECG results)
+**SDTM Sources:** - `LB` → `ADLB` (Lab results) - `VS` → `ADVS` (Vital signs) - `QS` → `ADQS` (Questionnaires) - `EG` → `ADEG` (ECG results)
 
 **BDS Formula:**
-```
+
+```         
 Number of Records = N subjects × N parameters × N timepoints
 ```
 
 **Example: ADLB**
-```
+
+```         
 USUBJID  PARAMCD  AVISIT    AVAL  ABLFL  BASE  CHG   PCHG   ANRIND
 001      ALT      Baseline  45    Y      45    NA    NA     NORMAL
 001      ALT      Week 4    52    N      45    7     15.6   NORMAL
@@ -184,42 +154,27 @@ USUBJID  PARAMCD  AVISIT    AVAL  ABLFL  BASE  CHG   PCHG   ANRIND
 001      ALKPH    Week 4    82    N      78    4     5.1    NORMAL
 ```
 
-**Clinical Use:**
-- Change from baseline analysis
-- Shift tables (baseline NORMAL → Week 4 HIGH)
-- Time-course plots
-- Repeated measures ANCOVA
+**Clinical Use:** - Change from baseline analysis - Shift tables (baseline NORMAL → Week 4 HIGH) - Time-course plots - Repeated measures ANCOVA
 
 ### 3.3 OCCDS: Occurrence Data Structure
 
 **Structure:** **One record per subject per event occurrence**
 
-**Purpose:**
-- Adverse events
-- Medications
-- Medical history events
-- Any event that can occur 0, 1, or multiple times per subject
+**Purpose:** - Adverse events - Medications - Medical history events - Any event that can occur 0, 1, or multiple times per subject
 
-**Key Variables:**
-- `ASTDT`/`AENDT`: Analysis start/end dates
-- `ADURN`: Analysis duration
-- `TRTEMFL`: Treatment-emergent flag
-- `AOCCFL`: First occurrence flag
-- `ANL01FL`: Primary analysis flag
-- Event-specific variables (e.g., severity, causality for AE)
+**Key Variables:** - `ASTDT`/`AENDT`: Analysis start/end dates - `ADURN`: Analysis duration - `TRTEMFL`: Treatment-emergent flag - `AOCCFL`: First occurrence flag - `ANL01FL`: Primary analysis flag - Event-specific variables (e.g., severity, causality for AE)
 
-**SDTM Sources:**
-- `AE` → `ADAE` (Adverse events)
-- `CM` → `ADCM` (Concomitant medications)
-- `MH` → `ADMH` (Medical history)
+**SDTM Sources:** - `AE` → `ADAE` (Adverse events) - `CM` → `ADCM` (Concomitant medications) - `MH` → `ADMH` (Medical history)
 
 **OCCDS Formula:**
-```
+
+```         
 Number of Records = Variable (0 to N events per subject)
 ```
 
 **Example: ADAE**
-```
+
+```         
 USUBJID  AESEQ  AETERM      ASTDT       AENDT       TRTEMFL  AOCCFL  ASEV
 001      1      Headache    2024-01-22  2024-01-23  Y        Y       MILD
 001      2      Nausea      2024-02-10  2024-02-12  Y        N       MODERATE
@@ -227,44 +182,31 @@ USUBJID  AESEQ  AETERM      ASTDT       AENDT       TRTEMFL  AOCCFL  ASEV
 002      1      Headache    2024-01-18  2024-01-19  N        N       MILD
 ```
 
-**Clinical Use:**
-- Adverse event frequency tables
-- Time-to-first-event analysis
-- Treatment-emergent vs pre-existing events
-- Causality and severity analysis
+**Clinical Use:** - Adverse event frequency tables - Time-to-first-event analysis - Treatment-emergent vs pre-existing events - Causality and severity analysis
 
----
+------------------------------------------------------------------------
 
 ## 4 Admiral Philosophy & Design Principles
 
 ### 4.1 Why Admiral Was Created
 
-**Pre-Admiral Era (2010-2020):**
-- Every pharma company had proprietary SAS macro libraries
-- Black-box functions (couldn't see or modify code)
-- Duplicated effort (50 companies solving the same problems)
-- Difficult to validate (macros hidden in compiled code)
-- Knowledge siloed within companies
+**Pre-Admiral Era (2010-2020):** - Every pharma company had proprietary SAS macro libraries - Black-box functions (couldn't see or modify code) - Duplicated effort (50 companies solving the same problems) - Difficult to validate (macros hidden in compiled code) - Knowledge siloed within companies
 
-**Admiral Vision (2020-present):**
-- **Open-source:** Code is fully transparent and inspectable
-- **Cross-company collaboration:** Roche, GSK, Johnson & Johnson, Novartis, Atorus, Merck co-develop
-- **Tidyverse-native:** Leverages dplyr, tidyr, lubridate - familiar to R users
-- **Modular:** Small, composable functions instead of monolithic macros
-- **Non-black-box:** Every derivation is explicit in your script
-- **Validated:** Extensive test coverage and regulatory use
+**Admiral Vision (2020-present):** - **Open-source:** Code is fully transparent and inspectable - **Cross-company collaboration:** Roche, GSK, Johnson & Johnson, Novartis, Atorus, Merck co-develop - **Tidyverse-native:** Leverages dplyr, tidyr, lubridate - familiar to R users - **Modular:** Small, composable functions instead of monolithic macros - **Non-black-box:** Every derivation is explicit in your script - **Validated:** Extensive test coverage and regulatory use
 
 ### 4.2 Admiral Core Design Principles
 
 #### Principle 1: Modularity
 
 **Bad (monolithic):**
-```r
+
+``` r
 create_adsl(dm, ex, ds, ae, lb)  # What does this do? Can't see inside!
 ```
 
 **Good (modular Admiral):**
-```r
+
+``` r
 adsl <- dm %>%
   derive_vars_merged(dataset_add = ex, ...) %>%  # Clear: merging EX
   derive_var_trtdurd() %>%                       # Clear: deriving duration
@@ -277,7 +219,7 @@ Every step is visible and modifiable.
 
 Admiral functions work seamlessly with `%>%` pipes and dplyr verbs:
 
-```r
+``` r
 adsl <- dm %>%
   filter(ARMCD != "SCRNFAIL") %>%          # dplyr
   derive_vars_merged(ex, ...) %>%          # admiral
@@ -287,12 +229,9 @@ adsl <- dm %>%
 
 #### Principle 3: Transparency
 
-**Every Admiral function:**
-- Returns a modified data frame (never a hidden state)
-- Has explicit input and output
-- Can be inspected mid-pipeline with `glimpse()` or `View()`
+**Every Admiral function:** - Returns a modified data frame (never a hidden state) - Has explicit input and output - Can be inspected mid-pipeline with `glimpse()` or `View()`
 
-```r
+``` r
 adsl_step1 <- dm %>% derive_vars_merged(ex, ...)
 glimpse(adsl_step1)  # Inspect intermediate result
 adsl_step2 <- adsl_step1 %>% derive_var_trtdurd()
@@ -302,7 +241,7 @@ adsl_step2 <- adsl_step1 %>% derive_var_trtdurd()
 
 Admiral functions are **parameterized** - same function, different arguments:
 
-```r
+``` r
 # Derive first dose date
 derive_vars_merged(dataset_add = ex, mode = "first", ...)
 
@@ -314,7 +253,7 @@ derive_vars_merged(dataset_add = ex, mode = "last", ...)
 
 Admiral encourages inline documentation:
 
-```r
+``` r
 adsl <- dm %>%
   # Treatment start date: first dose from EX
   derive_vars_merged(
@@ -329,7 +268,7 @@ adsl <- dm %>%
 ### 4.3 Admiral vs Traditional SAS Macros
 
 | Aspect | SAS Macros (Legacy) | Admiral (Modern) |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | **Source code** | Hidden in compiled `.sas7bcat` | Fully open on GitHub |
 | **Collaboration** | Company-specific | Cross-company |
 | **Debugging** | Difficult (macro expansion errors) | Easy (standard R debugging) |
@@ -338,7 +277,7 @@ adsl <- dm %>%
 | **Learning curve** | Steep (macro language) | Moderate (tidyverse knowledge) |
 | **Validation** | Company validates internally | Shared validation evidence |
 
----
+------------------------------------------------------------------------
 
 ## 5 Admiral's Four Core Function Categories
 
@@ -353,9 +292,10 @@ Admiral has **170+ functions**, but they fall into **4 main categories**. Learni
 **Key Functions:**
 
 #### `derive_vars_merged()`
+
 Merge variables from another dataset (most versatile function in Admiral)
 
-```r
+``` r
 # Pseudo-code example
 adsl <- dm %>%
   derive_vars_merged(
@@ -367,28 +307,25 @@ adsl <- dm %>%
   )
 ```
 
-**Use cases:**
-- Treatment dates from EX
-- Disposition reasons from DS
-- Baseline values from LB/VS
+**Use cases:** - Treatment dates from EX - Disposition reasons from DS - Baseline values from LB/VS
 
 #### `derive_vars_dt()` and `derive_vars_dtm()`
+
 Convert character dates to Date or POSIXct
 
-```r
+``` r
 adsl <- adsl %>%
   derive_vars_dt(dtc = RFSTDTC, new_vars_prefix = "RFST")
   # Creates RFSTDT
 ```
 
-**Use cases:**
-- All date conversions in ADSL, ADAE, ADLB, etc.
-- Handles partial dates with imputation
+**Use cases:** - All date conversions in ADSL, ADAE, ADLB, etc. - Handles partial dates with imputation
 
 #### `derive_vars_merged_lookup()`
+
 Add variables from a lookup table (e.g., parameter metadata)
 
-```r
+``` r
 adlb <- lb %>%
   derive_vars_merged_lookup(
     dataset_add = param_lookup,
@@ -397,9 +334,7 @@ adlb <- lb %>%
   )
 ```
 
-**Use cases:**
-- Parameter labels in BDS datasets
-- Decode values from reference tables
+**Use cases:** - Parameter labels in BDS datasets - Decode values from reference tables
 
 ### 5.2 Category 2: `derive_var_*` - Add One Variable
 
@@ -410,18 +345,20 @@ adlb <- lb %>%
 **Key Functions:**
 
 #### `derive_var_trtdurd()`
+
 Treatment duration (days)
 
-```r
+``` r
 adsl <- adsl %>%
   derive_var_trtdurd()
   # Creates TRTDURD = TRTEDT - TRTSDT + 1
 ```
 
 #### `derive_var_merged_exist_flag()`
+
 Flag if a condition exists in another dataset
 
-```r
+``` r
 adsl <- adsl %>%
   derive_var_merged_exist_flag(
     dataset_add = ex,
@@ -432,14 +369,13 @@ adsl <- adsl %>%
   # SAFFL = "Y" if subject has any EX record with dose > 0
 ```
 
-**Use cases:**
-- Population flags (SAFFL, ITTFL)
-- Event flags (had SAE, had dose interruption)
+**Use cases:** - Population flags (SAFFL, ITTFL) - Event flags (had SAE, had dose interruption)
 
 #### `derive_var_extreme_flag()`
+
 Flag first/last/min/max record within a group
 
-```r
+``` r
 adlb <- adlb %>%
   derive_var_extreme_flag(
     by_vars = exprs(USUBJID, PARAMCD),
@@ -451,9 +387,7 @@ adlb <- adlb %>%
   # Flags last pre-treatment lab as baseline
 ```
 
-**Use cases:**
-- Baseline flags (ABLFL)
-- First occurrence flags (AOCCFL)
+**Use cases:** - Baseline flags (ABLFL) - First occurrence flags (AOCCFL)
 
 ### 5.3 Category 3: `derive_param_*` - Add Computed Parameters
 
@@ -464,9 +398,10 @@ adlb <- adlb %>%
 **Key Functions:**
 
 #### `derive_param_computed()`
+
 Create a parameter computed from other parameters
 
-```r
+``` r
 advs <- advs %>%
   derive_param_computed(
     by_vars = exprs(USUBJID, AVISIT),
@@ -480,14 +415,13 @@ advs <- advs %>%
   # Adds new rows with PARAMCD = "MAP"
 ```
 
-**Use cases:**
-- Derived parameters (MAP from BP, BMI from height/weight)
-- Ratios (LDL/HDL)
+**Use cases:** - Derived parameters (MAP from BP, BMI from height/weight) - Ratios (LDL/HDL)
 
 #### `derive_param_exist_flag()`
+
 Create a parameter indicating if an event occurred
 
-```r
+``` r
 adlb <- adlb %>%
   derive_param_exist_flag(
     condition = ANRIND == "HIGH",
@@ -508,9 +442,10 @@ adlb <- adlb %>%
 **Key Functions:**
 
 #### `derive_extreme_records()`
+
 Create records by selecting extremes (first, last, min, max)
 
-```r
+``` r
 adlb_locf <- adlb %>%
   derive_extreme_records(
     dataset_add = adlb,
@@ -522,16 +457,13 @@ adlb_locf <- adlb %>%
   # LOCF imputation: carry forward last observed value
 ```
 
-**Use cases:**
-- LOCF/WOCF imputation
-- Summary records (average of multiple readings)
+**Use cases:** - LOCF/WOCF imputation - Summary records (average of multiple readings)
 
 #### Higher-Order Functions (HOFs)
 
-**`call_derivation()`**
-Apply the same derivation with different parameters
+**`call_derivation()`** Apply the same derivation with different parameters
 
-```r
+``` r
 adsl <- call_derivation(
   dataset = adsl,
   derivation = derive_var_extreme_flag,
@@ -544,10 +476,9 @@ adsl <- call_derivation(
 # Derives two flags with one call
 ```
 
-**`restrict_derivation()`**
-Apply derivation only to subset
+**`restrict_derivation()`** Apply derivation only to subset
 
-```r
+``` r
 adae <- restrict_derivation(
   dataset = adae,
   derivation = derive_var_extreme_flag,
@@ -557,10 +488,9 @@ adae <- restrict_derivation(
 # Only applies to treatment-emergent AEs
 ```
 
-**`slice_derivation()`**
-Apply different derivations to different slices
+**`slice_derivation()`** Apply different derivations to different slices
 
-```r
+``` r
 adlb <- slice_derivation(
   dataset = adlb,
   derivation = derive_var_base,
@@ -572,14 +502,14 @@ adlb <- slice_derivation(
 )
 ```
 
----
+------------------------------------------------------------------------
 
 ## 6 Mapping ADaM Datasets to Admiral Patterns
 
 This table is your **rosetta stone** for ADaM creation. Memorize this mapping.
 
 | ADaM Dataset | SDTM Source(s) | Structure | Key Admiral Functions | Primary Use |
-|---|---|---|---|---|
+|---------------|---------------|---------------|---------------|---------------|
 | **ADSL** | DM, EX, DS, AE, VS, LB | Subject-level (1 row/subject) | `derive_vars_merged()`, `derive_var_merged_exist_flag()`, `derive_var_trtdurd()` | Demographics, population flags, treatment dates |
 | **ADAE** | AE, ADSL | OCCDS (1 row/event) | `derive_vars_merged()` (ADSL), `derive_var_extreme_flag()` (TRTEMFL, AOCCFL), `derive_vars_dt()` | Safety tables, AE listings, time-to-first-AE |
 | **ADLB** | LB, ADSL | BDS (1 row/subject/param/visit) | `derive_var_extreme_flag()` (ABLFL), `derive_var_base()`, `derive_var_chg()`, `derive_var_pchg()` | Lab result tables, shift tables, change analysis |
@@ -589,7 +519,7 @@ This table is your **rosetta stone** for ADaM creation. Memorize this mapping.
 | **ADEX** | EX, ADSL | BDS (1 row/subject/param/dose) | `derive_vars_merged()` (ADSL), `derive_param_exposure()` (cumulative dose, intensity) | Dose intensity, compliance |
 | **ADRS** | RS, TR, TU, ADSL | BDS (oncology-specific) | `admiral.onco` package: `derive_param_response()`, `derive_param_confirmed_resp()` | Tumor response, RECIST criteria |
 
----
+------------------------------------------------------------------------
 
 ## 7 Hands-On: Exploring Admiral Function Taxonomy
 
@@ -644,10 +574,7 @@ cat(paste(names(formals(derive_var_extreme_flag)), collapse = ", "))
 
 **Scenario:** "I need to flag the first adverse event per subject."
 
-**Thought process:**
-1. First occurrence → need a **flag** → `derive_var_*`
-2. First/extreme → `derive_var_extreme_flag()`
-3. Check help: `?derive_var_extreme_flag`
+**Thought process:** 1. First occurrence → need a **flag** → `derive_var_*` 2. First/extreme → `derive_var_extreme_flag()` 3. Check help: `?derive_var_extreme_flag`
 
 ```{r find-function, eval=FALSE}
 # Search Admiral help
@@ -657,7 +584,7 @@ cat(paste(names(formals(derive_var_extreme_flag)), collapse = ", "))
 browseVignettes("admiral")
 ```
 
----
+------------------------------------------------------------------------
 
 ## 8 Deliverable: ADaM Dataset Mapping Matrix
 
@@ -754,7 +681,7 @@ cat("✓ Mapping matrix saved to adam_dataset_mapping.csv\n")
 cat("\nThis matrix will guide your ADaM builds in Days 16-30!\n")
 ```
 
----
+------------------------------------------------------------------------
 
 ## 9 Admiral Input-Output Contract
 
@@ -762,7 +689,7 @@ Understanding Admiral's **input-output contract** prevents common errors.
 
 ### Rule 1: Functions Return Modified Data Frames
 
-```r
+``` r
 # Input: data frame
 # Output: modified data frame (never modifies in place)
 
@@ -775,7 +702,7 @@ adsl_new <- adsl_old %>%
 
 ### Rule 2: Functions Compose with Pipes
 
-```r
+``` r
 adsl <- dm %>%
   derive_vars_dt(...) %>%
   derive_vars_merged(...) %>%
@@ -783,14 +710,11 @@ adsl <- dm %>%
   mutate(...)
 ```
 
-**Each function:**
-- Takes a data frame as first argument
-- Returns a modified data frame
-- Can be inspected mid-pipeline
+**Each function:** - Takes a data frame as first argument - Returns a modified data frame - Can be inspected mid-pipeline
 
 ### Rule 3: Required Variables Must Exist
 
-```r
+``` r
 # This will error if TRTSDT or TRTEDT don't exist
 adsl <- adsl %>%
   derive_var_trtdurd()
@@ -804,28 +728,24 @@ assert_data_frame(adsl, required_vars = required_vars)
 
 Admiral functions only add new variables or modify explicitly named variables. They never silently change existing variables.
 
-```r
+``` r
 # derive_var_trtdurd() only adds TRTDURD
 # It never modifies TRTSDT, TRTEDT, or any other existing variable
 ```
 
----
+------------------------------------------------------------------------
 
 ## 10 Navigating Admiral Documentation
 
 ### 10.1 Admiral Website
 
-**URL:** [https://pharmaverse.github.io/admiral/](https://pharmaverse.github.io/admiral/)
+**URL:** <https://pharmaverse.github.io/admiral/>
 
-**Key sections:**
-- **Get Started:** Quick introduction
-- **Vignettes:** Topic-based guides (ADSL, ADAE, ADLB, dates, etc.)
-- **Reference:** Alphabetical function list with examples
-- **Articles:** Advanced topics (Higher-Order Functions, metadata, programming strategy)
+**Key sections:** - **Get Started:** Quick introduction - **Vignettes:** Topic-based guides (ADSL, ADAE, ADLB, dates, etc.) - **Reference:** Alphabetical function list with examples - **Articles:** Advanced topics (Higher-Order Functions, metadata, programming strategy)
 
 ### 10.2 Function Help
 
-```r
+``` r
 # In R console
 ?derive_vars_merged
 ?derive_var_extreme_flag
@@ -848,18 +768,18 @@ browseVignettes("admiral")
 
 ### 10.4 GitHub Issues & Discussions
 
-**URL:** [https://github.com/pharmaverse/admiral](https://github.com/pharmaverse/admiral)
+**URL:** <https://github.com/pharmaverse/admiral>
 
-- **Issues:** Bug reports and feature requests
-- **Discussions:** Q&A, best practices
-- Search before asking - your question may be answered
+-   **Issues:** Bug reports and feature requests
+-   **Discussions:** Q&A, best practices
+-   Search before asking - your question may be answered
 
 ### 10.5 Pharmaverse Slack
 
-- **#admiral channel:** Active community support
-- Join at [pharmaverse.org](https://pharmaverse.org)
+-   **#admiral channel:** Active community support
+-   Join at [pharmaverse.org](https://pharmaverse.org)
 
----
+------------------------------------------------------------------------
 
 ## 11 Common Admiral Patterns (Cheat Sheet)
 
@@ -867,7 +787,7 @@ Memorize these patterns - they appear in 90% of ADaM derivations.
 
 ### Pattern 1: Merge Variables from Another Dataset
 
-```r
+``` r
 adsl <- adsl %>%
   derive_vars_merged(
     dataset_add = ex,
@@ -883,7 +803,7 @@ adsl <- adsl %>%
 
 ### Pattern 2: Flag if Condition Exists
 
-```r
+``` r
 adsl <- adsl %>%
   derive_var_merged_exist_flag(
     dataset_add = ex,
@@ -897,7 +817,7 @@ adsl <- adsl %>%
 
 ### Pattern 3: Flag First/Last/Extreme Record
 
-```r
+``` r
 adlb <- adlb %>%
   derive_var_extreme_flag(
     by_vars = exprs(USUBJID, PARAMCD),
@@ -912,7 +832,7 @@ adlb <- adlb %>%
 
 ### Pattern 4: Add Baseline Value
 
-```r
+``` r
 adlb <- adlb %>%
   derive_var_base(
     by_vars = exprs(USUBJID, PARAMCD),
@@ -926,7 +846,7 @@ adlb <- adlb %>%
 
 ### Pattern 5: Compute Change from Baseline
 
-```r
+``` r
 adlb <- adlb %>%
   derive_var_chg() %>%
   derive_var_pchg()
@@ -936,7 +856,7 @@ adlb <- adlb %>%
 
 ### Pattern 6: Date Conversion with Imputation
 
-```r
+``` r
 adsl <- adsl %>%
   derive_vars_dt(
     dtc = RFSTDTC,
@@ -947,13 +867,13 @@ adsl <- adsl %>%
 
 **Use for:** All date conversions in all ADaM datasets
 
----
+------------------------------------------------------------------------
 
 ## 12 ADaM Creation Workflow (Conceptual)
 
 **Standard sequence for any ADaM dataset:**
 
-```
+```         
 1. Start with primary SDTM domain
    ↓
 2. Merge ADSL (for demographics, treatment, flags)
@@ -979,24 +899,24 @@ adsl <- adsl %>%
 
 **Admiral makes each step explicit in your code.**
 
----
+------------------------------------------------------------------------
 
 ## 13 Key Takeaways
 
 ### Technical Takeaways
 
-1. **Three ADaM structures:** ADSL (subject-level), BDS (parameters × visits), OCCDS (events)
-2. **Admiral is modular:** Small, composable functions that chain with `%>%`
-3. **Four function categories:** `derive_vars_*` (multi-var), `derive_var_*` (single-var), `derive_param_*` (computed parameters), `derive_extreme_*` (record computations)
-4. **Functions compose:** Each takes and returns a data frame
-5. **Transparency:** Every derivation is explicit in your script
-6. **Reusability:** Same functions work across datasets with different arguments
+1.  **Three ADaM structures:** ADSL (subject-level), BDS (parameters × visits), OCCDS (events)
+2.  **Admiral is modular:** Small, composable functions that chain with `%>%`
+3.  **Four function categories:** `derive_vars_*` (multi-var), `derive_var_*` (single-var), `derive_param_*` (computed parameters), `derive_extreme_*` (record computations)
+4.  **Functions compose:** Each takes and returns a data frame
+5.  **Transparency:** Every derivation is explicit in your script
+6.  **Reusability:** Same functions work across datasets with different arguments
 
 ### Strategic Takeaways
 
-7. **ADSL is the foundation:** Build ADSL first, then all other ADaMs merge from it
-8. **Structure determines function choice:** BDS needs baseline derivations, OCCDS needs occurrence flags
-9. **Admiral documentation is extensive:** Vignettes are your best friend
+7.  **ADSL is the foundation:** Build ADSL first, then all other ADaMs merge from it
+8.  **Structure determines function choice:** BDS needs baseline derivations, OCCDS needs occurrence flags
+9.  **Admiral documentation is extensive:** Vignettes are your best friend
 10. **Community support:** Pharmaverse Slack, GitHub discussions
 11. **Cross-company patterns:** What works at Roche works at GSK works at your company
 
@@ -1006,60 +926,52 @@ adsl <- adsl %>%
 13. **Day 17:** ADSL demographics and baseline values
 14. **Days 18-24:** Build every ADaM type (ADAE, ADLB, ADVS, ADTTE, ADCM, ADEX)
 
----
+------------------------------------------------------------------------
 
 ## 14 Additional Resources
 
 ### Official Admiral Resources
 
-- **Admiral Website:** [https://pharmaverse.github.io/admiral/](https://pharmaverse.github.io/admiral/)
-- **Admiral GitHub:** [https://github.com/pharmaverse/admiral](https://github.com/pharmaverse/admiral)
-- **Pharmaverse Website:** [https://pharmaverse.org](https://pharmaverse.org)
-- **Admiral Get Started:** [https://pharmaverse.github.io/admiral/articles/admiral.html](https://pharmaverse.github.io/admiral/articles/admiral.html)
+-   **Admiral Website:** <https://pharmaverse.github.io/admiral/>
+-   **Admiral GitHub:** <https://github.com/pharmaverse/admiral>
+-   **Pharmaverse Website:** <https://pharmaverse.org>
+-   **Admiral Get Started:** <https://pharmaverse.github.io/admiral/articles/admiral.html>
 
 ### Key Vignettes (Read These!)
 
-- **Creating ADSL:** Full ADSL workflow
-- **Creating a BDS Finding ADaM:** ADLB/ADVS patterns
-- **Occurrence Datasets:** ADAE/ADCM patterns
-- **Higher Order Functions:** Advanced patterns
-- **Date and Time Imputation:** Complete date handling guide
+-   **Creating ADSL:** Full ADSL workflow
+-   **Creating a BDS Finding ADaM:** ADLB/ADVS patterns
+-   **Occurrence Datasets:** ADAE/ADCM patterns
+-   **Higher Order Functions:** Advanced patterns
+-   **Date and Time Imputation:** Complete date handling guide
 
 ### CDISC Standards
 
-- **ADaM IG v1.3:** [https://www.cdisc.org/standards/foundational/adam](https://www.cdisc.org/standards/foundational/adam)
-- **ADaM Examples:** [https://github.com/cdisc-org/sdtm-adam-pilot-project](https://github.com/cdisc-org/sdtm-adam-pilot-project)
+-   **ADaM IG v1.3:** <https://www.cdisc.org/standards/foundational/adam>
+-   **ADaM Examples:** <https://github.com/cdisc-org/sdtm-adam-pilot-project>
 
 ### Community
 
-- **Pharmaverse Slack:** `#admiral` channel
-- **Pharmaverse Blog:** [https://pharmaverse.github.io/blog/](https://pharmaverse.github.io/blog/)
-- **Pharmaverse Examples:** [https://pharmaverse.github.io/examples/](https://pharmaverse.github.io/examples/)
+-   **Pharmaverse Slack:** `#admiral` channel
+-   **Pharmaverse Blog:** <https://pharmaverse.github.io/blog/>
+-   **Pharmaverse Examples:** <https://pharmaverse.github.io/examples/>
 
----
+------------------------------------------------------------------------
 
 ## 15 Homework (Optional)
 
 Prepare for Day 16 (hands-on ADSL) by:
 
-1. **Read Admiral ADSL vignette:** [https://pharmaverse.github.io/admiral/articles/adsl.html](https://pharmaverse.github.io/admiral/articles/adsl.html)
-2. **Explore `pharmaversesdtm` datasets:** Load DM, EX, DS and examine their structure
-3. **Review your ADaM mapping matrix:** Understand how ADSL sources from multiple SDTM domains
-4. **Browse Admiral function reference:** Get familiar with function names and categories
+1.  **Read Admiral ADSL vignette:** <https://pharmaverse.github.io/admiral/articles/adsl.html>
+2.  **Explore `pharmaversesdtm` datasets:** Load DM, EX, DS and examine their structure
+3.  **Review your ADaM mapping matrix:** Understand how ADSL sources from multiple SDTM domains
+4.  **Browse Admiral function reference:** Get familiar with function names and categories
 
 **Tomorrow we build ADSL from scratch!**
 
----
-
-## Session Info
-
-```{r sessioninfo}
-sessionInfo()
-```
-
----
+------------------------------------------------------------------------
 
 **End of Day 15**
 
-*Today you mastered ADaM architecture and Admiral philosophy.*  
+*Today you mastered ADaM architecture and Admiral philosophy.*\
 *Tomorrow you'll put it into practice building your first ADaM dataset: ADSL!*
