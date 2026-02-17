@@ -49,6 +49,10 @@ website:
         - week3/day15.qmd
         - week3/day16.qmd
         - week3/day17.qmd
+        - week3/day18.qmd
+        - week3/day19.qmd
+        - week3/day20.qmd
+        - week3/day21.qmd
 
 format:
   html:

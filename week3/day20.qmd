@@ -1,0 +1,480 @@
+---
+title: "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+subtitle: "Week 3, Day 20: BDS structure with visit windows and multiple readings"
+author: "30 Days of Pharmaverse"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+## Welcome to ADVS
+
+ADVS follows the same **BDS structure** as ADLB, but with additional complexity: visit windows and multiple readings per timepoint.
+
+**Today's focus:** Build ADVS with visit mapping, baseline flags, and change from baseline.
+
+------------------------------------------------------------------------
+
+## Setup
+
+```{r setup}
+library(admiral)
+library(pharmaversesdtm)
+library(pharmaverseadam)
+library(dplyr)
+library(lubridate)
+library(stringr)
+library(xportr)
+
+# Load SDTM and ADaM
+vs <- pharmaversesdtm::vs
+adsl <- pharmaverseadam::adsl
+
+cat("Loaded VS:", nrow(vs), "records\n")
+cat("Loaded ADSL:", nrow(adsl), "subjects\n")
+```
+
+------------------------------------------------------------------------
+
+## Step 1: Merge ADSL Variables
+
+```{r merge-adsl}
+# Start with VS and merge treatment info
+advs <- vs %>%
+  admiral::derive_vars_merged(
+    dataset_add = adsl,
+    new_vars = exprs(TRTSDT, TRT01A),
+    by_vars = exprs(STUDYID, USUBJID)
+  )
+
+cat("\nADVS initialized:", nrow(advs), "records\n")
+
+# Check
+advs %>%
+  select(USUBJID, VSTESTCD, VSDTC, TRTSDT) %>%
+  head(5)
+```
+
+------------------------------------------------------------------------
+
+## Step 2: Derive Analysis Date
+
+```{r derive-adt}
+# Derive analysis date from VSDTC
+advs <- advs %>%
+  admiral::derive_vars_dt(
+    new_vars_prefix = "A",
+    dtc = VSDTC
+  )
+
+cat("\nAnalysis date derived\n")
+
+# Check
+advs %>%
+  select(USUBJID, VSTESTCD, VSDTC, ADT) %>%
+  head(5)
+```
+
+------------------------------------------------------------------------
+
+## Step 3: Derive Study Day
+
+```{r derive-ady}
+# Calculate relative day
+advs <- advs %>%
+  admiral::derive_vars_dy(
+    reference_date = TRTSDT,
+    source_vars = exprs(ADT)
+  )
+
+cat("\nStudy day derived\n")
+
+# Check
+advs %>%
+  select(USUBJID, VSTESTCD, TRTSDT, ADT, ADY) %>%
+  filter(!is.na(ADY)) %>%
+  head(5)
+```
+
+------------------------------------------------------------------------
+
+## Step 4: Create PARAM and AVAL
+
+```{r create-param-aval}
+# Create BDS variables
+advs <- advs %>%
+  mutate(
+    PARAMCD = VSTESTCD,
+    PARAM = VSTEST,
+    AVAL = VSSTRESN,
+    AVALU = VSSTRESU
+  )
+
+cat("\nPARAM and AVAL created\n")
+
+# Check parameters
+advs %>%
+  count(PARAMCD, PARAM) %>%
+  head(10)
+```
+
+------------------------------------------------------------------------
+
+## Step 5: Map Analysis Visits
+
+```{r map-avisit}
+# Map VISIT to analysis visit
+advs <- advs %>%
+  mutate(
+    AVISIT = case_when(
+      VISIT == "SCREENING" ~ "Baseline",
+      VISIT == "BASELINE" ~ "Baseline",
+      VISIT == "WEEK 2" ~ "Week 2",
+      VISIT == "WEEK 4" ~ "Week 4",
+      VISIT == "WEEK 8" ~ "Week 8",
+      TRUE ~ VISIT
+    ),
+    AVISITN = case_when(
+      AVISIT == "Baseline" ~ 0,
+      AVISIT == "Week 2" ~ 2,
+      AVISIT == "Week 4" ~ 4,
+      AVISIT == "Week 8" ~ 8,
+      TRUE ~ as.numeric(VISITNUM)
+    )
+  )
+
+cat("\nAnalysis visit mapped\n")
+
+# Distribution
+advs %>%
+  count(AVISIT, AVISITN) %>%
+  arrange(AVISITN)
+```
+
+**Visit Mapping:**
+
+-   AVISIT: Analysis visit label
+-   AVISITN: Analysis visit number for sorting
+
+------------------------------------------------------------------------
+
+## Step 6: Handle Position and Timepoint
+
+```{r derive-position}
+# Map position and timepoint
+advs <- advs %>%
+  mutate(
+    ATPT = VSTPT,
+    ATPTN = VSTPTNUM
+  )
+
+cat("\nPosition and timepoint mapped\n")
+
+# Check
+advs %>%
+  count(VSPOS, VSTPT, ATPTN) %>%
+  head(5)
+```
+
+**Multiple Readings:**
+
+-   ATPT: Analysis timepoint (e.g., "PRE-DOSE", "1H POST-DOSE")
+-   ATPTN: Timepoint number for ordering
+
+------------------------------------------------------------------------
+
+## Step 7: Derive Baseline Flag
+
+```{r derive-ablfl}
+# Flag last value before treatment start
+advs <- advs %>%
+  arrange(USUBJID, PARAMCD, ADT, ATPTN) %>%
+  group_by(USUBJID, PARAMCD) %>%
+  mutate(
+    ABLFL = case_when(
+      !is.na(AVAL) & !is.na(TRTSDT) & ADT <= TRTSDT & 
+        row_number() == max(which(ADT <= TRTSDT)) ~ "Y",
+      TRUE ~ NA_character_
+    )
+  ) %>%
+  ungroup()
+
+cat("\nBaseline flag derived\n")
+
+# Check
+advs %>%
+  filter(ABLFL == "Y") %>%
+  select(USUBJID, PARAMCD, ADT, TRTSDT, AVAL, ABLFL) %>%
+  head(5)
+```
+
+------------------------------------------------------------------------
+
+## Step 8: Derive Baseline Value
+
+```{r derive-base}
+# Merge baseline value to all records
+advs <- advs %>%
+  group_by(USUBJID, PARAMCD) %>%
+  mutate(
+    BASE = AVAL[ABLFL == "Y"][1]
+  ) %>%
+  ungroup()
+
+cat("\nBaseline value derived\n")
+
+# Check
+advs %>%
+  select(USUBJID, PARAMCD, AVISIT, AVAL, ABLFL, BASE) %>%
+  head(10)
+```
+
+------------------------------------------------------------------------
+
+## Step 9: Derive Change from Baseline
+
+```{r derive-chg}
+# Calculate change and percent change
+advs <- advs %>%
+  mutate(
+    CHG = case_when(
+      !is.na(AVAL) & !is.na(BASE) ~ AVAL - BASE,
+      TRUE ~ NA_real_
+    ),
+    PCHG = case_when(
+      !is.na(CHG) & BASE != 0 ~ (CHG / BASE) * 100,
+      TRUE ~ NA_real_
+    )
+  )
+
+cat("\nChange from baseline calculated\n")
+
+# Summary by parameter
+advs %>%
+  filter(!is.na(CHG)) %>%
+  group_by(PARAMCD) %>%
+  summarise(
+    N = n(),
+    Mean_CHG = round(mean(CHG), 1),
+    SD_CHG = round(sd(CHG), 1),
+    .groups = "drop"
+  ) %>%
+  head(5)
+```
+
+------------------------------------------------------------------------
+
+## Step 10: Derive Reference Range Indicators
+
+```{r derive-anrind}
+# Create reference range indicators for BP and HR
+advs <- advs %>%
+  mutate(
+    ANRIND = case_when(
+      PARAMCD == "SYSBP" & !is.na(AVAL) ~ case_when(
+        AVAL < 90 ~ "LOW",
+        AVAL > 140 ~ "HIGH",
+        TRUE ~ "NORMAL"
+      ),
+      PARAMCD == "DIABP" & !is.na(AVAL) ~ case_when(
+        AVAL < 60 ~ "LOW",
+        AVAL > 90 ~ "HIGH",
+        TRUE ~ "NORMAL"
+      ),
+      PARAMCD == "PULSE" & !is.na(AVAL) ~ case_when(
+        AVAL < 60 ~ "LOW",
+        AVAL > 100 ~ "HIGH",
+        TRUE ~ "NORMAL"
+      ),
+      TRUE ~ NA_character_
+    ),
+    BNRIND = case_when(
+      PARAMCD == "SYSBP" & !is.na(BASE) ~ case_when(
+        BASE < 90 ~ "LOW",
+        BASE > 140 ~ "HIGH",
+        TRUE ~ "NORMAL"
+      ),
+      PARAMCD == "DIABP" & !is.na(BASE) ~ case_when(
+        BASE < 60 ~ "LOW",
+        BASE > 90 ~ "HIGH",
+        TRUE ~ "NORMAL"
+      ),
+      PARAMCD == "PULSE" & !is.na(BASE) ~ case_when(
+        BASE < 60 ~ "LOW",
+        BASE > 100 ~ "HIGH",
+        TRUE ~ "NORMAL"
+      ),
+      TRUE ~ NA_character_
+    )
+  )
+
+cat("\nReference range indicators derived\n")
+
+# Distribution
+advs %>%
+  count(PARAMCD, ANRIND) %>%
+  head(10)
+```
+
+**Clinical Ranges (Simplified):**
+
+-   Systolic BP: \<90 LOW, 90-140 NORMAL, \>140 HIGH
+-   Diastolic BP: \<60 LOW, 60-90 NORMAL, \>90 HIGH
+-   Pulse: \<60 LOW, 60-100 NORMAL, \>100 HIGH
+
+------------------------------------------------------------------------
+
+## Step 11: Derive Analysis Sequence
+
+```{r derive-aseq}
+# Create sequence number
+advs <- advs %>%
+  arrange(USUBJID, PARAMCD, AVISITN, ATPTN, ADT) %>%
+  group_by(USUBJID) %>%
+  mutate(ASEQ = row_number()) %>%
+  ungroup()
+
+cat("\nAnalysis sequence derived\n")
+```
+
+------------------------------------------------------------------------
+
+## Validation
+
+```{r validate}
+cat("\n=== ADVS Validation ===\n\n")
+
+# Check 1: One ABLFL per subject-parameter
+check1 <- advs %>%
+  filter(ABLFL == "Y") %>%
+  count(USUBJID, PARAMCD) %>%
+  filter(n > 1)
+cat("Check 1 - Multiple ABLFL per subject-PARAMCD:", nrow(check1), "\n")
+
+# Check 2: CHG is NA at baseline
+check2 <- advs %>%
+  filter(ABLFL == "Y", !is.na(CHG))
+cat("Check 2 - CHG not NA at baseline:", nrow(check2), "\n")
+
+# Check 3: BASE consistency
+check3 <- advs %>%
+  filter(!is.na(BASE)) %>%
+  group_by(USUBJID, PARAMCD) %>%
+  summarise(n_distinct_base = n_distinct(BASE), .groups = "drop") %>%
+  filter(n_distinct_base > 1)
+cat("Check 3 - Inconsistent BASE within subject-PARAMCD:", nrow(check3), "\n")
+
+# Check 4: Visit ordering
+check4 <- advs %>%
+  filter(!is.na(AVISITN)) %>%
+  group_by(AVISIT) %>%
+  summarise(n_distinct_avisitn = n_distinct(AVISITN), .groups = "drop") %>%
+  filter(n_distinct_avisitn > 1)
+cat("Check 4 - Multiple AVISITN per AVISIT:", nrow(check4), "\n")
+
+cat("\n✓ Validation complete\n")
+```
+
+------------------------------------------------------------------------
+
+## Summary
+
+```{r summary}
+cat("\n=== ADVS Summary ===\n\n")
+cat("Total records:", nrow(advs), "\n")
+cat("Variables:", ncol(advs), "\n\n")
+
+# By parameter
+advs %>%
+  group_by(PARAMCD, PARAM) %>%
+  summarise(
+    N_Records = n(),
+    N_Subjects = n_distinct(USUBJID),
+    N_Baseline = sum(ABLFL == "Y", na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  head(10)
+
+# By visit
+advs %>%
+  count(AVISIT, AVISITN) %>%
+  arrange(AVISITN)
+```
+
+------------------------------------------------------------------------
+
+## Export
+
+```{r export}
+# Add labels
+attr(advs$PARAMCD, "label") <- "Parameter Code"
+attr(advs$PARAM, "label") <- "Parameter"
+attr(advs$AVAL, "label") <- "Analysis Value"
+attr(advs$AVALU, "label") <- "Analysis Value Unit"
+attr(advs$ADT, "label") <- "Analysis Date"
+attr(advs$ADY, "label") <- "Analysis Relative Day"
+attr(advs$AVISIT, "label") <- "Analysis Visit"
+attr(advs$AVISITN, "label") <- "Analysis Visit (N)"
+attr(advs$ATPT, "label") <- "Analysis Timepoint"
+attr(advs$ATPTN, "label") <- "Analysis Timepoint (N)"
+attr(advs$ABLFL, "label") <- "Baseline Record Flag"
+attr(advs$BASE, "label") <- "Baseline Value"
+attr(advs$CHG, "label") <- "Change from Baseline"
+attr(advs$PCHG, "label") <- "Percent Change from Baseline"
+attr(advs$ANRIND, "label") <- "Analysis Reference Range Indicator"
+attr(advs$BNRIND, "label") <- "Baseline Reference Range Indicator"
+attr(advs$ASEQ, "label") <- "Analysis Sequence Number"
+
+# Export
+xportr_write(advs, path = "advs.xpt", domain = "ADVS")
+
+cat("\n✓ ADVS exported to: advs.xpt\n")
+```
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  ADVS follows same BDS structure as ADLB
+2.  Visit mapping: VISIT → AVISIT/AVISITN
+3.  Multiple readings handled via ATPT/ATPTN (timepoint)
+4.  ABLFL logic same as ADLB (last value ≤ TRTSDT)
+5.  Clinical ranges differ by vital sign parameter
+6.  Position (SITTING/STANDING) captured in original VS
+
+------------------------------------------------------------------------
+
+## Next Steps
+
+**Day 21:** ADTTE - Time-to-Event Analysis\
+**Day 22:** ADCM and ADRS\
+**Day 23:** TLF Production
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   BDS Structure: <https://www.cdisc.org/standards/foundational/adam>
+-   Admiral BDS Vignette: <https://pharmaverse.github.io/admiral/articles/bds_finding.html>
+-   ADVS Examples: <https://pharmaverse.github.io/examples/adam/advs.html>
+
+------------------------------------------------------------------------
+
+**End of Day 20**

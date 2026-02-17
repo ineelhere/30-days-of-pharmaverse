@@ -1,0 +1,437 @@
+---
+title: "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+subtitle: "Week 3, Day 21: Survival analysis structure with events and censoring"
+author: "30 Days of Pharmaverse"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+## Welcome to ADTTE
+
+ADTTE is the dataset for **survival analysis** - time-to-event endpoints like overall survival, progression-free survival, and time to first AE.
+
+**Today's focus:** Build ADTTE with event/censor indicators and time-to-event calculations.
+
+---
+
+## Setup
+
+```{r setup}
+library(admiral)
+library(pharmaversesdtm)
+library(pharmaverseadam)
+library(dplyr)
+library(lubridate)
+library(stringr)
+library(xportr)
+
+# Load SDTM and ADaM
+dm <- pharmaversesdtm::dm
+ae <- pharmaversesdtm::ae
+adsl <- pharmaverseadam::adsl
+
+cat("Loaded DM:", nrow(dm), "subjects\n")
+cat("Loaded AE:", nrow(ae), "AE records\n")
+cat("Loaded ADSL:", nrow(adsl), "subjects\n")
+```
+
+---
+
+## Step 1: Start with ADSL
+
+```{r start-adsl}
+# ADTTE starts with one row per subject from ADSL
+adtte <- adsl %>%
+  select(STUDYID, USUBJID, TRTSDT, TRT01A, AGE, SEX)
+
+cat("\nADTTE initialized:", nrow(adtte), "subjects\n")
+
+# Check
+adtte %>%
+  select(USUBJID, TRTSDT, TRT01A) %>%
+  head(5)
+```
+
+**ADTTE Structure:**
+
+- One row per subject per parameter
+- PARAMCD identifies the endpoint (OS, TTAE, etc.)
+- Each parameter has event/censor logic
+
+---
+
+## Step 2: Prepare AE Data
+
+```{r prepare-ae}
+# Get first AE date per subject
+ae_first <- ae %>%
+  admiral::derive_vars_dt(
+    new_vars_prefix = "AE",
+    dtc = AESTDTC
+  ) %>%
+  filter(!is.na(AEDT)) %>%
+  group_by(STUDYID, USUBJID) %>%
+  summarise(
+    FIRST_AEDT = min(AEDT),
+    .groups = "drop"
+  )
+
+cat("\nFirst AE dates prepared\n")
+
+# Check
+ae_first %>%
+  head(5)
+```
+
+---
+
+## Step 3: Merge AE Dates
+
+```{r merge-ae}
+# Merge first AE date to ADTTE
+adtte <- adtte %>%
+  left_join(
+    ae_first,
+    by = c("STUDYID", "USUBJID")
+  )
+
+cat("\nAE dates merged\n")
+
+# Check
+adtte %>%
+  select(USUBJID, TRTSDT, FIRST_AEDT) %>%
+  head(10)
+```
+
+---
+
+## Step 4: Create TTAE Parameter
+
+```{r create-ttae}
+# Time to First AE parameter
+adtte_ttae <- adtte %>%
+  mutate(
+    PARAMCD = "TTAE",
+    PARAM = "Time to First Adverse Event",
+    # Event if AE occurred after treatment start
+    CNSR = case_when(
+      !is.na(FIRST_AEDT) & FIRST_AEDT >= TRTSDT ~ 0,  # Event
+      TRUE ~ 1  # Censored
+    ),
+    # Analysis date
+    ADT = case_when(
+      CNSR == 0 ~ FIRST_AEDT,  # Event date
+      TRUE ~ TRTSDT + 365  # Censor at 1 year (example)
+    ),
+    # Time to event in days
+    AVAL = case_when(
+      !is.na(ADT) & !is.na(TRTSDT) ~ as.numeric(ADT - TRTSDT) + 1,
+      TRUE ~ NA_real_
+    ),
+    AVALU = "DAYS"
+  )
+
+cat("\nTTAE parameter created\n")
+
+# Summary
+adtte_ttae %>%
+  count(CNSR) %>%
+  mutate(
+    Label = case_when(
+      CNSR == 0 ~ "Event",
+      CNSR == 1 ~ "Censored"
+    )
+  )
+```
+
+**CNSR Convention:**
+
+- CNSR = 0: Event occurred
+- CNSR = 1: Censored (no event)
+
+---
+
+## Step 5: Add Event Description
+
+```{r add-event-desc}
+# Add event description
+adtte_ttae <- adtte_ttae %>%
+  mutate(
+    EVNTDESC = case_when(
+      CNSR == 0 ~ "Adverse Event",
+      TRUE ~ NA_character_
+    ),
+    CNSDTDSC = case_when(
+      CNSR == 1 ~ "No Event by Study End",
+      TRUE ~ NA_character_
+    )
+  )
+
+cat("\nEvent descriptions added\n")
+
+# Check
+adtte_ttae %>%
+  select(USUBJID, PARAMCD, AVAL, CNSR, EVNTDESC, CNSDTDSC) %>%
+  head(10)
+```
+
+---
+
+## Step 6: Create Serious AE Parameter
+
+```{r create-ttserae}
+# Get first serious AE
+ae_serious <- ae %>%
+  admiral::derive_vars_dt(
+    new_vars_prefix = "AE",
+    dtc = AESTDTC
+  ) %>%
+  filter(AESER == "Y", !is.na(AEDT)) %>%
+  group_by(STUDYID, USUBJID) %>%
+  summarise(
+    FIRST_SERAEDT = min(AEDT),
+    .groups = "drop"
+  )
+
+# Merge to base
+adtte_base <- adtte %>%
+  left_join(ae_serious, by = c("STUDYID", "USUBJID"))
+
+# Create parameter
+adtte_ttserae <- adtte_base %>%
+  mutate(
+    PARAMCD = "TTSERAE",
+    PARAM = "Time to First Serious Adverse Event",
+    CNSR = case_when(
+      !is.na(FIRST_SERAEDT) & FIRST_SERAEDT >= TRTSDT ~ 0,
+      TRUE ~ 1
+    ),
+    ADT = case_when(
+      CNSR == 0 ~ FIRST_SERAEDT,
+      TRUE ~ TRTSDT + 365
+    ),
+    AVAL = case_when(
+      !is.na(ADT) & !is.na(TRTSDT) ~ as.numeric(ADT - TRTSDT) + 1,
+      TRUE ~ NA_real_
+    ),
+    AVALU = "DAYS",
+    EVNTDESC = case_when(
+      CNSR == 0 ~ "Serious Adverse Event",
+      TRUE ~ NA_character_
+    ),
+    CNSDTDSC = case_when(
+      CNSR == 1 ~ "No Serious Event by Study End",
+      TRUE ~ NA_character_
+    )
+  )
+
+cat("\nTTSERAE parameter created\n")
+
+# Summary
+adtte_ttserae %>%
+  count(CNSR) %>%
+  mutate(
+    Label = case_when(
+      CNSR == 0 ~ "Event",
+      CNSR == 1 ~ "Censored"
+    )
+  )
+```
+
+---
+
+## Step 7: Combine Parameters
+
+```{r combine-params}
+# Combine TTAE and TTSERAE
+adtte_final <- bind_rows(adtte_ttae, adtte_ttserae)
+
+cat("\nParameters combined\n")
+cat("Total records:", nrow(adtte_final), "\n")
+
+# Distribution
+adtte_final %>%
+  count(PARAMCD, PARAM)
+```
+
+---
+
+## Step 8: Derive Analysis Sequence
+
+```{r derive-aseq}
+# Create sequence number
+adtte_final <- adtte_final %>%
+  arrange(USUBJID, PARAMCD) %>%
+  group_by(USUBJID) %>%
+  mutate(ASEQ = row_number()) %>%
+  ungroup()
+
+cat("\nAnalysis sequence derived\n")
+```
+
+---
+
+## Step 9: Derive Study Day
+
+```{r derive-ady}
+# Calculate study day for analysis date
+adtte_final <- adtte_final %>%
+  mutate(
+    ADY = case_when(
+      !is.na(ADT) & !is.na(TRTSDT) ~ as.numeric(ADT - TRTSDT) + 1,
+      TRUE ~ NA_real_
+    )
+  )
+
+cat("\nStudy day derived\n")
+
+# Check
+adtte_final %>%
+  select(USUBJID, PARAMCD, ADT, TRTSDT, ADY, AVAL) %>%
+  head(10)
+```
+
+---
+
+## Validation
+
+```{r validate}
+cat("\n=== ADTTE Validation ===\n\n")
+
+# Check 1: CNSR values
+check1 <- adtte_final %>%
+  filter(!CNSR %in% c(0, 1))
+cat("Check 1 - Invalid CNSR values:", nrow(check1), "\n")
+
+# Check 2: AVAL consistency
+check2 <- adtte_final %>%
+  filter(!is.na(AVAL) & !is.na(ADY) & abs(AVAL - ADY) > 0.1)
+cat("Check 2 - AVAL != ADY:", nrow(check2), "\n")
+
+# Check 3: Event has EVNTDESC
+check3 <- adtte_final %>%
+  filter(CNSR == 0, is.na(EVNTDESC))
+cat("Check 3 - Event missing EVNTDESC:", nrow(check3), "\n")
+
+# Check 4: Censored has CNSDTDSC
+check4 <- adtte_final %>%
+  filter(CNSR == 1, is.na(CNSDTDSC))
+cat("Check 4 - Censored missing CNSDTDSC:", nrow(check4), "\n")
+
+cat("\n✓ Validation complete\n")
+```
+
+---
+
+## Summary
+
+```{r summary}
+cat("\n=== ADTTE Summary ===\n\n")
+cat("Total records:", nrow(adtte_final), "\n")
+cat("Parameters:", n_distinct(adtte_final$PARAMCD), "\n")
+cat("Subjects:", n_distinct(adtte_final$USUBJID), "\n\n")
+
+# By parameter
+adtte_final %>%
+  group_by(PARAMCD, PARAM) %>%
+  summarise(
+    N_Subjects = n(),
+    N_Events = sum(CNSR == 0),
+    N_Censored = sum(CNSR == 1),
+    Median_AVAL = median(AVAL, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# AVAL distribution
+adtte_final %>%
+  group_by(PARAMCD) %>%
+  summarise(
+    N = sum(!is.na(AVAL)),
+    Mean = round(mean(AVAL, na.rm = TRUE), 1),
+    Median = round(median(AVAL, na.rm = TRUE), 1),
+    Min = min(AVAL, na.rm = TRUE),
+    Max = max(AVAL, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+---
+
+## Export
+
+```{r export}
+# Add labels
+attr(adtte_final$PARAMCD, "label") <- "Parameter Code"
+attr(adtte_final$PARAM, "label") <- "Parameter"
+attr(adtte_final$AVAL, "label") <- "Analysis Value"
+attr(adtte_final$AVALU, "label") <- "Analysis Value Unit"
+attr(adtte_final$ADT, "label") <- "Analysis Date"
+attr(adtte_final$ADY, "label") <- "Analysis Relative Day"
+attr(adtte_final$CNSR, "label") <- "Censor"
+attr(adtte_final$EVNTDESC, "label") <- "Event Description"
+attr(adtte_final$CNSDTDSC, "label") <- "Censored Description"
+attr(adtte_final$ASEQ, "label") <- "Analysis Sequence Number"
+
+# Export
+xportr_write(adtte_final, path = "adtte.xpt", domain = "ADTTE")
+
+cat("\n✓ ADTTE exported to: adtte.xpt\n")
+```
+
+---
+
+## Key Takeaways
+
+1. ADTTE has one row per subject per parameter
+2. CNSR = 0 (event), CNSR = 1 (censored)
+3. AVAL = time to event in days (ADT - TRTSDT + 1)
+4. Events need EVNTDESC, censored need CNSDTDSC
+5. Multiple parameters: TTAE, TTSERAE, etc.
+6. Simple dplyr approach without complex admiral TTE functions
+
+---
+
+## Next Steps
+
+**Day 22:** Tables and Listings with gt  
+**Day 23:** Figures with ggplot2  
+**Day 24:** Complete TLF Package
+
+---
+
+## Resources
+
+- ADTTE Structure: <https://www.cdisc.org/standards/foundational/adam>
+- Admiral TTE Vignette: <https://pharmaverse.github.io/admiral/articles/bds_tte.html>
+- Survival Analysis in R: <https://www.emilyzabor.com/tutorials/survival_analysis_in_r_tutorial.html>
+
+---
+
+**End of Day 21**
+
+**Week 3 Complete! You've built:**
+- ADSL (Days 16-17)
+- ADAE (Day 18)
+- ADLB (Day 19)
+- ADVS (Day 20)
+- ADTTE (Day 21)
+
+Ready for TLF production in Week 4!

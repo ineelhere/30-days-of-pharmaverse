@@ -1,0 +1,424 @@
+---
+title: "Day 18: ADAE - Adverse Events Analysis Dataset"
+subtitle: "Week 3, Day 18: OCCDS structure with treatment emergent flags"
+author: "30 Days of Pharmaverse"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+## Welcome to ADAE
+
+ADAE is the backbone of safety reporting. Every safety table flows from this dataset.
+
+**Today's focus:** Build ADAE with treatment emergent flags and occurrence indicators.
+
+------------------------------------------------------------------------
+
+## Setup
+
+```{r setup}
+library(admiral)
+library(pharmaversesdtm)
+library(pharmaverseadam)
+library(dplyr)
+library(lubridate)
+library(stringr)
+library(xportr)
+
+# Load SDTM domains
+ae <- pharmaversesdtm::ae
+ex <- pharmaversesdtm::ex
+
+# Load pre-built ADSL
+adsl <- pharmaverseadam::adsl
+
+cat("Loaded AE:", nrow(ae), "records\n")
+cat("Loaded ADSL:", nrow(adsl), "subjects\n")
+```
+
+**Why pharmaverseadam::adsl?**
+
+-   Pre-built reference ADSL
+-   Has all required variables
+-   Saves rebuild time
+
+------------------------------------------------------------------------
+
+## Step 1: Merge ADSL to AE
+
+```{r merge-adsl}
+# Merge treatment dates to AE
+adae <- ae %>%
+  admiral::derive_vars_merged(
+    dataset_add = adsl,
+    new_vars = exprs(TRTSDT, TRTEDT, TRT01A),
+    by_vars = exprs(STUDYID, USUBJID)
+  )
+
+cat("\nADAE initialized:", nrow(adae), "records\n")
+
+# Check
+adae %>%
+  select(USUBJID, AETERM, TRTSDT, TRTEDT) %>%
+  head(5)
+```
+
+------------------------------------------------------------------------
+
+## Step 2: Derive AE Start Date
+
+```{r derive-astdt}
+# Derive AE start date
+adae <- adae %>%
+  admiral::derive_vars_dt(
+    new_vars_prefix = "AST",
+    dtc = AESTDTC,
+    highest_imputation = "M",
+    flag_imputation = "auto"
+  )
+
+cat("\nAE start date derived\n")
+
+# Check
+adae %>%
+  select(USUBJID, AESEQ, AESTDTC, ASTDT, ASTDTF) %>%
+  head(5)
+```
+
+**Imputation:**
+
+-   Partial dates like "2024-03" → "2024-03-01"
+-   ASTDTF flag shows if imputed
+
+------------------------------------------------------------------------
+
+## Step 3: Derive AE End Date
+
+```{r derive-aendt}
+# Derive AE end date
+adae <- adae %>%
+  admiral::derive_vars_dt(
+    new_vars_prefix = "AEN",
+    dtc = AEENDTC,
+    highest_imputation = "M",
+    date_imputation = "last",
+    flag_imputation = "auto"
+  )
+
+cat("\nAE end date derived\n")
+
+# Check
+adae %>%
+  select(USUBJID, AESEQ, AEENDTC, AENDT, AENDTF) %>%
+  head(5)
+```
+
+**Difference from start:**
+
+-   `date_imputation = "last"` → "2024-03" becomes "2024-03-31"
+
+------------------------------------------------------------------------
+
+## Step 4: Derive Study Days
+
+```{r derive-study-days}
+# Calculate relative days
+adae <- adae %>%
+  admiral::derive_vars_dy(
+    reference_date = TRTSDT,
+    source_vars = exprs(ASTDT, AENDT)
+  )
+
+cat("\nStudy days derived\n")
+
+# Check
+adae %>%
+  select(USUBJID, TRTSDT, ASTDT, ASTDY, AENDT, AENDY) %>%
+  filter(!is.na(ASTDY)) %>%
+  head(5)
+```
+
+**Study day convention:**
+
+-   Day 1 = first treatment day
+-   No Day 0
+
+------------------------------------------------------------------------
+
+## Step 5: Derive Duration
+
+```{r derive-duration}
+# Calculate duration
+adae <- adae %>%
+  mutate(
+    ADURN = case_when(
+      !is.na(ASTDT) & !is.na(AENDT) ~ as.numeric(AENDT - ASTDT) + 1,
+      TRUE ~ NA_real_
+    )
+  )
+
+cat("\nDuration calculated\n")
+
+# Summary
+adae %>%
+  filter(!is.na(ADURN)) %>%
+  summarise(
+    N = n(),
+    Mean = round(mean(ADURN), 1),
+    Median = median(ADURN),
+    Min = min(ADURN),
+    Max = max(ADURN)
+  )
+```
+
+**Formula:** AENDT - ASTDT + 1
+
+------------------------------------------------------------------------
+
+## Step 6: Derive Treatment Emergent Flag
+
+```{r derive-trtemfl}
+# Flag AEs that occurred during treatment
+adae <- adae %>%
+  mutate(
+    TRTEMFL = case_when(
+      !is.na(ASTDT) & !is.na(TRTSDT) & ASTDT >= TRTSDT ~ "Y",
+      TRUE ~ NA_character_
+    )
+  )
+
+cat("\nTreatment emergent flag derived\n")
+
+# Distribution
+adae %>%
+  count(TRTEMFL)
+```
+
+**Logic:**
+
+-   AE started on or after treatment start
+-   Used in all safety tables
+
+------------------------------------------------------------------------
+
+## Step 7: Derive Severity Numeric
+
+```{r derive-severity}
+# Create numeric severity
+adae <- adae %>%
+  mutate(
+    ASEV = AESEV,
+    ASEVN = case_when(
+      AESEV == "MILD" ~ 1,
+      AESEV == "MODERATE" ~ 2,
+      AESEV == "SEVERE" ~ 3,
+      TRUE ~ NA_real_
+    )
+  )
+
+cat("\nSeverity numeric created\n")
+
+# Distribution
+adae %>%
+  count(ASEV, ASEVN)
+```
+
+------------------------------------------------------------------------
+
+## Step 8: Derive First Occurrence Flag
+
+```{r derive-aoccfl}
+# Flag first AE per subject
+adae <- adae %>%
+  arrange(USUBJID, ASTDT, AESEQ) %>%
+  group_by(USUBJID) %>%
+  mutate(
+    AOCCFL = if_else(row_number() == 1, "Y", NA_character_)
+  ) %>%
+  ungroup()
+
+cat("\nFirst occurrence flag derived\n")
+
+# Check
+adae %>%
+  filter(AOCCFL == "Y") %>%
+  select(USUBJID, AETERM, ASTDT, AOCCFL) %>%
+  head(5)
+```
+
+**Logic:**
+
+-   First AE record per subject
+-   Used for "subjects with at least one AE"
+
+------------------------------------------------------------------------
+
+## Step 9: Derive Serious AE Flag
+
+```{r derive-serious}
+# Copy serious flag
+adae <- adae %>%
+  mutate(
+    ASER = AESER,
+    ASERN = if_else(AESER == "Y", 1, 0)
+  )
+
+cat("\nSerious flag created\n")
+
+# Distribution
+adae %>%
+  count(ASER, ASERN)
+```
+
+------------------------------------------------------------------------
+
+## Step 10: Derive Analysis Flag
+
+```{r derive-anl01fl}
+# Primary analysis flag
+adae <- adae %>%
+  mutate(
+    ANL01FL = if_else(TRTEMFL == "Y", "Y", NA_character_)
+  )
+
+cat("\nAnalysis flag created\n")
+
+# Distribution
+adae %>%
+  count(ANL01FL, TRTEMFL)
+```
+
+**ANL01FL:**
+
+-   Primary analysis records
+-   Typically = TRTEMFL
+
+------------------------------------------------------------------------
+
+## Validation
+
+```{r validate}
+cat("\n=== ADAE Validation ===\n\n")
+
+# Check 1: Start <= End
+check1 <- adae %>%
+  filter(!is.na(ASTDT) & !is.na(AENDT) & ASTDT > AENDT)
+cat("Check 1 - ASTDT > AENDT:", nrow(check1), "\n")
+
+# Check 2: Duration
+check2 <- adae %>%
+  filter(!is.na(ADURN)) %>%
+  mutate(
+    Expected = as.numeric(AENDT - ASTDT) + 1,
+    Match = ADURN == Expected
+  ) %>%
+  filter(!Match)
+cat("Check 2 - ADURN mismatch:", nrow(check2), "\n")
+
+# Check 3: One AOCCFL per subject
+check3 <- adae %>%
+  filter(AOCCFL == "Y") %>%
+  count(USUBJID) %>%
+  filter(n > 1)
+cat("Check 3 - Multiple AOCCFL:", nrow(check3), "\n")
+
+cat("\n✓ Validation complete\n")
+```
+
+------------------------------------------------------------------------
+
+## Summary
+
+```{r summary}
+cat("\n=== ADAE Summary ===\n\n")
+cat("Total records:", nrow(adae), "\n")
+cat("Variables:", ncol(adae), "\n\n")
+
+# By treatment
+adae %>%
+  filter(TRTEMFL == "Y") %>%
+  group_by(TRT01A) %>%
+  summarise(
+    N_AEs = n(),
+    N_Subjects = n_distinct(USUBJID),
+    N_Serious = sum(ASER == "Y", na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# By severity
+adae %>%
+  filter(TRTEMFL == "Y") %>%
+  count(ASEV)
+```
+
+------------------------------------------------------------------------
+
+## Export
+
+```{r export}
+# Add labels
+attr(adae$ASTDT, "label") <- "Analysis Start Date"
+attr(adae$ASTDY, "label") <- "Analysis Start Relative Day"
+attr(adae$AENDT, "label") <- "Analysis End Date"
+attr(adae$AENDY, "label") <- "Analysis End Relative Day"
+attr(adae$ADURN, "label") <- "Analysis Duration (Days)"
+attr(adae$TRTEMFL, "label") <- "Treatment Emergent Flag"
+attr(adae$ASEV, "label") <- "Analysis Severity"
+attr(adae$ASEVN, "label") <- "Analysis Severity (N)"
+attr(adae$AOCCFL, "label") <- "First Occurrence Flag"
+attr(adae$ANL01FL, "label") <- "Analysis Record Flag 01"
+
+# Export - xportr is already loaded via library()
+xportr_write(adae, path = "adae.xpt", domain = "ADAE")
+
+cat("\n✓ ADAE exported to: adae.xpt\n")
+```
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  Use pharmaverseadam::adsl for reference ADSL
+2.  Impute start date "first", end date "last"
+3.  TRTEMFL = AE on or after treatment start
+4.  AOCCFL = first AE per subject (arrange + group_by + row_number)
+5.  Always validate dates and flags
+
+------------------------------------------------------------------------
+
+## Next Steps
+
+**Day 19:** ADLB - Lab Analysis Dataset\
+**Day 20:** ADVS - Vitals Analysis Dataset\
+**Day 21:** ADTTE - Time-to-Event
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   OCCDS Vignette: <https://pharmaverse.github.io/admiral/articles/occds.html>
+-   ADAE Example: <https://pharmaverse.github.io/examples/adam/adae.html>
+-   pharmaverseadam: <https://pharmaverse.github.io/pharmaverseadam/>
+-   xportr package: <https://atorus-research.github.io/xportr/>
+
+------------------------------------------------------------------------
+
+**End of Day 18**

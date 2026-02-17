@@ -1,0 +1,475 @@
+---
+title: "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+subtitle: "Week 3, Day 19: BDS structure with baseline, change, and toxicity grading"
+author: "30 Days of Pharmaverse"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+## Welcome to ADLB
+
+ADLB is your first **BDS (Basic Data Structure)** dataset. Unlike ADSL (one row per subject) and ADAE (one row per event), BDS has **one row per subject per parameter per timepoint**.
+
+**Today's focus:** Build ADLB with baseline flags, change from baseline, and toxicity grades.
+
+------------------------------------------------------------------------
+
+## Setup
+
+```{r setup}
+library(admiral)
+library(pharmaversesdtm)
+library(pharmaverseadam)
+library(dplyr)
+library(lubridate)
+library(stringr)
+library(xportr)
+
+# Load SDTM and ADaM
+lb <- pharmaversesdtm::lb
+vs <- pharmaversesdtm::vs
+adsl <- pharmaverseadam::adsl
+
+cat("Loaded LB:", nrow(lb), "records\n")
+cat("Loaded ADSL:", nrow(adsl), "subjects\n")
+```
+
+------------------------------------------------------------------------
+
+## Step 1: Merge ADSL Variables
+
+```{r merge-adsl}
+# Start with LB and merge treatment info
+adlb <- lb %>%
+  admiral::derive_vars_merged(
+    dataset_add = adsl,
+    new_vars = exprs(TRTSDT, TRTEDT, TRT01A),
+    by_vars = exprs(STUDYID, USUBJID)
+  )
+
+cat("\nADLB initialized:", nrow(adlb), "records\n")
+
+# Check
+adlb %>%
+  select(USUBJID, LBTESTCD, LBDTC, TRTSDT) %>%
+  head(5)
+```
+
+------------------------------------------------------------------------
+
+## Step 2: Derive Analysis Date
+
+```{r derive-adt}
+# Derive analysis date from LBDTC
+adlb <- adlb %>%
+  admiral::derive_vars_dt(
+    new_vars_prefix = "A",
+    dtc = LBDTC
+  )
+
+cat("\nAnalysis date derived\n")
+
+# Check
+adlb %>%
+  select(USUBJID, LBTESTCD, LBDTC, ADT) %>%
+  head(5)
+```
+
+------------------------------------------------------------------------
+
+## Step 3: Derive Study Day
+
+```{r derive-ady}
+# Calculate relative day
+adlb <- adlb %>%
+  admiral::derive_vars_dy(
+    reference_date = TRTSDT,
+    source_vars = exprs(ADT)
+  )
+
+cat("\nStudy day derived\n")
+
+# Check
+adlb %>%
+  select(USUBJID, LBTESTCD, TRTSDT, ADT, ADY) %>%
+  filter(!is.na(ADY)) %>%
+  head(5)
+```
+
+------------------------------------------------------------------------
+
+## Step 4: Create PARAM and AVAL
+
+```{r create-param-aval}
+# Create BDS variables
+adlb <- adlb %>%
+  mutate(
+    PARAMCD = LBTESTCD,
+    PARAM = LBTEST,
+    AVAL = LBSTRESN,
+    AVALU = LBSTRESU
+  )
+
+cat("\nPARAM and AVAL created\n")
+
+# Check parameters
+adlb %>%
+  count(PARAMCD, PARAM) %>%
+  head(10)
+```
+
+**BDS Key Variables:**
+
+-   PARAMCD: Parameter code (ALT, AST, etc.)
+-   PARAM: Parameter description
+-   AVAL: Analysis value (numeric)
+-   AVALU: Analysis value unit
+
+------------------------------------------------------------------------
+
+## Step 5: Derive Baseline Flag
+
+```{r derive-ablfl}
+# Flag last value before treatment start
+adlb <- adlb %>%
+  arrange(USUBJID, PARAMCD, ADT) %>%
+  group_by(USUBJID, PARAMCD) %>%
+  mutate(
+    ABLFL = case_when(
+      !is.na(AVAL) & ADT <= TRTSDT & row_number() == max(which(ADT <= TRTSDT)) ~ "Y",
+      TRUE ~ NA_character_
+    )
+  ) %>%
+  ungroup()
+
+cat("\nBaseline flag derived\n")
+
+# Check
+adlb %>%
+  filter(ABLFL == "Y") %>%
+  select(USUBJID, PARAMCD, ADT, TRTSDT, AVAL, ABLFL) %>%
+  head(5)
+```
+
+**ABLFL Logic:**
+
+-   Last non-missing value on or before TRTSDT
+-   One ABLFL="Y" per subject per parameter
+
+------------------------------------------------------------------------
+
+## Step 6: Derive Baseline Value
+
+```{r derive-base}
+# Merge baseline value to all records
+adlb <- adlb %>%
+  group_by(USUBJID, PARAMCD) %>%
+  mutate(
+    BASE = AVAL[ABLFL == "Y"][1]
+  ) %>%
+  ungroup()
+
+cat("\nBaseline value derived\n")
+
+# Check
+adlb %>%
+  select(USUBJID, PARAMCD, ADT, AVAL, ABLFL, BASE) %>%
+  head(10)
+```
+
+------------------------------------------------------------------------
+
+## Step 7: Derive Change from Baseline
+
+```{r derive-chg}
+# Calculate change and percent change
+adlb <- adlb %>%
+  mutate(
+    CHG = case_when(
+      !is.na(AVAL) & !is.na(BASE) ~ AVAL - BASE,
+      TRUE ~ NA_real_
+    ),
+    PCHG = case_when(
+      !is.na(CHG) & BASE != 0 ~ (CHG / BASE) * 100,
+      TRUE ~ NA_real_
+    )
+  )
+
+cat("\nChange from baseline calculated\n")
+
+# Summary
+adlb %>%
+  filter(!is.na(CHG)) %>%
+  group_by(PARAMCD) %>%
+  summarise(
+    N = n(),
+    Mean_CHG = round(mean(CHG), 2),
+    .groups = "drop"
+  ) %>%
+  head(5)
+```
+
+**Change Variables:**
+
+-   CHG = AVAL - BASE
+-   PCHG = (CHG / BASE) \* 100
+
+------------------------------------------------------------------------
+
+## Step 8: Derive Analysis Visit
+
+```{r derive-avisit}
+# Map VISIT to analysis visit
+adlb <- adlb %>%
+  mutate(
+    AVISIT = case_when(
+      VISIT == "SCREENING" ~ "Baseline",
+      VISIT == "BASELINE" ~ "Baseline",
+      TRUE ~ VISIT
+    ),
+    AVISITN = case_when(
+      AVISIT == "Baseline" ~ 0,
+      VISIT == "WEEK 2" ~ 2,
+      VISIT == "WEEK 4" ~ 4,
+      VISIT == "WEEK 8" ~ 8,
+      TRUE ~ as.numeric(VISITNUM)
+    )
+  )
+
+cat("\nAnalysis visit derived\n")
+
+# Distribution
+adlb %>%
+  count(AVISIT, AVISITN) %>%
+  head(5)
+```
+
+------------------------------------------------------------------------
+
+## Step 9: Derive Reference Range Indicators
+
+```{r derive-anrind}
+# Create reference range indicators
+adlb <- adlb %>%
+  mutate(
+    ANRIND = case_when(
+      !is.na(AVAL) & !is.na(LBSTNRLO) & AVAL < LBSTNRLO ~ "LOW",
+      !is.na(AVAL) & !is.na(LBSTNRHI) & AVAL > LBSTNRHI ~ "HIGH",
+      !is.na(AVAL) ~ "NORMAL",
+      TRUE ~ NA_character_
+    ),
+    BNRIND = case_when(
+      !is.na(BASE) & !is.na(LBSTNRLO) & BASE < LBSTNRLO ~ "LOW",
+      !is.na(BASE) & !is.na(LBSTNRHI) & BASE > LBSTNRHI ~ "HIGH",
+      !is.na(BASE) ~ "NORMAL",
+      TRUE ~ NA_character_
+    )
+  )
+
+cat("\nReference range indicators derived\n")
+
+# Distribution
+adlb %>%
+  count(PARAMCD, ANRIND) %>%
+  head(10)
+```
+
+**Reference Range:**
+
+-   ANRIND: Analysis reference range (LOW/NORMAL/HIGH)
+-   BNRIND: Baseline reference range
+
+------------------------------------------------------------------------
+
+## Step 10: Derive Toxicity Grades
+
+```{r derive-atoxgr}
+# Simple toxicity grading for ALT as example
+adlb <- adlb %>%
+  mutate(
+    ATOXGR = case_when(
+      PARAMCD == "ALT" & !is.na(AVAL) & !is.na(LBSTNRHI) ~ case_when(
+        AVAL > 20 * LBSTNRHI ~ "4",
+        AVAL > 5 * LBSTNRHI ~ "3",
+        AVAL > 3 * LBSTNRHI ~ "2",
+        AVAL > LBSTNRHI ~ "1",
+        TRUE ~ "0"
+      ),
+      TRUE ~ NA_character_
+    ),
+    BTOXGR = case_when(
+      PARAMCD == "ALT" & !is.na(BASE) & !is.na(LBSTNRHI) ~ case_when(
+        BASE > 20 * LBSTNRHI ~ "4",
+        BASE > 5 * LBSTNRHI ~ "3",
+        BASE > 3 * LBSTNRHI ~ "2",
+        BASE > LBSTNRHI ~ "1",
+        TRUE ~ "0"
+      ),
+      TRUE ~ NA_character_
+    )
+  )
+
+cat("\nToxicity grades derived (ALT only)\n")
+
+# Check ALT toxicity
+adlb %>%
+  filter(PARAMCD == "ALT", !is.na(ATOXGR)) %>%
+  count(ATOXGR)
+```
+
+**NCI CTCAE Grading (ALT Example):**
+
+-   Grade 0: Normal
+-   Grade 1: \>ULN - 3×ULN
+-   Grade 2: \>3×ULN - 5×ULN
+-   Grade 3: \>5×ULN - 20×ULN
+-   Grade 4: \>20×ULN
+
+------------------------------------------------------------------------
+
+## Step 11: Derive Analysis Sequence
+
+```{r derive-aseq}
+# Create sequence number
+adlb <- adlb %>%
+  arrange(USUBJID, PARAMCD, ADT) %>%
+  group_by(USUBJID) %>%
+  mutate(ASEQ = row_number()) %>%
+  ungroup()
+
+cat("\nAnalysis sequence derived\n")
+```
+
+------------------------------------------------------------------------
+
+## Validation
+
+```{r validate}
+cat("\n=== ADLB Validation ===\n\n")
+
+# Check 1: One ABLFL per subject-parameter
+check1 <- adlb %>%
+  filter(ABLFL == "Y") %>%
+  count(USUBJID, PARAMCD) %>%
+  filter(n > 1)
+cat("Check 1 - Multiple ABLFL per subject-PARAMCD:", nrow(check1), "\n")
+
+# Check 2: CHG is NA at baseline
+check2 <- adlb %>%
+  filter(ABLFL == "Y", !is.na(CHG))
+cat("Check 2 - CHG not NA at baseline:", nrow(check2), "\n")
+
+# Check 3: BASE consistency
+check3 <- adlb %>%
+  filter(!is.na(BASE)) %>%
+  group_by(USUBJID, PARAMCD) %>%
+  summarise(n_distinct_base = n_distinct(BASE), .groups = "drop") %>%
+  filter(n_distinct_base > 1)
+cat("Check 3 - Inconsistent BASE within subject-PARAMCD:", nrow(check3), "\n")
+
+cat("\n✓ Validation complete\n")
+```
+
+------------------------------------------------------------------------
+
+## Summary
+
+```{r summary}
+cat("\n=== ADLB Summary ===\n\n")
+cat("Total records:", nrow(adlb), "\n")
+cat("Variables:", ncol(adlb), "\n\n")
+
+# By parameter
+adlb %>%
+  group_by(PARAMCD) %>%
+  summarise(
+    N_Records = n(),
+    N_Subjects = n_distinct(USUBJID),
+    N_Baseline = sum(ABLFL == "Y", na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  head(10)
+
+# By visit
+adlb %>%
+  count(AVISIT, AVISITN) %>%
+  arrange(AVISITN)
+```
+
+------------------------------------------------------------------------
+
+## Export
+
+```{r export}
+# Add labels
+attr(adlb$PARAMCD, "label") <- "Parameter Code"
+attr(adlb$PARAM, "label") <- "Parameter"
+attr(adlb$AVAL, "label") <- "Analysis Value"
+attr(adlb$AVALU, "label") <- "Analysis Value Unit"
+attr(adlb$ADT, "label") <- "Analysis Date"
+attr(adlb$ADY, "label") <- "Analysis Relative Day"
+attr(adlb$AVISIT, "label") <- "Analysis Visit"
+attr(adlb$AVISITN, "label") <- "Analysis Visit (N)"
+attr(adlb$ABLFL, "label") <- "Baseline Record Flag"
+attr(adlb$BASE, "label") <- "Baseline Value"
+attr(adlb$CHG, "label") <- "Change from Baseline"
+attr(adlb$PCHG, "label") <- "Percent Change from Baseline"
+attr(adlb$ANRIND, "label") <- "Analysis Reference Range Indicator"
+attr(adlb$BNRIND, "label") <- "Baseline Reference Range Indicator"
+attr(adlb$ATOXGR, "label") <- "Analysis Toxicity Grade"
+attr(adlb$ASEQ, "label") <- "Analysis Sequence Number"
+
+# Export
+xportr_write(adlb, path = "adlb.xpt", domain = "ADLB")
+
+cat("\n✓ ADLB exported to: adlb.xpt\n")
+```
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  BDS structure: One row per subject-parameter-timepoint
+2.  ABLFL = last value on or before TRTSDT (one per subject-PARAMCD)
+3.  BASE is constant across all records for same subject-PARAMCD
+4.  CHG = AVAL - BASE, must be NA at baseline rows
+5.  ANRIND compares to reference range (LOW/NORMAL/HIGH)
+6.  Toxicity grades based on multiples of ULN (Upper Limit of Normal)
+
+------------------------------------------------------------------------
+
+## Next Steps
+
+**Day 20:** ADVS - Vitals Analysis Dataset\
+**Day 21:** ADTTE - Time-to-Event Analysis\
+**Day 22:** ADCM and ADRS
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   BDS Structure: <https://www.cdisc.org/standards/foundational/adam>
+-   Admiral BDS Vignette: <https://pharmaverse.github.io/admiral/articles/bds_finding.html>
+-   NCI CTCAE: <https://ctep.cancer.gov/protocoldevelopment/electronic_applications/ctc.htm>
+
+------------------------------------------------------------------------
+
+**End of Day 19**

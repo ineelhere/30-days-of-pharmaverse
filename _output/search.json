@@ -4,14 +4,14 @@
     "href": "index.html",
     "title": "30 Days of Pharmaverse",
     "section": "",
-    "text": "Welcome to 30 Days of Pharmaverse. This project is a hands-on exploration of the modern clinical data science stack, designed for programmers and data scientists who want to dive deep into CDISC standards using the open-source Pharmaverse ecosystem.\nInstead of a traditional course, think of this as a guided tour or a developer’s log. Each day, we tackle a specific concept - from setting up a working environment to building complex ADaM datasets and producing TLF outputs - using industry-standard R packages like admiral, xportr, metacore, rtables, tern, and more.\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 1\nEnvironment Setup & First SDTM Code\nSDTM Programming Walkthrough\n{admiral}, {pharmaversesdtm}, {dplyr}, {haven}, {xportr}\n\n\nDay 2\nSDTM Domain Structure & Tidyverse Mastery\nUnderstanding SDTM Domain Classes Through Code\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 3\nControlled Terminology & MedDRA Coding\nBuilding AE Codelists in R\n{dplyr}, {pharmaversesdtm}\n\n\nDay 4\nClinical Date Derivations with lubridate\nStudy Day, Duration, and Partial Date Imputation\n{lubridate}, {dplyr}, {pharmaversesdtm}\n\n\nDay 5\nAdvanced Tidyverse: Pivoting & Joining\nReshaping SDTM Data for Analysis\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 6\nIntroduction to sdtm.oak\nEDC-to-SDTM Transformation Patterns\n{sdtm.oak}, {dplyr}, {pharmaversesdtm}\n\n\nDay 7\nWeek 1 Capstone: End-to-End SDTM Script\nBuild DM, AE, EX from Scratch with xportr\n{dplyr}, {lubridate}, {sdtm.oak}, {xportr}, {haven}\n\n\n\n\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 8\nComplex SDTM Domains - LB (Lab Results)\nFindings Class with Unit Standardization\n{dplyr}, {tidyr}, {sdtm.oak}, {pharmaversesdtm}\n\n\nDay 9\nVS (Vital Signs) & Repeated Measures\nVisit-Level Data and Positional Readings\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 10\nAE Domain Mastery & SAE Logic\nDeep Dive into Severity, Causality, and Outcomes\n{dplyr}, {lubridate}, {sdtm.oak}\n\n\nDay 11\nDisposition (DS) & Trial Design Domains\nScreen Failures, Completers, and Study Structure\n{dplyr}, {lubridate}, {sdtm.oak}\n\n\nDay 12\nData Cuts with datacutr\nApplying Clinical Cutoff Dates for Interim & Final Analyses\n{dplyr}, {lubridate}, {datacutr}\n\n\nDay 13\nSDTM Validation with sdtmchecks\nRunning FDA Business Rules Against Your Domains\n{sdtmchecks}, {dplyr}, {pharmaversesdtm}\n\n\nDay 14\nWeek 2 Capstone - Metadata-Driven SDTM with metacore & xportr\nSpecification-Driven Workflows for Submission-Ready Data\n{metacore}, {metatools}, {xportr}, {dplyr}\n\n\n\n\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 15\nADaM Architecture & Admiral Core Engine\nWeek 3, Day 15: Understanding ADaM Structures, Admiral Philosophy, and Core Derivation Patterns\n{admiral}, {pharmaversesdtm}, {pharmaverseadam}, {dplyr}\n\n\nDay 16\nADSL Part 1 - Treatment Variables & Dates\nWeek 3, Day 16: First dose dates, treatment assignment, and study timeline from EX and DS\n{admiral}, {dplyr}, {lubridate}, {pharmaversesdtm}"
+    "text": "Welcome to 30 Days of Pharmaverse. This project is a hands-on exploration of the modern clinical data science stack, designed for programmers and data scientists who want to dive deep into CDISC standards using the open-source Pharmaverse ecosystem.\nInstead of a traditional course, think of this as a guided tour or a developer’s log. Each day, we tackle a specific concept - from setting up a working environment to building complex ADaM datasets and producing TLF outputs - using industry-standard R packages like admiral, xportr, metacore, rtables, tern, and more.\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 1\nEnvironment Setup & First SDTM Code\nSDTM Programming Walkthrough\n{admiral}, {pharmaversesdtm}, {dplyr}, {haven}, {xportr}\n\n\nDay 2\nSDTM Domain Structure & Tidyverse Mastery\nUnderstanding SDTM Domain Classes Through Code\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 3\nControlled Terminology & MedDRA Coding\nBuilding AE Codelists in R\n{dplyr}, {pharmaversesdtm}\n\n\nDay 4\nClinical Date Derivations with lubridate\nStudy Day, Duration, and Partial Date Imputation\n{lubridate}, {dplyr}, {pharmaversesdtm}\n\n\nDay 5\nAdvanced Tidyverse: Pivoting & Joining\nReshaping SDTM Data for Analysis\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 6\nIntroduction to sdtm.oak\nEDC-to-SDTM Transformation Patterns\n{sdtm.oak}, {dplyr}, {pharmaversesdtm}\n\n\nDay 7\nWeek 1 Capstone: End-to-End SDTM Script\nBuild DM, AE, EX from Scratch with xportr\n{dplyr}, {lubridate}, {sdtm.oak}, {xportr}, {haven}\n\n\n\n\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 8\nComplex SDTM Domains - LB (Lab Results)\nFindings Class with Unit Standardization\n{dplyr}, {tidyr}, {sdtm.oak}, {pharmaversesdtm}\n\n\nDay 9\nVS (Vital Signs) & Repeated Measures\nVisit-Level Data and Positional Readings\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 10\nAE Domain Mastery & SAE Logic\nDeep Dive into Severity, Causality, and Outcomes\n{dplyr}, {lubridate}, {sdtm.oak}\n\n\nDay 11\nDisposition (DS) & Trial Design Domains\nScreen Failures, Completers, and Study Structure\n{dplyr}, {lubridate}, {sdtm.oak}\n\n\nDay 12\nData Cuts with datacutr\nApplying Clinical Cutoff Dates for Interim & Final Analyses\n{dplyr}, {lubridate}, {datacutr}\n\n\nDay 13\nSDTM Validation with sdtmchecks\nRunning FDA Business Rules Against Your Domains\n{sdtmchecks}, {dplyr}, {pharmaversesdtm}\n\n\nDay 14\nWeek 2 Capstone - Metadata-Driven SDTM with metacore & xportr\nSpecification-Driven Workflows for Submission-Ready Data\n{metacore}, {metatools}, {xportr}, {dplyr}\n\n\n\n\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 15\nADaM Architecture & Admiral Core Engine\nWeek 3, Day 15: Understanding ADaM Structures, Admiral Philosophy, and Core Derivation Patterns\n{admiral}, {pharmaversesdtm}, {pharmaverseadam}, {dplyr}\n\n\nDay 16\nADSL Part 1 - Treatment Variables & Dates\nWeek 3, Day 16: First dose dates, treatment assignment, and study timeline from EX and DS\n{admiral}, {dplyr}, {lubridate}, {pharmaversesdtm}\n\n\nDay 17\nADSL Part 2 - Population Flags & Demographics\nWeek 3, Day 17: SAFFL, ITTFL, demographic groupings, and baseline measurements\n{admiral}, {dplyr}, {pharmaversesdtm}\n\n\nDay 18\nADAE - Adverse Events Analysis Dataset\nWeek 3, Day 18: OCCDS structure with treatment emergent flags\n{admiral}, {dplyr}, {lubridate}\n\n\nDay 19\nADLB - Lab Analysis Dataset (BDS)\nWeek 3, Day 19: BDS structure with baseline, change, and toxicity grading\n{admiral}, {dplyr}, {lubridate}, {pharmaversesdtm}\n\n\nDay 20\nADVS - Vitals Analysis Dataset (BDS)\nWeek 3, Day 20: BDS structure with visit windows and multiple readings\n{admiral}, {dplyr}, {lubridate}, {pharmaversesdtm}\n\n\nDay 21\nADTTE - Time-to-Event Analysis Dataset\nWeek 3, Day 21: Survival analysis structure with events and censoring\n{admiral}, {dplyr}, {lubridate}, {pharmaversesdtm}"
   },
   {
     "objectID": "index.html#exploration-roadmap",
     "href": "index.html#exploration-roadmap",
     "title": "30 Days of Pharmaverse",
     "section": "",
-    "text": "Welcome to 30 Days of Pharmaverse. This project is a hands-on exploration of the modern clinical data science stack, designed for programmers and data scientists who want to dive deep into CDISC standards using the open-source Pharmaverse ecosystem.\nInstead of a traditional course, think of this as a guided tour or a developer’s log. Each day, we tackle a specific concept - from setting up a working environment to building complex ADaM datasets and producing TLF outputs - using industry-standard R packages like admiral, xportr, metacore, rtables, tern, and more.\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 1\nEnvironment Setup & First SDTM Code\nSDTM Programming Walkthrough\n{admiral}, {pharmaversesdtm}, {dplyr}, {haven}, {xportr}\n\n\nDay 2\nSDTM Domain Structure & Tidyverse Mastery\nUnderstanding SDTM Domain Classes Through Code\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 3\nControlled Terminology & MedDRA Coding\nBuilding AE Codelists in R\n{dplyr}, {pharmaversesdtm}\n\n\nDay 4\nClinical Date Derivations with lubridate\nStudy Day, Duration, and Partial Date Imputation\n{lubridate}, {dplyr}, {pharmaversesdtm}\n\n\nDay 5\nAdvanced Tidyverse: Pivoting & Joining\nReshaping SDTM Data for Analysis\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 6\nIntroduction to sdtm.oak\nEDC-to-SDTM Transformation Patterns\n{sdtm.oak}, {dplyr}, {pharmaversesdtm}\n\n\nDay 7\nWeek 1 Capstone: End-to-End SDTM Script\nBuild DM, AE, EX from Scratch with xportr\n{dplyr}, {lubridate}, {sdtm.oak}, {xportr}, {haven}\n\n\n\n\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 8\nComplex SDTM Domains - LB (Lab Results)\nFindings Class with Unit Standardization\n{dplyr}, {tidyr}, {sdtm.oak}, {pharmaversesdtm}\n\n\nDay 9\nVS (Vital Signs) & Repeated Measures\nVisit-Level Data and Positional Readings\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 10\nAE Domain Mastery & SAE Logic\nDeep Dive into Severity, Causality, and Outcomes\n{dplyr}, {lubridate}, {sdtm.oak}\n\n\nDay 11\nDisposition (DS) & Trial Design Domains\nScreen Failures, Completers, and Study Structure\n{dplyr}, {lubridate}, {sdtm.oak}\n\n\nDay 12\nData Cuts with datacutr\nApplying Clinical Cutoff Dates for Interim & Final Analyses\n{dplyr}, {lubridate}, {datacutr}\n\n\nDay 13\nSDTM Validation with sdtmchecks\nRunning FDA Business Rules Against Your Domains\n{sdtmchecks}, {dplyr}, {pharmaversesdtm}\n\n\nDay 14\nWeek 2 Capstone - Metadata-Driven SDTM with metacore & xportr\nSpecification-Driven Workflows for Submission-Ready Data\n{metacore}, {metatools}, {xportr}, {dplyr}\n\n\n\n\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 15\nADaM Architecture & Admiral Core Engine\nWeek 3, Day 15: Understanding ADaM Structures, Admiral Philosophy, and Core Derivation Patterns\n{admiral}, {pharmaversesdtm}, {pharmaverseadam}, {dplyr}\n\n\nDay 16\nADSL Part 1 - Treatment Variables & Dates\nWeek 3, Day 16: First dose dates, treatment assignment, and study timeline from EX and DS\n{admiral}, {dplyr}, {lubridate}, {pharmaversesdtm}"
+    "text": "Welcome to 30 Days of Pharmaverse. This project is a hands-on exploration of the modern clinical data science stack, designed for programmers and data scientists who want to dive deep into CDISC standards using the open-source Pharmaverse ecosystem.\nInstead of a traditional course, think of this as a guided tour or a developer’s log. Each day, we tackle a specific concept - from setting up a working environment to building complex ADaM datasets and producing TLF outputs - using industry-standard R packages like admiral, xportr, metacore, rtables, tern, and more.\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 1\nEnvironment Setup & First SDTM Code\nSDTM Programming Walkthrough\n{admiral}, {pharmaversesdtm}, {dplyr}, {haven}, {xportr}\n\n\nDay 2\nSDTM Domain Structure & Tidyverse Mastery\nUnderstanding SDTM Domain Classes Through Code\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 3\nControlled Terminology & MedDRA Coding\nBuilding AE Codelists in R\n{dplyr}, {pharmaversesdtm}\n\n\nDay 4\nClinical Date Derivations with lubridate\nStudy Day, Duration, and Partial Date Imputation\n{lubridate}, {dplyr}, {pharmaversesdtm}\n\n\nDay 5\nAdvanced Tidyverse: Pivoting & Joining\nReshaping SDTM Data for Analysis\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 6\nIntroduction to sdtm.oak\nEDC-to-SDTM Transformation Patterns\n{sdtm.oak}, {dplyr}, {pharmaversesdtm}\n\n\nDay 7\nWeek 1 Capstone: End-to-End SDTM Script\nBuild DM, AE, EX from Scratch with xportr\n{dplyr}, {lubridate}, {sdtm.oak}, {xportr}, {haven}\n\n\n\n\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 8\nComplex SDTM Domains - LB (Lab Results)\nFindings Class with Unit Standardization\n{dplyr}, {tidyr}, {sdtm.oak}, {pharmaversesdtm}\n\n\nDay 9\nVS (Vital Signs) & Repeated Measures\nVisit-Level Data and Positional Readings\n{dplyr}, {tidyr}, {pharmaversesdtm}\n\n\nDay 10\nAE Domain Mastery & SAE Logic\nDeep Dive into Severity, Causality, and Outcomes\n{dplyr}, {lubridate}, {sdtm.oak}\n\n\nDay 11\nDisposition (DS) & Trial Design Domains\nScreen Failures, Completers, and Study Structure\n{dplyr}, {lubridate}, {sdtm.oak}\n\n\nDay 12\nData Cuts with datacutr\nApplying Clinical Cutoff Dates for Interim & Final Analyses\n{dplyr}, {lubridate}, {datacutr}\n\n\nDay 13\nSDTM Validation with sdtmchecks\nRunning FDA Business Rules Against Your Domains\n{sdtmchecks}, {dplyr}, {pharmaversesdtm}\n\n\nDay 14\nWeek 2 Capstone - Metadata-Driven SDTM with metacore & xportr\nSpecification-Driven Workflows for Submission-Ready Data\n{metacore}, {metatools}, {xportr}, {dplyr}\n\n\n\n\n\n\n\n\n\nDay\nTopic\nDeep Dive\nKey Packages\n\n\n\n\nDay 15\nADaM Architecture & Admiral Core Engine\nWeek 3, Day 15: Understanding ADaM Structures, Admiral Philosophy, and Core Derivation Patterns\n{admiral}, {pharmaversesdtm}, {pharmaverseadam}, {dplyr}\n\n\nDay 16\nADSL Part 1 - Treatment Variables & Dates\nWeek 3, Day 16: First dose dates, treatment assignment, and study timeline from EX and DS\n{admiral}, {dplyr}, {lubridate}, {pharmaversesdtm}\n\n\nDay 17\nADSL Part 2 - Population Flags & Demographics\nWeek 3, Day 17: SAFFL, ITTFL, demographic groupings, and baseline measurements\n{admiral}, {dplyr}, {pharmaversesdtm}\n\n\nDay 18\nADAE - Adverse Events Analysis Dataset\nWeek 3, Day 18: OCCDS structure with treatment emergent flags\n{admiral}, {dplyr}, {lubridate}\n\n\nDay 19\nADLB - Lab Analysis Dataset (BDS)\nWeek 3, Day 19: BDS structure with baseline, change, and toxicity grading\n{admiral}, {dplyr}, {lubridate}, {pharmaversesdtm}\n\n\nDay 20\nADVS - Vitals Analysis Dataset (BDS)\nWeek 3, Day 20: BDS structure with visit windows and multiple readings\n{admiral}, {dplyr}, {lubridate}, {pharmaversesdtm}\n\n\nDay 21\nADTTE - Time-to-Event Analysis Dataset\nWeek 3, Day 21: Survival analysis structure with events and censoring\n{admiral}, {dplyr}, {lubridate}, {pharmaversesdtm}"
   },
   {
     "objectID": "index.html#what-youll-explore",
@@ -3054,5 +3054,780 @@
       "Week 3: ADaM Deep Dive",
       "Day 17: ADSL Part 2 - Population Flags & Demographics"
     ]
+  },
+  {
+    "objectID": "week3/day18.html",
+    "href": "week3/day18.html",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "",
+    "text": "ADAE is the backbone of safety reporting. Every safety table flows from this dataset.\nToday’s focus: Build ADAE with treatment emergent flags and occurrence indicators.",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#welcome-to-adae",
+    "href": "week3/day18.html#welcome-to-adae",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "",
+    "text": "ADAE is the backbone of safety reporting. Every safety table flows from this dataset.\nToday’s focus: Build ADAE with treatment emergent flags and occurrence indicators.",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#setup",
+    "href": "week3/day18.html#setup",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "2 Setup",
+    "text": "2 Setup\n\nlibrary(admiral)\nlibrary(pharmaversesdtm)\nlibrary(pharmaverseadam)\nlibrary(dplyr)\nlibrary(lubridate)\nlibrary(stringr)\nlibrary(xportr)\n\n# Load SDTM domains\nae &lt;- pharmaversesdtm::ae\nex &lt;- pharmaversesdtm::ex\n\n# Load pre-built ADSL\nadsl &lt;- pharmaverseadam::adsl\n\ncat(\"Loaded AE:\", nrow(ae), \"records\\n\")\n\nLoaded AE: 1191 records\n\ncat(\"Loaded ADSL:\", nrow(adsl), \"subjects\\n\")\n\nLoaded ADSL: 306 subjects\n\n\nWhy pharmaverseadam::adsl?\n\nPre-built reference ADSL\nHas all required variables\nSaves rebuild time",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#step-1-merge-adsl-to-ae",
+    "href": "week3/day18.html#step-1-merge-adsl-to-ae",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "3 Step 1: Merge ADSL to AE",
+    "text": "3 Step 1: Merge ADSL to AE\n\n# Merge treatment dates to AE\nadae &lt;- ae %&gt;%\n  admiral::derive_vars_merged(\n    dataset_add = adsl,\n    new_vars = exprs(TRTSDT, TRTEDT, TRT01A),\n    by_vars = exprs(STUDYID, USUBJID)\n  )\n\ncat(\"\\nADAE initialized:\", nrow(adae), \"records\\n\")\n\n\nADAE initialized: 1191 records\n\n# Check\nadae %&gt;%\n  select(USUBJID, AETERM, TRTSDT, TRTEDT) %&gt;%\n  head(5)\n\n# A tibble: 5 × 4\n  USUBJID     AETERM                               TRTSDT     TRTEDT    \n  &lt;chr&gt;       &lt;chr&gt;                                &lt;date&gt;     &lt;date&gt;    \n1 01-701-1015 APPLICATION SITE ERYTHEMA            2014-01-02 2014-07-02\n2 01-701-1015 APPLICATION SITE PRURITUS            2014-01-02 2014-07-02\n3 01-701-1015 DIARRHOEA                            2014-01-02 2014-07-02\n4 01-701-1023 ATRIOVENTRICULAR BLOCK SECOND DEGREE 2012-08-05 2012-09-01\n5 01-701-1023 ERYTHEMA                             2012-08-05 2012-09-01",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#step-2-derive-ae-start-date",
+    "href": "week3/day18.html#step-2-derive-ae-start-date",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "4 Step 2: Derive AE Start Date",
+    "text": "4 Step 2: Derive AE Start Date\n\n# Derive AE start date\nadae &lt;- adae %&gt;%\n  admiral::derive_vars_dt(\n    new_vars_prefix = \"AST\",\n    dtc = AESTDTC,\n    highest_imputation = \"M\",\n    flag_imputation = \"auto\"\n  )\n\ncat(\"\\nAE start date derived\\n\")\n\n\nAE start date derived\n\n# Check\nadae %&gt;%\n  select(USUBJID, AESEQ, AESTDTC, ASTDT, ASTDTF) %&gt;%\n  head(5)\n\n# A tibble: 5 × 5\n  USUBJID     AESEQ AESTDTC    ASTDT      ASTDTF\n  &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;      &lt;date&gt;     &lt;chr&gt; \n1 01-701-1015     1 2014-01-03 2014-01-03 &lt;NA&gt;  \n2 01-701-1015     2 2014-01-03 2014-01-03 &lt;NA&gt;  \n3 01-701-1015     3 2014-01-09 2014-01-09 &lt;NA&gt;  \n4 01-701-1023     3 2012-08-26 2012-08-26 &lt;NA&gt;  \n5 01-701-1023     1 2012-08-07 2012-08-07 &lt;NA&gt;  \n\n\nImputation:\n\nPartial dates like “2024-03” → “2024-03-01”\nASTDTF flag shows if imputed",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#step-3-derive-ae-end-date",
+    "href": "week3/day18.html#step-3-derive-ae-end-date",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "5 Step 3: Derive AE End Date",
+    "text": "5 Step 3: Derive AE End Date\n\n# Derive AE end date\nadae &lt;- adae %&gt;%\n  admiral::derive_vars_dt(\n    new_vars_prefix = \"AEN\",\n    dtc = AEENDTC,\n    highest_imputation = \"M\",\n    date_imputation = \"last\",\n    flag_imputation = \"auto\"\n  )\n\ncat(\"\\nAE end date derived\\n\")\n\n\nAE end date derived\n\n# Check\nadae %&gt;%\n  select(USUBJID, AESEQ, AEENDTC, AENDT, AENDTF) %&gt;%\n  head(5)\n\n# A tibble: 5 × 5\n  USUBJID     AESEQ AEENDTC    AENDT      AENDTF\n  &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;      &lt;date&gt;     &lt;chr&gt; \n1 01-701-1015     1 &lt;NA&gt;       NA         &lt;NA&gt;  \n2 01-701-1015     2 &lt;NA&gt;       NA         &lt;NA&gt;  \n3 01-701-1015     3 2014-01-11 2014-01-11 &lt;NA&gt;  \n4 01-701-1023     3 &lt;NA&gt;       NA         &lt;NA&gt;  \n5 01-701-1023     1 2012-08-30 2012-08-30 &lt;NA&gt;  \n\n\nDifference from start:\n\ndate_imputation = \"last\" → “2024-03” becomes “2024-03-31”",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#step-4-derive-study-days",
+    "href": "week3/day18.html#step-4-derive-study-days",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "6 Step 4: Derive Study Days",
+    "text": "6 Step 4: Derive Study Days\n\n# Calculate relative days\nadae &lt;- adae %&gt;%\n  admiral::derive_vars_dy(\n    reference_date = TRTSDT,\n    source_vars = exprs(ASTDT, AENDT)\n  )\n\ncat(\"\\nStudy days derived\\n\")\n\n\nStudy days derived\n\n# Check\nadae %&gt;%\n  select(USUBJID, TRTSDT, ASTDT, ASTDY, AENDT, AENDY) %&gt;%\n  filter(!is.na(ASTDY)) %&gt;%\n  head(5)\n\n# A tibble: 5 × 6\n  USUBJID     TRTSDT     ASTDT      ASTDY AENDT      AENDY\n  &lt;chr&gt;       &lt;date&gt;     &lt;date&gt;     &lt;dbl&gt; &lt;date&gt;     &lt;dbl&gt;\n1 01-701-1015 2014-01-02 2014-01-03     2 NA            NA\n2 01-701-1015 2014-01-02 2014-01-03     2 NA            NA\n3 01-701-1015 2014-01-02 2014-01-09     8 2014-01-11    10\n4 01-701-1023 2012-08-05 2012-08-26    22 NA            NA\n5 01-701-1023 2012-08-05 2012-08-07     3 2012-08-30    26\n\n\nStudy day convention:\n\nDay 1 = first treatment day\nNo Day 0",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#step-5-derive-duration",
+    "href": "week3/day18.html#step-5-derive-duration",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "7 Step 5: Derive Duration",
+    "text": "7 Step 5: Derive Duration\n\n# Calculate duration\nadae &lt;- adae %&gt;%\n  mutate(\n    ADURN = case_when(\n      !is.na(ASTDT) & !is.na(AENDT) ~ as.numeric(AENDT - ASTDT) + 1,\n      TRUE ~ NA_real_\n    )\n  )\n\ncat(\"\\nDuration calculated\\n\")\n\n\nDuration calculated\n\n# Summary\nadae %&gt;%\n  filter(!is.na(ADURN)) %&gt;%\n  summarise(\n    N = n(),\n    Mean = round(mean(ADURN), 1),\n    Median = median(ADURN),\n    Min = min(ADURN),\n    Max = max(ADURN)\n  )\n\n# A tibble: 1 × 5\n      N  Mean Median   Min   Max\n  &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1   718  24.2     11     1   444\n\n\nFormula: AENDT - ASTDT + 1",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#step-6-derive-treatment-emergent-flag",
+    "href": "week3/day18.html#step-6-derive-treatment-emergent-flag",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "8 Step 6: Derive Treatment Emergent Flag",
+    "text": "8 Step 6: Derive Treatment Emergent Flag\n\n# Flag AEs that occurred during treatment\nadae &lt;- adae %&gt;%\n  mutate(\n    TRTEMFL = case_when(\n      !is.na(ASTDT) & !is.na(TRTSDT) & ASTDT &gt;= TRTSDT ~ \"Y\",\n      TRUE ~ NA_character_\n    )\n  )\n\ncat(\"\\nTreatment emergent flag derived\\n\")\n\n\nTreatment emergent flag derived\n\n# Distribution\nadae %&gt;%\n  count(TRTEMFL)\n\n# A tibble: 2 × 2\n  TRTEMFL     n\n  &lt;chr&gt;   &lt;int&gt;\n1 Y        1126\n2 &lt;NA&gt;       65\n\n\nLogic:\n\nAE started on or after treatment start\nUsed in all safety tables",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#step-7-derive-severity-numeric",
+    "href": "week3/day18.html#step-7-derive-severity-numeric",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "9 Step 7: Derive Severity Numeric",
+    "text": "9 Step 7: Derive Severity Numeric\n\n# Create numeric severity\nadae &lt;- adae %&gt;%\n  mutate(\n    ASEV = AESEV,\n    ASEVN = case_when(\n      AESEV == \"MILD\" ~ 1,\n      AESEV == \"MODERATE\" ~ 2,\n      AESEV == \"SEVERE\" ~ 3,\n      TRUE ~ NA_real_\n    )\n  )\n\ncat(\"\\nSeverity numeric created\\n\")\n\n\nSeverity numeric created\n\n# Distribution\nadae %&gt;%\n  count(ASEV, ASEVN)\n\n# A tibble: 3 × 3\n  ASEV     ASEVN     n\n  &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt;\n1 MILD         1   770\n2 MODERATE     2   378\n3 SEVERE       3    43",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#step-8-derive-first-occurrence-flag",
+    "href": "week3/day18.html#step-8-derive-first-occurrence-flag",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "10 Step 8: Derive First Occurrence Flag",
+    "text": "10 Step 8: Derive First Occurrence Flag\n\n# Flag first AE per subject\nadae &lt;- adae %&gt;%\n  arrange(USUBJID, ASTDT, AESEQ) %&gt;%\n  group_by(USUBJID) %&gt;%\n  mutate(\n    AOCCFL = if_else(row_number() == 1, \"Y\", NA_character_)\n  ) %&gt;%\n  ungroup()\n\ncat(\"\\nFirst occurrence flag derived\\n\")\n\n\nFirst occurrence flag derived\n\n# Check\nadae %&gt;%\n  filter(AOCCFL == \"Y\") %&gt;%\n  select(USUBJID, AETERM, ASTDT, AOCCFL) %&gt;%\n  head(5)\n\n# A tibble: 5 × 4\n  USUBJID     AETERM                    ASTDT      AOCCFL\n  &lt;chr&gt;       &lt;chr&gt;                     &lt;date&gt;     &lt;chr&gt; \n1 01-701-1015 APPLICATION SITE ERYTHEMA 2014-01-03 Y     \n2 01-701-1023 ERYTHEMA                  2012-08-07 Y     \n3 01-701-1028 APPLICATION SITE ERYTHEMA 2013-07-21 Y     \n4 01-701-1034 APPLICATION SITE PRURITUS 2014-08-27 Y     \n5 01-701-1047 HIATUS HERNIA             2013-02-12 Y     \n\n\nLogic:\n\nFirst AE record per subject\nUsed for “subjects with at least one AE”",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#step-9-derive-serious-ae-flag",
+    "href": "week3/day18.html#step-9-derive-serious-ae-flag",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "11 Step 9: Derive Serious AE Flag",
+    "text": "11 Step 9: Derive Serious AE Flag\n\n# Copy serious flag\nadae &lt;- adae %&gt;%\n  mutate(\n    ASER = AESER,\n    ASERN = if_else(AESER == \"Y\", 1, 0)\n  )\n\ncat(\"\\nSerious flag created\\n\")\n\n\nSerious flag created\n\n# Distribution\nadae %&gt;%\n  count(ASER, ASERN)\n\n# A tibble: 2 × 3\n  ASER  ASERN     n\n  &lt;chr&gt; &lt;dbl&gt; &lt;int&gt;\n1 N         0  1188\n2 Y         1     3",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#step-10-derive-analysis-flag",
+    "href": "week3/day18.html#step-10-derive-analysis-flag",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "12 Step 10: Derive Analysis Flag",
+    "text": "12 Step 10: Derive Analysis Flag\n\n# Primary analysis flag\nadae &lt;- adae %&gt;%\n  mutate(\n    ANL01FL = if_else(TRTEMFL == \"Y\", \"Y\", NA_character_)\n  )\n\ncat(\"\\nAnalysis flag created\\n\")\n\n\nAnalysis flag created\n\n# Distribution\nadae %&gt;%\n  count(ANL01FL, TRTEMFL)\n\n# A tibble: 2 × 3\n  ANL01FL TRTEMFL     n\n  &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;\n1 Y       Y        1126\n2 &lt;NA&gt;    &lt;NA&gt;       65\n\n\nANL01FL:\n\nPrimary analysis records\nTypically = TRTEMFL",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#validation",
+    "href": "week3/day18.html#validation",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "13 Validation",
+    "text": "13 Validation\n\ncat(\"\\n=== ADAE Validation ===\\n\\n\")\n\n\n=== ADAE Validation ===\n\n# Check 1: Start &lt;= End\ncheck1 &lt;- adae %&gt;%\n  filter(!is.na(ASTDT) & !is.na(AENDT) & ASTDT &gt; AENDT)\ncat(\"Check 1 - ASTDT &gt; AENDT:\", nrow(check1), \"\\n\")\n\nCheck 1 - ASTDT &gt; AENDT: 0 \n\n# Check 2: Duration\ncheck2 &lt;- adae %&gt;%\n  filter(!is.na(ADURN)) %&gt;%\n  mutate(\n    Expected = as.numeric(AENDT - ASTDT) + 1,\n    Match = ADURN == Expected\n  ) %&gt;%\n  filter(!Match)\ncat(\"Check 2 - ADURN mismatch:\", nrow(check2), \"\\n\")\n\nCheck 2 - ADURN mismatch: 0 \n\n# Check 3: One AOCCFL per subject\ncheck3 &lt;- adae %&gt;%\n  filter(AOCCFL == \"Y\") %&gt;%\n  count(USUBJID) %&gt;%\n  filter(n &gt; 1)\ncat(\"Check 3 - Multiple AOCCFL:\", nrow(check3), \"\\n\")\n\nCheck 3 - Multiple AOCCFL: 0 \n\ncat(\"\\n✓ Validation complete\\n\")\n\n\n✓ Validation complete",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#summary",
+    "href": "week3/day18.html#summary",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "14 Summary",
+    "text": "14 Summary\n\ncat(\"\\n=== ADAE Summary ===\\n\\n\")\n\n\n=== ADAE Summary ===\n\ncat(\"Total records:\", nrow(adae), \"\\n\")\n\nTotal records: 1191 \n\ncat(\"Variables:\", ncol(adae), \"\\n\\n\")\n\nVariables: 52 \n\n# By treatment\nadae %&gt;%\n  filter(TRTEMFL == \"Y\") %&gt;%\n  group_by(TRT01A) %&gt;%\n  summarise(\n    N_AEs = n(),\n    N_Subjects = n_distinct(USUBJID),\n    N_Serious = sum(ASER == \"Y\", na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\n# A tibble: 3 × 4\n  TRT01A               N_AEs N_Subjects N_Serious\n  &lt;chr&gt;                &lt;int&gt;      &lt;int&gt;     &lt;int&gt;\n1 Placebo                281         65         0\n2 Xanomeline High Dose   418         69         1\n3 Xanomeline Low Dose    427         84         2\n\n# By severity\nadae %&gt;%\n  filter(TRTEMFL == \"Y\") %&gt;%\n  count(ASEV)\n\n# A tibble: 3 × 2\n  ASEV         n\n  &lt;chr&gt;    &lt;int&gt;\n1 MILD       731\n2 MODERATE   354\n3 SEVERE      41",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#export",
+    "href": "week3/day18.html#export",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "15 Export",
+    "text": "15 Export\n\n# Add labels\nattr(adae$ASTDT, \"label\") &lt;- \"Analysis Start Date\"\nattr(adae$ASTDY, \"label\") &lt;- \"Analysis Start Relative Day\"\nattr(adae$AENDT, \"label\") &lt;- \"Analysis End Date\"\nattr(adae$AENDY, \"label\") &lt;- \"Analysis End Relative Day\"\nattr(adae$ADURN, \"label\") &lt;- \"Analysis Duration (Days)\"\nattr(adae$TRTEMFL, \"label\") &lt;- \"Treatment Emergent Flag\"\nattr(adae$ASEV, \"label\") &lt;- \"Analysis Severity\"\nattr(adae$ASEVN, \"label\") &lt;- \"Analysis Severity (N)\"\nattr(adae$AOCCFL, \"label\") &lt;- \"First Occurrence Flag\"\nattr(adae$ANL01FL, \"label\") &lt;- \"Analysis Record Flag 01\"\n\n# Export - xportr is already loaded via library()\nxportr_write(adae, path = \"adae.xpt\", domain = \"ADAE\")\n\ncat(\"\\n✓ ADAE exported to: adae.xpt\\n\")\n\n\n✓ ADAE exported to: adae.xpt",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#key-takeaways",
+    "href": "week3/day18.html#key-takeaways",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "16 Key Takeaways",
+    "text": "16 Key Takeaways\n\nUse pharmaverseadam::adsl for reference ADSL\nImpute start date “first”, end date “last”\nTRTEMFL = AE on or after treatment start\nAOCCFL = first AE per subject (arrange + group_by + row_number)\nAlways validate dates and flags",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#next-steps",
+    "href": "week3/day18.html#next-steps",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "17 Next Steps",
+    "text": "17 Next Steps\nDay 19: ADLB - Lab Analysis Dataset\nDay 20: ADVS - Vitals Analysis Dataset\nDay 21: ADTTE - Time-to-Event",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day18.html#resources",
+    "href": "week3/day18.html#resources",
+    "title": "Day 18: ADAE - Adverse Events Analysis Dataset",
+    "section": "18 Resources",
+    "text": "18 Resources\n\nOCCDS Vignette: https://pharmaverse.github.io/admiral/articles/occds.html\nADAE Example: https://pharmaverse.github.io/examples/adam/adae.html\npharmaverseadam: https://pharmaverse.github.io/pharmaverseadam/\nxportr package: https://atorus-research.github.io/xportr/\n\n\nEnd of Day 18",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 18: ADAE - Adverse Events Analysis Dataset"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html",
+    "href": "week3/day19.html",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "",
+    "text": "ADLB is your first BDS (Basic Data Structure) dataset. Unlike ADSL (one row per subject) and ADAE (one row per event), BDS has one row per subject per parameter per timepoint.\nToday’s focus: Build ADLB with baseline flags, change from baseline, and toxicity grades.",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#welcome-to-adlb",
+    "href": "week3/day19.html#welcome-to-adlb",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "",
+    "text": "ADLB is your first BDS (Basic Data Structure) dataset. Unlike ADSL (one row per subject) and ADAE (one row per event), BDS has one row per subject per parameter per timepoint.\nToday’s focus: Build ADLB with baseline flags, change from baseline, and toxicity grades.",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#setup",
+    "href": "week3/day19.html#setup",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "2 Setup",
+    "text": "2 Setup\n\nlibrary(admiral)\nlibrary(pharmaversesdtm)\nlibrary(pharmaverseadam)\nlibrary(dplyr)\nlibrary(lubridate)\nlibrary(stringr)\nlibrary(xportr)\n\n# Load SDTM and ADaM\nlb &lt;- pharmaversesdtm::lb\nvs &lt;- pharmaversesdtm::vs\nadsl &lt;- pharmaverseadam::adsl\n\ncat(\"Loaded LB:\", nrow(lb), \"records\\n\")\n\nLoaded LB: 59580 records\n\ncat(\"Loaded ADSL:\", nrow(adsl), \"subjects\\n\")\n\nLoaded ADSL: 306 subjects",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#step-1-merge-adsl-variables",
+    "href": "week3/day19.html#step-1-merge-adsl-variables",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "3 Step 1: Merge ADSL Variables",
+    "text": "3 Step 1: Merge ADSL Variables\n\n# Start with LB and merge treatment info\nadlb &lt;- lb %&gt;%\n  admiral::derive_vars_merged(\n    dataset_add = adsl,\n    new_vars = exprs(TRTSDT, TRTEDT, TRT01A),\n    by_vars = exprs(STUDYID, USUBJID)\n  )\n\ncat(\"\\nADLB initialized:\", nrow(adlb), \"records\\n\")\n\n\nADLB initialized: 59580 records\n\n# Check\nadlb %&gt;%\n  select(USUBJID, LBTESTCD, LBDTC, TRTSDT) %&gt;%\n  head(5)\n\n# A tibble: 5 × 4\n  USUBJID     LBTESTCD LBDTC            TRTSDT    \n  &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;            &lt;date&gt;    \n1 01-701-1015 ALB      2013-12-26T14:45 2014-01-02\n2 01-701-1015 ALB      2014-01-16T13:17 2014-01-02\n3 01-701-1015 ALB      2014-01-30T08:50 2014-01-02\n4 01-701-1015 ALB      2014-02-12T12:56 2014-01-02\n5 01-701-1015 ALB      2014-03-05T12:25 2014-01-02",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#step-2-derive-analysis-date",
+    "href": "week3/day19.html#step-2-derive-analysis-date",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "4 Step 2: Derive Analysis Date",
+    "text": "4 Step 2: Derive Analysis Date\n\n# Derive analysis date from LBDTC\nadlb &lt;- adlb %&gt;%\n  admiral::derive_vars_dt(\n    new_vars_prefix = \"A\",\n    dtc = LBDTC\n  )\n\ncat(\"\\nAnalysis date derived\\n\")\n\n\nAnalysis date derived\n\n# Check\nadlb %&gt;%\n  select(USUBJID, LBTESTCD, LBDTC, ADT) %&gt;%\n  head(5)\n\n# A tibble: 5 × 4\n  USUBJID     LBTESTCD LBDTC            ADT       \n  &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;            &lt;date&gt;    \n1 01-701-1015 ALB      2013-12-26T14:45 2013-12-26\n2 01-701-1015 ALB      2014-01-16T13:17 2014-01-16\n3 01-701-1015 ALB      2014-01-30T08:50 2014-01-30\n4 01-701-1015 ALB      2014-02-12T12:56 2014-02-12\n5 01-701-1015 ALB      2014-03-05T12:25 2014-03-05",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#step-3-derive-study-day",
+    "href": "week3/day19.html#step-3-derive-study-day",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "5 Step 3: Derive Study Day",
+    "text": "5 Step 3: Derive Study Day\n\n# Calculate relative day\nadlb &lt;- adlb %&gt;%\n  admiral::derive_vars_dy(\n    reference_date = TRTSDT,\n    source_vars = exprs(ADT)\n  )\n\ncat(\"\\nStudy day derived\\n\")\n\n\nStudy day derived\n\n# Check\nadlb %&gt;%\n  select(USUBJID, LBTESTCD, TRTSDT, ADT, ADY) %&gt;%\n  filter(!is.na(ADY)) %&gt;%\n  head(5)\n\n# A tibble: 5 × 5\n  USUBJID     LBTESTCD TRTSDT     ADT          ADY\n  &lt;chr&gt;       &lt;chr&gt;    &lt;date&gt;     &lt;date&gt;     &lt;dbl&gt;\n1 01-701-1015 ALB      2014-01-02 2013-12-26    -7\n2 01-701-1015 ALB      2014-01-02 2014-01-16    15\n3 01-701-1015 ALB      2014-01-02 2014-01-30    29\n4 01-701-1015 ALB      2014-01-02 2014-02-12    42\n5 01-701-1015 ALB      2014-01-02 2014-03-05    63",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#step-4-create-param-and-aval",
+    "href": "week3/day19.html#step-4-create-param-and-aval",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "6 Step 4: Create PARAM and AVAL",
+    "text": "6 Step 4: Create PARAM and AVAL\n\n# Create BDS variables\nadlb &lt;- adlb %&gt;%\n  mutate(\n    PARAMCD = LBTESTCD,\n    PARAM = LBTEST,\n    AVAL = LBSTRESN,\n    AVALU = LBSTRESU\n  )\n\ncat(\"\\nPARAM and AVAL created\\n\")\n\n\nPARAM and AVAL created\n\n# Check parameters\nadlb %&gt;%\n  count(PARAMCD, PARAM) %&gt;%\n  head(10)\n\n# A tibble: 10 × 3\n   PARAMCD PARAM                          n\n   &lt;chr&gt;   &lt;chr&gt;                      &lt;int&gt;\n 1 ALB     Albumin                     1814\n 2 ALP     Alkaline Phosphatase        1824\n 3 ALT     Alanine Aminotransferase    1814\n 4 ANISO   Anisocytes                   158\n 5 AST     Aspartate Aminotransferase  1814\n 6 BASO    Basophils                   1796\n 7 BASOLE  Basophils/Leukocytes          12\n 8 BILI    Bilirubin                   1814\n 9 BUN     Blood Urea Nitrogen         1828\n10 CA      Calcium                     1828\n\n\nBDS Key Variables:\n\nPARAMCD: Parameter code (ALT, AST, etc.)\nPARAM: Parameter description\nAVAL: Analysis value (numeric)\nAVALU: Analysis value unit",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#step-5-derive-baseline-flag",
+    "href": "week3/day19.html#step-5-derive-baseline-flag",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "7 Step 5: Derive Baseline Flag",
+    "text": "7 Step 5: Derive Baseline Flag\n\n# Flag last value before treatment start\nadlb &lt;- adlb %&gt;%\n  arrange(USUBJID, PARAMCD, ADT) %&gt;%\n  group_by(USUBJID, PARAMCD) %&gt;%\n  mutate(\n    ABLFL = case_when(\n      !is.na(AVAL) & ADT &lt;= TRTSDT & row_number() == max(which(ADT &lt;= TRTSDT)) ~ \"Y\",\n      TRUE ~ NA_character_\n    )\n  ) %&gt;%\n  ungroup()\n\ncat(\"\\nBaseline flag derived\\n\")\n\n\nBaseline flag derived\n\n# Check\nadlb %&gt;%\n  filter(ABLFL == \"Y\") %&gt;%\n  select(USUBJID, PARAMCD, ADT, TRTSDT, AVAL, ABLFL) %&gt;%\n  head(5)\n\n# A tibble: 5 × 6\n  USUBJID     PARAMCD ADT        TRTSDT      AVAL ABLFL\n  &lt;chr&gt;       &lt;chr&gt;   &lt;date&gt;     &lt;date&gt;     &lt;dbl&gt; &lt;chr&gt;\n1 01-701-1015 ALB     2013-12-26 2014-01-02    38 Y    \n2 01-701-1015 ALP     2013-12-26 2014-01-02    34 Y    \n3 01-701-1015 ALT     2013-12-26 2014-01-02    27 Y    \n4 01-701-1015 ANISO   2013-12-26 2014-01-02     1 Y    \n5 01-701-1015 AST     2013-12-26 2014-01-02    40 Y    \n\n\nABLFL Logic:\n\nLast non-missing value on or before TRTSDT\nOne ABLFL=“Y” per subject per parameter",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#step-6-derive-baseline-value",
+    "href": "week3/day19.html#step-6-derive-baseline-value",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "8 Step 6: Derive Baseline Value",
+    "text": "8 Step 6: Derive Baseline Value\n\n# Merge baseline value to all records\nadlb &lt;- adlb %&gt;%\n  group_by(USUBJID, PARAMCD) %&gt;%\n  mutate(\n    BASE = AVAL[ABLFL == \"Y\"][1]\n  ) %&gt;%\n  ungroup()\n\ncat(\"\\nBaseline value derived\\n\")\n\n\nBaseline value derived\n\n# Check\nadlb %&gt;%\n  select(USUBJID, PARAMCD, ADT, AVAL, ABLFL, BASE) %&gt;%\n  head(10)\n\n# A tibble: 10 × 6\n   USUBJID     PARAMCD ADT         AVAL ABLFL  BASE\n   &lt;chr&gt;       &lt;chr&gt;   &lt;date&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;\n 1 01-701-1015 ALB     2013-12-26    38 Y        38\n 2 01-701-1015 ALB     2014-01-16    39 &lt;NA&gt;     38\n 3 01-701-1015 ALB     2014-01-30    38 &lt;NA&gt;     38\n 4 01-701-1015 ALB     2014-02-12    37 &lt;NA&gt;     38\n 5 01-701-1015 ALB     2014-03-05    38 &lt;NA&gt;     38\n 6 01-701-1015 ALB     2014-03-26    38 &lt;NA&gt;     38\n 7 01-701-1015 ALB     2014-05-07    37 &lt;NA&gt;     38\n 8 01-701-1015 ALB     2014-05-21    37 &lt;NA&gt;     38\n 9 01-701-1015 ALB     2014-06-18    38 &lt;NA&gt;     38\n10 01-701-1015 ALB     2014-07-02    38 &lt;NA&gt;     38",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#step-7-derive-change-from-baseline",
+    "href": "week3/day19.html#step-7-derive-change-from-baseline",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "9 Step 7: Derive Change from Baseline",
+    "text": "9 Step 7: Derive Change from Baseline\n\n# Calculate change and percent change\nadlb &lt;- adlb %&gt;%\n  mutate(\n    CHG = case_when(\n      !is.na(AVAL) & !is.na(BASE) ~ AVAL - BASE,\n      TRUE ~ NA_real_\n    ),\n    PCHG = case_when(\n      !is.na(CHG) & BASE != 0 ~ (CHG / BASE) * 100,\n      TRUE ~ NA_real_\n    )\n  )\n\ncat(\"\\nChange from baseline calculated\\n\")\n\n\nChange from baseline calculated\n\n# Summary\nadlb %&gt;%\n  filter(!is.na(CHG)) %&gt;%\n  group_by(PARAMCD) %&gt;%\n  summarise(\n    N = n(),\n    Mean_CHG = round(mean(CHG), 2),\n    .groups = \"drop\"\n  ) %&gt;%\n  head(5)\n\n# A tibble: 5 × 3\n  PARAMCD     N Mean_CHG\n  &lt;chr&gt;   &lt;int&gt;    &lt;dbl&gt;\n1 ALB      1626    -0.71\n2 ALP      1635     0.13\n3 ALT      1626     0.55\n4 ANISO      58     0   \n5 AST      1626     0.11\n\n\nChange Variables:\n\nCHG = AVAL - BASE\nPCHG = (CHG / BASE) * 100",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#step-8-derive-analysis-visit",
+    "href": "week3/day19.html#step-8-derive-analysis-visit",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "10 Step 8: Derive Analysis Visit",
+    "text": "10 Step 8: Derive Analysis Visit\n\n# Map VISIT to analysis visit\nadlb &lt;- adlb %&gt;%\n  mutate(\n    AVISIT = case_when(\n      VISIT == \"SCREENING\" ~ \"Baseline\",\n      VISIT == \"BASELINE\" ~ \"Baseline\",\n      TRUE ~ VISIT\n    ),\n    AVISITN = case_when(\n      AVISIT == \"Baseline\" ~ 0,\n      VISIT == \"WEEK 2\" ~ 2,\n      VISIT == \"WEEK 4\" ~ 4,\n      VISIT == \"WEEK 8\" ~ 8,\n      TRUE ~ as.numeric(VISITNUM)\n    )\n  )\n\ncat(\"\\nAnalysis visit derived\\n\")\n\n\nAnalysis visit derived\n\n# Distribution\nadlb %&gt;%\n  count(AVISIT, AVISITN) %&gt;%\n  head(5)\n\n# A tibble: 5 × 3\n  AVISIT              AVISITN     n\n  &lt;chr&gt;                 &lt;dbl&gt; &lt;int&gt;\n1 AMBUL ECG PLACEMENT     3.5     5\n2 AMBUL ECG REMOVAL       6      52\n3 Baseline                0      12\n4 RETRIEVAL             201      35\n5 SCREENING 1             1    9233",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#step-9-derive-reference-range-indicators",
+    "href": "week3/day19.html#step-9-derive-reference-range-indicators",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "11 Step 9: Derive Reference Range Indicators",
+    "text": "11 Step 9: Derive Reference Range Indicators\n\n# Create reference range indicators\nadlb &lt;- adlb %&gt;%\n  mutate(\n    ANRIND = case_when(\n      !is.na(AVAL) & !is.na(LBSTNRLO) & AVAL &lt; LBSTNRLO ~ \"LOW\",\n      !is.na(AVAL) & !is.na(LBSTNRHI) & AVAL &gt; LBSTNRHI ~ \"HIGH\",\n      !is.na(AVAL) ~ \"NORMAL\",\n      TRUE ~ NA_character_\n    ),\n    BNRIND = case_when(\n      !is.na(BASE) & !is.na(LBSTNRLO) & BASE &lt; LBSTNRLO ~ \"LOW\",\n      !is.na(BASE) & !is.na(LBSTNRHI) & BASE &gt; LBSTNRHI ~ \"HIGH\",\n      !is.na(BASE) ~ \"NORMAL\",\n      TRUE ~ NA_character_\n    )\n  )\n\ncat(\"\\nReference range indicators derived\\n\")\n\n\nReference range indicators derived\n\n# Distribution\nadlb %&gt;%\n  count(PARAMCD, ANRIND) %&gt;%\n  head(10)\n\n# A tibble: 10 × 3\n   PARAMCD ANRIND     n\n   &lt;chr&gt;   &lt;chr&gt;  &lt;int&gt;\n 1 ALB     HIGH       7\n 2 ALB     LOW       76\n 3 ALB     NORMAL  1731\n 4 ALP     HIGH      85\n 5 ALP     LOW       43\n 6 ALP     NORMAL  1696\n 7 ALT     HIGH      83\n 8 ALT     LOW       10\n 9 ALT     NORMAL  1721\n10 ANISO   NORMAL   158\n\n\nReference Range:\n\nANRIND: Analysis reference range (LOW/NORMAL/HIGH)\nBNRIND: Baseline reference range",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#step-10-derive-toxicity-grades",
+    "href": "week3/day19.html#step-10-derive-toxicity-grades",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "12 Step 10: Derive Toxicity Grades",
+    "text": "12 Step 10: Derive Toxicity Grades\n\n# Simple toxicity grading for ALT as example\nadlb &lt;- adlb %&gt;%\n  mutate(\n    ATOXGR = case_when(\n      PARAMCD == \"ALT\" & !is.na(AVAL) & !is.na(LBSTNRHI) ~ case_when(\n        AVAL &gt; 20 * LBSTNRHI ~ \"4\",\n        AVAL &gt; 5 * LBSTNRHI ~ \"3\",\n        AVAL &gt; 3 * LBSTNRHI ~ \"2\",\n        AVAL &gt; LBSTNRHI ~ \"1\",\n        TRUE ~ \"0\"\n      ),\n      TRUE ~ NA_character_\n    ),\n    BTOXGR = case_when(\n      PARAMCD == \"ALT\" & !is.na(BASE) & !is.na(LBSTNRHI) ~ case_when(\n        BASE &gt; 20 * LBSTNRHI ~ \"4\",\n        BASE &gt; 5 * LBSTNRHI ~ \"3\",\n        BASE &gt; 3 * LBSTNRHI ~ \"2\",\n        BASE &gt; LBSTNRHI ~ \"1\",\n        TRUE ~ \"0\"\n      ),\n      TRUE ~ NA_character_\n    )\n  )\n\ncat(\"\\nToxicity grades derived (ALT only)\\n\")\n\n\nToxicity grades derived (ALT only)\n\n# Check ALT toxicity\nadlb %&gt;%\n  filter(PARAMCD == \"ALT\", !is.na(ATOXGR)) %&gt;%\n  count(ATOXGR)\n\n# A tibble: 3 × 2\n  ATOXGR     n\n  &lt;chr&gt;  &lt;int&gt;\n1 0       1731\n2 1         79\n3 2          4\n\n\nNCI CTCAE Grading (ALT Example):\n\nGrade 0: Normal\nGrade 1: &gt;ULN - 3×ULN\nGrade 2: &gt;3×ULN - 5×ULN\nGrade 3: &gt;5×ULN - 20×ULN\nGrade 4: &gt;20×ULN",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#step-11-derive-analysis-sequence",
+    "href": "week3/day19.html#step-11-derive-analysis-sequence",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "13 Step 11: Derive Analysis Sequence",
+    "text": "13 Step 11: Derive Analysis Sequence\n\n# Create sequence number\nadlb &lt;- adlb %&gt;%\n  arrange(USUBJID, PARAMCD, ADT) %&gt;%\n  group_by(USUBJID) %&gt;%\n  mutate(ASEQ = row_number()) %&gt;%\n  ungroup()\n\ncat(\"\\nAnalysis sequence derived\\n\")\n\n\nAnalysis sequence derived",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#validation",
+    "href": "week3/day19.html#validation",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "14 Validation",
+    "text": "14 Validation\n\ncat(\"\\n=== ADLB Validation ===\\n\\n\")\n\n\n=== ADLB Validation ===\n\n# Check 1: One ABLFL per subject-parameter\ncheck1 &lt;- adlb %&gt;%\n  filter(ABLFL == \"Y\") %&gt;%\n  count(USUBJID, PARAMCD) %&gt;%\n  filter(n &gt; 1)\ncat(\"Check 1 - Multiple ABLFL per subject-PARAMCD:\", nrow(check1), \"\\n\")\n\nCheck 1 - Multiple ABLFL per subject-PARAMCD: 0 \n\n# Check 2: CHG is NA at baseline\ncheck2 &lt;- adlb %&gt;%\n  filter(ABLFL == \"Y\", !is.na(CHG))\ncat(\"Check 2 - CHG not NA at baseline:\", nrow(check2), \"\\n\")\n\nCheck 2 - CHG not NA at baseline: 8405 \n\n# Check 3: BASE consistency\ncheck3 &lt;- adlb %&gt;%\n  filter(!is.na(BASE)) %&gt;%\n  group_by(USUBJID, PARAMCD) %&gt;%\n  summarise(n_distinct_base = n_distinct(BASE), .groups = \"drop\") %&gt;%\n  filter(n_distinct_base &gt; 1)\ncat(\"Check 3 - Inconsistent BASE within subject-PARAMCD:\", nrow(check3), \"\\n\")\n\nCheck 3 - Inconsistent BASE within subject-PARAMCD: 0 \n\ncat(\"\\n✓ Validation complete\\n\")\n\n\n✓ Validation complete",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#summary",
+    "href": "week3/day19.html#summary",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "15 Summary",
+    "text": "15 Summary\n\ncat(\"\\n=== ADLB Summary ===\\n\\n\")\n\n\n=== ADLB Summary ===\n\ncat(\"Total records:\", nrow(adlb), \"\\n\")\n\nTotal records: 59580 \n\ncat(\"Variables:\", ncol(adlb), \"\\n\\n\")\n\nVariables: 43 \n\n# By parameter\nadlb %&gt;%\n  group_by(PARAMCD) %&gt;%\n  summarise(\n    N_Records = n(),\n    N_Subjects = n_distinct(USUBJID),\n    N_Baseline = sum(ABLFL == \"Y\", na.rm = TRUE),\n    .groups = \"drop\"\n  ) %&gt;%\n  head(10)\n\n# A tibble: 10 × 4\n   PARAMCD N_Records N_Subjects N_Baseline\n   &lt;chr&gt;       &lt;int&gt;      &lt;int&gt;      &lt;int&gt;\n 1 ALB          1814        254        254\n 2 ALP          1824        254        253\n 3 ALT          1814        254        254\n 4 ANISO         158         73         18\n 5 AST          1814        254        254\n 6 BASO         1796        254        248\n 7 BASOLE         12          6          6\n 8 BILI         1814        254        254\n 9 BUN          1828        254        254\n10 CA           1828        254        254\n\n# By visit\nadlb %&gt;%\n  count(AVISIT, AVISITN) %&gt;%\n  arrange(AVISITN)\n\n# A tibble: 27 × 3\n   AVISIT              AVISITN     n\n   &lt;chr&gt;                 &lt;dbl&gt; &lt;int&gt;\n 1 Baseline                0      12\n 2 SCREENING 1             1    9233\n 3 UNSCHEDULED 1.1         1.1   781\n 4 UNSCHEDULED 1.2         1.2   157\n 5 UNSCHEDULED 1.3         1.3    73\n 6 WEEK 2                  2    8425\n 7 AMBUL ECG PLACEMENT     3.5     5\n 8 WEEK 4                  4    6801\n 9 UNSCHEDULED 4.1         4.1   104\n10 UNSCHEDULED 4.2         4.2    15\n# ℹ 17 more rows",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#export",
+    "href": "week3/day19.html#export",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "16 Export",
+    "text": "16 Export\n\n# Add labels\nattr(adlb$PARAMCD, \"label\") &lt;- \"Parameter Code\"\nattr(adlb$PARAM, \"label\") &lt;- \"Parameter\"\nattr(adlb$AVAL, \"label\") &lt;- \"Analysis Value\"\nattr(adlb$AVALU, \"label\") &lt;- \"Analysis Value Unit\"\nattr(adlb$ADT, \"label\") &lt;- \"Analysis Date\"\nattr(adlb$ADY, \"label\") &lt;- \"Analysis Relative Day\"\nattr(adlb$AVISIT, \"label\") &lt;- \"Analysis Visit\"\nattr(adlb$AVISITN, \"label\") &lt;- \"Analysis Visit (N)\"\nattr(adlb$ABLFL, \"label\") &lt;- \"Baseline Record Flag\"\nattr(adlb$BASE, \"label\") &lt;- \"Baseline Value\"\nattr(adlb$CHG, \"label\") &lt;- \"Change from Baseline\"\nattr(adlb$PCHG, \"label\") &lt;- \"Percent Change from Baseline\"\nattr(adlb$ANRIND, \"label\") &lt;- \"Analysis Reference Range Indicator\"\nattr(adlb$BNRIND, \"label\") &lt;- \"Baseline Reference Range Indicator\"\nattr(adlb$ATOXGR, \"label\") &lt;- \"Analysis Toxicity Grade\"\nattr(adlb$ASEQ, \"label\") &lt;- \"Analysis Sequence Number\"\n\n# Export\nxportr_write(adlb, path = \"adlb.xpt\", domain = \"ADLB\")\n\ncat(\"\\n✓ ADLB exported to: adlb.xpt\\n\")\n\n\n✓ ADLB exported to: adlb.xpt",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#key-takeaways",
+    "href": "week3/day19.html#key-takeaways",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "17 Key Takeaways",
+    "text": "17 Key Takeaways\n\nBDS structure: One row per subject-parameter-timepoint\nABLFL = last value on or before TRTSDT (one per subject-PARAMCD)\nBASE is constant across all records for same subject-PARAMCD\nCHG = AVAL - BASE, must be NA at baseline rows\nANRIND compares to reference range (LOW/NORMAL/HIGH)\nToxicity grades based on multiples of ULN (Upper Limit of Normal)",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#next-steps",
+    "href": "week3/day19.html#next-steps",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "18 Next Steps",
+    "text": "18 Next Steps\nDay 20: ADVS - Vitals Analysis Dataset\nDay 21: ADTTE - Time-to-Event Analysis\nDay 22: ADCM and ADRS",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day19.html#resources",
+    "href": "week3/day19.html#resources",
+    "title": "Day 19: ADLB - Lab Analysis Dataset (BDS)",
+    "section": "19 Resources",
+    "text": "19 Resources\n\nBDS Structure: https://www.cdisc.org/standards/foundational/adam\nAdmiral BDS Vignette: https://pharmaverse.github.io/admiral/articles/bds_finding.html\nNCI CTCAE: https://ctep.cancer.gov/protocoldevelopment/electronic_applications/ctc.htm\n\n\nEnd of Day 19",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 19: ADLB - Lab Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html",
+    "href": "week3/day20.html",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "",
+    "text": "ADVS follows the same BDS structure as ADLB, but with additional complexity: visit windows and multiple readings per timepoint.\nToday’s focus: Build ADVS with visit mapping, baseline flags, and change from baseline.",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#welcome-to-advs",
+    "href": "week3/day20.html#welcome-to-advs",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "",
+    "text": "ADVS follows the same BDS structure as ADLB, but with additional complexity: visit windows and multiple readings per timepoint.\nToday’s focus: Build ADVS with visit mapping, baseline flags, and change from baseline.",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#setup",
+    "href": "week3/day20.html#setup",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "2 Setup",
+    "text": "2 Setup\n\nlibrary(admiral)\nlibrary(pharmaversesdtm)\nlibrary(pharmaverseadam)\nlibrary(dplyr)\nlibrary(lubridate)\nlibrary(stringr)\nlibrary(xportr)\n\n# Load SDTM and ADaM\nvs &lt;- pharmaversesdtm::vs\nadsl &lt;- pharmaverseadam::adsl\n\ncat(\"Loaded VS:\", nrow(vs), \"records\\n\")\n\nLoaded VS: 29643 records\n\ncat(\"Loaded ADSL:\", nrow(adsl), \"subjects\\n\")\n\nLoaded ADSL: 306 subjects",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#step-1-merge-adsl-variables",
+    "href": "week3/day20.html#step-1-merge-adsl-variables",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "3 Step 1: Merge ADSL Variables",
+    "text": "3 Step 1: Merge ADSL Variables\n\n# Start with VS and merge treatment info\nadvs &lt;- vs %&gt;%\n  admiral::derive_vars_merged(\n    dataset_add = adsl,\n    new_vars = exprs(TRTSDT, TRT01A),\n    by_vars = exprs(STUDYID, USUBJID)\n  )\n\ncat(\"\\nADVS initialized:\", nrow(advs), \"records\\n\")\n\n\nADVS initialized: 29643 records\n\n# Check\nadvs %&gt;%\n  select(USUBJID, VSTESTCD, VSDTC, TRTSDT) %&gt;%\n  head(5)\n\n# A tibble: 5 × 4\n  USUBJID     VSTESTCD VSDTC      TRTSDT    \n  &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;      &lt;date&gt;    \n1 01-701-1015 DIABP    2013-12-26 2014-01-02\n2 01-701-1015 DIABP    2013-12-26 2014-01-02\n3 01-701-1015 DIABP    2013-12-26 2014-01-02\n4 01-701-1015 DIABP    2013-12-31 2014-01-02\n5 01-701-1015 DIABP    2013-12-31 2014-01-02",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#step-2-derive-analysis-date",
+    "href": "week3/day20.html#step-2-derive-analysis-date",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "4 Step 2: Derive Analysis Date",
+    "text": "4 Step 2: Derive Analysis Date\n\n# Derive analysis date from VSDTC\nadvs &lt;- advs %&gt;%\n  admiral::derive_vars_dt(\n    new_vars_prefix = \"A\",\n    dtc = VSDTC\n  )\n\ncat(\"\\nAnalysis date derived\\n\")\n\n\nAnalysis date derived\n\n# Check\nadvs %&gt;%\n  select(USUBJID, VSTESTCD, VSDTC, ADT) %&gt;%\n  head(5)\n\n# A tibble: 5 × 4\n  USUBJID     VSTESTCD VSDTC      ADT       \n  &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;      &lt;date&gt;    \n1 01-701-1015 DIABP    2013-12-26 2013-12-26\n2 01-701-1015 DIABP    2013-12-26 2013-12-26\n3 01-701-1015 DIABP    2013-12-26 2013-12-26\n4 01-701-1015 DIABP    2013-12-31 2013-12-31\n5 01-701-1015 DIABP    2013-12-31 2013-12-31",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#step-3-derive-study-day",
+    "href": "week3/day20.html#step-3-derive-study-day",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "5 Step 3: Derive Study Day",
+    "text": "5 Step 3: Derive Study Day\n\n# Calculate relative day\nadvs &lt;- advs %&gt;%\n  admiral::derive_vars_dy(\n    reference_date = TRTSDT,\n    source_vars = exprs(ADT)\n  )\n\ncat(\"\\nStudy day derived\\n\")\n\n\nStudy day derived\n\n# Check\nadvs %&gt;%\n  select(USUBJID, VSTESTCD, TRTSDT, ADT, ADY) %&gt;%\n  filter(!is.na(ADY)) %&gt;%\n  head(5)\n\n# A tibble: 5 × 5\n  USUBJID     VSTESTCD TRTSDT     ADT          ADY\n  &lt;chr&gt;       &lt;chr&gt;    &lt;date&gt;     &lt;date&gt;     &lt;dbl&gt;\n1 01-701-1015 DIABP    2014-01-02 2013-12-26    -7\n2 01-701-1015 DIABP    2014-01-02 2013-12-26    -7\n3 01-701-1015 DIABP    2014-01-02 2013-12-26    -7\n4 01-701-1015 DIABP    2014-01-02 2013-12-31    -2\n5 01-701-1015 DIABP    2014-01-02 2013-12-31    -2",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#step-4-create-param-and-aval",
+    "href": "week3/day20.html#step-4-create-param-and-aval",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "6 Step 4: Create PARAM and AVAL",
+    "text": "6 Step 4: Create PARAM and AVAL\n\n# Create BDS variables\nadvs &lt;- advs %&gt;%\n  mutate(\n    PARAMCD = VSTESTCD,\n    PARAM = VSTEST,\n    AVAL = VSSTRESN,\n    AVALU = VSSTRESU\n  )\n\ncat(\"\\nPARAM and AVAL created\\n\")\n\n\nPARAM and AVAL created\n\n# Check parameters\nadvs %&gt;%\n  count(PARAMCD, PARAM) %&gt;%\n  head(10)\n\n# A tibble: 6 × 3\n  PARAMCD PARAM                        n\n  &lt;chr&gt;   &lt;chr&gt;                    &lt;int&gt;\n1 DIABP   Diastolic Blood Pressure  8207\n2 HEIGHT  Height                     254\n3 PULSE   Pulse Rate                8204\n4 SYSBP   Systolic Blood Pressure   8208\n5 TEMP    Temperature               2720\n6 WEIGHT  Weight                    2050",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#step-5-map-analysis-visits",
+    "href": "week3/day20.html#step-5-map-analysis-visits",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "7 Step 5: Map Analysis Visits",
+    "text": "7 Step 5: Map Analysis Visits\n\n# Map VISIT to analysis visit\nadvs &lt;- advs %&gt;%\n  mutate(\n    AVISIT = case_when(\n      VISIT == \"SCREENING\" ~ \"Baseline\",\n      VISIT == \"BASELINE\" ~ \"Baseline\",\n      VISIT == \"WEEK 2\" ~ \"Week 2\",\n      VISIT == \"WEEK 4\" ~ \"Week 4\",\n      VISIT == \"WEEK 8\" ~ \"Week 8\",\n      TRUE ~ VISIT\n    ),\n    AVISITN = case_when(\n      AVISIT == \"Baseline\" ~ 0,\n      AVISIT == \"Week 2\" ~ 2,\n      AVISIT == \"Week 4\" ~ 4,\n      AVISIT == \"Week 8\" ~ 8,\n      TRUE ~ as.numeric(VISITNUM)\n    )\n  )\n\ncat(\"\\nAnalysis visit mapped\\n\")\n\n\nAnalysis visit mapped\n\n# Distribution\nadvs %&gt;%\n  count(AVISIT, AVISITN) %&gt;%\n  arrange(AVISITN)\n\n# A tibble: 16 × 3\n   AVISIT              AVISITN     n\n   &lt;chr&gt;                 &lt;dbl&gt; &lt;int&gt;\n 1 Baseline                0    2783\n 2 SCREENING 1             1    3044\n 3 SCREENING 2             2    2496\n 4 Week 2                  2    2736\n 5 UNSCHEDULED 3.1         3.1    10\n 6 AMBUL ECG PLACEMENT     3.5  2060\n 7 Week 4                  4    2495\n 8 AMBUL ECG REMOVAL       6    1890\n 9 WEEK 6                  7    2296\n10 Week 8                  8    2077\n11 WEEK 12                 9    1881\n12 WEEK 16                10    1616\n13 WEEK 20                11    1407\n14 WEEK 24                12    1272\n15 WEEK 26                13    1220\n16 RETRIEVAL             201     360\n\n\nVisit Mapping:\n\nAVISIT: Analysis visit label\nAVISITN: Analysis visit number for sorting",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#step-6-handle-position-and-timepoint",
+    "href": "week3/day20.html#step-6-handle-position-and-timepoint",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "8 Step 6: Handle Position and Timepoint",
+    "text": "8 Step 6: Handle Position and Timepoint\n\n# Map position and timepoint\nadvs &lt;- advs %&gt;%\n  mutate(\n    ATPT = VSTPT,\n    ATPTN = VSTPTNUM\n  )\n\ncat(\"\\nPosition and timepoint mapped\\n\")\n\n\nPosition and timepoint mapped\n\n# Check\nadvs %&gt;%\n  count(VSPOS, VSTPT, ATPTN) %&gt;%\n  head(5)\n\n# A tibble: 4 × 4\n  VSPOS    VSTPT                          ATPTN     n\n  &lt;chr&gt;    &lt;chr&gt;                          &lt;dbl&gt; &lt;int&gt;\n1 STANDING AFTER STANDING FOR 1 MINUTE      816  8204\n2 STANDING AFTER STANDING FOR 3 MINUTES     817  8207\n3 SUPINE   AFTER LYING DOWN FOR 5 MINUTES   815  8208\n4 &lt;NA&gt;     &lt;NA&gt;                              NA  5024\n\n\nMultiple Readings:\n\nATPT: Analysis timepoint (e.g., “PRE-DOSE”, “1H POST-DOSE”)\nATPTN: Timepoint number for ordering",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#step-7-derive-baseline-flag",
+    "href": "week3/day20.html#step-7-derive-baseline-flag",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "9 Step 7: Derive Baseline Flag",
+    "text": "9 Step 7: Derive Baseline Flag\n\n# Flag last value before treatment start\nadvs &lt;- advs %&gt;%\n  arrange(USUBJID, PARAMCD, ADT, ATPTN) %&gt;%\n  group_by(USUBJID, PARAMCD) %&gt;%\n  mutate(\n    ABLFL = case_when(\n      !is.na(AVAL) & !is.na(TRTSDT) & ADT &lt;= TRTSDT & \n        row_number() == max(which(ADT &lt;= TRTSDT)) ~ \"Y\",\n      TRUE ~ NA_character_\n    )\n  ) %&gt;%\n  ungroup()\n\ncat(\"\\nBaseline flag derived\\n\")\n\n\nBaseline flag derived\n\n# Check\nadvs %&gt;%\n  filter(ABLFL == \"Y\") %&gt;%\n  select(USUBJID, PARAMCD, ADT, TRTSDT, AVAL, ABLFL) %&gt;%\n  head(5)\n\n# A tibble: 5 × 6\n  USUBJID     PARAMCD ADT        TRTSDT      AVAL ABLFL\n  &lt;chr&gt;       &lt;chr&gt;   &lt;date&gt;     &lt;date&gt;     &lt;dbl&gt; &lt;chr&gt;\n1 01-701-1015 DIABP   2014-01-02 2014-01-02  61   Y    \n2 01-701-1015 HEIGHT  2013-12-26 2014-01-02 147.  Y    \n3 01-701-1015 PULSE   2014-01-02 2014-01-02  59   Y    \n4 01-701-1015 SYSBP   2014-01-02 2014-01-02 131   Y    \n5 01-701-1015 TEMP    2014-01-02 2014-01-02  36.2 Y",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#step-8-derive-baseline-value",
+    "href": "week3/day20.html#step-8-derive-baseline-value",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "10 Step 8: Derive Baseline Value",
+    "text": "10 Step 8: Derive Baseline Value\n\n# Merge baseline value to all records\nadvs &lt;- advs %&gt;%\n  group_by(USUBJID, PARAMCD) %&gt;%\n  mutate(\n    BASE = AVAL[ABLFL == \"Y\"][1]\n  ) %&gt;%\n  ungroup()\n\ncat(\"\\nBaseline value derived\\n\")\n\n\nBaseline value derived\n\n# Check\nadvs %&gt;%\n  select(USUBJID, PARAMCD, AVISIT, AVAL, ABLFL, BASE) %&gt;%\n  head(10)\n\n# A tibble: 10 × 6\n   USUBJID     PARAMCD AVISIT               AVAL ABLFL  BASE\n   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;\n 1 01-701-1015 DIABP   SCREENING 1            64 &lt;NA&gt;     NA\n 2 01-701-1015 DIABP   SCREENING 1            83 &lt;NA&gt;     NA\n 3 01-701-1015 DIABP   SCREENING 1            57 &lt;NA&gt;     NA\n 4 01-701-1015 DIABP   SCREENING 2            68 &lt;NA&gt;     NA\n 5 01-701-1015 DIABP   SCREENING 2            59 &lt;NA&gt;     NA\n 6 01-701-1015 DIABP   SCREENING 2            71 &lt;NA&gt;     NA\n 7 01-701-1015 DIABP   Baseline               56 &lt;NA&gt;     NA\n 8 01-701-1015 DIABP   Baseline               51 &lt;NA&gt;     NA\n 9 01-701-1015 DIABP   Baseline               61 Y        NA\n10 01-701-1015 DIABP   AMBUL ECG PLACEMENT    67 &lt;NA&gt;     NA",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#step-9-derive-change-from-baseline",
+    "href": "week3/day20.html#step-9-derive-change-from-baseline",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "11 Step 9: Derive Change from Baseline",
+    "text": "11 Step 9: Derive Change from Baseline\n\n# Calculate change and percent change\nadvs &lt;- advs %&gt;%\n  mutate(\n    CHG = case_when(\n      !is.na(AVAL) & !is.na(BASE) ~ AVAL - BASE,\n      TRUE ~ NA_real_\n    ),\n    PCHG = case_when(\n      !is.na(CHG) & BASE != 0 ~ (CHG / BASE) * 100,\n      TRUE ~ NA_real_\n    )\n  )\n\ncat(\"\\nChange from baseline calculated\\n\")\n\n\nChange from baseline calculated\n\n# Summary by parameter\nadvs %&gt;%\n  filter(!is.na(CHG)) %&gt;%\n  group_by(PARAMCD) %&gt;%\n  summarise(\n    N = n(),\n    Mean_CHG = round(mean(CHG), 1),\n    SD_CHG = round(sd(CHG), 1),\n    .groups = \"drop\"\n  ) %&gt;%\n  head(5)\n\n# A tibble: 2 × 4\n  PARAMCD     N Mean_CHG SD_CHG\n  &lt;chr&gt;   &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt;\n1 HEIGHT    254      0      0  \n2 WEIGHT      6     -0.7    1.5",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#step-10-derive-reference-range-indicators",
+    "href": "week3/day20.html#step-10-derive-reference-range-indicators",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "12 Step 10: Derive Reference Range Indicators",
+    "text": "12 Step 10: Derive Reference Range Indicators\n\n# Create reference range indicators for BP and HR\nadvs &lt;- advs %&gt;%\n  mutate(\n    ANRIND = case_when(\n      PARAMCD == \"SYSBP\" & !is.na(AVAL) ~ case_when(\n        AVAL &lt; 90 ~ \"LOW\",\n        AVAL &gt; 140 ~ \"HIGH\",\n        TRUE ~ \"NORMAL\"\n      ),\n      PARAMCD == \"DIABP\" & !is.na(AVAL) ~ case_when(\n        AVAL &lt; 60 ~ \"LOW\",\n        AVAL &gt; 90 ~ \"HIGH\",\n        TRUE ~ \"NORMAL\"\n      ),\n      PARAMCD == \"PULSE\" & !is.na(AVAL) ~ case_when(\n        AVAL &lt; 60 ~ \"LOW\",\n        AVAL &gt; 100 ~ \"HIGH\",\n        TRUE ~ \"NORMAL\"\n      ),\n      TRUE ~ NA_character_\n    ),\n    BNRIND = case_when(\n      PARAMCD == \"SYSBP\" & !is.na(BASE) ~ case_when(\n        BASE &lt; 90 ~ \"LOW\",\n        BASE &gt; 140 ~ \"HIGH\",\n        TRUE ~ \"NORMAL\"\n      ),\n      PARAMCD == \"DIABP\" & !is.na(BASE) ~ case_when(\n        BASE &lt; 60 ~ \"LOW\",\n        BASE &gt; 90 ~ \"HIGH\",\n        TRUE ~ \"NORMAL\"\n      ),\n      PARAMCD == \"PULSE\" & !is.na(BASE) ~ case_when(\n        BASE &lt; 60 ~ \"LOW\",\n        BASE &gt; 100 ~ \"HIGH\",\n        TRUE ~ \"NORMAL\"\n      ),\n      TRUE ~ NA_character_\n    )\n  )\n\ncat(\"\\nReference range indicators derived\\n\")\n\n\nReference range indicators derived\n\n# Distribution\nadvs %&gt;%\n  count(PARAMCD, ANRIND) %&gt;%\n  head(10)\n\n# A tibble: 10 × 3\n   PARAMCD ANRIND     n\n   &lt;chr&gt;   &lt;chr&gt;  &lt;int&gt;\n 1 DIABP   HIGH     467\n 2 DIABP   LOW      386\n 3 DIABP   NORMAL  7352\n 4 DIABP   &lt;NA&gt;       2\n 5 HEIGHT  &lt;NA&gt;     254\n 6 PULSE   HIGH      47\n 7 PULSE   LOW      589\n 8 PULSE   NORMAL  7565\n 9 PULSE   &lt;NA&gt;       3\n10 SYSBP   HIGH    2559\n\n\nClinical Ranges (Simplified):\n\nSystolic BP: &lt;90 LOW, 90-140 NORMAL, &gt;140 HIGH\nDiastolic BP: &lt;60 LOW, 60-90 NORMAL, &gt;90 HIGH\nPulse: &lt;60 LOW, 60-100 NORMAL, &gt;100 HIGH",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#step-11-derive-analysis-sequence",
+    "href": "week3/day20.html#step-11-derive-analysis-sequence",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "13 Step 11: Derive Analysis Sequence",
+    "text": "13 Step 11: Derive Analysis Sequence\n\n# Create sequence number\nadvs &lt;- advs %&gt;%\n  arrange(USUBJID, PARAMCD, AVISITN, ATPTN, ADT) %&gt;%\n  group_by(USUBJID) %&gt;%\n  mutate(ASEQ = row_number()) %&gt;%\n  ungroup()\n\ncat(\"\\nAnalysis sequence derived\\n\")\n\n\nAnalysis sequence derived",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#validation",
+    "href": "week3/day20.html#validation",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "14 Validation",
+    "text": "14 Validation\n\ncat(\"\\n=== ADVS Validation ===\\n\\n\")\n\n\n=== ADVS Validation ===\n\n# Check 1: One ABLFL per subject-parameter\ncheck1 &lt;- advs %&gt;%\n  filter(ABLFL == \"Y\") %&gt;%\n  count(USUBJID, PARAMCD) %&gt;%\n  filter(n &gt; 1)\ncat(\"Check 1 - Multiple ABLFL per subject-PARAMCD:\", nrow(check1), \"\\n\")\n\nCheck 1 - Multiple ABLFL per subject-PARAMCD: 0 \n\n# Check 2: CHG is NA at baseline\ncheck2 &lt;- advs %&gt;%\n  filter(ABLFL == \"Y\", !is.na(CHG))\ncat(\"Check 2 - CHG not NA at baseline:\", nrow(check2), \"\\n\")\n\nCheck 2 - CHG not NA at baseline: 255 \n\n# Check 3: BASE consistency\ncheck3 &lt;- advs %&gt;%\n  filter(!is.na(BASE)) %&gt;%\n  group_by(USUBJID, PARAMCD) %&gt;%\n  summarise(n_distinct_base = n_distinct(BASE), .groups = \"drop\") %&gt;%\n  filter(n_distinct_base &gt; 1)\ncat(\"Check 3 - Inconsistent BASE within subject-PARAMCD:\", nrow(check3), \"\\n\")\n\nCheck 3 - Inconsistent BASE within subject-PARAMCD: 0 \n\n# Check 4: Visit ordering\ncheck4 &lt;- advs %&gt;%\n  filter(!is.na(AVISITN)) %&gt;%\n  group_by(AVISIT) %&gt;%\n  summarise(n_distinct_avisitn = n_distinct(AVISITN), .groups = \"drop\") %&gt;%\n  filter(n_distinct_avisitn &gt; 1)\ncat(\"Check 4 - Multiple AVISITN per AVISIT:\", nrow(check4), \"\\n\")\n\nCheck 4 - Multiple AVISITN per AVISIT: 0 \n\ncat(\"\\n✓ Validation complete\\n\")\n\n\n✓ Validation complete",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#summary",
+    "href": "week3/day20.html#summary",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "15 Summary",
+    "text": "15 Summary\n\ncat(\"\\n=== ADVS Summary ===\\n\\n\")\n\n\n=== ADVS Summary ===\n\ncat(\"Total records:\", nrow(advs), \"\\n\")\n\nTotal records: 29643 \n\ncat(\"Variables:\", ncol(advs), \"\\n\\n\")\n\nVariables: 43 \n\n# By parameter\nadvs %&gt;%\n  group_by(PARAMCD, PARAM) %&gt;%\n  summarise(\n    N_Records = n(),\n    N_Subjects = n_distinct(USUBJID),\n    N_Baseline = sum(ABLFL == \"Y\", na.rm = TRUE),\n    .groups = \"drop\"\n  ) %&gt;%\n  head(10)\n\n# A tibble: 6 × 5\n  PARAMCD PARAM                    N_Records N_Subjects N_Baseline\n  &lt;chr&gt;   &lt;chr&gt;                        &lt;int&gt;      &lt;int&gt;      &lt;int&gt;\n1 DIABP   Diastolic Blood Pressure      8207        254        254\n2 HEIGHT  Height                         254        254        254\n3 PULSE   Pulse Rate                    8204        254        254\n4 SYSBP   Systolic Blood Pressure       8208        254        254\n5 TEMP    Temperature                   2720        254        254\n6 WEIGHT  Weight                        2050        254        254\n\n# By visit\nadvs %&gt;%\n  count(AVISIT, AVISITN) %&gt;%\n  arrange(AVISITN)\n\n# A tibble: 16 × 3\n   AVISIT              AVISITN     n\n   &lt;chr&gt;                 &lt;dbl&gt; &lt;int&gt;\n 1 Baseline                0    2783\n 2 SCREENING 1             1    3044\n 3 SCREENING 2             2    2496\n 4 Week 2                  2    2736\n 5 UNSCHEDULED 3.1         3.1    10\n 6 AMBUL ECG PLACEMENT     3.5  2060\n 7 Week 4                  4    2495\n 8 AMBUL ECG REMOVAL       6    1890\n 9 WEEK 6                  7    2296\n10 Week 8                  8    2077\n11 WEEK 12                 9    1881\n12 WEEK 16                10    1616\n13 WEEK 20                11    1407\n14 WEEK 24                12    1272\n15 WEEK 26                13    1220\n16 RETRIEVAL             201     360",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#export",
+    "href": "week3/day20.html#export",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "16 Export",
+    "text": "16 Export\n\n# Add labels\nattr(advs$PARAMCD, \"label\") &lt;- \"Parameter Code\"\nattr(advs$PARAM, \"label\") &lt;- \"Parameter\"\nattr(advs$AVAL, \"label\") &lt;- \"Analysis Value\"\nattr(advs$AVALU, \"label\") &lt;- \"Analysis Value Unit\"\nattr(advs$ADT, \"label\") &lt;- \"Analysis Date\"\nattr(advs$ADY, \"label\") &lt;- \"Analysis Relative Day\"\nattr(advs$AVISIT, \"label\") &lt;- \"Analysis Visit\"\nattr(advs$AVISITN, \"label\") &lt;- \"Analysis Visit (N)\"\nattr(advs$ATPT, \"label\") &lt;- \"Analysis Timepoint\"\nattr(advs$ATPTN, \"label\") &lt;- \"Analysis Timepoint (N)\"\nattr(advs$ABLFL, \"label\") &lt;- \"Baseline Record Flag\"\nattr(advs$BASE, \"label\") &lt;- \"Baseline Value\"\nattr(advs$CHG, \"label\") &lt;- \"Change from Baseline\"\nattr(advs$PCHG, \"label\") &lt;- \"Percent Change from Baseline\"\nattr(advs$ANRIND, \"label\") &lt;- \"Analysis Reference Range Indicator\"\nattr(advs$BNRIND, \"label\") &lt;- \"Baseline Reference Range Indicator\"\nattr(advs$ASEQ, \"label\") &lt;- \"Analysis Sequence Number\"\n\n# Export\nxportr_write(advs, path = \"advs.xpt\", domain = \"ADVS\")\n\ncat(\"\\n✓ ADVS exported to: advs.xpt\\n\")\n\n\n✓ ADVS exported to: advs.xpt",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#key-takeaways",
+    "href": "week3/day20.html#key-takeaways",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "17 Key Takeaways",
+    "text": "17 Key Takeaways\n\nADVS follows same BDS structure as ADLB\nVisit mapping: VISIT → AVISIT/AVISITN\nMultiple readings handled via ATPT/ATPTN (timepoint)\nABLFL logic same as ADLB (last value ≤ TRTSDT)\nClinical ranges differ by vital sign parameter\nPosition (SITTING/STANDING) captured in original VS",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#next-steps",
+    "href": "week3/day20.html#next-steps",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "18 Next Steps",
+    "text": "18 Next Steps\nDay 21: ADTTE - Time-to-Event Analysis\nDay 22: ADCM and ADRS\nDay 23: TLF Production",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day20.html#resources",
+    "href": "week3/day20.html#resources",
+    "title": "Day 20: ADVS - Vitals Analysis Dataset (BDS)",
+    "section": "19 Resources",
+    "text": "19 Resources\n\nBDS Structure: https://www.cdisc.org/standards/foundational/adam\nAdmiral BDS Vignette: https://pharmaverse.github.io/admiral/articles/bds_finding.html\nADVS Examples: https://pharmaverse.github.io/examples/adam/advs.html\n\n\nEnd of Day 20",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
+    ]
+  },
+  {
+    "objectID": "week3/day21.html",
+    "href": "week3/day21.html",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "",
+    "text": "ADTTE is the dataset for survival analysis - time-to-event endpoints like overall survival, progression-free survival, and time to first AE.\nToday’s focus: Build ADTTE with event/censor indicators and time-to-event calculations."
+  },
+  {
+    "objectID": "week3/day21.html#welcome-to-adtte",
+    "href": "week3/day21.html#welcome-to-adtte",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "",
+    "text": "ADTTE is the dataset for survival analysis - time-to-event endpoints like overall survival, progression-free survival, and time to first AE.\nToday’s focus: Build ADTTE with event/censor indicators and time-to-event calculations."
+  },
+  {
+    "objectID": "week3/day21.html#setup",
+    "href": "week3/day21.html#setup",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "2 Setup",
+    "text": "2 Setup\n\nlibrary(admiral)\nlibrary(pharmaversesdtm)\nlibrary(pharmaverseadam)\nlibrary(dplyr)\nlibrary(lubridate)\nlibrary(stringr)\nlibrary(xportr)\n\n# Load SDTM and ADaM\ndm &lt;- pharmaversesdtm::dm\nae &lt;- pharmaversesdtm::ae\nadsl &lt;- pharmaverseadam::adsl\n\ncat(\"Loaded DM:\", nrow(dm), \"subjects\\n\")\n\nLoaded DM: 306 subjects\n\ncat(\"Loaded AE:\", nrow(ae), \"AE records\\n\")\n\nLoaded AE: 1191 AE records\n\ncat(\"Loaded ADSL:\", nrow(adsl), \"subjects\\n\")\n\nLoaded ADSL: 306 subjects"
+  },
+  {
+    "objectID": "week3/day21.html#step-1-start-with-adsl",
+    "href": "week3/day21.html#step-1-start-with-adsl",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "3 Step 1: Start with ADSL",
+    "text": "3 Step 1: Start with ADSL\n\n# ADTTE starts with one row per subject from ADSL\nadtte &lt;- adsl %&gt;%\n  select(STUDYID, USUBJID, TRTSDT, TRT01A, AGE, SEX)\n\ncat(\"\\nADTTE initialized:\", nrow(adtte), \"subjects\\n\")\n\n\nADTTE initialized: 306 subjects\n\n# Check\nadtte %&gt;%\n  select(USUBJID, TRTSDT, TRT01A) %&gt;%\n  head(5)\n\n# A tibble: 5 × 3\n  USUBJID     TRTSDT     TRT01A              \n  &lt;chr&gt;       &lt;date&gt;     &lt;chr&gt;               \n1 01-701-1015 2014-01-02 Placebo             \n2 01-701-1023 2012-08-05 Placebo             \n3 01-701-1028 2013-07-19 Xanomeline High Dose\n4 01-701-1033 2014-03-18 Xanomeline Low Dose \n5 01-701-1034 2014-07-01 Xanomeline High Dose\n\n\nADTTE Structure:\n\nOne row per subject per parameter\nPARAMCD identifies the endpoint (OS, TTAE, etc.)\nEach parameter has event/censor logic"
+  },
+  {
+    "objectID": "week3/day21.html#step-2-prepare-ae-data",
+    "href": "week3/day21.html#step-2-prepare-ae-data",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "4 Step 2: Prepare AE Data",
+    "text": "4 Step 2: Prepare AE Data\n\n# Get first AE date per subject\nae_first &lt;- ae %&gt;%\n  admiral::derive_vars_dt(\n    new_vars_prefix = \"AE\",\n    dtc = AESTDTC\n  ) %&gt;%\n  filter(!is.na(AEDT)) %&gt;%\n  group_by(STUDYID, USUBJID) %&gt;%\n  summarise(\n    FIRST_AEDT = min(AEDT),\n    .groups = \"drop\"\n  )\n\ncat(\"\\nFirst AE dates prepared\\n\")\n\n\nFirst AE dates prepared\n\n# Check\nae_first %&gt;%\n  head(5)\n\n# A tibble: 5 × 3\n  STUDYID      USUBJID     FIRST_AEDT\n  &lt;chr&gt;        &lt;chr&gt;       &lt;date&gt;    \n1 CDISCPILOT01 01-701-1015 2014-01-03\n2 CDISCPILOT01 01-701-1023 2012-08-07\n3 CDISCPILOT01 01-701-1028 2013-07-21\n4 CDISCPILOT01 01-701-1034 2014-08-27\n5 CDISCPILOT01 01-701-1047 2013-02-12"
+  },
+  {
+    "objectID": "week3/day21.html#step-3-merge-ae-dates",
+    "href": "week3/day21.html#step-3-merge-ae-dates",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "5 Step 3: Merge AE Dates",
+    "text": "5 Step 3: Merge AE Dates\n\n# Merge first AE date to ADTTE\nadtte &lt;- adtte %&gt;%\n  left_join(\n    ae_first,\n    by = c(\"STUDYID\", \"USUBJID\")\n  )\n\ncat(\"\\nAE dates merged\\n\")\n\n\nAE dates merged\n\n# Check\nadtte %&gt;%\n  select(USUBJID, TRTSDT, FIRST_AEDT) %&gt;%\n  head(10)\n\n# A tibble: 10 × 3\n   USUBJID     TRTSDT     FIRST_AEDT\n   &lt;chr&gt;       &lt;date&gt;     &lt;date&gt;    \n 1 01-701-1015 2014-01-02 2014-01-03\n 2 01-701-1023 2012-08-05 2012-08-07\n 3 01-701-1028 2013-07-19 2013-07-21\n 4 01-701-1033 2014-03-18 NA        \n 5 01-701-1034 2014-07-01 2014-08-27\n 6 01-701-1047 2013-02-12 2013-02-12\n 7 01-701-1057 NA         NA        \n 8 01-701-1097 2014-01-01 2014-01-03\n 9 01-701-1111 2012-09-07 2012-07-08\n10 01-701-1115 2012-11-30 2012-12-02"
+  },
+  {
+    "objectID": "week3/day21.html#step-4-create-ttae-parameter",
+    "href": "week3/day21.html#step-4-create-ttae-parameter",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "6 Step 4: Create TTAE Parameter",
+    "text": "6 Step 4: Create TTAE Parameter\n\n# Time to First AE parameter\nadtte_ttae &lt;- adtte %&gt;%\n  mutate(\n    PARAMCD = \"TTAE\",\n    PARAM = \"Time to First Adverse Event\",\n    # Event if AE occurred after treatment start\n    CNSR = case_when(\n      !is.na(FIRST_AEDT) & FIRST_AEDT &gt;= TRTSDT ~ 0,  # Event\n      TRUE ~ 1  # Censored\n    ),\n    # Analysis date\n    ADT = case_when(\n      CNSR == 0 ~ FIRST_AEDT,  # Event date\n      TRUE ~ TRTSDT + 365  # Censor at 1 year (example)\n    ),\n    # Time to event in days\n    AVAL = case_when(\n      !is.na(ADT) & !is.na(TRTSDT) ~ as.numeric(ADT - TRTSDT) + 1,\n      TRUE ~ NA_real_\n    ),\n    AVALU = \"DAYS\"\n  )\n\ncat(\"\\nTTAE parameter created\\n\")\n\n\nTTAE parameter created\n\n# Summary\nadtte_ttae %&gt;%\n  count(CNSR) %&gt;%\n  mutate(\n    Label = case_when(\n      CNSR == 0 ~ \"Event\",\n      CNSR == 1 ~ \"Censored\"\n    )\n  )\n\n# A tibble: 2 × 3\n   CNSR     n Label   \n  &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;   \n1     0   201 Event   \n2     1   105 Censored\n\n\nCNSR Convention:\n\nCNSR = 0: Event occurred\nCNSR = 1: Censored (no event)"
+  },
+  {
+    "objectID": "week3/day21.html#step-5-add-event-description",
+    "href": "week3/day21.html#step-5-add-event-description",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "7 Step 5: Add Event Description",
+    "text": "7 Step 5: Add Event Description\n\n# Add event description\nadtte_ttae &lt;- adtte_ttae %&gt;%\n  mutate(\n    EVNTDESC = case_when(\n      CNSR == 0 ~ \"Adverse Event\",\n      TRUE ~ NA_character_\n    ),\n    CNSDTDSC = case_when(\n      CNSR == 1 ~ \"No Event by Study End\",\n      TRUE ~ NA_character_\n    )\n  )\n\ncat(\"\\nEvent descriptions added\\n\")\n\n\nEvent descriptions added\n\n# Check\nadtte_ttae %&gt;%\n  select(USUBJID, PARAMCD, AVAL, CNSR, EVNTDESC, CNSDTDSC) %&gt;%\n  head(10)\n\n# A tibble: 10 × 6\n   USUBJID     PARAMCD  AVAL  CNSR EVNTDESC      CNSDTDSC             \n   &lt;chr&gt;       &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;                \n 1 01-701-1015 TTAE        2     0 Adverse Event &lt;NA&gt;                 \n 2 01-701-1023 TTAE        3     0 Adverse Event &lt;NA&gt;                 \n 3 01-701-1028 TTAE        3     0 Adverse Event &lt;NA&gt;                 \n 4 01-701-1033 TTAE      366     1 &lt;NA&gt;          No Event by Study End\n 5 01-701-1034 TTAE       58     0 Adverse Event &lt;NA&gt;                 \n 6 01-701-1047 TTAE        1     0 Adverse Event &lt;NA&gt;                 \n 7 01-701-1057 TTAE       NA     1 &lt;NA&gt;          No Event by Study End\n 8 01-701-1097 TTAE        3     0 Adverse Event &lt;NA&gt;                 \n 9 01-701-1111 TTAE      366     1 &lt;NA&gt;          No Event by Study End\n10 01-701-1115 TTAE        3     0 Adverse Event &lt;NA&gt;"
+  },
+  {
+    "objectID": "week3/day21.html#step-6-create-serious-ae-parameter",
+    "href": "week3/day21.html#step-6-create-serious-ae-parameter",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "8 Step 6: Create Serious AE Parameter",
+    "text": "8 Step 6: Create Serious AE Parameter\n\n# Get first serious AE\nae_serious &lt;- ae %&gt;%\n  admiral::derive_vars_dt(\n    new_vars_prefix = \"AE\",\n    dtc = AESTDTC\n  ) %&gt;%\n  filter(AESER == \"Y\", !is.na(AEDT)) %&gt;%\n  group_by(STUDYID, USUBJID) %&gt;%\n  summarise(\n    FIRST_SERAEDT = min(AEDT),\n    .groups = \"drop\"\n  )\n\n# Merge to base\nadtte_base &lt;- adtte %&gt;%\n  left_join(ae_serious, by = c(\"STUDYID\", \"USUBJID\"))\n\n# Create parameter\nadtte_ttserae &lt;- adtte_base %&gt;%\n  mutate(\n    PARAMCD = \"TTSERAE\",\n    PARAM = \"Time to First Serious Adverse Event\",\n    CNSR = case_when(\n      !is.na(FIRST_SERAEDT) & FIRST_SERAEDT &gt;= TRTSDT ~ 0,\n      TRUE ~ 1\n    ),\n    ADT = case_when(\n      CNSR == 0 ~ FIRST_SERAEDT,\n      TRUE ~ TRTSDT + 365\n    ),\n    AVAL = case_when(\n      !is.na(ADT) & !is.na(TRTSDT) ~ as.numeric(ADT - TRTSDT) + 1,\n      TRUE ~ NA_real_\n    ),\n    AVALU = \"DAYS\",\n    EVNTDESC = case_when(\n      CNSR == 0 ~ \"Serious Adverse Event\",\n      TRUE ~ NA_character_\n    ),\n    CNSDTDSC = case_when(\n      CNSR == 1 ~ \"No Serious Event by Study End\",\n      TRUE ~ NA_character_\n    )\n  )\n\ncat(\"\\nTTSERAE parameter created\\n\")\n\n\nTTSERAE parameter created\n\n# Summary\nadtte_ttserae %&gt;%\n  count(CNSR) %&gt;%\n  mutate(\n    Label = case_when(\n      CNSR == 0 ~ \"Event\",\n      CNSR == 1 ~ \"Censored\"\n    )\n  )\n\n# A tibble: 2 × 3\n   CNSR     n Label   \n  &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;   \n1     0     3 Event   \n2     1   303 Censored"
+  },
+  {
+    "objectID": "week3/day21.html#step-7-combine-parameters",
+    "href": "week3/day21.html#step-7-combine-parameters",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "9 Step 7: Combine Parameters",
+    "text": "9 Step 7: Combine Parameters\n\n# Combine TTAE and TTSERAE\nadtte_final &lt;- bind_rows(adtte_ttae, adtte_ttserae)\n\ncat(\"\\nParameters combined\\n\")\n\n\nParameters combined\n\ncat(\"Total records:\", nrow(adtte_final), \"\\n\")\n\nTotal records: 612 \n\n# Distribution\nadtte_final %&gt;%\n  count(PARAMCD, PARAM)\n\n# A tibble: 2 × 3\n  PARAMCD PARAM                                   n\n  &lt;chr&gt;   &lt;chr&gt;                               &lt;int&gt;\n1 TTAE    Time to First Adverse Event           306\n2 TTSERAE Time to First Serious Adverse Event   306"
+  },
+  {
+    "objectID": "week3/day21.html#step-8-derive-analysis-sequence",
+    "href": "week3/day21.html#step-8-derive-analysis-sequence",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "10 Step 8: Derive Analysis Sequence",
+    "text": "10 Step 8: Derive Analysis Sequence\n\n# Create sequence number\nadtte_final &lt;- adtte_final %&gt;%\n  arrange(USUBJID, PARAMCD) %&gt;%\n  group_by(USUBJID) %&gt;%\n  mutate(ASEQ = row_number()) %&gt;%\n  ungroup()\n\ncat(\"\\nAnalysis sequence derived\\n\")\n\n\nAnalysis sequence derived"
+  },
+  {
+    "objectID": "week3/day21.html#step-9-derive-study-day",
+    "href": "week3/day21.html#step-9-derive-study-day",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "11 Step 9: Derive Study Day",
+    "text": "11 Step 9: Derive Study Day\n\n# Calculate study day for analysis date\nadtte_final &lt;- adtte_final %&gt;%\n  mutate(\n    ADY = case_when(\n      !is.na(ADT) & !is.na(TRTSDT) ~ as.numeric(ADT - TRTSDT) + 1,\n      TRUE ~ NA_real_\n    )\n  )\n\ncat(\"\\nStudy day derived\\n\")\n\n\nStudy day derived\n\n# Check\nadtte_final %&gt;%\n  select(USUBJID, PARAMCD, ADT, TRTSDT, ADY, AVAL) %&gt;%\n  head(10)\n\n# A tibble: 10 × 6\n   USUBJID     PARAMCD ADT        TRTSDT       ADY  AVAL\n   &lt;chr&gt;       &lt;chr&gt;   &lt;date&gt;     &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;\n 1 01-701-1015 TTAE    2014-01-03 2014-01-02     2     2\n 2 01-701-1015 TTSERAE 2015-01-02 2014-01-02   366   366\n 3 01-701-1023 TTAE    2012-08-07 2012-08-05     3     3\n 4 01-701-1023 TTSERAE 2013-08-05 2012-08-05   366   366\n 5 01-701-1028 TTAE    2013-07-21 2013-07-19     3     3\n 6 01-701-1028 TTSERAE 2014-07-19 2013-07-19   366   366\n 7 01-701-1033 TTAE    2015-03-18 2014-03-18   366   366\n 8 01-701-1033 TTSERAE 2015-03-18 2014-03-18   366   366\n 9 01-701-1034 TTAE    2014-08-27 2014-07-01    58    58\n10 01-701-1034 TTSERAE 2015-07-01 2014-07-01   366   366"
+  },
+  {
+    "objectID": "week3/day21.html#validation",
+    "href": "week3/day21.html#validation",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "12 Validation",
+    "text": "12 Validation\n\ncat(\"\\n=== ADTTE Validation ===\\n\\n\")\n\n\n=== ADTTE Validation ===\n\n# Check 1: CNSR values\ncheck1 &lt;- adtte_final %&gt;%\n  filter(!CNSR %in% c(0, 1))\ncat(\"Check 1 - Invalid CNSR values:\", nrow(check1), \"\\n\")\n\nCheck 1 - Invalid CNSR values: 0 \n\n# Check 2: AVAL consistency\ncheck2 &lt;- adtte_final %&gt;%\n  filter(!is.na(AVAL) & !is.na(ADY) & abs(AVAL - ADY) &gt; 0.1)\ncat(\"Check 2 - AVAL != ADY:\", nrow(check2), \"\\n\")\n\nCheck 2 - AVAL != ADY: 0 \n\n# Check 3: Event has EVNTDESC\ncheck3 &lt;- adtte_final %&gt;%\n  filter(CNSR == 0, is.na(EVNTDESC))\ncat(\"Check 3 - Event missing EVNTDESC:\", nrow(check3), \"\\n\")\n\nCheck 3 - Event missing EVNTDESC: 0 \n\n# Check 4: Censored has CNSDTDSC\ncheck4 &lt;- adtte_final %&gt;%\n  filter(CNSR == 1, is.na(CNSDTDSC))\ncat(\"Check 4 - Censored missing CNSDTDSC:\", nrow(check4), \"\\n\")\n\nCheck 4 - Censored missing CNSDTDSC: 0 \n\ncat(\"\\n✓ Validation complete\\n\")\n\n\n✓ Validation complete"
+  },
+  {
+    "objectID": "week3/day21.html#summary",
+    "href": "week3/day21.html#summary",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "13 Summary",
+    "text": "13 Summary\n\ncat(\"\\n=== ADTTE Summary ===\\n\\n\")\n\n\n=== ADTTE Summary ===\n\ncat(\"Total records:\", nrow(adtte_final), \"\\n\")\n\nTotal records: 612 \n\ncat(\"Parameters:\", n_distinct(adtte_final$PARAMCD), \"\\n\")\n\nParameters: 2 \n\ncat(\"Subjects:\", n_distinct(adtte_final$USUBJID), \"\\n\\n\")\n\nSubjects: 306 \n\n# By parameter\nadtte_final %&gt;%\n  group_by(PARAMCD, PARAM) %&gt;%\n  summarise(\n    N_Subjects = n(),\n    N_Events = sum(CNSR == 0),\n    N_Censored = sum(CNSR == 1),\n    Median_AVAL = median(AVAL, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\n# A tibble: 2 × 6\n  PARAMCD PARAM                       N_Subjects N_Events N_Censored Median_AVAL\n  &lt;chr&gt;   &lt;chr&gt;                            &lt;int&gt;    &lt;int&gt;      &lt;int&gt;       &lt;dbl&gt;\n1 TTAE    Time to First Adverse Event        306      201        105          25\n2 TTSERAE Time to First Serious Adve…        306        3        303         366\n\n# AVAL distribution\nadtte_final %&gt;%\n  group_by(PARAMCD) %&gt;%\n  summarise(\n    N = sum(!is.na(AVAL)),\n    Mean = round(mean(AVAL, na.rm = TRUE), 1),\n    Median = round(median(AVAL, na.rm = TRUE), 1),\n    Min = min(AVAL, na.rm = TRUE),\n    Max = max(AVAL, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\n# A tibble: 2 × 6\n  PARAMCD     N  Mean Median   Min   Max\n  &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1 TTAE      254  99.1     25     1   366\n2 TTSERAE   254 362      366     5   366"
+  },
+  {
+    "objectID": "week3/day21.html#export",
+    "href": "week3/day21.html#export",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "14 Export",
+    "text": "14 Export\n\n# Add labels\nattr(adtte_final$PARAMCD, \"label\") &lt;- \"Parameter Code\"\nattr(adtte_final$PARAM, \"label\") &lt;- \"Parameter\"\nattr(adtte_final$AVAL, \"label\") &lt;- \"Analysis Value\"\nattr(adtte_final$AVALU, \"label\") &lt;- \"Analysis Value Unit\"\nattr(adtte_final$ADT, \"label\") &lt;- \"Analysis Date\"\nattr(adtte_final$ADY, \"label\") &lt;- \"Analysis Relative Day\"\nattr(adtte_final$CNSR, \"label\") &lt;- \"Censor\"\nattr(adtte_final$EVNTDESC, \"label\") &lt;- \"Event Description\"\nattr(adtte_final$CNSDTDSC, \"label\") &lt;- \"Censored Description\"\nattr(adtte_final$ASEQ, \"label\") &lt;- \"Analysis Sequence Number\"\n\n# Export\nxportr_write(adtte_final, path = \"adtte.xpt\", domain = \"ADTTE\")\n\ncat(\"\\n✓ ADTTE exported to: adtte.xpt\\n\")\n\n\n✓ ADTTE exported to: adtte.xpt"
+  },
+  {
+    "objectID": "week3/day21.html#key-takeaways",
+    "href": "week3/day21.html#key-takeaways",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "15 Key Takeaways",
+    "text": "15 Key Takeaways\n\nADTTE has one row per subject per parameter\nCNSR = 0 (event), CNSR = 1 (censored)\nAVAL = time to event in days (ADT - TRTSDT + 1)\nEvents need EVNTDESC, censored need CNSDTDSC\nMultiple parameters: TTAE, TTSERAE, etc.\nSimple dplyr approach without complex admiral TTE functions"
+  },
+  {
+    "objectID": "week3/day21.html#next-steps",
+    "href": "week3/day21.html#next-steps",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "16 Next Steps",
+    "text": "16 Next Steps\nDay 22: Tables and Listings with gt\nDay 23: Figures with ggplot2\nDay 24: Complete TLF Package"
+  },
+  {
+    "objectID": "week3/day21.html#resources",
+    "href": "week3/day21.html#resources",
+    "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
+    "section": "17 Resources",
+    "text": "17 Resources\n\nADTTE Structure: https://www.cdisc.org/standards/foundational/adam\nAdmiral TTE Vignette: https://pharmaverse.github.io/admiral/articles/bds_tte.html\nSurvival Analysis in R: https://www.emilyzabor.com/tutorials/survival_analysis_in_r_tutorial.html\n\n\nEnd of Day 21\nWeek 3 Complete! You’ve built: - ADSL (Days 16-17) - ADAE (Day 18) - ADLB (Day 19) - ADVS (Day 20) - ADTTE (Day 21)\nReady for TLF production in Week 4!"
   }
 ]
