@@ -3709,125 +3709,197 @@
     "href": "week3/day21.html",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "",
-    "text": "ADTTE is the dataset for survival analysis - time-to-event endpoints like overall survival, progression-free survival, and time to first AE.\nToday’s focus: Build ADTTE with event/censor indicators and time-to-event calculations."
+    "text": "ADTTE is the dataset for survival analysis - time-to-event endpoints like overall survival, progression-free survival, and time to first AE.\nToday’s focus: Build ADTTE with event/censor indicators and time-to-event calculations.",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#welcome-to-adtte",
     "href": "week3/day21.html#welcome-to-adtte",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "",
-    "text": "ADTTE is the dataset for survival analysis - time-to-event endpoints like overall survival, progression-free survival, and time to first AE.\nToday’s focus: Build ADTTE with event/censor indicators and time-to-event calculations."
+    "text": "ADTTE is the dataset for survival analysis - time-to-event endpoints like overall survival, progression-free survival, and time to first AE.\nToday’s focus: Build ADTTE with event/censor indicators and time-to-event calculations.",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#setup",
     "href": "week3/day21.html#setup",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "2 Setup",
-    "text": "2 Setup\n\nlibrary(admiral)\nlibrary(pharmaversesdtm)\nlibrary(pharmaverseadam)\nlibrary(dplyr)\nlibrary(lubridate)\nlibrary(stringr)\nlibrary(xportr)\n\n# Load SDTM and ADaM\ndm &lt;- pharmaversesdtm::dm\nae &lt;- pharmaversesdtm::ae\nadsl &lt;- pharmaverseadam::adsl\n\ncat(\"Loaded DM:\", nrow(dm), \"subjects\\n\")\n\nLoaded DM: 306 subjects\n\ncat(\"Loaded AE:\", nrow(ae), \"AE records\\n\")\n\nLoaded AE: 1191 AE records\n\ncat(\"Loaded ADSL:\", nrow(adsl), \"subjects\\n\")\n\nLoaded ADSL: 306 subjects"
+    "text": "2 Setup\n\nlibrary(admiral)\nlibrary(pharmaversesdtm)\nlibrary(pharmaverseadam)\nlibrary(dplyr)\nlibrary(lubridate)\nlibrary(stringr)\nlibrary(xportr)\n\n# Load SDTM and ADaM\ndm &lt;- pharmaversesdtm::dm\nae &lt;- pharmaversesdtm::ae\nadsl &lt;- pharmaverseadam::adsl\n\ncat(\"Loaded DM:\", nrow(dm), \"subjects\\n\")\n\nLoaded DM: 306 subjects\n\ncat(\"Loaded AE:\", nrow(ae), \"AE records\\n\")\n\nLoaded AE: 1191 AE records\n\ncat(\"Loaded ADSL:\", nrow(adsl), \"subjects\\n\")\n\nLoaded ADSL: 306 subjects",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#step-1-start-with-adsl",
     "href": "week3/day21.html#step-1-start-with-adsl",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "3 Step 1: Start with ADSL",
-    "text": "3 Step 1: Start with ADSL\n\n# ADTTE starts with one row per subject from ADSL\nadtte &lt;- adsl %&gt;%\n  select(STUDYID, USUBJID, TRTSDT, TRT01A, AGE, SEX)\n\ncat(\"\\nADTTE initialized:\", nrow(adtte), \"subjects\\n\")\n\n\nADTTE initialized: 306 subjects\n\n# Check\nadtte %&gt;%\n  select(USUBJID, TRTSDT, TRT01A) %&gt;%\n  head(5)\n\n# A tibble: 5 × 3\n  USUBJID     TRTSDT     TRT01A              \n  &lt;chr&gt;       &lt;date&gt;     &lt;chr&gt;               \n1 01-701-1015 2014-01-02 Placebo             \n2 01-701-1023 2012-08-05 Placebo             \n3 01-701-1028 2013-07-19 Xanomeline High Dose\n4 01-701-1033 2014-03-18 Xanomeline Low Dose \n5 01-701-1034 2014-07-01 Xanomeline High Dose\n\n\nADTTE Structure:\n\nOne row per subject per parameter\nPARAMCD identifies the endpoint (OS, TTAE, etc.)\nEach parameter has event/censor logic"
+    "text": "3 Step 1: Start with ADSL\n\n# ADTTE starts with one row per subject from ADSL\nadtte &lt;- adsl %&gt;%\n  select(STUDYID, USUBJID, TRTSDT, TRT01A, AGE, SEX)\n\ncat(\"\\nADTTE initialized:\", nrow(adtte), \"subjects\\n\")\n\n\nADTTE initialized: 306 subjects\n\n# Check\nadtte %&gt;%\n  select(USUBJID, TRTSDT, TRT01A) %&gt;%\n  head(5)\n\n# A tibble: 5 × 3\n  USUBJID     TRTSDT     TRT01A              \n  &lt;chr&gt;       &lt;date&gt;     &lt;chr&gt;               \n1 01-701-1015 2014-01-02 Placebo             \n2 01-701-1023 2012-08-05 Placebo             \n3 01-701-1028 2013-07-19 Xanomeline High Dose\n4 01-701-1033 2014-03-18 Xanomeline Low Dose \n5 01-701-1034 2014-07-01 Xanomeline High Dose\n\n\nADTTE Structure:\n\nOne row per subject per parameter\nPARAMCD identifies the endpoint (OS, TTAE, etc.)\nEach parameter has event/censor logic",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#step-2-prepare-ae-data",
     "href": "week3/day21.html#step-2-prepare-ae-data",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "4 Step 2: Prepare AE Data",
-    "text": "4 Step 2: Prepare AE Data\n\n# Get first AE date per subject\nae_first &lt;- ae %&gt;%\n  admiral::derive_vars_dt(\n    new_vars_prefix = \"AE\",\n    dtc = AESTDTC\n  ) %&gt;%\n  filter(!is.na(AEDT)) %&gt;%\n  group_by(STUDYID, USUBJID) %&gt;%\n  summarise(\n    FIRST_AEDT = min(AEDT),\n    .groups = \"drop\"\n  )\n\ncat(\"\\nFirst AE dates prepared\\n\")\n\n\nFirst AE dates prepared\n\n# Check\nae_first %&gt;%\n  head(5)\n\n# A tibble: 5 × 3\n  STUDYID      USUBJID     FIRST_AEDT\n  &lt;chr&gt;        &lt;chr&gt;       &lt;date&gt;    \n1 CDISCPILOT01 01-701-1015 2014-01-03\n2 CDISCPILOT01 01-701-1023 2012-08-07\n3 CDISCPILOT01 01-701-1028 2013-07-21\n4 CDISCPILOT01 01-701-1034 2014-08-27\n5 CDISCPILOT01 01-701-1047 2013-02-12"
+    "text": "4 Step 2: Prepare AE Data\n\n# Get first AE date per subject\nae_first &lt;- ae %&gt;%\n  admiral::derive_vars_dt(\n    new_vars_prefix = \"AE\",\n    dtc = AESTDTC\n  ) %&gt;%\n  filter(!is.na(AEDT)) %&gt;%\n  group_by(STUDYID, USUBJID) %&gt;%\n  summarise(\n    FIRST_AEDT = min(AEDT),\n    .groups = \"drop\"\n  )\n\ncat(\"\\nFirst AE dates prepared\\n\")\n\n\nFirst AE dates prepared\n\n# Check\nae_first %&gt;%\n  head(5)\n\n# A tibble: 5 × 3\n  STUDYID      USUBJID     FIRST_AEDT\n  &lt;chr&gt;        &lt;chr&gt;       &lt;date&gt;    \n1 CDISCPILOT01 01-701-1015 2014-01-03\n2 CDISCPILOT01 01-701-1023 2012-08-07\n3 CDISCPILOT01 01-701-1028 2013-07-21\n4 CDISCPILOT01 01-701-1034 2014-08-27\n5 CDISCPILOT01 01-701-1047 2013-02-12",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#step-3-merge-ae-dates",
     "href": "week3/day21.html#step-3-merge-ae-dates",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "5 Step 3: Merge AE Dates",
-    "text": "5 Step 3: Merge AE Dates\n\n# Merge first AE date to ADTTE\nadtte &lt;- adtte %&gt;%\n  left_join(\n    ae_first,\n    by = c(\"STUDYID\", \"USUBJID\")\n  )\n\ncat(\"\\nAE dates merged\\n\")\n\n\nAE dates merged\n\n# Check\nadtte %&gt;%\n  select(USUBJID, TRTSDT, FIRST_AEDT) %&gt;%\n  head(10)\n\n# A tibble: 10 × 3\n   USUBJID     TRTSDT     FIRST_AEDT\n   &lt;chr&gt;       &lt;date&gt;     &lt;date&gt;    \n 1 01-701-1015 2014-01-02 2014-01-03\n 2 01-701-1023 2012-08-05 2012-08-07\n 3 01-701-1028 2013-07-19 2013-07-21\n 4 01-701-1033 2014-03-18 NA        \n 5 01-701-1034 2014-07-01 2014-08-27\n 6 01-701-1047 2013-02-12 2013-02-12\n 7 01-701-1057 NA         NA        \n 8 01-701-1097 2014-01-01 2014-01-03\n 9 01-701-1111 2012-09-07 2012-07-08\n10 01-701-1115 2012-11-30 2012-12-02"
+    "text": "5 Step 3: Merge AE Dates\n\n# Merge first AE date to ADTTE\nadtte &lt;- adtte %&gt;%\n  left_join(\n    ae_first,\n    by = c(\"STUDYID\", \"USUBJID\")\n  )\n\ncat(\"\\nAE dates merged\\n\")\n\n\nAE dates merged\n\n# Check\nadtte %&gt;%\n  select(USUBJID, TRTSDT, FIRST_AEDT) %&gt;%\n  head(10)\n\n# A tibble: 10 × 3\n   USUBJID     TRTSDT     FIRST_AEDT\n   &lt;chr&gt;       &lt;date&gt;     &lt;date&gt;    \n 1 01-701-1015 2014-01-02 2014-01-03\n 2 01-701-1023 2012-08-05 2012-08-07\n 3 01-701-1028 2013-07-19 2013-07-21\n 4 01-701-1033 2014-03-18 NA        \n 5 01-701-1034 2014-07-01 2014-08-27\n 6 01-701-1047 2013-02-12 2013-02-12\n 7 01-701-1057 NA         NA        \n 8 01-701-1097 2014-01-01 2014-01-03\n 9 01-701-1111 2012-09-07 2012-07-08\n10 01-701-1115 2012-11-30 2012-12-02",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#step-4-create-ttae-parameter",
     "href": "week3/day21.html#step-4-create-ttae-parameter",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "6 Step 4: Create TTAE Parameter",
-    "text": "6 Step 4: Create TTAE Parameter\n\n# Time to First AE parameter\nadtte_ttae &lt;- adtte %&gt;%\n  mutate(\n    PARAMCD = \"TTAE\",\n    PARAM = \"Time to First Adverse Event\",\n    # Event if AE occurred after treatment start\n    CNSR = case_when(\n      !is.na(FIRST_AEDT) & FIRST_AEDT &gt;= TRTSDT ~ 0,  # Event\n      TRUE ~ 1  # Censored\n    ),\n    # Analysis date\n    ADT = case_when(\n      CNSR == 0 ~ FIRST_AEDT,  # Event date\n      TRUE ~ TRTSDT + 365  # Censor at 1 year (example)\n    ),\n    # Time to event in days\n    AVAL = case_when(\n      !is.na(ADT) & !is.na(TRTSDT) ~ as.numeric(ADT - TRTSDT) + 1,\n      TRUE ~ NA_real_\n    ),\n    AVALU = \"DAYS\"\n  )\n\ncat(\"\\nTTAE parameter created\\n\")\n\n\nTTAE parameter created\n\n# Summary\nadtte_ttae %&gt;%\n  count(CNSR) %&gt;%\n  mutate(\n    Label = case_when(\n      CNSR == 0 ~ \"Event\",\n      CNSR == 1 ~ \"Censored\"\n    )\n  )\n\n# A tibble: 2 × 3\n   CNSR     n Label   \n  &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;   \n1     0   201 Event   \n2     1   105 Censored\n\n\nCNSR Convention:\n\nCNSR = 0: Event occurred\nCNSR = 1: Censored (no event)"
+    "text": "6 Step 4: Create TTAE Parameter\n\n# Time to First AE parameter\nadtte_ttae &lt;- adtte %&gt;%\n  mutate(\n    PARAMCD = \"TTAE\",\n    PARAM = \"Time to First Adverse Event\",\n    # Event if AE occurred after treatment start\n    CNSR = case_when(\n      !is.na(FIRST_AEDT) & FIRST_AEDT &gt;= TRTSDT ~ 0,  # Event\n      TRUE ~ 1  # Censored\n    ),\n    # Analysis date\n    ADT = case_when(\n      CNSR == 0 ~ FIRST_AEDT,  # Event date\n      TRUE ~ TRTSDT + 365  # Censor at 1 year (example)\n    ),\n    # Time to event in days\n    AVAL = case_when(\n      !is.na(ADT) & !is.na(TRTSDT) ~ as.numeric(ADT - TRTSDT) + 1,\n      TRUE ~ NA_real_\n    ),\n    AVALU = \"DAYS\"\n  )\n\ncat(\"\\nTTAE parameter created\\n\")\n\n\nTTAE parameter created\n\n# Summary\nadtte_ttae %&gt;%\n  count(CNSR) %&gt;%\n  mutate(\n    Label = case_when(\n      CNSR == 0 ~ \"Event\",\n      CNSR == 1 ~ \"Censored\"\n    )\n  )\n\n# A tibble: 2 × 3\n   CNSR     n Label   \n  &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;   \n1     0   201 Event   \n2     1   105 Censored\n\n\nCNSR Convention:\n\nCNSR = 0: Event occurred\nCNSR = 1: Censored (no event)",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#step-5-add-event-description",
     "href": "week3/day21.html#step-5-add-event-description",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "7 Step 5: Add Event Description",
-    "text": "7 Step 5: Add Event Description\n\n# Add event description\nadtte_ttae &lt;- adtte_ttae %&gt;%\n  mutate(\n    EVNTDESC = case_when(\n      CNSR == 0 ~ \"Adverse Event\",\n      TRUE ~ NA_character_\n    ),\n    CNSDTDSC = case_when(\n      CNSR == 1 ~ \"No Event by Study End\",\n      TRUE ~ NA_character_\n    )\n  )\n\ncat(\"\\nEvent descriptions added\\n\")\n\n\nEvent descriptions added\n\n# Check\nadtte_ttae %&gt;%\n  select(USUBJID, PARAMCD, AVAL, CNSR, EVNTDESC, CNSDTDSC) %&gt;%\n  head(10)\n\n# A tibble: 10 × 6\n   USUBJID     PARAMCD  AVAL  CNSR EVNTDESC      CNSDTDSC             \n   &lt;chr&gt;       &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;                \n 1 01-701-1015 TTAE        2     0 Adverse Event &lt;NA&gt;                 \n 2 01-701-1023 TTAE        3     0 Adverse Event &lt;NA&gt;                 \n 3 01-701-1028 TTAE        3     0 Adverse Event &lt;NA&gt;                 \n 4 01-701-1033 TTAE      366     1 &lt;NA&gt;          No Event by Study End\n 5 01-701-1034 TTAE       58     0 Adverse Event &lt;NA&gt;                 \n 6 01-701-1047 TTAE        1     0 Adverse Event &lt;NA&gt;                 \n 7 01-701-1057 TTAE       NA     1 &lt;NA&gt;          No Event by Study End\n 8 01-701-1097 TTAE        3     0 Adverse Event &lt;NA&gt;                 \n 9 01-701-1111 TTAE      366     1 &lt;NA&gt;          No Event by Study End\n10 01-701-1115 TTAE        3     0 Adverse Event &lt;NA&gt;"
+    "text": "7 Step 5: Add Event Description\n\n# Add event description\nadtte_ttae &lt;- adtte_ttae %&gt;%\n  mutate(\n    EVNTDESC = case_when(\n      CNSR == 0 ~ \"Adverse Event\",\n      TRUE ~ NA_character_\n    ),\n    CNSDTDSC = case_when(\n      CNSR == 1 ~ \"No Event by Study End\",\n      TRUE ~ NA_character_\n    )\n  )\n\ncat(\"\\nEvent descriptions added\\n\")\n\n\nEvent descriptions added\n\n# Check\nadtte_ttae %&gt;%\n  select(USUBJID, PARAMCD, AVAL, CNSR, EVNTDESC, CNSDTDSC) %&gt;%\n  head(10)\n\n# A tibble: 10 × 6\n   USUBJID     PARAMCD  AVAL  CNSR EVNTDESC      CNSDTDSC             \n   &lt;chr&gt;       &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;                \n 1 01-701-1015 TTAE        2     0 Adverse Event &lt;NA&gt;                 \n 2 01-701-1023 TTAE        3     0 Adverse Event &lt;NA&gt;                 \n 3 01-701-1028 TTAE        3     0 Adverse Event &lt;NA&gt;                 \n 4 01-701-1033 TTAE      366     1 &lt;NA&gt;          No Event by Study End\n 5 01-701-1034 TTAE       58     0 Adverse Event &lt;NA&gt;                 \n 6 01-701-1047 TTAE        1     0 Adverse Event &lt;NA&gt;                 \n 7 01-701-1057 TTAE       NA     1 &lt;NA&gt;          No Event by Study End\n 8 01-701-1097 TTAE        3     0 Adverse Event &lt;NA&gt;                 \n 9 01-701-1111 TTAE      366     1 &lt;NA&gt;          No Event by Study End\n10 01-701-1115 TTAE        3     0 Adverse Event &lt;NA&gt;",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#step-6-create-serious-ae-parameter",
     "href": "week3/day21.html#step-6-create-serious-ae-parameter",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "8 Step 6: Create Serious AE Parameter",
-    "text": "8 Step 6: Create Serious AE Parameter\n\n# Get first serious AE\nae_serious &lt;- ae %&gt;%\n  admiral::derive_vars_dt(\n    new_vars_prefix = \"AE\",\n    dtc = AESTDTC\n  ) %&gt;%\n  filter(AESER == \"Y\", !is.na(AEDT)) %&gt;%\n  group_by(STUDYID, USUBJID) %&gt;%\n  summarise(\n    FIRST_SERAEDT = min(AEDT),\n    .groups = \"drop\"\n  )\n\n# Merge to base\nadtte_base &lt;- adtte %&gt;%\n  left_join(ae_serious, by = c(\"STUDYID\", \"USUBJID\"))\n\n# Create parameter\nadtte_ttserae &lt;- adtte_base %&gt;%\n  mutate(\n    PARAMCD = \"TTSERAE\",\n    PARAM = \"Time to First Serious Adverse Event\",\n    CNSR = case_when(\n      !is.na(FIRST_SERAEDT) & FIRST_SERAEDT &gt;= TRTSDT ~ 0,\n      TRUE ~ 1\n    ),\n    ADT = case_when(\n      CNSR == 0 ~ FIRST_SERAEDT,\n      TRUE ~ TRTSDT + 365\n    ),\n    AVAL = case_when(\n      !is.na(ADT) & !is.na(TRTSDT) ~ as.numeric(ADT - TRTSDT) + 1,\n      TRUE ~ NA_real_\n    ),\n    AVALU = \"DAYS\",\n    EVNTDESC = case_when(\n      CNSR == 0 ~ \"Serious Adverse Event\",\n      TRUE ~ NA_character_\n    ),\n    CNSDTDSC = case_when(\n      CNSR == 1 ~ \"No Serious Event by Study End\",\n      TRUE ~ NA_character_\n    )\n  )\n\ncat(\"\\nTTSERAE parameter created\\n\")\n\n\nTTSERAE parameter created\n\n# Summary\nadtte_ttserae %&gt;%\n  count(CNSR) %&gt;%\n  mutate(\n    Label = case_when(\n      CNSR == 0 ~ \"Event\",\n      CNSR == 1 ~ \"Censored\"\n    )\n  )\n\n# A tibble: 2 × 3\n   CNSR     n Label   \n  &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;   \n1     0     3 Event   \n2     1   303 Censored"
+    "text": "8 Step 6: Create Serious AE Parameter\n\n# Get first serious AE\nae_serious &lt;- ae %&gt;%\n  admiral::derive_vars_dt(\n    new_vars_prefix = \"AE\",\n    dtc = AESTDTC\n  ) %&gt;%\n  filter(AESER == \"Y\", !is.na(AEDT)) %&gt;%\n  group_by(STUDYID, USUBJID) %&gt;%\n  summarise(\n    FIRST_SERAEDT = min(AEDT),\n    .groups = \"drop\"\n  )\n\n# Merge to base\nadtte_base &lt;- adtte %&gt;%\n  left_join(ae_serious, by = c(\"STUDYID\", \"USUBJID\"))\n\n# Create parameter\nadtte_ttserae &lt;- adtte_base %&gt;%\n  mutate(\n    PARAMCD = \"TTSERAE\",\n    PARAM = \"Time to First Serious Adverse Event\",\n    CNSR = case_when(\n      !is.na(FIRST_SERAEDT) & FIRST_SERAEDT &gt;= TRTSDT ~ 0,\n      TRUE ~ 1\n    ),\n    ADT = case_when(\n      CNSR == 0 ~ FIRST_SERAEDT,\n      TRUE ~ TRTSDT + 365\n    ),\n    AVAL = case_when(\n      !is.na(ADT) & !is.na(TRTSDT) ~ as.numeric(ADT - TRTSDT) + 1,\n      TRUE ~ NA_real_\n    ),\n    AVALU = \"DAYS\",\n    EVNTDESC = case_when(\n      CNSR == 0 ~ \"Serious Adverse Event\",\n      TRUE ~ NA_character_\n    ),\n    CNSDTDSC = case_when(\n      CNSR == 1 ~ \"No Serious Event by Study End\",\n      TRUE ~ NA_character_\n    )\n  )\n\ncat(\"\\nTTSERAE parameter created\\n\")\n\n\nTTSERAE parameter created\n\n# Summary\nadtte_ttserae %&gt;%\n  count(CNSR) %&gt;%\n  mutate(\n    Label = case_when(\n      CNSR == 0 ~ \"Event\",\n      CNSR == 1 ~ \"Censored\"\n    )\n  )\n\n# A tibble: 2 × 3\n   CNSR     n Label   \n  &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;   \n1     0     3 Event   \n2     1   303 Censored",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#step-7-combine-parameters",
     "href": "week3/day21.html#step-7-combine-parameters",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "9 Step 7: Combine Parameters",
-    "text": "9 Step 7: Combine Parameters\n\n# Combine TTAE and TTSERAE\nadtte_final &lt;- bind_rows(adtte_ttae, adtte_ttserae)\n\ncat(\"\\nParameters combined\\n\")\n\n\nParameters combined\n\ncat(\"Total records:\", nrow(adtte_final), \"\\n\")\n\nTotal records: 612 \n\n# Distribution\nadtte_final %&gt;%\n  count(PARAMCD, PARAM)\n\n# A tibble: 2 × 3\n  PARAMCD PARAM                                   n\n  &lt;chr&gt;   &lt;chr&gt;                               &lt;int&gt;\n1 TTAE    Time to First Adverse Event           306\n2 TTSERAE Time to First Serious Adverse Event   306"
+    "text": "9 Step 7: Combine Parameters\n\n# Combine TTAE and TTSERAE\nadtte_final &lt;- bind_rows(adtte_ttae, adtte_ttserae)\n\ncat(\"\\nParameters combined\\n\")\n\n\nParameters combined\n\ncat(\"Total records:\", nrow(adtte_final), \"\\n\")\n\nTotal records: 612 \n\n# Distribution\nadtte_final %&gt;%\n  count(PARAMCD, PARAM)\n\n# A tibble: 2 × 3\n  PARAMCD PARAM                                   n\n  &lt;chr&gt;   &lt;chr&gt;                               &lt;int&gt;\n1 TTAE    Time to First Adverse Event           306\n2 TTSERAE Time to First Serious Adverse Event   306",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#step-8-derive-analysis-sequence",
     "href": "week3/day21.html#step-8-derive-analysis-sequence",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "10 Step 8: Derive Analysis Sequence",
-    "text": "10 Step 8: Derive Analysis Sequence\n\n# Create sequence number\nadtte_final &lt;- adtte_final %&gt;%\n  arrange(USUBJID, PARAMCD) %&gt;%\n  group_by(USUBJID) %&gt;%\n  mutate(ASEQ = row_number()) %&gt;%\n  ungroup()\n\ncat(\"\\nAnalysis sequence derived\\n\")\n\n\nAnalysis sequence derived"
+    "text": "10 Step 8: Derive Analysis Sequence\n\n# Create sequence number\nadtte_final &lt;- adtte_final %&gt;%\n  arrange(USUBJID, PARAMCD) %&gt;%\n  group_by(USUBJID) %&gt;%\n  mutate(ASEQ = row_number()) %&gt;%\n  ungroup()\n\ncat(\"\\nAnalysis sequence derived\\n\")\n\n\nAnalysis sequence derived",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#step-9-derive-study-day",
     "href": "week3/day21.html#step-9-derive-study-day",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "11 Step 9: Derive Study Day",
-    "text": "11 Step 9: Derive Study Day\n\n# Calculate study day for analysis date\nadtte_final &lt;- adtte_final %&gt;%\n  mutate(\n    ADY = case_when(\n      !is.na(ADT) & !is.na(TRTSDT) ~ as.numeric(ADT - TRTSDT) + 1,\n      TRUE ~ NA_real_\n    )\n  )\n\ncat(\"\\nStudy day derived\\n\")\n\n\nStudy day derived\n\n# Check\nadtte_final %&gt;%\n  select(USUBJID, PARAMCD, ADT, TRTSDT, ADY, AVAL) %&gt;%\n  head(10)\n\n# A tibble: 10 × 6\n   USUBJID     PARAMCD ADT        TRTSDT       ADY  AVAL\n   &lt;chr&gt;       &lt;chr&gt;   &lt;date&gt;     &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;\n 1 01-701-1015 TTAE    2014-01-03 2014-01-02     2     2\n 2 01-701-1015 TTSERAE 2015-01-02 2014-01-02   366   366\n 3 01-701-1023 TTAE    2012-08-07 2012-08-05     3     3\n 4 01-701-1023 TTSERAE 2013-08-05 2012-08-05   366   366\n 5 01-701-1028 TTAE    2013-07-21 2013-07-19     3     3\n 6 01-701-1028 TTSERAE 2014-07-19 2013-07-19   366   366\n 7 01-701-1033 TTAE    2015-03-18 2014-03-18   366   366\n 8 01-701-1033 TTSERAE 2015-03-18 2014-03-18   366   366\n 9 01-701-1034 TTAE    2014-08-27 2014-07-01    58    58\n10 01-701-1034 TTSERAE 2015-07-01 2014-07-01   366   366"
+    "text": "11 Step 9: Derive Study Day\n\n# Calculate study day for analysis date\nadtte_final &lt;- adtte_final %&gt;%\n  mutate(\n    ADY = case_when(\n      !is.na(ADT) & !is.na(TRTSDT) ~ as.numeric(ADT - TRTSDT) + 1,\n      TRUE ~ NA_real_\n    )\n  )\n\ncat(\"\\nStudy day derived\\n\")\n\n\nStudy day derived\n\n# Check\nadtte_final %&gt;%\n  select(USUBJID, PARAMCD, ADT, TRTSDT, ADY, AVAL) %&gt;%\n  head(10)\n\n# A tibble: 10 × 6\n   USUBJID     PARAMCD ADT        TRTSDT       ADY  AVAL\n   &lt;chr&gt;       &lt;chr&gt;   &lt;date&gt;     &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;\n 1 01-701-1015 TTAE    2014-01-03 2014-01-02     2     2\n 2 01-701-1015 TTSERAE 2015-01-02 2014-01-02   366   366\n 3 01-701-1023 TTAE    2012-08-07 2012-08-05     3     3\n 4 01-701-1023 TTSERAE 2013-08-05 2012-08-05   366   366\n 5 01-701-1028 TTAE    2013-07-21 2013-07-19     3     3\n 6 01-701-1028 TTSERAE 2014-07-19 2013-07-19   366   366\n 7 01-701-1033 TTAE    2015-03-18 2014-03-18   366   366\n 8 01-701-1033 TTSERAE 2015-03-18 2014-03-18   366   366\n 9 01-701-1034 TTAE    2014-08-27 2014-07-01    58    58\n10 01-701-1034 TTSERAE 2015-07-01 2014-07-01   366   366",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#validation",
     "href": "week3/day21.html#validation",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "12 Validation",
-    "text": "12 Validation\n\ncat(\"\\n=== ADTTE Validation ===\\n\\n\")\n\n\n=== ADTTE Validation ===\n\n# Check 1: CNSR values\ncheck1 &lt;- adtte_final %&gt;%\n  filter(!CNSR %in% c(0, 1))\ncat(\"Check 1 - Invalid CNSR values:\", nrow(check1), \"\\n\")\n\nCheck 1 - Invalid CNSR values: 0 \n\n# Check 2: AVAL consistency\ncheck2 &lt;- adtte_final %&gt;%\n  filter(!is.na(AVAL) & !is.na(ADY) & abs(AVAL - ADY) &gt; 0.1)\ncat(\"Check 2 - AVAL != ADY:\", nrow(check2), \"\\n\")\n\nCheck 2 - AVAL != ADY: 0 \n\n# Check 3: Event has EVNTDESC\ncheck3 &lt;- adtte_final %&gt;%\n  filter(CNSR == 0, is.na(EVNTDESC))\ncat(\"Check 3 - Event missing EVNTDESC:\", nrow(check3), \"\\n\")\n\nCheck 3 - Event missing EVNTDESC: 0 \n\n# Check 4: Censored has CNSDTDSC\ncheck4 &lt;- adtte_final %&gt;%\n  filter(CNSR == 1, is.na(CNSDTDSC))\ncat(\"Check 4 - Censored missing CNSDTDSC:\", nrow(check4), \"\\n\")\n\nCheck 4 - Censored missing CNSDTDSC: 0 \n\ncat(\"\\n✓ Validation complete\\n\")\n\n\n✓ Validation complete"
+    "text": "12 Validation\n\ncat(\"\\n=== ADTTE Validation ===\\n\\n\")\n\n\n=== ADTTE Validation ===\n\n# Check 1: CNSR values\ncheck1 &lt;- adtte_final %&gt;%\n  filter(!CNSR %in% c(0, 1))\ncat(\"Check 1 - Invalid CNSR values:\", nrow(check1), \"\\n\")\n\nCheck 1 - Invalid CNSR values: 0 \n\n# Check 2: AVAL consistency\ncheck2 &lt;- adtte_final %&gt;%\n  filter(!is.na(AVAL) & !is.na(ADY) & abs(AVAL - ADY) &gt; 0.1)\ncat(\"Check 2 - AVAL != ADY:\", nrow(check2), \"\\n\")\n\nCheck 2 - AVAL != ADY: 0 \n\n# Check 3: Event has EVNTDESC\ncheck3 &lt;- adtte_final %&gt;%\n  filter(CNSR == 0, is.na(EVNTDESC))\ncat(\"Check 3 - Event missing EVNTDESC:\", nrow(check3), \"\\n\")\n\nCheck 3 - Event missing EVNTDESC: 0 \n\n# Check 4: Censored has CNSDTDSC\ncheck4 &lt;- adtte_final %&gt;%\n  filter(CNSR == 1, is.na(CNSDTDSC))\ncat(\"Check 4 - Censored missing CNSDTDSC:\", nrow(check4), \"\\n\")\n\nCheck 4 - Censored missing CNSDTDSC: 0 \n\ncat(\"\\n✓ Validation complete\\n\")\n\n\n✓ Validation complete",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#summary",
     "href": "week3/day21.html#summary",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "13 Summary",
-    "text": "13 Summary\n\ncat(\"\\n=== ADTTE Summary ===\\n\\n\")\n\n\n=== ADTTE Summary ===\n\ncat(\"Total records:\", nrow(adtte_final), \"\\n\")\n\nTotal records: 612 \n\ncat(\"Parameters:\", n_distinct(adtte_final$PARAMCD), \"\\n\")\n\nParameters: 2 \n\ncat(\"Subjects:\", n_distinct(adtte_final$USUBJID), \"\\n\\n\")\n\nSubjects: 306 \n\n# By parameter\nadtte_final %&gt;%\n  group_by(PARAMCD, PARAM) %&gt;%\n  summarise(\n    N_Subjects = n(),\n    N_Events = sum(CNSR == 0),\n    N_Censored = sum(CNSR == 1),\n    Median_AVAL = median(AVAL, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\n# A tibble: 2 × 6\n  PARAMCD PARAM                       N_Subjects N_Events N_Censored Median_AVAL\n  &lt;chr&gt;   &lt;chr&gt;                            &lt;int&gt;    &lt;int&gt;      &lt;int&gt;       &lt;dbl&gt;\n1 TTAE    Time to First Adverse Event        306      201        105          25\n2 TTSERAE Time to First Serious Adve…        306        3        303         366\n\n# AVAL distribution\nadtte_final %&gt;%\n  group_by(PARAMCD) %&gt;%\n  summarise(\n    N = sum(!is.na(AVAL)),\n    Mean = round(mean(AVAL, na.rm = TRUE), 1),\n    Median = round(median(AVAL, na.rm = TRUE), 1),\n    Min = min(AVAL, na.rm = TRUE),\n    Max = max(AVAL, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\n# A tibble: 2 × 6\n  PARAMCD     N  Mean Median   Min   Max\n  &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1 TTAE      254  99.1     25     1   366\n2 TTSERAE   254 362      366     5   366"
+    "text": "13 Summary\n\ncat(\"\\n=== ADTTE Summary ===\\n\\n\")\n\n\n=== ADTTE Summary ===\n\ncat(\"Total records:\", nrow(adtte_final), \"\\n\")\n\nTotal records: 612 \n\ncat(\"Parameters:\", n_distinct(adtte_final$PARAMCD), \"\\n\")\n\nParameters: 2 \n\ncat(\"Subjects:\", n_distinct(adtte_final$USUBJID), \"\\n\\n\")\n\nSubjects: 306 \n\n# By parameter\nadtte_final %&gt;%\n  group_by(PARAMCD, PARAM) %&gt;%\n  summarise(\n    N_Subjects = n(),\n    N_Events = sum(CNSR == 0),\n    N_Censored = sum(CNSR == 1),\n    Median_AVAL = median(AVAL, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\n# A tibble: 2 × 6\n  PARAMCD PARAM                       N_Subjects N_Events N_Censored Median_AVAL\n  &lt;chr&gt;   &lt;chr&gt;                            &lt;int&gt;    &lt;int&gt;      &lt;int&gt;       &lt;dbl&gt;\n1 TTAE    Time to First Adverse Event        306      201        105          25\n2 TTSERAE Time to First Serious Adve…        306        3        303         366\n\n# AVAL distribution\nadtte_final %&gt;%\n  group_by(PARAMCD) %&gt;%\n  summarise(\n    N = sum(!is.na(AVAL)),\n    Mean = round(mean(AVAL, na.rm = TRUE), 1),\n    Median = round(median(AVAL, na.rm = TRUE), 1),\n    Min = min(AVAL, na.rm = TRUE),\n    Max = max(AVAL, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\n# A tibble: 2 × 6\n  PARAMCD     N  Mean Median   Min   Max\n  &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1 TTAE      254  99.1     25     1   366\n2 TTSERAE   254 362      366     5   366",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#export",
     "href": "week3/day21.html#export",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "14 Export",
-    "text": "14 Export\n\n# Add labels\nattr(adtte_final$PARAMCD, \"label\") &lt;- \"Parameter Code\"\nattr(adtte_final$PARAM, \"label\") &lt;- \"Parameter\"\nattr(adtte_final$AVAL, \"label\") &lt;- \"Analysis Value\"\nattr(adtte_final$AVALU, \"label\") &lt;- \"Analysis Value Unit\"\nattr(adtte_final$ADT, \"label\") &lt;- \"Analysis Date\"\nattr(adtte_final$ADY, \"label\") &lt;- \"Analysis Relative Day\"\nattr(adtte_final$CNSR, \"label\") &lt;- \"Censor\"\nattr(adtte_final$EVNTDESC, \"label\") &lt;- \"Event Description\"\nattr(adtte_final$CNSDTDSC, \"label\") &lt;- \"Censored Description\"\nattr(adtte_final$ASEQ, \"label\") &lt;- \"Analysis Sequence Number\"\n\n# Export\nxportr_write(adtte_final, path = \"adtte.xpt\", domain = \"ADTTE\")\n\ncat(\"\\n✓ ADTTE exported to: adtte.xpt\\n\")\n\n\n✓ ADTTE exported to: adtte.xpt"
+    "text": "14 Export\n\n# Add labels\nattr(adtte_final$PARAMCD, \"label\") &lt;- \"Parameter Code\"\nattr(adtte_final$PARAM, \"label\") &lt;- \"Parameter\"\nattr(adtte_final$AVAL, \"label\") &lt;- \"Analysis Value\"\nattr(adtte_final$AVALU, \"label\") &lt;- \"Analysis Value Unit\"\nattr(adtte_final$ADT, \"label\") &lt;- \"Analysis Date\"\nattr(adtte_final$ADY, \"label\") &lt;- \"Analysis Relative Day\"\nattr(adtte_final$CNSR, \"label\") &lt;- \"Censor\"\nattr(adtte_final$EVNTDESC, \"label\") &lt;- \"Event Description\"\nattr(adtte_final$CNSDTDSC, \"label\") &lt;- \"Censored Description\"\nattr(adtte_final$ASEQ, \"label\") &lt;- \"Analysis Sequence Number\"\n\n# Export\nxportr_write(adtte_final, path = \"adtte.xpt\", domain = \"ADTTE\")\n\ncat(\"\\n✓ ADTTE exported to: adtte.xpt\\n\")\n\n\n✓ ADTTE exported to: adtte.xpt",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#key-takeaways",
     "href": "week3/day21.html#key-takeaways",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "15 Key Takeaways",
-    "text": "15 Key Takeaways\n\nADTTE has one row per subject per parameter\nCNSR = 0 (event), CNSR = 1 (censored)\nAVAL = time to event in days (ADT - TRTSDT + 1)\nEvents need EVNTDESC, censored need CNSDTDSC\nMultiple parameters: TTAE, TTSERAE, etc.\nSimple dplyr approach without complex admiral TTE functions"
+    "text": "15 Key Takeaways\n\nADTTE has one row per subject per parameter\nCNSR = 0 (event), CNSR = 1 (censored)\nAVAL = time to event in days (ADT - TRTSDT + 1)\nEvents need EVNTDESC, censored need CNSDTDSC\nMultiple parameters: TTAE, TTSERAE, etc.\nSimple dplyr approach without complex admiral TTE functions",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#next-steps",
     "href": "week3/day21.html#next-steps",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "16 Next Steps",
-    "text": "16 Next Steps\nDay 22: Tables and Listings with gt\nDay 23: Figures with ggplot2\nDay 24: Complete TLF Package"
+    "text": "16 Next Steps\nDay 22: Tables and Listings with gt\nDay 23: Figures with ggplot2\nDay 24: Complete TLF Package",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   },
   {
     "objectID": "week3/day21.html#resources",
     "href": "week3/day21.html#resources",
     "title": "Day 21: ADTTE - Time-to-Event Analysis Dataset",
     "section": "17 Resources",
-    "text": "17 Resources\n\nADTTE Structure: https://www.cdisc.org/standards/foundational/adam\nAdmiral TTE Vignette: https://pharmaverse.github.io/admiral/articles/bds_tte.html\nSurvival Analysis in R: https://www.emilyzabor.com/tutorials/survival_analysis_in_r_tutorial.html\n\n\nEnd of Day 21\nWeek 3 Complete! You’ve built: - ADSL (Days 16-17) - ADAE (Day 18) - ADLB (Day 19) - ADVS (Day 20) - ADTTE (Day 21)\nReady for TLF production in Week 4!"
+    "text": "17 Resources\n\nADTTE Structure: https://www.cdisc.org/standards/foundational/adam\nAdmiral TTE Vignette: https://pharmaverse.github.io/admiral/articles/bds_tte.html\nSurvival Analysis in R: https://www.emilyzabor.com/tutorials/survival_analysis_in_r_tutorial.html\n\n\nEnd of Day 21\nWeek 3 Complete! You’ve built: - ADSL (Days 16-17) - ADAE (Day 18) - ADLB (Day 19) - ADVS (Day 20) - ADTTE (Day 21)\nReady for TLF production in Week 4!",
+    "crumbs": [
+      "Week 3: ADaM Deep Dive",
+      "Day 21: ADTTE - Time-to-Event Analysis Dataset"
+    ]
   }
 ]
