@@ -18,6 +18,8 @@ website:
         href: week2/day8.html
       - text: "Week 3: ADaM Deep Dive"
         href: week3/day15.html
+      - text: "Week 4: Tables, Listings and Figures"
+        href: week4/day22.html
     right:
       - icon: github
         href: https://github.com/ineelhere/30-days-of-pharmaverse
@@ -53,6 +55,18 @@ website:
         - week3/day19.qmd
         - week3/day20.qmd
         - week3/day21.qmd
+    - id: week4
+      title: "Week 4: Tables, Listings and Figures"
+      contents:
+        - week4/day22.qmd
+        - week4/day23.qmd
+        - week4/day24.qmd
+        - week4/day25.qmd
+        - week4/day26.qmd
+        - week4/day27.qmd
+        - week4/day28.qmd
+        - week4/day29.qmd
+        - week4/day30.qmd
 
 format:
   html:

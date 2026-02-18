@@ -1,0 +1,279 @@
+---
+title: "Day 22: Demography Table with gtsummary + gt"
+subtitle: "First TLF from ADSL"
+author: "Indraneel Chakraborty"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+## Welcome to Week 4: TLFs
+
+Week 4 moves from **building ADaMs** to **producing TLFs**.
+
+Today we build two classic tables using `pharmaverseadam::adsl`:
+
+-   **Table 14.1.1** Demography and Baseline Characteristics
+-   **Table 14.2.1** Disposition Summary
+
+------------------------------------------------------------------------
+
+## Setup
+
+```{r setup}
+library(pharmaverseadam)
+library(dplyr)
+library(gtsummary)
+library(gt)
+
+adsl <- pharmaverseadam::adsl
+
+cat("Loaded ADSL:", nrow(adsl), "subjects\n")
+cat("Variables:", ncol(adsl), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Step 1: Check Available Columns
+
+```{r check-cols}
+# Always check what exists before selecting
+names(adsl)
+```
+
+------------------------------------------------------------------------
+
+## Step 2: Define Analysis Population
+
+```{r analysis-population}
+adsl_saf <- adsl %>%
+  dplyr::filter(SAFFL == "Y")
+
+cat("Safety population:", nrow(adsl_saf), "subjects\n")
+
+adsl_saf %>%
+  dplyr::count(TRT01A)
+```
+
+------------------------------------------------------------------------
+
+## Step 3: Select Variables for Table 1
+
+```{r select-vars}
+# Only columns confirmed in pharmaverseadam::adsl
+adsl_tab <- adsl_saf %>%
+  dplyr::select(TRT01A, AGE, SEX, RACE, ETHNIC, AGEGR1)
+
+adsl_tab %>%
+  head(5)
+```
+
+Variables used:
+
+-   AGE (continuous)
+-   SEX, RACE, ETHNIC, AGEGR1 (categorical)
+
+------------------------------------------------------------------------
+
+## Step 4: Build Summary Table with gtsummary
+
+```{r build-gtsummary}
+var_types <- list(
+  AGE    ~ "continuous2",
+  SEX    ~ "categorical",
+  RACE   ~ "categorical",
+  ETHNIC ~ "categorical",
+  AGEGR1 ~ "categorical"
+)
+
+tbl_demo <- adsl_tab %>%
+  gtsummary::tbl_summary(
+    by = TRT01A,
+    type = var_types,
+    statistic = list(
+      gtsummary::all_continuous()  ~ c("{mean} ({sd})", "{median} ({p25}, {p75})"),
+      gtsummary::all_categorical() ~ "{n} ({p}%)"
+    ),
+    digits  = gtsummary::all_continuous() ~ 1,
+    missing = "no"
+  ) %>%
+  gtsummary::add_overall(last = TRUE) %>%
+  gtsummary::add_n()
+
+tbl_demo
+```
+
+**Features:**
+
+-   Continuous: mean (SD) and median (Q1, Q3)
+-   Categorical: n (%)
+-   Columns: each treatment arm + overall
+-   `add_n()` shows N per column header
+
+------------------------------------------------------------------------
+
+## Step 5: Convert to gt Table
+
+```{r to-gt}
+gt_demo <- tbl_demo %>%
+  gtsummary::as_gt() %>%
+  gt::tab_header(
+    title    = "Table 14.1.1",
+    subtitle = "Summary of Demographic and Baseline Characteristics (Safety Population)"
+  ) %>%
+  gt::tab_source_note(
+    source_note = "Source: pharmaverseadam::adsl | Population: Safety (SAFFL=Y)"
+  )
+
+gt_demo
+```
+
+------------------------------------------------------------------------
+
+## Step 6: Explore Disposition Variables
+
+```{r disposition-explore}
+# EOSSTT = End of Study Status (confirmed in adsl)
+# DTHFL = Death Flag (confirmed in adsl)
+
+adsl_saf %>%
+  dplyr::count(EOSSTT)
+```
+
+------------------------------------------------------------------------
+
+## Step 7: Disposition Summary Table
+
+```{r disposition-gtsummary}
+disp_tab <- adsl_saf %>%
+  dplyr::select(TRT01A, EOSSTT, DTHFL)
+
+tbl_disp <- disp_tab %>%
+  gtsummary::tbl_summary(
+    by = TRT01A,
+    type = list(
+      EOSSTT ~ "categorical",
+      DTHFL  ~ "categorical"
+    ),
+    statistic = gtsummary::all_categorical() ~ "{n} ({p}%)",
+    missing = "no"
+  ) %>%
+  gtsummary::add_overall(last = TRUE) %>%
+  gtsummary::add_n()
+
+tbl_disp
+```
+
+------------------------------------------------------------------------
+
+## Step 8: Disposition gt Table
+
+```{r disposition-gt}
+gt_disp <- tbl_disp %>%
+  gtsummary::as_gt() %>%
+  gt::tab_header(
+    title    = "Table 14.2.1",
+    subtitle = "Subject Disposition Summary (Safety Population)"
+  ) %>%
+  gt::tab_source_note(
+    source_note = "Source: pharmaverseadam::adsl | Population: Safety (SAFFL=Y)"
+  )
+
+gt_disp
+```
+
+------------------------------------------------------------------------
+
+## Validation Checks
+
+```{r validate}
+cat("\n=== Table Validation ===\n\n")
+
+# Check 1: Safety N
+cat("Check 1 - Safety N:", nrow(adsl_saf), "\n")
+
+# Check 2: All SAFFL subjects have TRT01A
+check2 <- adsl_saf %>% dplyr::filter(is.na(TRT01A))
+cat("Check 2 - Missing TRT01A:", nrow(check2), "\n")
+
+# Check 3: EOSSTT completeness
+check3 <- adsl_saf %>% dplyr::filter(is.na(EOSSTT))
+cat("Check 3 - Missing EOSSTT:", nrow(check3), "\n")
+
+cat("\n✓ Validation complete\n")
+```
+
+------------------------------------------------------------------------
+
+## Summary
+
+```{r summary}
+cat("\n=== Day 22 Summary ===\n\n")
+cat("Safety N:", nrow(adsl_saf), "\n\n")
+
+cat("Treatment arms:\n")
+adsl_saf %>% dplyr::count(TRT01A)
+
+cat("\nEnd of study status:\n")
+adsl_saf %>% dplyr::count(EOSSTT)
+```
+
+------------------------------------------------------------------------
+
+## Export Reference (not run)
+
+```{r export-tables, eval=FALSE}
+# Export gtsummary table to Word/RTF (covered in a later day)
+# library(flextable)
+# library(officer)
+#
+# ft_demo <- gtsummary::as_flex_table(tbl_demo)
+# doc <- officer::read_docx() %>%
+#   officer::body_add_flextable(ft_demo)
+# print(doc, target = "table14_1_1_demography.docx")
+```
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  Always run `names(adsl)` first to confirm which columns exist
+2.  `pharmaverseadam::adsl` confirmed variables: AGE, SEX, RACE, ETHNIC, AGEGR1, EOSSTT, DTHFL, TRT01A
+3.  `gtsummary::tbl_summary()` handles both continuous and categorical in one call
+4.  `gtsummary::as_gt()` converts to gt for headers, footnotes, and final formatting
+5.  No `DCSREAS`, `BMIBL`, or `adtte` in `pharmaverseadam` - always verify before use
+
+------------------------------------------------------------------------
+
+## Next Steps
+
+**Day 23:** AE tables with `pharmaverseadam::adae` and `gt` **Day 24:** KM curves with `ggsurvfit` **Day 25:** ARD-first workflow with `cards`
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   gtsummary: <https://www.danieldsjoberg.com/gtsummary/>
+-   gt clinical case study: <https://gt.rstudio.com/articles/case-study-clinical-tables.html>
+-   pharmaverseadam datasets: <https://pharmaverse.github.io/pharmaverseadam/>
+
+------------------------------------------------------------------------
+
+**End of Day 22**

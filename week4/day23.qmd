@@ -1,0 +1,440 @@
+---
+title: "Day 23: ADCM and ADRS - Concomitant Meds and Oncology Response"
+subtitle: "Week 4, Day 23: OCCDS period flags and RECIST 1.1 with admiralonco"
+author: "30 Days of Pharmaverse"
+date: today
+format:
+  html:
+    theme:
+      light: cosmo
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+## Overview
+
+Today covers two supporting ADaM datasets:
+
+-   **ADCM** — Concomitant Medications (OCCDS) with pre/concomitant/prior period flags
+-   **ADRS** — Oncology Response (OCCDS) with RECIST 1.1 Best Overall Response using `admiralonco`
+
+> Note: `pharmaversesdtm` exports `rs_onco` (not `rs`) for oncology response data.
+
+------------------------------------------------------------------------
+
+## Setup
+
+```{r setup}
+library(admiral)
+library(admiralonco)
+library(pharmaversesdtm)
+library(pharmaverseadam)
+library(dplyr)
+library(lubridate)
+library(xportr)
+
+# Load SDTM source data
+cm     <- pharmaversesdtm::cm
+rs_onco <- pharmaversesdtm::rs_onco   # oncology-specific RS domain
+
+# Load ADSL for merging
+adsl <- pharmaverseadam::adsl
+
+cat("Loaded CM:", nrow(cm), "records\n")
+cat("Loaded RS (oncology):", nrow(rs_onco), "records\n")
+cat("Loaded ADSL:", nrow(adsl), "subjects\n")
+```
+
+------------------------------------------------------------------------
+
+## ADCM - Concomitant Medications
+
+### Step 1: Check CM Structure
+
+```{r check-cm}
+cm %>%
+  dplyr::select(STUDYID, USUBJID, CMTRT, CMDECOD, CMSTDTC, CMENDTC) %>%
+  head(5)
+```
+
+**Key CM Variables:**
+
+-   CMTRT: Verbatim medication name
+-   CMDECOD: Standardised medication name (WHODrug)
+-   CMSTDTC / CMENDTC: Start / end dates (ISO 8601)
+
+------------------------------------------------------------------------
+
+### Step 2: Merge ADSL into CM
+
+```{r adcm-merge}
+adcm <- cm %>%
+  admiral::derive_vars_merged(
+    dataset_add = adsl,
+    new_vars = exprs(TRTSDT, TRTEDT, TRT01A),
+    by_vars = exprs(STUDYID, USUBJID)
+  )
+
+cat("ADCM after ADSL merge:", nrow(adcm), "records\n")
+```
+
+------------------------------------------------------------------------
+
+### Step 3: Derive Start and End Dates
+
+```{r adcm-dates}
+adcm <- adcm %>%
+  admiral::derive_vars_dt(
+    new_vars_prefix = "AST",
+    dtc = CMSTDTC,
+    highest_imputation = "M"
+  ) %>%
+  admiral::derive_vars_dt(
+    new_vars_prefix = "AEN",
+    dtc = CMENDTC,
+    highest_imputation = "M"
+  )
+
+cat("Dates derived\n")
+
+adcm %>%
+  dplyr::select(USUBJID, CMTRT, ASTDT, AENDT) %>%
+  head(5)
+```
+
+------------------------------------------------------------------------
+
+### Step 4: Derive Period Flags
+
+```{r adcm-period-flags}
+adcm <- adcm %>%
+  dplyr::mutate(
+    # Pre-treatment: started before TRTSDT and ongoing at TRTSDT
+    PREFL = dplyr::case_when(
+      !is.na(ASTDT) & ASTDT < TRTSDT &
+        (is.na(AENDT) | AENDT >= TRTSDT) ~ "Y",
+      TRUE ~ NA_character_
+    ),
+    # Concomitant: overlaps with treatment period
+    CONFL = dplyr::case_when(
+      !is.na(ASTDT) &
+        ASTDT <= TRTEDT &
+        (is.na(AENDT) | AENDT >= TRTSDT) ~ "Y",
+      TRUE ~ NA_character_
+    ),
+    # Prior: ended strictly before treatment start
+    PRVFL = dplyr::case_when(
+      !is.na(AENDT) & AENDT < TRTSDT ~ "Y",
+      TRUE ~ NA_character_
+    )
+  )
+
+cat("Period flags derived\n")
+
+adcm %>%
+  dplyr::summarise(
+    N_PREFL = sum(PREFL == "Y", na.rm = TRUE),
+    N_CONFL = sum(CONFL == "Y", na.rm = TRUE),
+    N_PRVFL = sum(PRVFL == "Y", na.rm = TRUE)
+  )
+```
+
+**Period Flag Logic:**
+
+| Flag  | Meaning                                  |
+|-------|------------------------------------------|
+| PREFL | Started before TRTSDT, ongoing at TRTSDT |
+| CONFL | Overlapping with treatment window        |
+| PRVFL | Ended strictly before TRTSDT             |
+
+------------------------------------------------------------------------
+
+### Step 5: Derive Analysis Sequence
+
+```{r adcm-aseq}
+adcm <- adcm %>%
+  dplyr::arrange(USUBJID, ASTDT, CMSEQ) %>%
+  dplyr::group_by(USUBJID) %>%
+  dplyr::mutate(ASEQ = dplyr::row_number()) %>%
+  dplyr::ungroup()
+
+cat("ADCM records:", nrow(adcm), "\n")
+```
+
+------------------------------------------------------------------------
+
+### Step 6: ADCM Validation
+
+```{r adcm-validate}
+cat("\n=== ADCM Validation ===\n\n")
+
+check1 <- adcm %>% dplyr::filter(is.na(ASTDT))
+cat("Check 1 - Missing ASTDT:", nrow(check1), "\n")
+
+check2 <- adcm %>% dplyr::filter(!is.na(PREFL) & PREFL != "Y")
+cat("Check 2 - Invalid PREFL values:", nrow(check2), "\n")
+
+check3 <- adcm %>%
+  dplyr::count(USUBJID, ASEQ) %>%
+  dplyr::filter(n > 1)
+cat("Check 3 - Duplicate ASEQ per subject:", nrow(check3), "\n")
+
+cat("\n✓ ADCM validation complete\n")
+```
+
+------------------------------------------------------------------------
+
+## ADRS - Oncology Tumor Response
+
+### Step 7: Check RS Oncology Structure
+
+```{r check-rs}
+# pharmaversesdtm exports rs_onco (not rs)
+names(rs_onco)
+
+rs_onco %>%
+  dplyr::select(USUBJID, RSTESTCD, RSSTRESC, VISIT, RSDTC) %>%
+  head(5)
+```
+
+------------------------------------------------------------------------
+
+### Step 8: Merge ADSL into RS
+
+```{r adrs-base}
+adrs <- rs_onco %>%
+  admiral::derive_vars_merged(
+    dataset_add = adsl,
+    new_vars = exprs(RANDDT, TRTSDT, TRT01A),
+    by_vars = exprs(STUDYID, USUBJID)
+  ) %>%
+  admiral::derive_vars_dt(
+    new_vars_prefix = "A",
+    dtc = RSDTC
+  )
+
+cat("ADRS base created:", nrow(adrs), "records\n")
+
+adrs %>%
+  dplyr::select(USUBJID, RSTESTCD, RSSTRESC, ADT, TRTSDT) %>%
+  head(5)
+```
+
+------------------------------------------------------------------------
+
+### Step 9: Derive AVAL from Response
+
+```{r adrs-aval}
+# admiralonco::aval_resp() maps RECIST 1.1 labels to numeric values
+adrs <- adrs %>%
+  dplyr::mutate(
+    PARAMCD = RSTESTCD,
+    PARAM   = RSTEST,
+    AVALC   = RSSTRESC,
+    AVAL    = admiralonco::aval_resp(RSSTRESC)
+  )
+
+cat("AVAL derived\n")
+
+adrs %>%
+  dplyr::count(AVALC, AVAL) %>%
+  dplyr::arrange(AVAL)
+```
+
+**RECIST 1.1 Response Coding:**
+
+| AVALC | AVAL |
+|-------|------|
+| CR    | 1    |
+| PR    | 2    |
+| SD    | 3    |
+| PD    | 4    |
+| NE    | 5    |
+
+------------------------------------------------------------------------
+
+### Step 10: Filter to Overall Visit Response
+
+```{r adrs-ovr}
+# Filter to overall response records and rename parameter
+adrs_ovr <- adrs %>%
+  dplyr::filter(RSTESTCD == "OVRLRESP") %>%
+  dplyr::mutate(
+    PARAMCD = "OVR",
+    PARAM   = "Overall Response by Visit"
+  )
+
+cat("OVR records:", nrow(adrs_ovr), "\n")
+
+adrs_ovr %>%
+  dplyr::count(AVALC, AVAL)
+```
+
+------------------------------------------------------------------------
+
+### Step 11: Derive Best Overall Response
+
+```{r adrs-bor}
+# BOR = best (lowest AVAL) response across all visits per subject
+adrs_bor <- adrs_ovr %>%
+  dplyr::group_by(STUDYID, USUBJID) %>%
+  dplyr::slice_min(AVAL, n = 1, with_ties = FALSE) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(
+    PARAMCD = "BOR",
+    PARAM   = "Best Overall Response"
+  )
+
+cat("BOR records:", nrow(adrs_bor), "\n")
+
+adrs_bor %>%
+  dplyr::count(AVALC, AVAL)
+```
+
+------------------------------------------------------------------------
+
+### Step 12: Derive Responder Flag
+
+```{r adrs-rsp}
+# Responder = CR (AVAL=1) or PR (AVAL=2)
+adrs_rsp <- adrs_bor %>%
+  dplyr::mutate(
+    PARAMCD = "RSP",
+    PARAM   = "Responder (CR or PR)",
+    AVALC   = dplyr::if_else(AVAL <= 2, "Y", "N"),
+    AVAL    = dplyr::if_else(AVALC == "Y", 1, 0)
+  )
+
+cat("RSP records:", nrow(adrs_rsp), "\n")
+
+adrs_rsp %>%
+  dplyr::count(AVALC, AVAL)
+```
+
+------------------------------------------------------------------------
+
+### Step 13: Combine ADRS Parameters
+
+```{r adrs-combine}
+adrs_final <- dplyr::bind_rows(adrs_ovr, adrs_bor, adrs_rsp) %>%
+  dplyr::arrange(USUBJID, PARAMCD, ADT) %>%
+  dplyr::group_by(USUBJID) %>%
+  dplyr::mutate(ASEQ = dplyr::row_number()) %>%
+  dplyr::ungroup()
+
+cat("ADRS final:", nrow(adrs_final), "records\n")
+
+adrs_final %>%
+  dplyr::count(PARAMCD, PARAM)
+```
+
+------------------------------------------------------------------------
+
+### Step 14: ADRS Validation
+
+```{r adrs-validate}
+cat("\n=== ADRS Validation ===\n\n")
+
+# One BOR per subject
+check1 <- adrs_final %>%
+  dplyr::filter(PARAMCD == "BOR") %>%
+  dplyr::count(USUBJID) %>%
+  dplyr::filter(n > 1)
+cat("Check 1 - Multiple BOR per subject:", nrow(check1), "\n")
+
+# Valid AVAL range for OVR (1-5)
+check2 <- adrs_final %>%
+  dplyr::filter(PARAMCD == "OVR", !AVAL %in% 1:5)
+cat("Check 2 - Invalid OVR AVAL:", nrow(check2), "\n")
+
+# RSP only 0 or 1
+check3 <- adrs_final %>%
+  dplyr::filter(PARAMCD == "RSP", !AVAL %in% c(0, 1))
+cat("Check 3 - Invalid RSP AVAL:", nrow(check3), "\n")
+
+cat("\n✓ ADRS validation complete\n")
+```
+
+------------------------------------------------------------------------
+
+## Summary
+
+```{r summary}
+cat("\n=== Day 23 Summary ===\n\n")
+
+cat("ADCM:\n")
+cat("  Records:", nrow(adcm), "\n")
+cat("  Concomitant (CONFL=Y):", sum(adcm$CONFL == "Y", na.rm = TRUE), "\n")
+cat("  Prior (PRVFL=Y):", sum(adcm$PRVFL == "Y", na.rm = TRUE), "\n\n")
+
+cat("ADRS:\n")
+adrs_final %>%
+  dplyr::count(PARAMCD, PARAM)
+```
+
+------------------------------------------------------------------------
+
+## Export
+
+```{r export}
+attr(adcm$ASTDT, "label") <- "Analysis Start Date"
+attr(adcm$AENDT, "label") <- "Analysis End Date"
+attr(adcm$PREFL, "label") <- "Pre-treatment Flag"
+attr(adcm$CONFL, "label") <- "Concomitant Flag"
+attr(adcm$PRVFL, "label") <- "Prior Flag"
+attr(adcm$ASEQ,  "label") <- "Analysis Sequence Number"
+
+attr(adrs_final$PARAMCD, "label") <- "Parameter Code"
+attr(adrs_final$PARAM,   "label") <- "Parameter"
+attr(adrs_final$AVAL,    "label") <- "Analysis Value"
+attr(adrs_final$AVALC,   "label") <- "Analysis Value (C)"
+attr(adrs_final$ADT,     "label") <- "Analysis Date"
+attr(adrs_final$ASEQ,    "label") <- "Analysis Sequence Number"
+
+xportr_write(adcm,       path = "adcm.xpt", domain = "ADCM")
+xportr_write(adrs_final, path = "adrs.xpt", domain = "ADRS")
+
+cat("\n✓ adcm.xpt exported\n")
+cat("✓ adrs.xpt exported\n")
+```
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  `pharmaversesdtm` exports `rs_onco` for oncology response — not `rs`
+2.  ADCM period flags describe timing relative to TRTSDT/TRTEDT
+3.  `admiralonco::aval_resp()` converts RECIST labels to numeric AVAL
+4.  BOR = `slice_min(AVAL)` per subject across OVR records
+5.  RSP = 1 if BOR is CR or PR (AVAL ≤ 2), else 0
+
+------------------------------------------------------------------------
+
+## Next Steps
+
+**Day 24:** ARD-first reporting with `cards` and `cardx` **Day 25:** `gtsummary` + `tfrmt` ARD-backed tables **Day 26:** `flextable` + `officer` Word/RTF output
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   admiral ADCM vignette: <https://pharmaverse.github.io/admiral/articles/occds.html>
+-   admiralonco ADRS vignette: <https://pharmaverse.github.io/admiralonco/articles/adrs.html>
+-   pharmaversesdtm datasets: <https://pharmaverse.github.io/pharmaversesdtm/>
+
+------------------------------------------------------------------------
+
+**End of Day 23**
