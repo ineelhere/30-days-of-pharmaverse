@@ -637,3 +637,5 @@ In **Day 14**, we will complete Week 2 with the **Week 2 Capstone: Metadata-Driv
 -   Exporting submission-ready `.xpt` files with `xportr`
 -   End-to-end pipeline: raw data → SDTM → validate → export
 -   Comprehensive review of all SDTM concepts before entering ADaM in Week 3
+
+<a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>

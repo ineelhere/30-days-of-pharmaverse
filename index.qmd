@@ -35,9 +35,18 @@ execute:
 
 ## Exploration Roadmap
 
-Welcome to **30 Days of Pharmaverse**. This project is a hands-on exploration of the modern clinical data science stack, designed for programmers and data scientists who want to dive deep into CDISC standards using the open-source Pharmaverse ecosystem.
+Welcome to **30 Days of Pharmaverse** — a free, open-source, hands-on exploration of Clinical Data Science with R and the [Pharmaverse](https://pharmaverse.org) ecosystem. Whether you're a clinical programmer, biostatistician, data scientist, or a curious learner, this project walks you through real-world CDISC workflows one day at a time.
 
-Instead of a traditional course, think of this as a **guided tour** or a **developer's log**. Each day, we tackle a specific concept - from setting up a working environment to building complex ADaM datasets and producing TLF outputs - using industry-standard R packages like `admiral`, `xportr`, `metacore`, `rtables`, `tern`, and more.
+Each day tackles a specific concept — from setting up a working environment to building complex ADaM datasets and producing Tables, Listings, and Figures — using community-driven, open-source R packages like `admiral`, `xportr`, `metacore`, `rtables`, `tern`, and many more.
+
+### Who Is This For?
+
+- **Clinical programmers** transitioning from SAS to R, looking for a structured, code-first guide to the Pharmaverse
+- **Biostatisticians & data scientists** exploring how SDTM, ADaM, and TLF production work end-to-end in R
+- **Students & academics** learning clinical trial data standards and reproducible research workflows
+- **Open-source contributors** interested in the Pharmaverse — a growing family of validated R packages for clinical reporting
+
+No SAS license or prior CDISC experience required. If you know base R / `tidyverse` and are curious about clinical data pipelines, start with Day 1.
 
 ```{r}
 #| echo: false
@@ -193,7 +202,7 @@ install.packages(c("ggplot2", "ggsurvfit", "patchwork"))
 install.packages(c("cards", "cardx", "testthat", "logrx"))
 ```
 
-## **⚠️ Important Disclaimer**
+## ⚠️ Important Disclaimer {#important-disclaimer}
 
 This project is a **personal initiative** created for **learning and exploratory purposes only**. It is in no way affiliated with, endorsed by, sponsored by, funded by, or assisted by any organisation or company at any capacity.
 
@@ -212,13 +221,17 @@ The views, opinions, code, and materials shared in this project are solely for e
 
 ## Community & Resources
 
-- [Pharmaverse.org](https://pharmaverse.org) - The central hub for open-source clinical R packages.
-- [CDISC.org](https://www.cdisc.org) - The official standards body for clinical data.
-- [Admiral Documentation](https://pharmaverse.github.io/admiral/) - The flagship ADaM derivation package.
-- [r4csr.org](https://r4csr.org) - Open-access book: *R for Clinical Study Reports* (Zhang et al.).
-- [pharmaverse TLG Catalogue](https://pharmaverse.github.io/TLG-Catalog) - Reference TLF outputs from the pharmaverse stack.
-- [R Consortium R Submission Working Group](https://rconsortium.github.io/submissions-wg/) - Ongoing work on R-based submissions (pilot projects, not formal FDA guidance).
+- [Pharmaverse.org](https://pharmaverse.org) — The central hub for open-source clinical R packages
+- [CDISC.org](https://www.cdisc.org) — The official standards body for clinical data interchange
+- [Admiral Documentation](https://pharmaverse.github.io/admiral/) — The flagship ADaM derivation package
+- [Pharmaverse TLG Catalogue](https://pharmaverse.github.io/TLG-Catalog) — Reference TLF outputs from the pharmaverse stack
+- [r4csr.org](https://r4csr.org) — Open-access book: *R for Clinical Study Reports* (Zhang et al.)
+- [R Consortium R Submissions WG](https://rconsortium.github.io/submissions-wg/) — Pilot projects for R-based regulatory submissions
+- [R for Data Science](https://r4ds.had.co.nz) — The foundation for learning tidyverse
+- [GitHub Repository](https://github.com/ineelhere/30-days-of-pharmaverse) — Source code, issues, and contributions welcome
 
 ___
 
-**Curated by:** Indraneel Chakraborty | **Last Updated:** February 2026
+**Curated by:** [Indraneel Chakraborty](https://www.linkedin.com/in/indraneelchakraborty/) | **Last Updated:** February 2026
+<br>
+<a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>

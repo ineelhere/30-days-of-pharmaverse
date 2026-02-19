@@ -1,8 +1,6 @@
 ---
 title: "Day 24: ARD-First Reporting with cards and cardx"
 subtitle: "CDISC Analysis Results Data - computation decoupled from presentation"
-
-
 format:
   html:
     theme:
@@ -23,6 +21,10 @@ execute:
   warning: false
   message: false
 ---
+
+::: {style="margin-bottom:12px;"}
+<a href="../index.html" class="resource-link"> Back to Roadmap</a>
+:::
 
 ## Overview
 
