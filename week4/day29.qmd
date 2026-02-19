@@ -1,0 +1,346 @@
+---
+title: "Day 29: ggsurvfit + gtsummary - Survival Plots and Clinical Figures"
+subtitle: "Publication-ready TTE figures in pharmaverse"
+format:
+  html:
+    theme:
+      light: cosmo
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+## Overview
+
+`visR` was archived from CRAN on 2024-06-22. The pharmaverse recommends two actively maintained replacements:
+
+| Task                      | Package     | Status                       |
+|---------------------------|-------------|------------------------------|
+| KM curves + risk tables   | `ggsurvfit` | Active on CRAN + pharmaverse |
+| Demographics / Cox tables | `gtsummary` | Active on CRAN + pharmaverse |
+
+`ggsurvfit` is a proper **ggplot2 extension** -- every `add_*()` call is a real geom or stat, so any `ggplot2::theme()`, `labs()`, or scale function works directly without wrappers.
+
+> **CNSR convention:** CDISC ADaM uses `CNSR = 1` for censored and `CNSR = 0` for event (opposite of base R). `Surv_CNSR(AVAL, CNSR)` from `ggsurvfit` handles this automatically.
+
+> **Note:** `pharmaverseadam` does not ship an `adtte` dataset. This day derives Overall Survival from `pharmaverseadam::adsl` using `DTHDT`, `LSTALVDT`, `EOSDT`, and `TRTSDT` -- a standard clinical derivation.
+
+------------------------------------------------------------------------
+
+## Setup
+
+```{r setup}
+library(ggsurvfit)
+library(gtsummary)
+library(survival)
+library(broom)
+library(pharmaverseadam)
+library(dplyr)
+library(knitr)
+
+adsl <- pharmaverseadam::adsl
+
+# Inspect date and death columns confirmed in pharmaverseadam::adsl
+date_cols <- grep("DT$|DTF$|ALV", names(adsl), value = TRUE)
+cat("Date/death columns:", paste(date_cols, collapse = ", "), "\n")
+
+# Derive Overall Survival ADTTE from ADSL:
+#   AVAL = days from TRTSDT to DTHDT (event) or LSTALVDT / EOSDT (censored)
+#   CNSR = 0 (death = event) | 1 (no death = censored)  [ADaM convention]
+adtte <- adsl |>
+  dplyr::filter(SAFFL == "Y") |>
+  dplyr::mutate(
+    TRTP = TRT01P,
+    CNSR = dplyr::if_else(!is.na(DTHDT), 0L, 1L),
+    AVAL = dplyr::case_when(
+      !is.na(DTHDT)    ~ as.numeric(DTHDT    - TRTSDT),
+      !is.na(LSTALVDT) ~ as.numeric(LSTALVDT - TRTSDT),
+      !is.na(EOSDT)    ~ as.numeric(EOSDT    - TRTSDT),
+      !is.na(TRTEDT)   ~ as.numeric(TRTEDT   - TRTSDT) + 1,
+      TRUE             ~ NA_real_
+    )
+  ) |>
+  dplyr::filter(!is.na(AVAL), AVAL >= 0)
+
+cat("Derived ADTTE rows:", nrow(adtte), "\n")
+cat("Events  (CNSR=0):", sum(adtte$CNSR == 0), "\n")
+cat("Censored(CNSR=1):", sum(adtte$CNSR == 1), "\n")
+cat("Median AVAL (days):", median(adtte$AVAL), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Part 1: Demographic Summary
+
+### Step 1: gtsummary::tbl_summary()
+
+```{r demo-table}
+# tbl_summary(by = ...) stratifies by a column.
+# add_overall() appends a combined Total column.
+# as_kable() renders to a kable table compatible with Quarto HTML.
+adtte |>
+  dplyr::select(AGE, AGEGR1, SEX, RACE, TRTP) |>
+  gtsummary::tbl_summary(
+    by        = TRTP,
+    label     = list(AGE ~ "Age (years)", AGEGR1 ~ "Age Group",
+                     SEX ~ "Sex",         RACE   ~ "Race"),
+    statistic = list(
+      all_continuous()  ~ "{mean} ({sd})",
+      all_categorical() ~ "{n} ({p}%)"
+    ),
+    digits  = all_continuous() ~ 1,
+    missing = "no"
+  ) |>
+  gtsummary::add_overall() |>
+  gtsummary::bold_labels() |>
+  gtsummary::as_kable()
+```
+
+------------------------------------------------------------------------
+
+## Part 2: Kaplan-Meier Plot
+
+### Step 2: survfit2() + ggsurvfit()
+
+```{r km-basic}
+# survfit2() is ggsurvfit's survfit wrapper -- required for add_pvalue().
+# It tracks the calling environment to correctly label plot elements.
+# Surv_CNSR(AVAL, CNSR) converts ADaM CNSR coding to standard Surv() internally:
+#   CNSR=1 (censored) -> status=0  |  CNSR=0 (event) -> status=1
+# ggsurvfit uses '+' (ggplot2 extension), NOT '|>'.
+
+km_fit <- survfit2(Surv_CNSR(AVAL, CNSR) ~ TRTP, data = adtte)
+km_fit
+
+km_fit |>
+  ggsurvfit(linewidth = 1) +
+  scale_ggsurvfit() +
+  labs(
+    title = "Kaplan-Meier Overall Survival",
+    x     = "Time (Days)",
+    y     = "Survival Probability"
+  )
+```
+
+------------------------------------------------------------------------
+
+### Step 3: add_confidence_interval() + add_censor_mark() + add_risktable()
+
+```{r km-enhanced}
+# add_risktable() attaches a risk table below the plot using patchwork.
+# It MUST come last in the chain -- it wraps the ggplot and cannot be
+# further modified by add_* calls after it.
+# risktable_stats accepts: "n.risk", "cum.event", "cum.censor",
+#   or glue-style strings like "{n.risk} ({cum.event})".
+# stats_label renames the risk table row labels.
+
+km_fit |>
+  ggsurvfit(linewidth = 1) +
+  add_confidence_interval() +
+  add_censor_mark(shape = 3, size = 2) +
+  scale_ggsurvfit() +
+  labs(x = "Time (Days)", y = "Survival Probability",
+       title = "Overall Survival with Risk Table") +
+  add_risktable(
+    risktable_stats = c("n.risk", "cum.event"),
+    stats_label     = list(n.risk = "At Risk", cum.event = "Events")
+  )
+```
+
+------------------------------------------------------------------------
+
+## Part 3: Annotated KM Plot
+
+### Step 4: add_pvalue() -- log-rank p-value on the figure
+
+```{r km-pvalue}
+# add_pvalue() calls survival::survdiff() log-rank test on km_fit.
+# location = "annotation" places the p-value inside the plot panel.
+# location = "caption"    places it in the figure caption below.
+# survfit2() (not survfit()) is REQUIRED for add_pvalue() to work.
+
+km_fit |>
+  ggsurvfit(linewidth = 1) +
+  add_confidence_interval() +
+  add_censor_mark(shape = 3, size = 1.5) +
+  add_pvalue(location = "annotation", prepend_p = TRUE) +
+  scale_ggsurvfit() +
+  labs(x = "Time (Days)", y = "Survival Probability",
+       title = "Overall Survival with Log-Rank P-value")
+```
+
+------------------------------------------------------------------------
+
+### Step 5: add_quantile() -- median survival line
+
+```{r km-quantile}
+# add_quantile(y_value = 0.5) draws lines at median survival (50th percentile).
+# y_value is the survival probability level, NOT the time value.
+# Must be called BEFORE add_risktable().
+
+km_fit |>
+  ggsurvfit(linewidth = 1) +
+  add_confidence_interval() +
+  add_censor_mark(shape = 3, size = 1.5) +
+  add_quantile(
+    y_value   = 0.5,
+    color     = "grey40",
+    linewidth = 0.75,
+    linetype  = "dashed"
+  ) +
+  add_pvalue(location = "annotation", prepend_p = TRUE) +
+  scale_ggsurvfit() +
+  labs(x = "Time (Days)", y = "Survival Probability",
+       title = "Median Survival with Annotation") +
+  add_risktable(
+    risktable_stats = "n.risk",
+    stats_label     = list(n.risk = "At Risk")
+  )
+```
+
+------------------------------------------------------------------------
+
+## Part 4: KMunicate Theme
+
+### Step 6: theme_ggsurvfit_KMunicate()
+
+```{r km-kmunicate}
+# theme_ggsurvfit_KMunicate() applies the KMunicate style recommended for
+# transparent reporting of KM plots (Morris et al., BMJ Open 2019).
+# It repositions risk table elements for integrated, publication-ready output.
+
+km_fit |>
+  ggsurvfit(linetype_aes = TRUE, linewidth = 0.9) +
+  add_confidence_interval() +
+  add_censor_mark(shape = 3, size = 1.5) +
+  add_risktable(
+    risktable_stats = c("n.risk", "cum.event"),
+    stats_label     = list(n.risk = "At Risk", cum.event = "Cum. Events")
+  ) +
+  theme_ggsurvfit_KMunicate() +
+  scale_ggsurvfit() +
+  labs(x = "Time (Days)", y = "Survival Probability",
+       title = "KMunicate-Style Overall Survival")
+```
+
+------------------------------------------------------------------------
+
+## Part 5: Cox Proportional Hazards
+
+### Step 7: coxph() + broom::tidy()
+
+```{r cox-tidy}
+# Surv_CNSR() works inside coxph() as well -- same ADaM convention handling.
+# broom::tidy(exponentiate = TRUE) returns hazard ratios with 95% CI.
+
+cox_fit <- survival::coxph(
+  Surv_CNSR(AVAL, CNSR) ~ TRTP,
+  data = adtte
+)
+
+broom::tidy(cox_fit, exponentiate = TRUE, conf.int = TRUE) |>
+  dplyr::select(term, estimate, conf.low, conf.high, p.value) |>
+  dplyr::rename(
+    "Treatment" = term,
+    "HR"        = estimate,
+    "95% CI LB" = conf.low,
+    "95% CI UB" = conf.high,
+    "P-value"   = p.value
+  ) |>
+  knitr::kable(digits = 3, caption = "Cox PH - Hazard Ratios vs Reference")
+```
+
+------------------------------------------------------------------------
+
+### Step 8: gtsummary::tbl_regression() -- formatted HR table
+
+```{r cox-forest}
+# tbl_regression(exponentiate = TRUE) renders a formatted HR table with CI.
+# add_global_p() adds a global Wald test p-value for the treatment term.
+# as_kable() converts to plain kable for Quarto HTML output.
+
+cox_fit |>
+  gtsummary::tbl_regression(
+    exponentiate = TRUE,
+    label        = list(TRTP ~ "Treatment")
+  ) |>
+  gtsummary::add_global_p() |>
+  gtsummary::bold_p() |>
+  gtsummary::bold_labels() |>
+  gtsummary::as_kable()
+```
+
+------------------------------------------------------------------------
+
+## Part 6: Accessing Survival Estimates
+
+### Step 9: tidy_survfit() -- extract estimates as a data frame
+
+```{r tidy-survfit}
+# tidy_survfit() returns survival estimates as a tidy tibble.
+# Useful for custom ggplot2 figures or programmatic summaries.
+
+surv_df <- km_fit |> tidy_survfit()
+cat("Columns:", paste(names(surv_df), collapse = ", "), "\n")
+cat("Rows:", nrow(surv_df), "\n")
+
+# First time each stratum crosses 50% survival (= median OS)
+surv_df |>
+  dplyr::group_by(strata) |>
+  dplyr::filter(estimate <= 0.5) |>
+  dplyr::slice_head(n = 1) |>
+  dplyr::select(strata, time, estimate, conf.low, conf.high) |>
+  knitr::kable(digits = 3, caption = "Median Overall Survival by Treatment")
+```
+
+------------------------------------------------------------------------
+
+## Validation Checks
+
+```{r validate}
+cat("\n=== Day 29 Validation ===\n\n")
+cat("Check 1 - adtte rows derived:", nrow(adtte), "\n")
+cat("Check 2 - Events (CNSR=0):", sum(adtte$CNSR == 0), "\n")
+cat("Check 3 - KM strata count:", length(km_fit$strata), "\n")
+cat("Check 4 - tidy_survfit rows:", nrow(surv_df), "\n")
+cat("Check 5 - Cox terms:", length(coef(cox_fit)), "\n")
+cat("Check 6 - Log-rank p:", format(survfit2_p(km_fit), digits = 4), "\n")
+cat("\nValidation complete\n")
+```
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  **`pharmaverseadam` has no `adtte`** -- derive Overall Survival from `adsl` using `DTHDT - TRTSDT` (event) and `LSTALVDT`/`EOSDT - TRTSDT` (censored)
+2.  **`survfit2()` not `survfit()`** -- required for `add_pvalue()` to work; tracks the calling environment for the log-rank test
+3.  **`Surv_CNSR(AVAL, CNSR)`** -- handles ADaM CNSR convention (1=censored, 0=event) automatically; works in both `survfit2()` and `coxph()`
+4.  **`ggsurvfit` uses `+`** (ggplot2 extension), not `|>` -- any `ggplot2::theme()`, `labs()`, or scale function applies directly
+5.  **`add_risktable()` uses `risktable_stats`** (not `statlist`) and `stats_label` (not `label`); must always be the last call in the chain
+6.  **`add_quantile(y_value = 0.5)`** draws median survival lines; **`add_pvalue(location = "annotation")`** overlays the log-rank result
+7.  **`tbl_summary()` + `tbl_regression(exponentiate = TRUE)`** from `gtsummary` replace `visR::tableone()` and Cox HR table wrappers
+8.  **`tidy_survfit()`** exports the KM curve as a plain tibble for custom figures
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   ggsurvfit documentation: <https://www.danieldsjoberg.com/ggsurvfit/>
+-   ggsurvfit gallery: <https://www.danieldsjoberg.com/ggsurvfit/articles/gallery.html>
+-   gtsummary documentation: <https://www.danieldsjoberg.com/gtsummary/>
+-   KMunicate style: Morris et al. (2019) BMJ Open <https://doi.org/10.1136/bmjopen-2019-030215>
+
+------------------------------------------------------------------------
+
+End of Day 29

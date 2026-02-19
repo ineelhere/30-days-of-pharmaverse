@@ -28,8 +28,8 @@ execute:
 
 Today covers two complementary approaches to clinical table production:
 
--   **`gtsummary`** — builds publication-quality tables directly from ADaM data, and can extract an ARD via `gather_ard()`
--   **`tfrmt`** — separates data preparation from display spec; one format spec applies to many tables
+-   **`gtsummary`** - builds publication-quality tables directly from ADaM data, and can extract an ARD via `gather_ard()`
+-   **`tfrmt`** - separates data preparation from display spec; one format spec applies to many tables
 
 ------------------------------------------------------------------------
 
@@ -324,7 +324,7 @@ cat("\n✓ Validation complete\n")
 
 ## Next Steps
 
-**Day 26:** `flextable` + `officer` — Word/RTF clinical output
+**Day 26:** `flextable` + `officer` - Word/RTF clinical output
 
 ------------------------------------------------------------------------
 
