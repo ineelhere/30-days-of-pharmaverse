@@ -1,8 +1,8 @@
 ---
 title: "Day 23: ADCM and ADRS - Concomitant Meds and Oncology Response"
 subtitle: "Week 4, Day 23: OCCDS period flags and RECIST 1.1 with admiralonco"
-author: "30 Days of Pharmaverse"
-date: today
+
+
 format:
   html:
     theme:
@@ -28,8 +28,8 @@ execute:
 
 Today covers two supporting ADaM datasets:
 
--   **ADCM** — Concomitant Medications (OCCDS) with pre/concomitant/prior period flags
--   **ADRS** — Oncology Response (OCCDS) with RECIST 1.1 Best Overall Response using `admiralonco`
+-   **ADCM** - Concomitant Medications (OCCDS) with pre/concomitant/prior period flags
+-   **ADRS** - Oncology Response (OCCDS) with RECIST 1.1 Best Overall Response using `admiralonco`
 
 > Note: `pharmaversesdtm` exports `rs_onco` (not `rs`) for oncology response data.
 
@@ -415,7 +415,7 @@ cat("✓ adrs.xpt exported\n")
 
 ## Key Takeaways
 
-1.  `pharmaversesdtm` exports `rs_onco` for oncology response — not `rs`
+1.  `pharmaversesdtm` exports `rs_onco` for oncology response - not `rs`
 2.  ADCM period flags describe timing relative to TRTSDT/TRTEDT
 3.  `admiralonco::aval_resp()` converts RECIST labels to numeric AVAL
 4.  BOR = `slice_min(AVAL)` per subject across OVR records

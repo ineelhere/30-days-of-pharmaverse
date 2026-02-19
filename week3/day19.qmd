@@ -1,8 +1,8 @@
 ---
 title: "Day 19: ADLB - Lab Analysis Dataset (BDS)"
 subtitle: "Week 3, Day 19: BDS structure with baseline, change, and toxicity grading"
-author: "30 Days of Pharmaverse"
-date: today
+
+
 format:
   html:
     theme:

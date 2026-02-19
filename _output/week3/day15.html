@@ -6,8 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="30 Days of Pharmaverse">
-<meta name="dcterms.date" content="2026-02-18">
 
 <title>Day 15: ADaM Architecture &amp; Admiral Core Engine – 30 Days of Pharmaverse</title>
 <style>
@@ -319,19 +317,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta column-body">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>30 Days of Pharmaverse </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">February 18, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -344,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="welcome-to-week-3-adam-deep-dive-admiral-mastery" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="welcome-to-week-3-adam-deep-dive-admiral-mastery"><span class="header-section-number">1</span> Welcome to Week 3: ADaM Deep Dive &amp; Admiral Mastery</h2>
 <p><strong>Week 3 Overview:</strong> After mastering SDTM creation and validation in Weeks 1-2, we now transition to <strong>ADaM (Analysis Data Model)</strong> - the analysis-ready datasets that feed directly into regulatory Tables, Listings, and Figures (TLFs).</p>
-<p>This week is <strong>intensive</strong> - we’ll use the <code>{admiral}</code> package to build every major ADaM dataset type. Admiral was co-developed by Roche and GSK as a <strong>tidyverse-based, modular, non-black-box toolbox</strong> for ADaM creation, and is now maintained by 50+ pharma company programmers across the pharmaverse community.</p>
+<p>This week is <strong>intensive</strong> - we’ll use the <code>{admiral}</code> package to build every major ADaM dataset type. Admiral was co-developed by multiple pharmaceutical companies as a <strong>tidyverse-based, modular, non-black-box toolbox</strong> for ADaM creation, and is now maintained by 50+ pharma company programmers across the pharmaverse community.</p>
 <p><strong>Day 15 is foundational</strong> - today we learn the <strong>architecture</strong> before building datasets tomorrow.</p>
 <hr>
 </section>
@@ -458,7 +444,7 @@ EOSSTT: "COMPLETED"</code></pre>
 <section id="why-admiral-was-created" class="level3" data-number="5.1">
 <h3 data-number="5.1" class="anchored" data-anchor-id="why-admiral-was-created"><span class="header-section-number">5.1</span> 4.1 Why Admiral Was Created</h3>
 <p><strong>Pre-Admiral Era (2010-2020):</strong> - Every pharma company had proprietary SAS macro libraries - Black-box functions (couldn’t see or modify code) - Duplicated effort (50 companies solving the same problems) - Difficult to validate (macros hidden in compiled code) - Knowledge siloed within companies</p>
-<p><strong>Admiral Vision (2020-present):</strong> - <strong>Open-source:</strong> Code is fully transparent and inspectable - <strong>Cross-company collaboration:</strong> Roche, GSK, Johnson &amp; Johnson, Novartis, Atorus, Merck co-develop - <strong>Tidyverse-native:</strong> Leverages dplyr, tidyr, lubridate - familiar to R users - <strong>Modular:</strong> Small, composable functions instead of monolithic macros - <strong>Non-black-box:</strong> Every derivation is explicit in your script - <strong>Validated:</strong> Extensive test coverage and regulatory use</p>
+<p><strong>Admiral Vision (2020-present):</strong> - <strong>Open-source:</strong> Code is fully transparent and inspectable - <strong>Cross-company collaboration:</strong> Multiple pharmaceutical companies co-develop - <strong>Tidyverse-native:</strong> Leverages dplyr, tidyr, lubridate - familiar to R users - <strong>Modular:</strong> Small, composable functions instead of monolithic macros - <strong>Non-black-box:</strong> Every derivation is explicit in your script - <strong>Validated:</strong> Extensive test coverage and regulatory use</p>
 </section>
 <section id="admiral-core-design-principles" class="level3" data-number="5.2">
 <h3 data-number="5.2" class="anchored" data-anchor-id="admiral-core-design-principles"><span class="header-section-number">5.2</span> 4.2 Admiral Core Design Principles</h3>
@@ -1380,7 +1366,7 @@ This matrix will guide your ADaM builds in Days 16-30!</code></pre>
 <li><strong>Structure determines function choice:</strong> BDS needs baseline derivations, OCCDS needs occurrence flags</li>
 <li><strong>Admiral documentation is extensive:</strong> Vignettes are your best friend</li>
 <li><strong>Community support:</strong> Pharmaverse Slack, GitHub discussions</li>
-<li><strong>Cross-company patterns:</strong> What works at Roche works at GSK works at your company</li>
+<li><strong>Cross-company patterns:</strong> What works at one company works at another</li>
 </ol>
 </section>
 <section id="prepare-for-tomorrow" class="level3" data-number="14.3">

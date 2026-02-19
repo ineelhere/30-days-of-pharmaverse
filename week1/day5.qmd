@@ -1,8 +1,8 @@
 ---
 title: "Day 5: Advanced Tidyverse: Pivoting & Joining"
 subtitle: "Reshaping SDTM Data for Analysis"
-author: "Indraneel Chakraborty"
-date: today
+
+
 format:
   html:
     theme:

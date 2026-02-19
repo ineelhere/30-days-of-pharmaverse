@@ -1,0 +1,384 @@
+---
+title: "Day 26: flextable and officer - Word and RTF Clinical Tables"
+subtitle: "Week 4, Day 26: Formatted TLF output to Word and RTF"
+
+
+format:
+  html:
+    theme:
+      light: cosmo
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+## Overview
+
+`flextable` is the most flexible R package for creating formatted tables in Word, RTF, HTML, and PowerPoint -- comparable in power to SAS PROC REPORT for clinical reporting. `officer` provides the Word document container.
+
+Key rule: `body_add_flextable()` lives in the **flextable** package, not officer. Always call it as `flextable::body_add_flextable()`.
+
+------------------------------------------------------------------------
+
+## Setup
+
+```{r setup}
+library(flextable)
+library(officer)
+library(pharmaverseadam)
+library(dplyr)
+library(tidyr)
+
+adsl <- pharmaverseadam::adsl
+adae <- pharmaverseadam::adae
+adlb <- pharmaverseadam::adlb
+
+cat("ADSL columns:\n");       print(names(adsl))
+cat("\nADAE columns (first 20):\n"); print(head(names(adae), 20))
+cat("\nADLB columns (first 20):\n"); print(head(names(adlb), 20))
+```
+
+------------------------------------------------------------------------
+
+## Table 1: Demographics
+
+### Step 1: Build Summary Data
+
+```{r demo-data}
+adsl_safe <- adsl |> dplyr::filter(SAFFL == "Y")
+
+demo_sum <- adsl_safe |>
+  dplyr::group_by(TRT01A) |>
+  dplyr::summarise(
+    N          = dplyr::n(),
+    AGE_MEAN   = sprintf("%.1f (%.2f)", mean(AGE, na.rm = TRUE), sd(AGE, na.rm = TRUE)),
+    FEMALE_PCT = sprintf("%d (%.1f%%)", sum(SEX == "F", na.rm = TRUE),
+                         mean(SEX == "F", na.rm = TRUE) * 100),
+    .groups = "drop"
+  )
+
+print(demo_sum)
+```
+
+------------------------------------------------------------------------
+
+### Step 2: Build flextable
+
+```{r demo-ft}
+ft_demo <- flextable::flextable(demo_sum) |>
+  flextable::set_header_labels(
+    TRT01A     = "Treatment",
+    N          = "N",
+    AGE_MEAN   = "Age, Mean (SD)",
+    FEMALE_PCT = "Female, n (%)"
+  ) |>
+  flextable::theme_booktabs() |>
+  flextable::align(align = "center", part = "all") |>
+  flextable::align(j = 1, align = "left", part = "all") |>
+  flextable::bold(part = "header") |>
+  flextable::hline_top(border = officer::fp_border(width = 2), part = "header") |>
+  flextable::hline_bottom(border = officer::fp_border(width = 2), part = "header") |>
+  flextable::hline_bottom(border = officer::fp_border(width = 1.5), part = "body") |>
+  flextable::add_header_lines("Table 14.1.1 -- Subject Demographics (Safety Population)") |>
+  flextable::add_footer_lines("SD = standard deviation") |>
+  flextable::autofit()
+
+ft_demo
+```
+
+------------------------------------------------------------------------
+
+### Step 3: Export Demographics to Word
+
+```{r demo-docx}
+# body_add_flextable() is in flextable, NOT officer
+doc_demo <- officer::read_docx()
+doc_demo <- officer::body_add_par(doc_demo,
+                                   "Table 14.1.1 Demographics",
+                                   style = "heading 1")
+doc_demo <- flextable::body_add_flextable(doc_demo, value = ft_demo)
+doc_demo <- officer::body_add_par(doc_demo, "", style = "Normal")
+print(doc_demo, target = "table14_1_1_demographics.docx")
+cat("Exported: table14_1_1_demographics.docx\n")
+```
+
+------------------------------------------------------------------------
+
+### Step 4: Export Demographics to RTF
+
+```{r demo-rtf}
+flextable::save_as_rtf(ft_demo, path = "table14_1_1_demographics.rtf")
+cat("Exported: table14_1_1_demographics.rtf\n")
+```
+
+------------------------------------------------------------------------
+
+## Table 2: AE Frequency by SOC
+
+### Step 5: Build AE Summary Data
+
+```{r ae-data}
+adae_te <- adae |>
+  dplyr::filter(TRTEMFL == "Y", SAFFL == "Y")
+
+n_per_arm <- adsl_safe |>
+  dplyr::count(TRT01A, name = "ARM_N")
+
+ae_sum <- adae_te |>
+  dplyr::distinct(USUBJID, TRT01A, AEBODSYS, AEDECOD) |>
+  dplyr::group_by(TRT01A, AEBODSYS, AEDECOD) |>
+  dplyr::summarise(subj_n = dplyr::n_distinct(USUBJID), .groups = "drop") |>
+  dplyr::left_join(n_per_arm, by = "TRT01A") |>
+  dplyr::mutate(
+    cell = sprintf("%d (%.1f%%)", subj_n, subj_n / ARM_N * 100)
+  ) |>
+  dplyr::select(AEBODSYS, AEDECOD, TRT01A, cell) |>
+  tidyr::pivot_wider(names_from = TRT01A, values_from = cell,
+                     values_fill = "0 (0.0%)") |>
+  dplyr::arrange(AEBODSYS, AEDECOD) |>
+  utils::head(15)
+
+cat("AE summary rows:", nrow(ae_sum), "\n")
+print(head(ae_sum, 3))
+```
+
+------------------------------------------------------------------------
+
+### Step 6: Build AE flextable
+
+```{r ae-ft}
+ft_ae <- flextable::flextable(ae_sum) |>
+  flextable::set_header_labels(
+    AEBODSYS = "System Organ Class",
+    AEDECOD  = "Preferred Term"
+  ) |>
+  flextable::theme_booktabs() |>
+  flextable::bold(part = "header") |>
+  flextable::align(align = "center", part = "all") |>
+  flextable::align(j = c(1, 2), align = "left", part = "all") |>
+  flextable::merge_v(j = "AEBODSYS") |>
+  flextable::valign(j = "AEBODSYS", valign = "top", part = "body") |>
+  flextable::hline_top(border = officer::fp_border(width = 2), part = "header") |>
+  flextable::hline_bottom(border = officer::fp_border(width = 2), part = "header") |>
+  flextable::hline_bottom(border = officer::fp_border(width = 1.5), part = "body") |>
+  flextable::add_header_lines(
+    "Table 14.3.1 -- Treatment-Emergent Adverse Events by SOC (Safety Population)"
+  ) |>
+  flextable::add_footer_lines(
+    "n (%) = subjects with at least one event; TEAE = treatment-emergent adverse event"
+  ) |>
+  flextable::autofit()
+
+ft_ae
+```
+
+------------------------------------------------------------------------
+
+### Step 7: Export AE Table to Word
+
+```{r ae-docx}
+doc_ae <- officer::read_docx()
+doc_ae <- officer::body_add_par(doc_ae, "Table 14.3.1 TEAEs by SOC",
+                                 style = "heading 1")
+doc_ae <- flextable::body_add_flextable(doc_ae, value = ft_ae)
+doc_ae <- officer::body_add_par(doc_ae, "", style = "Normal")
+print(doc_ae, target = "table14_3_1_ae.docx")
+cat("Exported: table14_3_1_ae.docx\n")
+```
+
+------------------------------------------------------------------------
+
+### Step 8: Export AE Table to RTF
+
+```{r ae-rtf}
+flextable::save_as_rtf(ft_ae, path = "table14_3_1_ae.rtf")
+cat("Exported: table14_3_1_ae.rtf\n")
+```
+
+------------------------------------------------------------------------
+
+## Table 3: Lab Shift Table
+
+### Step 9: Build Lab Shift Data
+
+```{r lab-data}
+adlb_safe <- adlb |>
+  dplyr::filter(SAFFL == "Y", PARAMCD == "ALT", !is.na(AVAL))
+
+cat("ADLB indicator columns present:\n")
+print(intersect(names(adlb_safe), c("BNRIND", "ANRIND", "ABLFL", "ANL01FL")))
+
+shift_data <- adlb_safe |>
+  dplyr::filter(!is.na(BNRIND), !is.na(ANRIND), ANL01FL == "Y") |>
+  dplyr::count(TRT01A, BNRIND, ANRIND, name = "n") |>
+  dplyr::mutate(
+    BNRIND = factor(BNRIND, levels = c("LOW", "NORMAL", "HIGH")),
+    ANRIND = factor(ANRIND, levels = c("LOW", "NORMAL", "HIGH"))
+  ) |>
+  tidyr::pivot_wider(
+    names_from  = ANRIND,
+    values_from = n,
+    values_fill = 0L
+  ) |>
+  dplyr::arrange(TRT01A, BNRIND)
+
+cat("Lab shift rows:", nrow(shift_data), "\n")
+print(shift_data)
+```
+
+------------------------------------------------------------------------
+
+### Step 10: Build Lab Shift flextable
+
+```{r lab-ft}
+ft_lab <- flextable::flextable(shift_data) |>
+  flextable::set_header_labels(
+    TRT01A = "Treatment",
+    BNRIND = "Baseline"
+  ) |>
+  flextable::add_header_row(
+    values     = c("", "", "Post-Baseline Reference Range"),
+    colwidths  = c(1, 1, ncol(shift_data) - 2)
+  ) |>
+  flextable::theme_booktabs() |>
+  flextable::bold(part = "header") |>
+  flextable::align(align = "center", part = "all") |>
+  flextable::align(j = c(1, 2), align = "left", part = "all") |>
+  flextable::merge_v(j = "TRT01A") |>
+  flextable::valign(j = "TRT01A", valign = "top", part = "body") |>
+  flextable::hline_top(border = officer::fp_border(width = 2), part = "header") |>
+  flextable::hline_bottom(border = officer::fp_border(width = 2), part = "header") |>
+  flextable::hline_bottom(border = officer::fp_border(width = 1.5), part = "body") |>
+  flextable::add_header_lines(
+    "Table 14.4.1 -- ALT Shift Table: Baseline vs Post-Baseline (Safety Population)"
+  ) |>
+  flextable::add_footer_lines(
+    "BNRIND = Baseline Reference Range Indicator; ANRIND = Post-Baseline Reference Range Indicator"
+  ) |>
+  flextable::autofit()
+
+ft_lab
+```
+
+------------------------------------------------------------------------
+
+### Step 11: Export Lab Shift to Word
+
+```{r lab-docx}
+doc_lab <- officer::read_docx()
+doc_lab <- officer::body_add_par(doc_lab, "Table 14.4.1 ALT Shift Table",
+                                  style = "heading 1")
+doc_lab <- flextable::body_add_flextable(doc_lab, value = ft_lab)
+doc_lab <- officer::body_add_par(doc_lab, "", style = "Normal")
+print(doc_lab, target = "table14_4_1_lab_shift.docx")
+cat("Exported: table14_4_1_lab_shift.docx\n")
+```
+
+------------------------------------------------------------------------
+
+### Step 12: Export Lab Shift to RTF
+
+```{r lab-rtf}
+flextable::save_as_rtf(ft_lab, path = "table14_4_1_lab_shift.rtf")
+cat("Exported: table14_4_1_lab_shift.rtf\n")
+```
+
+------------------------------------------------------------------------
+
+## Step 13: Multi-Table Word Document
+
+```{r multi-doc}
+doc_all <- officer::read_docx()
+doc_all <- officer::body_add_par(doc_all,
+                                  "Table 14.1.1 Demographics",
+                                  style = "heading 1")
+doc_all <- flextable::body_add_flextable(doc_all, value = ft_demo)
+doc_all <- officer::body_add_break(doc_all)
+doc_all <- officer::body_add_par(doc_all,
+                                  "Table 14.3.1 Treatment-Emergent Adverse Events",
+                                  style = "heading 1")
+doc_all <- flextable::body_add_flextable(doc_all, value = ft_ae)
+doc_all <- officer::body_add_break(doc_all)
+doc_all <- officer::body_add_par(doc_all,
+                                  "Table 14.4.1 ALT Shift Table",
+                                  style = "heading 1")
+doc_all <- flextable::body_add_flextable(doc_all, value = ft_lab)
+doc_all <- officer::body_add_par(doc_all, "", style = "Normal")
+print(doc_all, target = "tlf_package_day26.docx")
+cat("Exported: tlf_package_day26.docx (all 3 tables)\n")
+```
+
+------------------------------------------------------------------------
+
+## Validation Checks
+
+```{r validate}
+cat("\n=== Day 26 Validation ===\n\n")
+
+cat("Check 1 - Treatment arms in demo summary:\n")
+print(demo_sum |> dplyr::select(TRT01A, N))
+
+cat("\nCheck 2 - AE table columns:\n")
+print(names(ae_sum))
+
+cat("\nCheck 3 - Lab shift rows:", nrow(shift_data), "\n")
+
+files_out <- c(
+  "table14_1_1_demographics.docx",
+  "table14_1_1_demographics.rtf",
+  "table14_3_1_ae.docx",
+  "table14_3_1_ae.rtf",
+  "table14_4_1_lab_shift.docx",
+  "table14_4_1_lab_shift.rtf",
+  "tlf_package_day26.docx"
+)
+
+cat("\nCheck 4 - Output files:\n")
+for (f in files_out) {
+  cat(sprintf("  %s: %s\n", f,
+              if (file.exists(f)) "EXISTS" else "MISSING"))
+}
+
+cat("\nValidation complete\n")
+```
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  `body_add_flextable()` is exported from **flextable**, not officer -- always use `flextable::body_add_flextable()`
+2.  Use base assignment (`doc <- flextable::body_add_flextable(doc, ...)`) not pipe chains for officer documents
+3.  `theme_booktabs()` produces the standard clinical table look
+4.  `merge_v()` + `valign()` handles SOC grouping rows in AE tables
+5.  `add_header_row()` creates column spanners for shift tables
+6.  `save_as_rtf()` exports directly; for Word use `officer::read_docx()` + `print(target = ...)`
+
+------------------------------------------------------------------------
+
+## Next Steps
+
+**Day 27:** `r2rtf` -- submission-ready RTF tables **Day 28:** `rtables` + `tern` -- structured clinical tables
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   flextable documentation: <https://davidgohel.github.io/flextable/>
+-   officer CRAN: <https://cran.r-project.org/package=officer>
+-   r4csr.org: <https://r4csr.org>
+
+------------------------------------------------------------------------
+
+**End of Day 26**

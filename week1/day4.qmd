@@ -1,8 +1,8 @@
 ---
 title: "Day 4: Clinical Date Derivations with lubridate"
 subtitle: "Study Day, Duration, and Partial Date Imputation"
-author: "Indraneel Chakraborty"
-date: today
+
+
 format:
   html:
     theme:

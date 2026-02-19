@@ -1,8 +1,8 @@
 ---
 title: "Day 15: ADaM Architecture & Admiral Core Engine"
 subtitle: "Week 3, Day 15: Understanding ADaM Structures, Admiral Philosophy, and Core Derivation Patterns"
-author: "30 Days of Pharmaverse"
-date: today
+
+
 format:
   html:
     theme:
@@ -29,7 +29,7 @@ execute:
 
 **Week 3 Overview:** After mastering SDTM creation and validation in Weeks 1-2, we now transition to **ADaM (Analysis Data Model)** - the analysis-ready datasets that feed directly into regulatory Tables, Listings, and Figures (TLFs).
 
-This week is **intensive** - we'll use the `{admiral}` package to build every major ADaM dataset type. Admiral was co-developed by Roche and GSK as a **tidyverse-based, modular, non-black-box toolbox** for ADaM creation, and is now maintained by 50+ pharma company programmers across the pharmaverse community.
+This week is **intensive** - we'll use the `{admiral}` package to build every major ADaM dataset type. Admiral was co-developed by multiple pharmaceutical companies as a **tidyverse-based, modular, non-black-box toolbox** for ADaM creation, and is now maintained by 50+ pharma company programmers across the pharmaverse community.
 
 **Day 15 is foundational** - today we learn the **architecture** before building datasets tomorrow.
 
@@ -192,7 +192,7 @@ USUBJID  AESEQ  AETERM      ASTDT       AENDT       TRTEMFL  AOCCFL  ASEV
 
 **Pre-Admiral Era (2010-2020):** - Every pharma company had proprietary SAS macro libraries - Black-box functions (couldn't see or modify code) - Duplicated effort (50 companies solving the same problems) - Difficult to validate (macros hidden in compiled code) - Knowledge siloed within companies
 
-**Admiral Vision (2020-present):** - **Open-source:** Code is fully transparent and inspectable - **Cross-company collaboration:** Roche, GSK, Johnson & Johnson, Novartis, Atorus, Merck co-develop - **Tidyverse-native:** Leverages dplyr, tidyr, lubridate - familiar to R users - **Modular:** Small, composable functions instead of monolithic macros - **Non-black-box:** Every derivation is explicit in your script - **Validated:** Extensive test coverage and regulatory use
+**Admiral Vision (2020-present):** - **Open-source:** Code is fully transparent and inspectable - **Cross-company collaboration:** Multiple pharmaceutical companies co-develop - **Tidyverse-native:** Leverages dplyr, tidyr, lubridate - familiar to R users - **Modular:** Small, composable functions instead of monolithic macros - **Non-black-box:** Every derivation is explicit in your script - **Validated:** Extensive test coverage and regulatory use
 
 ### 4.2 Admiral Core Design Principles
 
@@ -918,7 +918,7 @@ adsl <- adsl %>%
 8.  **Structure determines function choice:** BDS needs baseline derivations, OCCDS needs occurrence flags
 9.  **Admiral documentation is extensive:** Vignettes are your best friend
 10. **Community support:** Pharmaverse Slack, GitHub discussions
-11. **Cross-company patterns:** What works at Roche works at GSK works at your company
+11. **Cross-company patterns:** What works at one company works at another
 
 ### Prepare for Tomorrow
 

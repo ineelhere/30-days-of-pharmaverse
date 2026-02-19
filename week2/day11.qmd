@@ -1,8 +1,8 @@
 ---
 title: "Day 11: Disposition (DS) & Trial Design Domains"
 subtitle: "Screen Failures, Completers, and Study Structure"
-author: "Indraneel Chakraborty"
-date: today
+
+
 format:
   html:
     theme:

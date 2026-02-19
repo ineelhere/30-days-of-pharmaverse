@@ -1,8 +1,8 @@
 ---
 title: "Day 18: ADAE - Adverse Events Analysis Dataset"
 subtitle: "Week 3, Day 18: OCCDS structure with treatment emergent flags"
-author: "30 Days of Pharmaverse"
-date: today
+
+
 format:
   html:
     theme:

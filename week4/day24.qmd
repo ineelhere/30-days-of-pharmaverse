@@ -1,8 +1,8 @@
 ---
 title: "Day 24: ARD-First Reporting with cards and cardx"
 subtitle: "CDISC Analysis Results Data - computation decoupled from presentation"
-author: "Indraneel Chakraborty"
-date: today
+
+
 format:
   html:
     theme:
@@ -26,13 +26,13 @@ execute:
 
 ## Overview
 
-The **Analysis Results Dataset (ARD)** is an emerging CDISC standard that stores statistical results in a tidy, machine-readable format — reusable across tables, figures, and reports without re-running analyses.
+The **Analysis Results Dataset (ARD)** is an emerging CDISC standard that stores statistical results in a tidy, machine-readable format - reusable across tables, figures, and reports without re-running analyses.
 
 Today's packages:
 
--   `cards` — core ARD objects: continuous, categorical summaries
--   `cardx` — extended ARD: t-tests, chi-square, regression models
--   `pharmaverseadam` — reference ADaM datasets as input
+-   `cards` - core ARD objects: continuous, categorical summaries
+-   `cardx` - extended ARD: t-tests, chi-square, regression models
+-   `pharmaverseadam` - reference ADaM datasets as input
 
 ------------------------------------------------------------------------
 
@@ -45,12 +45,12 @@ library(pharmaverseadam)
 library(dplyr)
 
 # Safety population from ADSL
-adsl_safe <- pharmaverseadam::adsl |>
+adsl_safe <- pharmaverseadam::adsl %>%
   dplyr::filter(SAFFL == "Y")
 
 cat("Safety population N:", nrow(adsl_safe), "\n")
 cat("Treatment arms:\n")
-adsl_safe |> dplyr::count(TRT01A)
+adsl_safe %>% dplyr::count(TRT01A)
 ```
 
 ------------------------------------------------------------------------
@@ -62,14 +62,13 @@ adsl_safe |> dplyr::count(TRT01A)
 names(adsl_safe)
 ```
 
-> **Note:** `pharmaverseadam::adsl` does not contain `BMIBL`. We use `AGE` as the only continuous variable available.
+> **Note:** `pharmaverseadam::adsl` does not contain `BMIBL`. We use `AGE` as the only continuous variable.
 
 ------------------------------------------------------------------------
 
 ## Step 2: Continuous Summary ARD
 
 ```{r ard-continuous}
-# ard_continuous() generates a tidy ARD for numeric variables
 ard_cont <- cards::ard_continuous(
   adsl_safe,
   by        = TRT01A,
@@ -77,7 +76,7 @@ ard_cont <- cards::ard_continuous(
   statistic = ~ cards::continuous_summary_fns(c("mean", "sd", "median", "p25", "p75", "min", "max"))
 )
 
-ard_cont |>
+ard_cont %>%
   dplyr::select(group1, group1_level, variable, stat_name, stat_label, stat)
 ```
 
@@ -103,8 +102,8 @@ ard_cat <- cards::ard_categorical(
   variables = c(SEX, RACE, AGEGR1)
 )
 
-ard_cat |>
-  dplyr::select(group1, group1_level, variable, variable_level, stat_name, stat_label, stat) |>
+ard_cat %>%
+  dplyr::select(group1, group1_level, variable, variable_level, stat_name, stat_label, stat) %>%
   head(12)
 ```
 
@@ -113,13 +112,15 @@ ard_cat |>
 ## Step 4: Missing Values ARD
 
 ```{r ard-missing}
+# Note: keep ard_missing separate - do not combine with ard_cont/cat
+# (overlapping stat_names cause duplicates in bind_ard)
 ard_miss <- cards::ard_missing(
   adsl_safe,
   by        = TRT01A,
   variables = c(AGE, SEX, RACE, AGEGR1, ETHNIC)
 )
 
-ard_miss |>
+ard_miss %>%
   dplyr::select(group1, group1_level, variable, stat_name, stat_label, stat)
 ```
 
@@ -128,14 +129,13 @@ ard_miss |>
 ## Step 5: T-test ARD (cardx)
 
 ```{r ard-ttest}
-# cardx extends cards with inferential statistics
 ard_t <- cardx::ard_stats_t_test(
   adsl_safe,
   by        = TRT01A,
   variables = AGE
 )
 
-ard_t |>
+ard_t %>%
   dplyr::select(group1, variable, stat_name, stat_label, stat)
 ```
 
@@ -150,7 +150,7 @@ ard_chi <- cardx::ard_stats_chisq_test(
   variables = SEX
 )
 
-ard_chi |>
+ard_chi %>%
   dplyr::select(group1, variable, stat_name, stat_label, stat)
 ```
 
@@ -159,46 +159,53 @@ ard_chi |>
 ## Step 7: Wilcoxon Rank-Sum ARD (cardx)
 
 ```{r ard-wilcox}
-# Non-parametric alternative to t-test
 ard_wilcox <- cardx::ard_stats_wilcox_test(
   adsl_safe,
   by        = TRT01A,
   variables = AGE
 )
 
-ard_wilcox |>
+ard_wilcox %>%
   dplyr::select(group1, variable, stat_name, stat_label, stat)
 ```
 
 ------------------------------------------------------------------------
 
-## Step 8: Combine All ARDs
+## Step 8: Combine Summary ARDs
 
 ```{r ard-combine}
-# bind_ard() stacks multiple ARD objects into one
-ard_all <- cards::bind_ard(
+# bind_ard() with .update = TRUE resolves duplicate stat_names across ARD objects
+# Keep inferential (t-test, chisq, wilcox) separate from descriptive (cont, cat)
+ard_descriptive <- cards::bind_ard(
   ard_cont,
   ard_cat,
-  ard_miss,
-  ard_t,
-  ard_chi,
-  ard_wilcox
+  .update = TRUE
 )
 
-cat("Total ARD rows:", nrow(ard_all), "\n")
-cat("Contexts present:\n")
-ard_all |>
-  dplyr::count(context)
+ard_inferential <- cards::bind_ard(
+  ard_t,
+  ard_chi,
+  ard_wilcox,
+  .update = TRUE
+)
+
+cat("Descriptive ARD rows:", nrow(ard_descriptive), "\n")
+cat("Inferential ARD rows:", nrow(ard_inferential), "\n")
+
+cat("\nDescriptive contexts:\n")
+ard_descriptive %>% dplyr::count(context)
+
+cat("\nInferential contexts:\n")
+ard_inferential %>% dplyr::count(context)
 ```
 
 ------------------------------------------------------------------------
 
-## Step 9: Inspect the Full ARD
+## Step 9: Inspect the Descriptive ARD
 
 ```{r ard-inspect}
-# Key columns of the combined ARD
-ard_all |>
-  dplyr::select(group1, variable, context, stat_name, stat_label, stat) |>
+ard_descriptive %>%
+  dplyr::select(group1, group1_level, variable, context, stat_name, stat_label, stat) %>%
   head(20)
 ```
 
@@ -207,14 +214,14 @@ ard_all |>
 ## Step 10: Extract Specific Statistics
 
 ```{r ard-extract}
-# Pull mean AGE per treatment arm from the ARD
-ard_all |>
+# Pull mean AGE per treatment arm
+ard_descriptive %>%
   dplyr::filter(
-    variable   == "AGE",
-    stat_name  == "mean",
-    context    == "continuous"
-  ) |>
-  dplyr::select(group1_level, stat_name, stat) |>
+    variable  == "AGE",
+    stat_name == "mean",
+    context   == "continuous"
+  ) %>%
+  dplyr::select(group1_level, stat_name, stat) %>%
   dplyr::mutate(stat = round(unlist(stat), 1))
 ```
 
@@ -223,16 +230,15 @@ ard_all |>
 ## Step 11: Format Statistics from ARD
 
 ```{r ard-format}
-# cards::apply_fmt_fn() applies formatting functions stored in fmt_fn column
-ard_formatted <- ard_all |>
+ard_formatted <- ard_descriptive %>%
   dplyr::filter(
     variable  == "AGE",
     context   == "continuous",
     stat_name %in% c("mean", "sd", "median", "p25", "p75")
-  ) |>
+  ) %>%
   cards::apply_fmt_fn()
 
-ard_formatted |>
+ard_formatted %>%
   dplyr::select(group1_level, stat_name, stat_label, stat_fmt)
 ```
 
@@ -241,25 +247,18 @@ ard_formatted |>
 ## Step 12: ARD-Backed Summary Table
 
 ```{r ard-summary-table}
-# Use the ARD to build a readable summary manually
-mean_age <- ard_all |>
-  dplyr::filter(variable == "AGE", stat_name == "mean", context == "continuous") |>
-  dplyr::mutate(
-    treatment = as.character(group1_level),
-    mean_age  = round(unlist(stat), 1)
-  ) |>
+mean_age <- ard_descriptive %>%
+  dplyr::filter(variable == "AGE", stat_name == "mean", context == "continuous") %>%
+  dplyr::mutate(treatment = as.character(group1_level), mean_age = round(unlist(stat), 1)) %>%
   dplyr::select(treatment, mean_age)
 
-sd_age <- ard_all |>
-  dplyr::filter(variable == "AGE", stat_name == "sd", context == "continuous") |>
-  dplyr::mutate(
-    treatment = as.character(group1_level),
-    sd_age    = round(unlist(stat), 1)
-  ) |>
+sd_age <- ard_descriptive %>%
+  dplyr::filter(variable == "AGE", stat_name == "sd", context == "continuous") %>%
+  dplyr::mutate(treatment = as.character(group1_level), sd_age = round(unlist(stat), 1)) %>%
   dplyr::select(treatment, sd_age)
 
-age_summary <- dplyr::left_join(mean_age, sd_age, by = "treatment") |>
-  dplyr::mutate(`Mean (SD)` = paste0(mean_age, " (", sd_age, ")")) |>
+age_summary <- dplyr::left_join(mean_age, sd_age, by = "treatment") %>%
+  dplyr::mutate(`Mean (SD)` = paste0(mean_age, " (", sd_age, ")")) %>%
   dplyr::select(Treatment = treatment, `Mean (SD)`)
 
 age_summary
@@ -270,9 +269,7 @@ age_summary
 ## Step 13: ARD for Regression (cardx)
 
 ```{r ard-regression}
-# Logistic regression: predict SEX from AGE
-# (simple example to demonstrate ard_regression)
-adsl_model <- adsl_safe |>
+adsl_model <- adsl_safe %>%
   dplyr::mutate(SEX_BIN = dplyr::if_else(SEX == "M", 1L, 0L))
 
 logit_mod <- glm(
@@ -286,8 +283,8 @@ ard_logit <- cardx::ard_regression(
   exponentiate = TRUE
 )
 
-ard_logit |>
-  dplyr::select(variable, stat_name, stat_label, stat) |>
+ard_logit %>%
+  dplyr::select(variable, stat_name, stat_label, stat) %>%
   head(12)
 ```
 
@@ -298,23 +295,23 @@ ard_logit |>
 ```{r validate}
 cat("\n=== ARD Validation ===\n\n")
 
-# Check 1: No error records in combined ARD
-check1 <- ard_all |>
-  dplyr::filter(!is.null(error) & !sapply(error, is.null))
-cat("Check 1 - ARD error records:", nrow(check1), "\n")
+# Check 1: No error records in descriptive ARD
+check1 <- ard_descriptive %>%
+  dplyr::filter(!sapply(error, is.null))
+cat("Check 1 - Descriptive ARD error records:", nrow(check1), "\n")
 
 # Check 2: AGE mean stat is numeric
-mean_stat <- ard_all |>
-  dplyr::filter(variable == "AGE", stat_name == "mean", context == "continuous") |>
+mean_stat <- ard_descriptive %>%
+  dplyr::filter(variable == "AGE", stat_name == "mean", context == "continuous") %>%
   dplyr::pull(stat)
 check2 <- all(sapply(mean_stat, is.numeric))
 cat("Check 2 - AGE mean is numeric:", check2, "\n")
 
-# Check 3: Categorical stats sum to N
-cat_n <- ard_all |>
-  dplyr::filter(variable == "SEX", stat_name == "n", context == "categorical") |>
-  dplyr::mutate(val = unlist(stat)) |>
-  dplyr::group_by(group1_level) |>
+# Check 3: SEX counts per treatment arm
+cat_n <- ard_descriptive %>%
+  dplyr::filter(variable == "SEX", stat_name == "n", context == "categorical") %>%
+  dplyr::mutate(val = unlist(stat)) %>%
+  dplyr::group_by(group1_level) %>%
   dplyr::summarise(total = sum(val), .groups = "drop")
 cat("Check 3 - SEX counts per arm:\n")
 print(cat_n)
@@ -329,15 +326,15 @@ cat("\n✓ ARD validation complete\n")
 ```{r summary}
 cat("\n=== Day 24 Summary ===\n\n")
 
-cat("ARD contexts built:\n")
-ard_all |>
-  dplyr::count(context) |>
-  print()
+cat("Descriptive ARD contexts:\n")
+ard_descriptive %>% dplyr::count(context) %>% print()
 
-cat("\nTotal ARD rows:", nrow(ard_all), "\n")
-cat("Variables covered: AGE, SEX, RACE, AGEGR1, ETHNIC\n")
+cat("\nInferential ARD contexts:\n")
+ard_inferential %>% dplyr::count(context) %>% print()
+
+cat("\nVariables covered: AGE, SEX, RACE, AGEGR1, ETHNIC\n")
 cat("Tests: t-test, chi-square, Wilcoxon rank-sum\n")
-cat("Regression: logistic (age + treatment)\n")
+cat("Regression: logistic (AGE + TRT01A)\n")
 ```
 
 ------------------------------------------------------------------------
@@ -345,20 +342,17 @@ cat("Regression: logistic (age + treatment)\n")
 ## Export ARD as CSV
 
 ```{r export}
-# ARD is a tibble - flatten list columns for CSV export
-ard_export <- ard_all |>
+ard_export <- ard_descriptive %>%
   dplyr::mutate(
-    stat_value    = sapply(stat, function(x) if (is.null(x)) NA_character_ else as.character(x)),
-    group1_level  = as.character(group1_level),
+    stat_value     = sapply(stat, function(x) if (is.null(x)) NA_character_ else as.character(x)),
+    group1_level   = as.character(group1_level),
     variable_level = sapply(variable_level, function(x) if (is.null(x)) NA_character_ else as.character(x))
-  ) |>
+  ) %>%
   dplyr::select(group1, group1_level, variable, variable_level,
                 context, stat_name, stat_label, stat_value)
 
 readr::write_csv(ard_export, "ard_day24.csv")
-
-cat("✓ ard_day24.csv exported\n")
-cat("Rows:", nrow(ard_export), "\n")
+cat("✓ ard_day24.csv exported -", nrow(ard_export), "rows\n")
 ```
 
 ------------------------------------------------------------------------
@@ -367,16 +361,16 @@ cat("Rows:", nrow(ard_export), "\n")
 
 1.  `cards::ard_continuous()` and `ard_categorical()` build tidy ARDs from ADaM data
 2.  `cardx` extends with inferential stats: t-test, chi-square, Wilcoxon, regression
-3.  `bind_ard()` stacks multiple ARD objects into one combined dataset
-4.  ARD `stat` column is a **list column** — use `unlist()` or `apply_fmt_fn()` to extract
-5.  `pharmaverseadam::adsl` has no `BMIBL` — use only confirmed columns
-6.  The ARD is the **single source of truth** for all downstream tables and figures
+3.  `bind_ard(.update = TRUE)` resolves duplicate stat_names across ARD objects
+4.  Keep **descriptive** and **inferential** ARDs in separate `bind_ard()` calls to avoid duplicates
+5.  ARD `stat` column is a **list column** - use `unlist()` or `apply_fmt_fn()` to extract values
+6.  `pharmaverseadam::adsl` has no `BMIBL` - only `AGE` is available as continuous
 
 ------------------------------------------------------------------------
 
 ## Next Steps
 
-**Day 25:** `gtsummary` + `tfrmt` — ARD-backed production tables **Day 26:** `flextable` + `officer` — Word/RTF clinical output **Day 27:** `r2rtf` — submission-ready RTF tables
+**Day 25:** `gtsummary` + `tfrmt` - ARD-backed production tables **Day 26:** `flextable` + `officer` - Word/RTF clinical output **Day 27:** `r2rtf` - submission-ready RTF tables
 
 ------------------------------------------------------------------------
 

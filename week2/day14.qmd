@@ -1,8 +1,8 @@
 ---
 title: "Day 14: Week 2 Capstone - Metadata-Driven SDTM with metacore & xportr"
 subtitle: "Specification-Driven Workflows for Submission-Ready Data"
-author: "Indraneel Chakraborty"
-date: today
+
+
 format:
   html:
     theme:

@@ -1,0 +1,85 @@
+group1,group1_level,variable,variable_level,context,stat_name,stat_label,stat_value
+TRT01A,Placebo,AGE,NA,continuous,mean,Mean,75.2093023255814
+TRT01A,Placebo,AGE,NA,continuous,sd,SD,8.59016712714193
+TRT01A,Placebo,AGE,NA,continuous,median,Median,76
+TRT01A,Placebo,AGE,NA,continuous,p25,Q1,69
+TRT01A,Placebo,AGE,NA,continuous,p75,Q3,82
+TRT01A,Placebo,AGE,NA,continuous,min,Min,52
+TRT01A,Placebo,AGE,NA,continuous,max,Max,89
+TRT01A,Xanomeline High Dose,AGE,NA,continuous,mean,Mean,73.7777777777778
+TRT01A,Xanomeline High Dose,AGE,NA,continuous,sd,SD,7.94385620024705
+TRT01A,Xanomeline High Dose,AGE,NA,continuous,median,Median,75.5
+TRT01A,Xanomeline High Dose,AGE,NA,continuous,p25,Q1,70
+TRT01A,Xanomeline High Dose,AGE,NA,continuous,p75,Q3,79
+TRT01A,Xanomeline High Dose,AGE,NA,continuous,min,Min,56
+TRT01A,Xanomeline High Dose,AGE,NA,continuous,max,Max,88
+TRT01A,Xanomeline Low Dose,AGE,NA,continuous,mean,Mean,75.9583333333333
+TRT01A,Xanomeline Low Dose,AGE,NA,continuous,sd,SD,8.11355807037847
+TRT01A,Xanomeline Low Dose,AGE,NA,continuous,median,Median,78
+TRT01A,Xanomeline Low Dose,AGE,NA,continuous,p25,Q1,71
+TRT01A,Xanomeline Low Dose,AGE,NA,continuous,p75,Q3,82
+TRT01A,Xanomeline Low Dose,AGE,NA,continuous,min,Min,51
+TRT01A,Xanomeline Low Dose,AGE,NA,continuous,max,Max,88
+TRT01A,Placebo,SEX,F,categorical,n,n,53
+TRT01A,Placebo,SEX,F,categorical,N,N,86
+TRT01A,Placebo,SEX,F,categorical,p,%,0.616279069767442
+TRT01A,Placebo,SEX,M,categorical,n,n,33
+TRT01A,Placebo,SEX,M,categorical,N,N,86
+TRT01A,Placebo,SEX,M,categorical,p,%,0.383720930232558
+TRT01A,Placebo,RACE,AMERICAN INDIAN OR ALASKA NATIVE,categorical,n,n,0
+TRT01A,Placebo,RACE,AMERICAN INDIAN OR ALASKA NATIVE,categorical,N,N,86
+TRT01A,Placebo,RACE,AMERICAN INDIAN OR ALASKA NATIVE,categorical,p,%,0
+TRT01A,Placebo,RACE,BLACK OR AFRICAN AMERICAN,categorical,n,n,8
+TRT01A,Placebo,RACE,BLACK OR AFRICAN AMERICAN,categorical,N,N,86
+TRT01A,Placebo,RACE,BLACK OR AFRICAN AMERICAN,categorical,p,%,0.0930232558139535
+TRT01A,Placebo,RACE,WHITE,categorical,n,n,78
+TRT01A,Placebo,RACE,WHITE,categorical,N,N,86
+TRT01A,Placebo,RACE,WHITE,categorical,p,%,0.906976744186046
+TRT01A,Placebo,AGEGR1,>64,categorical,n,n,72
+TRT01A,Placebo,AGEGR1,>64,categorical,N,N,86
+TRT01A,Placebo,AGEGR1,>64,categorical,p,%,0.837209302325581
+TRT01A,Placebo,AGEGR1,18-64,categorical,n,n,14
+TRT01A,Placebo,AGEGR1,18-64,categorical,N,N,86
+TRT01A,Placebo,AGEGR1,18-64,categorical,p,%,0.162790697674419
+TRT01A,Xanomeline High Dose,SEX,F,categorical,n,n,35
+TRT01A,Xanomeline High Dose,SEX,F,categorical,N,N,72
+TRT01A,Xanomeline High Dose,SEX,F,categorical,p,%,0.486111111111111
+TRT01A,Xanomeline High Dose,SEX,M,categorical,n,n,37
+TRT01A,Xanomeline High Dose,SEX,M,categorical,N,N,72
+TRT01A,Xanomeline High Dose,SEX,M,categorical,p,%,0.513888888888889
+TRT01A,Xanomeline High Dose,RACE,AMERICAN INDIAN OR ALASKA NATIVE,categorical,n,n,1
+TRT01A,Xanomeline High Dose,RACE,AMERICAN INDIAN OR ALASKA NATIVE,categorical,N,N,72
+TRT01A,Xanomeline High Dose,RACE,AMERICAN INDIAN OR ALASKA NATIVE,categorical,p,%,0.0138888888888889
+TRT01A,Xanomeline High Dose,RACE,BLACK OR AFRICAN AMERICAN,categorical,n,n,9
+TRT01A,Xanomeline High Dose,RACE,BLACK OR AFRICAN AMERICAN,categorical,N,N,72
+TRT01A,Xanomeline High Dose,RACE,BLACK OR AFRICAN AMERICAN,categorical,p,%,0.125
+TRT01A,Xanomeline High Dose,RACE,WHITE,categorical,n,n,62
+TRT01A,Xanomeline High Dose,RACE,WHITE,categorical,N,N,72
+TRT01A,Xanomeline High Dose,RACE,WHITE,categorical,p,%,0.861111111111111
+TRT01A,Xanomeline High Dose,AGEGR1,>64,categorical,n,n,61
+TRT01A,Xanomeline High Dose,AGEGR1,>64,categorical,N,N,72
+TRT01A,Xanomeline High Dose,AGEGR1,>64,categorical,p,%,0.847222222222222
+TRT01A,Xanomeline High Dose,AGEGR1,18-64,categorical,n,n,11
+TRT01A,Xanomeline High Dose,AGEGR1,18-64,categorical,N,N,72
+TRT01A,Xanomeline High Dose,AGEGR1,18-64,categorical,p,%,0.152777777777778
+TRT01A,Xanomeline Low Dose,SEX,F,categorical,n,n,55
+TRT01A,Xanomeline Low Dose,SEX,F,categorical,N,N,96
+TRT01A,Xanomeline Low Dose,SEX,F,categorical,p,%,0.572916666666667
+TRT01A,Xanomeline Low Dose,SEX,M,categorical,n,n,41
+TRT01A,Xanomeline Low Dose,SEX,M,categorical,N,N,96
+TRT01A,Xanomeline Low Dose,SEX,M,categorical,p,%,0.427083333333333
+TRT01A,Xanomeline Low Dose,RACE,AMERICAN INDIAN OR ALASKA NATIVE,categorical,n,n,0
+TRT01A,Xanomeline Low Dose,RACE,AMERICAN INDIAN OR ALASKA NATIVE,categorical,N,N,96
+TRT01A,Xanomeline Low Dose,RACE,AMERICAN INDIAN OR ALASKA NATIVE,categorical,p,%,0
+TRT01A,Xanomeline Low Dose,RACE,BLACK OR AFRICAN AMERICAN,categorical,n,n,6
+TRT01A,Xanomeline Low Dose,RACE,BLACK OR AFRICAN AMERICAN,categorical,N,N,96
+TRT01A,Xanomeline Low Dose,RACE,BLACK OR AFRICAN AMERICAN,categorical,p,%,0.0625
+TRT01A,Xanomeline Low Dose,RACE,WHITE,categorical,n,n,90
+TRT01A,Xanomeline Low Dose,RACE,WHITE,categorical,N,N,96
+TRT01A,Xanomeline Low Dose,RACE,WHITE,categorical,p,%,0.9375
+TRT01A,Xanomeline Low Dose,AGEGR1,>64,categorical,n,n,88
+TRT01A,Xanomeline Low Dose,AGEGR1,>64,categorical,N,N,96
+TRT01A,Xanomeline Low Dose,AGEGR1,>64,categorical,p,%,0.916666666666667
+TRT01A,Xanomeline Low Dose,AGEGR1,18-64,categorical,n,n,8
+TRT01A,Xanomeline Low Dose,AGEGR1,18-64,categorical,N,N,96
+TRT01A,Xanomeline Low Dose,AGEGR1,18-64,categorical,p,%,0.0833333333333333

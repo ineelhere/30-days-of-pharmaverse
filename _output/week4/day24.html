@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Day 24: ARD-First Reporting with cards and cardx – 30 Days of Pharmaverse</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-60d4398d82fec002ccec76571ed06d15.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../styles/site.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">30 Days of Pharmaverse</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../week1/day1.html"> 
+<span class="menu-text">Week 1: SDTM Fundamentals</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../week2/day8.html"> 
+<span class="menu-text">Week 2: Production SDTM</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../week3/day15.html"> 
+<span class="menu-text">Week 3: ADaM Deep Dive</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../week4/day22.html" aria-current="page"> 
+<span class="menu-text">Week 4: Tables, Listings and Figures</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ineelhere/30-days-of-pharmaverse"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../week4/day24.html">Day 24: ARD-First Reporting with cards and cardx</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week4/day22.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 22: Demography Table with gtsummary + gt</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week4/day23.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 23: ADCM and ADRS - Concomitant Meds and Oncology Response</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week4/day24.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Day 24: ARD-First Reporting with cards and cardx</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week4/day25.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 25: gtsummary and tfrmt - ARD-Backed Production Tables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week4/day26.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 26: flextable and officer - Word and RTF Clinical Tables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week4/day27.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 27: rtables, tern, and r2rtf - Structured Clinical Tables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+ <span class="menu-text">week4/day28.qmd</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">week4/day29.qmd</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">week4/day30.qmd</span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">2</span> Setup</a></li>
+  <li><a href="#step-1-confirm-available-variables" id="toc-step-1-confirm-available-variables" class="nav-link" data-scroll-target="#step-1-confirm-available-variables"><span class="header-section-number">3</span> Step 1: Confirm Available Variables</a></li>
+  <li><a href="#step-2-continuous-summary-ard" id="toc-step-2-continuous-summary-ard" class="nav-link" data-scroll-target="#step-2-continuous-summary-ard"><span class="header-section-number">4</span> Step 2: Continuous Summary ARD</a></li>
+  <li><a href="#step-3-categorical-summary-ard" id="toc-step-3-categorical-summary-ard" class="nav-link" data-scroll-target="#step-3-categorical-summary-ard"><span class="header-section-number">5</span> Step 3: Categorical Summary ARD</a></li>
+  <li><a href="#step-4-missing-values-ard" id="toc-step-4-missing-values-ard" class="nav-link" data-scroll-target="#step-4-missing-values-ard"><span class="header-section-number">6</span> Step 4: Missing Values ARD</a></li>
+  <li><a href="#step-5-t-test-ard-cardx" id="toc-step-5-t-test-ard-cardx" class="nav-link" data-scroll-target="#step-5-t-test-ard-cardx"><span class="header-section-number">7</span> Step 5: T-test ARD (cardx)</a></li>
+  <li><a href="#step-6-chi-square-test-ard-cardx" id="toc-step-6-chi-square-test-ard-cardx" class="nav-link" data-scroll-target="#step-6-chi-square-test-ard-cardx"><span class="header-section-number">8</span> Step 6: Chi-Square Test ARD (cardx)</a></li>
+  <li><a href="#step-7-wilcoxon-rank-sum-ard-cardx" id="toc-step-7-wilcoxon-rank-sum-ard-cardx" class="nav-link" data-scroll-target="#step-7-wilcoxon-rank-sum-ard-cardx"><span class="header-section-number">9</span> Step 7: Wilcoxon Rank-Sum ARD (cardx)</a></li>
+  <li><a href="#step-8-combine-summary-ards" id="toc-step-8-combine-summary-ards" class="nav-link" data-scroll-target="#step-8-combine-summary-ards"><span class="header-section-number">10</span> Step 8: Combine Summary ARDs</a></li>
+  <li><a href="#step-9-inspect-the-descriptive-ard" id="toc-step-9-inspect-the-descriptive-ard" class="nav-link" data-scroll-target="#step-9-inspect-the-descriptive-ard"><span class="header-section-number">11</span> Step 9: Inspect the Descriptive ARD</a></li>
+  <li><a href="#step-10-extract-specific-statistics" id="toc-step-10-extract-specific-statistics" class="nav-link" data-scroll-target="#step-10-extract-specific-statistics"><span class="header-section-number">12</span> Step 10: Extract Specific Statistics</a></li>
+  <li><a href="#step-11-format-statistics-from-ard" id="toc-step-11-format-statistics-from-ard" class="nav-link" data-scroll-target="#step-11-format-statistics-from-ard"><span class="header-section-number">13</span> Step 11: Format Statistics from ARD</a></li>
+  <li><a href="#step-12-ard-backed-summary-table" id="toc-step-12-ard-backed-summary-table" class="nav-link" data-scroll-target="#step-12-ard-backed-summary-table"><span class="header-section-number">14</span> Step 12: ARD-Backed Summary Table</a></li>
+  <li><a href="#step-13-ard-for-regression-cardx" id="toc-step-13-ard-for-regression-cardx" class="nav-link" data-scroll-target="#step-13-ard-for-regression-cardx"><span class="header-section-number">15</span> Step 13: ARD for Regression (cardx)</a></li>
+  <li><a href="#step-14-validation-checks" id="toc-step-14-validation-checks" class="nav-link" data-scroll-target="#step-14-validation-checks"><span class="header-section-number">16</span> Step 14: Validation Checks</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">17</span> Summary</a></li>
+  <li><a href="#export-ard-as-csv" id="toc-export-ard-as-csv" class="nav-link" data-scroll-target="#export-ard-as-csv"><span class="header-section-number">18</span> Export ARD as CSV</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">19</span> Key Takeaways</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">20</span> Next Steps</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">21</span> Resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Day 24: ARD-First Reporting with cards and cardx</h1>
+<p class="subtitle lead">CDISC Analysis Results Data - computation decoupled from presentation</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
+<p>The <strong>Analysis Results Dataset (ARD)</strong> is an emerging CDISC standard that stores statistical results in a tidy, machine-readable format - reusable across tables, figures, and reports without re-running analyses.</p>
+<p>Today’s packages:</p>
+<ul>
+<li><code>cards</code> - core ARD objects: continuous, categorical summaries</li>
+<li><code>cardx</code> - extended ARD: t-tests, chi-square, regression models</li>
+<li><code>pharmaverseadam</code> - reference ADaM datasets as input</li>
+</ul>
+<hr>
+</section>
+<section id="setup" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="setup"><span class="header-section-number">2</span> Setup</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cards)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cardx)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pharmaverseadam)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Safety population from ADSL</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>adsl_safe <span class="ot">&lt;-</span> pharmaverseadam<span class="sc">::</span>adsl <span class="sc">%&gt;%</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(SAFFL <span class="sc">==</span> <span class="st">"Y"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Safety population N:"</span>, <span class="fu">nrow</span>(adsl_safe), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Safety population N: 254 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Treatment arms:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Treatment arms:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>adsl_safe <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">count</span>(TRT01A)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  TRT01A                   n
+  &lt;chr&gt;                &lt;int&gt;
+1 Placebo                 86
+2 Xanomeline High Dose    72
+3 Xanomeline Low Dose     96</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-1-confirm-available-variables" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="step-1-confirm-available-variables"><span class="header-section-number">3</span> Step 1: Confirm Available Variables</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Always verify before use - BMIBL is NOT in pharmaverseadam::adsl</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(adsl_safe)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "STUDYID"  "USUBJID"  "SUBJID"   "RFSTDTC"  "RFENDTC"  "RFXSTDTC"
+ [7] "RFXENDTC" "RFICDTC"  "RFPENDTC" "DTHDTC"   "DTHFL"    "SITEID"  
+[13] "AGE"      "AGEU"     "SEX"      "RACE"     "ETHNIC"   "ARMCD"   
+[19] "ARM"      "ACTARMCD" "ACTARM"   "COUNTRY"  "DMDTC"    "DMDY"    
+[25] "TRT01P"   "TRT01A"   "TRTSDTM"  "TRTSTMF"  "TRTEDTM"  "TRTETMF" 
+[31] "TRTSDT"   "TRTEDT"   "TRTDURD"  "SCRFDT"   "EOSDT"    "EOSSTT"  
+[37] "FRVDT"    "RANDDT"   "DTHDT"    "DTHDTF"   "DTHADY"   "LDDTHELD"
+[43] "DTHCAUS"  "DTHDOM"   "DTHCGR1"  "LSTALVDT" "SAFFL"    "RACEGR1" 
+[49] "AGEGR1"   "REGION1"  "LDDTHGR1" "DTH30FL"  "DTHA30FL" "DTHB30FL"</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> <code>pharmaverseadam::adsl</code> does not contain <code>BMIBL</code>. We use <code>AGE</code> as the only continuous variable.</p>
+</blockquote>
+<hr>
+</section>
+<section id="step-2-continuous-summary-ard" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="step-2-continuous-summary-ard"><span class="header-section-number">4</span> Step 2: Continuous Summary ARD</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ard_cont <span class="ot">&lt;-</span> cards<span class="sc">::</span><span class="fu">ard_continuous</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  adsl_safe,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">by        =</span> TRT01A,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">variables =</span> AGE,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">statistic =</span> <span class="sc">~</span> cards<span class="sc">::</span><span class="fu">continuous_summary_fns</span>(<span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"median"</span>, <span class="st">"p25"</span>, <span class="st">"p75"</span>, <span class="st">"min"</span>, <span class="st">"max"</span>))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>ard_cont <span class="sc">%&gt;%</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(group1, group1_level, variable, stat_name, stat_label, stat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   group1 group1_level variable stat_name stat_label   stat
+1  TRT01A      Placebo      AGE      mean       Mean 75.209
+2  TRT01A      Placebo      AGE        sd         SD   8.59
+3  TRT01A      Placebo      AGE    median     Median     76
+4  TRT01A      Placebo      AGE       p25         Q1     69
+5  TRT01A      Placebo      AGE       p75         Q3     82
+6  TRT01A      Placebo      AGE       min        Min     52
+7  TRT01A      Placebo      AGE       max        Max     89
+8  TRT01A    Xanomeli…      AGE      mean       Mean 73.778
+9  TRT01A    Xanomeli…      AGE        sd         SD  7.944
+10 TRT01A    Xanomeli…      AGE    median     Median   75.5</code></pre>
+</div>
+</div>
+<p><strong>ARD Structure:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>group1</code></td>
+<td>Grouping variable (TRT01A)</td>
+</tr>
+<tr class="even">
+<td><code>group1_level</code></td>
+<td>Level of grouping variable</td>
+</tr>
+<tr class="odd">
+<td><code>variable</code></td>
+<td>Analysis variable (AGE)</td>
+</tr>
+<tr class="even">
+<td><code>stat_name</code></td>
+<td>Statistic name (mean, sd, …)</td>
+</tr>
+<tr class="odd">
+<td><code>stat_label</code></td>
+<td>Human-readable label</td>
+</tr>
+<tr class="even">
+<td><code>stat</code></td>
+<td>Computed value (list column)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="step-3-categorical-summary-ard" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="step-3-categorical-summary-ard"><span class="header-section-number">5</span> Step 3: Categorical Summary ARD</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ard_cat <span class="ot">&lt;-</span> cards<span class="sc">::</span><span class="fu">ard_categorical</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  adsl_safe,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">by        =</span> TRT01A,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">variables =</span> <span class="fu">c</span>(SEX, RACE, AGEGR1)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>ard_cat <span class="sc">%&gt;%</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(group1, group1_level, variable, variable_level, stat_name, stat_label, stat) <span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   group1 group1_level variable variable_level stat_name stat_label  stat
+1  TRT01A      Placebo      SEX              F         n          n    53
+2  TRT01A      Placebo      SEX              F         N          N    86
+3  TRT01A      Placebo      SEX              F         p          % 0.616
+4  TRT01A      Placebo      SEX              M         n          n    33
+5  TRT01A      Placebo      SEX              M         N          N    86
+6  TRT01A      Placebo      SEX              M         p          % 0.384
+7  TRT01A      Placebo     RACE      AMERICAN…         n          n     0
+8  TRT01A      Placebo     RACE      AMERICAN…         N          N    86
+9  TRT01A      Placebo     RACE      AMERICAN…         p          %     0
+10 TRT01A      Placebo     RACE      BLACK OR…         n          n     8
+11 TRT01A      Placebo     RACE      BLACK OR…         N          N    86
+12 TRT01A      Placebo     RACE      BLACK OR…         p          % 0.093</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-4-missing-values-ard" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="step-4-missing-values-ard"><span class="header-section-number">6</span> Step 4: Missing Values ARD</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: keep ard_missing separate - do not combine with ard_cont/cat</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (overlapping stat_names cause duplicates in bind_ard)</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>ard_miss <span class="ot">&lt;-</span> cards<span class="sc">::</span><span class="fu">ard_missing</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  adsl_safe,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">by        =</span> TRT01A,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">variables =</span> <span class="fu">c</span>(AGE, SEX, RACE, AGEGR1, ETHNIC)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>ard_miss <span class="sc">%&gt;%</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(group1, group1_level, variable, stat_name, stat_label, stat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   group1 group1_level variable stat_name stat_label stat
+1  TRT01A      Placebo      AGE     N_obs  Vector L…   86
+2  TRT01A      Placebo      AGE    N_miss  N Missing    0
+3  TRT01A      Placebo      AGE N_nonmiss  N Non-mi…   86
+4  TRT01A      Placebo      AGE    p_miss  % Missing    0
+5  TRT01A      Placebo      AGE p_nonmiss  % Non-mi…    1
+6  TRT01A      Placebo      SEX     N_obs  Vector L…   86
+7  TRT01A      Placebo      SEX    N_miss  N Missing    0
+8  TRT01A      Placebo      SEX N_nonmiss  N Non-mi…   86
+9  TRT01A      Placebo      SEX    p_miss  % Missing    0
+10 TRT01A      Placebo      SEX p_nonmiss  % Non-mi…    1</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-5-t-test-ard-cardx" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="step-5-t-test-ard-cardx"><span class="header-section-number">7</span> Step 5: T-test ARD (cardx)</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ard_t <span class="ot">&lt;-</span> cardx<span class="sc">::</span><span class="fu">ard_stats_t_test</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  adsl_safe,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">by        =</span> TRT01A,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">variables =</span> AGE</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>ard_t <span class="sc">%&gt;%</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(group1, variable, stat_name, stat_label, stat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   group1 variable   stat_name stat_label  stat
+1  TRT01A      AGE    estimate  Mean Dif…      
+2  TRT01A      AGE   estimate1  Group 1 …      
+3  TRT01A      AGE   estimate2  Group 2 …      
+4  TRT01A      AGE   statistic  t Statis…      
+5  TRT01A      AGE     p.value    p-value      
+6  TRT01A      AGE   parameter  Degrees …      
+7  TRT01A      AGE    conf.low  CI Lower…      
+8  TRT01A      AGE   conf.high  CI Upper…      
+9  TRT01A      AGE      method     method      
+10 TRT01A      AGE alternative  alternat…      
+11 TRT01A      AGE          mu    H0 Mean     0
+12 TRT01A      AGE      paired  Paired t… FALSE
+13 TRT01A      AGE   var.equal  Equal Va… FALSE
+14 TRT01A      AGE  conf.level  CI Confi…  0.95</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-6-chi-square-test-ard-cardx" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="step-6-chi-square-test-ard-cardx"><span class="header-section-number">8</span> Step 6: Chi-Square Test ARD (cardx)</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ard_chi <span class="ot">&lt;-</span> cardx<span class="sc">::</span><span class="fu">ard_stats_chisq_test</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  adsl_safe,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">by        =</span> TRT01A,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">variables =</span> SEX</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>ard_chi <span class="sc">%&gt;%</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(group1, variable, stat_name, stat_label, stat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  group1 variable        stat_name stat_label                        stat
+1 TRT01A      SEX        statistic  X-square…                       2.761
+2 TRT01A      SEX          p.value    p-value                       0.251
+3 TRT01A      SEX        parameter  Degrees …                           2
+4 TRT01A      SEX           method     method                   Pearson'…
+5 TRT01A      SEX          correct    correct                        TRUE
+6 TRT01A      SEX                p          p rep, 1/length(x), length(x)
+7 TRT01A      SEX        rescale.p  rescale.p                       FALSE
+8 TRT01A      SEX simulate.p.value  simulate…                       FALSE
+9 TRT01A      SEX                B          B                        2000</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-7-wilcoxon-rank-sum-ard-cardx" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="step-7-wilcoxon-rank-sum-ard-cardx"><span class="header-section-number">9</span> Step 7: Wilcoxon Rank-Sum ARD (cardx)</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ard_wilcox <span class="ot">&lt;-</span> cardx<span class="sc">::</span><span class="fu">ard_stats_wilcox_test</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  adsl_safe,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">by        =</span> TRT01A,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">variables =</span> AGE</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>ard_wilcox <span class="sc">%&gt;%</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(group1, variable, stat_name, stat_label, stat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   group1 variable   stat_name stat_label  stat
+1  TRT01A      AGE   statistic  X-square…      
+2  TRT01A      AGE     p.value    p-value      
+3  TRT01A      AGE      method     method      
+4  TRT01A      AGE alternative  alternat…      
+5  TRT01A      AGE          mu         mu     0
+6  TRT01A      AGE      paired  Paired t… FALSE
+7  TRT01A      AGE       exact      exact      
+8  TRT01A      AGE     correct    correct  TRUE
+9  TRT01A      AGE    conf.int   conf.int FALSE
+10 TRT01A      AGE  conf.level  CI Confi…  0.95
+11 TRT01A      AGE    tol.root   tol.root     0
+12 TRT01A      AGE digits.rank  digits.r…   Inf</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-8-combine-summary-ards" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="step-8-combine-summary-ards"><span class="header-section-number">10</span> Step 8: Combine Summary ARDs</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bind_ard() with .update = TRUE resolves duplicate stat_names across ARD objects</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep inferential (t-test, chisq, wilcox) separate from descriptive (cont, cat)</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>ard_descriptive <span class="ot">&lt;-</span> cards<span class="sc">::</span><span class="fu">bind_ard</span>(</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  ard_cont,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  ard_cat,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">.update =</span> <span class="cn">TRUE</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>ard_inferential <span class="ot">&lt;-</span> cards<span class="sc">::</span><span class="fu">bind_ard</span>(</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  ard_t,</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  ard_chi,</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  ard_wilcox,</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">.update =</span> <span class="cn">TRUE</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Descriptive ARD rows:"</span>, <span class="fu">nrow</span>(ard_descriptive), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Descriptive ARD rows: 84 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Inferential ARD rows:"</span>, <span class="fu">nrow</span>(ard_inferential), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Inferential ARD rows: 28 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Descriptive contexts:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Descriptive contexts:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ard_descriptive <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">count</span>(context)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    context
+1 categori…
+2 continuo…</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Inferential contexts:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Inferential contexts:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>ard_inferential <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">count</span>(context)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    context
+1 stats_ch…
+2 stats_t_…
+3 stats_wi…</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-9-inspect-the-descriptive-ard" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="step-9-inspect-the-descriptive-ard"><span class="header-section-number">11</span> Step 9: Inspect the Descriptive ARD</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>ard_descriptive <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(group1, group1_level, variable, context, stat_name, stat_label, stat) <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   group1 group1_level variable stat_name stat_label   stat
+1  TRT01A      Placebo      AGE      mean       Mean 75.209
+2  TRT01A      Placebo      AGE        sd         SD   8.59
+3  TRT01A      Placebo      AGE    median     Median     76
+4  TRT01A      Placebo      AGE       p25         Q1     69
+5  TRT01A      Placebo      AGE       p75         Q3     82
+6  TRT01A      Placebo      AGE       min        Min     52
+7  TRT01A      Placebo      AGE       max        Max     89
+8  TRT01A    Xanomeli…      AGE      mean       Mean 73.778
+9  TRT01A    Xanomeli…      AGE        sd         SD  7.944
+10 TRT01A    Xanomeli…      AGE    median     Median   75.5
+11 TRT01A    Xanomeli…      AGE       p25         Q1     70
+12 TRT01A    Xanomeli…      AGE       p75         Q3     79
+13 TRT01A    Xanomeli…      AGE       min        Min     56
+14 TRT01A    Xanomeli…      AGE       max        Max     88
+15 TRT01A    Xanomeli…      AGE      mean       Mean 75.958
+16 TRT01A    Xanomeli…      AGE        sd         SD  8.114
+17 TRT01A    Xanomeli…      AGE    median     Median     78
+18 TRT01A    Xanomeli…      AGE       p25         Q1     71
+19 TRT01A    Xanomeli…      AGE       p75         Q3     82
+20 TRT01A    Xanomeli…      AGE       min        Min     51</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-10-extract-specific-statistics" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="step-10-extract-specific-statistics"><span class="header-section-number">12</span> Step 10: Extract Specific Statistics</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull mean AGE per treatment arm</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>ard_descriptive <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    variable  <span class="sc">==</span> <span class="st">"AGE"</span>,</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    stat_name <span class="sc">==</span> <span class="st">"mean"</span>,</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    context   <span class="sc">==</span> <span class="st">"continuous"</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(group1_level, stat_name, stat) <span class="sc">%&gt;%</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">stat =</span> <span class="fu">round</span>(<span class="fu">unlist</span>(stat), <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  group1_level stat_name stat
+1      Placebo      mean 75.2
+2    Xanomeli…      mean 73.8
+3    Xanomeli…      mean   76</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-11-format-statistics-from-ard" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="step-11-format-statistics-from-ard"><span class="header-section-number">13</span> Step 11: Format Statistics from ARD</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>ard_formatted <span class="ot">&lt;-</span> ard_descriptive <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    variable  <span class="sc">==</span> <span class="st">"AGE"</span>,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    context   <span class="sc">==</span> <span class="st">"continuous"</span>,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    stat_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"median"</span>, <span class="st">"p25"</span>, <span class="st">"p75"</span>)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  cards<span class="sc">::</span><span class="fu">apply_fmt_fn</span>()</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>ard_formatted <span class="sc">%&gt;%</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(group1_level, stat_name, stat_label, stat_fmt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   group1_level stat_name stat_label stat_fmt
+1       Placebo      mean       Mean     75.2
+2       Placebo        sd         SD      8.6
+3       Placebo    median     Median     76.0
+4       Placebo       p25         Q1     69.0
+5       Placebo       p75         Q3     82.0
+6     Xanomeli…      mean       Mean     73.8
+7     Xanomeli…        sd         SD      7.9
+8     Xanomeli…    median     Median     75.5
+9     Xanomeli…       p25         Q1     70.0
+10    Xanomeli…       p75         Q3     79.0
+11    Xanomeli…      mean       Mean     76.0
+12    Xanomeli…        sd         SD      8.1
+13    Xanomeli…    median     Median     78.0
+14    Xanomeli…       p25         Q1     71.0
+15    Xanomeli…       p75         Q3     82.0</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-12-ard-backed-summary-table" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="step-12-ard-backed-summary-table"><span class="header-section-number">14</span> Step 12: ARD-Backed Summary Table</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>mean_age <span class="ot">&lt;-</span> ard_descriptive <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"AGE"</span>, stat_name <span class="sc">==</span> <span class="st">"mean"</span>, context <span class="sc">==</span> <span class="st">"continuous"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">treatment =</span> <span class="fu">as.character</span>(group1_level), <span class="at">mean_age =</span> <span class="fu">round</span>(<span class="fu">unlist</span>(stat), <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(treatment, mean_age)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>sd_age <span class="ot">&lt;-</span> ard_descriptive <span class="sc">%&gt;%</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"AGE"</span>, stat_name <span class="sc">==</span> <span class="st">"sd"</span>, context <span class="sc">==</span> <span class="st">"continuous"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">treatment =</span> <span class="fu">as.character</span>(group1_level), <span class="at">sd_age =</span> <span class="fu">round</span>(<span class="fu">unlist</span>(stat), <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(treatment, sd_age)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>age_summary <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">left_join</span>(mean_age, sd_age, <span class="at">by =</span> <span class="st">"treatment"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">Mean (SD)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">paste0</span>(mean_age, <span class="st">" ("</span>, sd_age, <span class="st">")"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="at">Treatment =</span> treatment, <span class="st">`</span><span class="at">Mean (SD)</span><span class="st">`</span>)</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>age_summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>data frame with 0 columns and 3 rows</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-13-ard-for-regression-cardx" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="step-13-ard-for-regression-cardx"><span class="header-section-number">15</span> Step 13: ARD for Regression (cardx)</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>adsl_model <span class="ot">&lt;-</span> adsl_safe <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">SEX_BIN =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(SEX <span class="sc">==</span> <span class="st">"M"</span>, <span class="dv">1</span>L, <span class="dv">0</span>L))</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>logit_mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  SEX_BIN <span class="sc">~</span> AGE <span class="sc">+</span> TRT01A,</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data   =</span> adsl_model,</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">binomial</span>()</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>ard_logit <span class="ot">&lt;-</span> cardx<span class="sc">::</span><span class="fu">ard_regression</span>(</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  logit_mod,</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">exponentiate =</span> <span class="cn">TRUE</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>ard_logit <span class="sc">%&gt;%</span></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(variable, stat_name, stat_label, stat) <span class="sc">%&gt;%</span></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   variable stat_name stat_label      stat
+1       AGE      term       term       AGE
+2       AGE var_label      Label       Age
+3       AGE var_class      Class   numeric
+4       AGE  var_type       Type continuo…
+5       AGE     label  Level La…       Age
+6       AGE     n_obs     N Obs.       254
+7       AGE   n_event   N Events       111
+8       AGE  estimate  Coeffici…     0.983
+9       AGE std.error  Standard…     0.016
+10      AGE statistic  statistic    -1.117
+11      AGE   p.value    p-value     0.264
+12      AGE  conf.low  CI Lower…     0.953</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-14-validation-checks" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="step-14-validation-checks"><span class="header-section-number">16</span> Step 14: Validation Checks</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== ARD Validation ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== ARD Validation ===</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 1: No error records in descriptive ARD</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>check1 <span class="ot">&lt;-</span> ard_descriptive <span class="sc">%&gt;%</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">sapply</span>(error, is.null))</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Check 1 - Descriptive ARD error records:"</span>, <span class="fu">nrow</span>(check1), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Check 1 - Descriptive ARD error records: 0 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 2: AGE mean stat is numeric</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>mean_stat <span class="ot">&lt;-</span> ard_descriptive <span class="sc">%&gt;%</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"AGE"</span>, stat_name <span class="sc">==</span> <span class="st">"mean"</span>, context <span class="sc">==</span> <span class="st">"continuous"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(stat)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>check2 <span class="ot">&lt;-</span> <span class="fu">all</span>(<span class="fu">sapply</span>(mean_stat, is.numeric))</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Check 2 - AGE mean is numeric:"</span>, check2, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Check 2 - AGE mean is numeric: TRUE </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 3: SEX counts per treatment arm</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>cat_n <span class="ot">&lt;-</span> ard_descriptive <span class="sc">%&gt;%</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"SEX"</span>, stat_name <span class="sc">==</span> <span class="st">"n"</span>, context <span class="sc">==</span> <span class="st">"categorical"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">val =</span> <span class="fu">unlist</span>(stat)) <span class="sc">%&gt;%</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(group1_level) <span class="sc">%&gt;%</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">total =</span> <span class="fu">sum</span>(val), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Check 3 - SEX counts per arm:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Check 3 - SEX counts per arm:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cat_n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  group1_level total
+  &lt;list&gt;       &lt;int&gt;
+1 &lt;chr [1]&gt;       86
+2 &lt;chr [1]&gt;       72
+3 &lt;chr [1]&gt;       96</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">✓ ARD validation complete</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+✓ ARD validation complete</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="summary" class="level2" data-number="17">
+<h2 data-number="17" class="anchored" data-anchor-id="summary"><span class="header-section-number">17</span> Summary</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== Day 24 Summary ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Day 24 Summary ===</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Descriptive ARD contexts:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Descriptive ARD contexts:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>ard_descriptive <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">count</span>(context) <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    context
+1 categori…
+2 continuo…</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Inferential ARD contexts:</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Inferential ARD contexts:</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>ard_inferential <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">count</span>(context) <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    context
+1 stats_ch…
+2 stats_t_…
+3 stats_wi…</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Variables covered: AGE, SEX, RACE, AGEGR1, ETHNIC</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Variables covered: AGE, SEX, RACE, AGEGR1, ETHNIC</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Tests: t-test, chi-square, Wilcoxon rank-sum</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tests: t-test, chi-square, Wilcoxon rank-sum</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Regression: logistic (AGE + TRT01A)</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Regression: logistic (AGE + TRT01A)</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="export-ard-as-csv" class="level2" data-number="18">
+<h2 data-number="18" class="anchored" data-anchor-id="export-ard-as-csv"><span class="header-section-number">18</span> Export ARD as CSV</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>ard_export <span class="ot">&lt;-</span> ard_descriptive <span class="sc">%&gt;%</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat_value     =</span> <span class="fu">sapply</span>(stat, <span class="cf">function</span>(x) <span class="cf">if</span> (<span class="fu">is.null</span>(x)) <span class="cn">NA_character_</span> <span class="cf">else</span> <span class="fu">as.character</span>(x)),</span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">group1_level   =</span> <span class="fu">as.character</span>(group1_level),</span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">variable_level =</span> <span class="fu">sapply</span>(variable_level, <span class="cf">function</span>(x) <span class="cf">if</span> (<span class="fu">is.null</span>(x)) <span class="cn">NA_character_</span> <span class="cf">else</span> <span class="fu">as.character</span>(x))</span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(group1, group1_level, variable, variable_level,</span>
+<span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a>                context, stat_name, stat_label, stat_value)</span>
+<span id="cb71-9"><a href="#cb71-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-10"><a href="#cb71-10" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(ard_export, <span class="st">"ard_day24.csv"</span>)</span>
+<span id="cb71-11"><a href="#cb71-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"✓ ard_day24.csv exported -"</span>, <span class="fu">nrow</span>(ard_export), <span class="st">"rows</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✓ ard_day24.csv exported - 84 rows</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="key-takeaways" class="level2" data-number="19">
+<h2 data-number="19" class="anchored" data-anchor-id="key-takeaways"><span class="header-section-number">19</span> Key Takeaways</h2>
+<ol type="1">
+<li><code>cards::ard_continuous()</code> and <code>ard_categorical()</code> build tidy ARDs from ADaM data</li>
+<li><code>cardx</code> extends with inferential stats: t-test, chi-square, Wilcoxon, regression</li>
+<li><code>bind_ard(.update = TRUE)</code> resolves duplicate stat_names across ARD objects</li>
+<li>Keep <strong>descriptive</strong> and <strong>inferential</strong> ARDs in separate <code>bind_ard()</code> calls to avoid duplicates</li>
+<li>ARD <code>stat</code> column is a <strong>list column</strong> - use <code>unlist()</code> or <code>apply_fmt_fn()</code> to extract values</li>
+<li><code>pharmaverseadam::adsl</code> has no <code>BMIBL</code> - only <code>AGE</code> is available as continuous</li>
+</ol>
+<hr>
+</section>
+<section id="next-steps" class="level2" data-number="20">
+<h2 data-number="20" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">20</span> Next Steps</h2>
+<p><strong>Day 25:</strong> <code>gtsummary</code> + <code>tfrmt</code> - ARD-backed production tables <strong>Day 26:</strong> <code>flextable</code> + <code>officer</code> - Word/RTF clinical output <strong>Day 27:</strong> <code>r2rtf</code> - submission-ready RTF tables</p>
+<hr>
+</section>
+<section id="resources" class="level2" data-number="21">
+<h2 data-number="21" class="anchored" data-anchor-id="resources"><span class="header-section-number">21</span> Resources</h2>
+<ul>
+<li>cards CRAN: <a href="https://cran.r-project.org/package=cards" class="uri">https://cran.r-project.org/package=cards</a></li>
+<li>cardx documentation: <a href="https://insightsengineering.github.io/cardx/" class="uri">https://insightsengineering.github.io/cardx/</a></li>
+<li>CDISC ARS standard: <a href="https://www.cdisc.org/standards/foundational/ars" class="uri">https://www.cdisc.org/standards/foundational/ars</a></li>
+<li>pharmaverse cardinal project: <a href="https://github.com/pharmaverse/cardinal" class="uri">https://github.com/pharmaverse/cardinal</a></li>
+</ul>
+<hr>
+<p><strong>End of Day 24</strong></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ineelhere\.github\.io\/30-days-of-pharmaverse\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

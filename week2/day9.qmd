@@ -1,8 +1,8 @@
 ---
 title: "Day 9: VS (Vital Signs) & Repeated Measures"
 subtitle: "Visit-Level Data and Positional Readings"
-author: "Indraneel Chakraborty"
-date: today
+
+
 format:
   html:
     theme:

@@ -1,8 +1,8 @@
 ---
 title: "Day 20: ADVS - Vitals Analysis Dataset (BDS)"
 subtitle: "Week 3, Day 20: BDS structure with visit windows and multiple readings"
-author: "30 Days of Pharmaverse"
-date: today
+
+
 format:
   html:
     theme:

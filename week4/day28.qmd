@@ -1,0 +1,310 @@
+---
+title: "Day 28: Tplyr - Declarative Clinical Table Programming"
+subtitle: "Grammar of clinical data summaries"
+
+format:
+  html:
+    theme:
+      light: cosmo
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+## Overview
+
+`Tplyr` provides a grammar-of-tables approach to clinical data summaries. A table is built by stacking independent **layers**. When `build()` is called, all layers execute and assemble into a single data frame ready for downstream display or RTF export.
+
+| Concept | Tplyr | rtables / tern |
+|--------------------|------------------|-----------------------------------|
+| Entry point | `tplyr_table()` | `basic_table()` |
+| Analysis unit | layer (`add_layer()`) | `analyze()` / `split_rows_by()` |
+| Execution | `build()` returns a data frame | `build_table()` returns an `rtable` |
+| Sorting | dplyr post-`build()` | pre-ordered factors |
+| Output | data frame -\> any renderer | `rtable` -\> `r2rtf` |
+
+------------------------------------------------------------------------
+
+## Setup
+
+```{r setup}
+library(Tplyr)
+library(pharmaverseadam)
+library(dplyr)
+library(tidyr)
+library(knitr)
+
+adsl <- pharmaverseadam::adsl
+adae  <- pharmaverseadam::adae
+adlb  <- pharmaverseadam::adlb
+
+adsl_safe <- adsl |>
+  dplyr::filter(SAFFL == "Y") |>
+  dplyr::mutate(
+    TRT01A = factor(TRT01A),
+    SEX    = factor(SEX),
+    RACE   = factor(RACE)
+  )
+
+adae_safe <- adae |>
+  dplyr::filter(SAFFL == "Y", TRTEMFL == "Y")
+
+adlb_alt <- adlb |>
+  dplyr::filter(SAFFL == "Y", PARAMCD == "ALT",
+                ANL01FL == "Y", !is.na(BNRIND), !is.na(ANRIND)) |>
+  dplyr::mutate(
+    BNRIND = factor(BNRIND, levels = c('LOW', 'NORMAL', 'HIGH')),
+    ANRIND = factor(ANRIND, levels = c('LOW', 'NORMAL', 'HIGH'))
+  )
+
+cat("ADSL safety N:", nrow(adsl_safe), "\n")
+cat("Treatment arms:", levels(adsl_safe$TRT01A), "\n")
+cat("ADAE TEAE records:", nrow(adae_safe), "\n")
+cat("ADLB ALT records:", nrow(adlb_alt), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Part 1: Core Tplyr Concepts
+
+### Step 1: Single-layer count table
+
+```{r tplyr-basic}
+t_sex <- tplyr_table(adsl_safe, TRT01A) |>
+  add_total_group() |>
+  add_layer(
+    group_count(SEX, by = 'Sex') |>
+      set_format_strings(f_str('xx (xx.x%)', n, pct))
+  )
+build(t_sex) |>
+  dplyr::select(-dplyr::starts_with('ord')) |>
+  knitr::kable()
+```
+
+------------------------------------------------------------------------
+
+### Step 2: Descriptive statistics layer
+
+```{r tplyr-desc-simple}
+# Named entries in set_format_strings() become row labels.
+# f_str() maps positional args to statistic keywords: mean, sd, median, q1, q3, min, max
+t_age <- tplyr_table(adsl_safe, TRT01A) |>
+  add_total_group() |>
+  add_layer(
+    group_desc(AGE, by = 'Age (years)') |>
+      set_format_strings(
+        'n'           = f_str('xx', n),
+        'Mean (SD)'   = f_str('xx.x (xx.xx)', mean, sd),
+        'Median'      = f_str('xx.x', median),
+        'Q1, Q3'      = f_str('xx.x, xx.x', q1, q3),
+        'Min, Max'    = f_str('xx.x, xx.x', min, max)
+      )
+  )
+build(t_age) |>
+  dplyr::select(-dplyr::starts_with('ord')) |>
+  knitr::kable()
+```
+
+------------------------------------------------------------------------
+
+## Part 2: Demographics Table
+
+### Step 3: Multi-layer demographics table
+
+```{r tplyr-demo}
+t_demo <- tplyr_table(adsl_safe, TRT01A) |>
+  add_total_group() |>
+  add_layer(
+    group_desc(AGE, by = 'Age (years)') |>
+      set_format_strings(
+        'n'         = f_str('xx', n),
+        'Mean (SD)' = f_str('xx.x (xx.xx)', mean, sd),
+        'Median'    = f_str('xx.x', median),
+        'Min, Max'  = f_str('xx.x, xx.x', min, max)
+      )
+  ) |>
+  add_layer(
+    group_count(SEX, by = 'Sex') |>
+      set_format_strings(f_str('xx (xx.x%)', n, pct))
+  ) |>
+  add_layer(
+    group_count(RACE, by = 'Race') |>
+      set_format_strings(f_str('xx (xx.x%)', n, pct))
+  ) |>
+  add_layer(
+    group_count(AGEGR1, by = 'Age Group') |>
+      set_format_strings(f_str('xx (xx.x%)', n, pct))
+  )
+demo_result <- build(t_demo) |>
+  dplyr::select(-dplyr::starts_with('ord'))
+knitr::kable(demo_result)
+```
+
+------------------------------------------------------------------------
+
+## Part 3: AE Frequency Table
+
+### Step 4: AE table with subject-level denominators
+
+```{r tplyr-ae}
+# Required trio for subject-level AE denominators:
+#   set_pop_data() / set_pop_treat_var() / set_distinct_by(USUBJID)
+# Sort by frequency AFTER build() using dplyr on the Total column.
+t_ae <- tplyr_table(adae_safe, TRT01A) |>
+  set_pop_data(adsl_safe) |>
+  set_pop_treat_var(TRT01A) |>
+  add_total_group() |>
+  add_layer(
+    group_count(AEDECOD, by = vars(AEBODSYS)) |>
+      set_distinct_by(USUBJID) |>
+      set_format_strings(f_str('xx (xx.x%)', distinct_n, distinct_pct))
+  )
+ae_result_raw <- build(t_ae) |>
+  dplyr::select(-dplyr::starts_with('ord'))
+total_col <- grep('Total', names(ae_result_raw), value = TRUE)[1]
+ae_result <- ae_result_raw |>
+  dplyr::mutate(
+    .sort_n = suppressWarnings(
+      as.integer(trimws(sub('\\s*\\(.*', '', .data[[total_col]])))
+    )
+  ) |>
+  dplyr::arrange(row_label1, dplyr::desc(.sort_n)) |>
+  dplyr::select(-.sort_n)
+cat("AE table rows:", nrow(ae_result), "\n")
+knitr::kable(head(ae_result, 20))
+```
+
+------------------------------------------------------------------------
+
+### Step 5: Apply a frequency threshold
+
+```{r tplyr-ae-filter}
+arm_cols <- grep('^var1_', names(ae_result), value = TRUE)
+arm_cols <- arm_cols[!grepl('Total', arm_cols, ignore.case = TRUE)]
+arm1_col <- arm_cols[1]
+cat("First arm column:", arm1_col, "\n")
+ae_filtered <- ae_result |>
+  dplyr::filter(
+    !is.na(row_label2),
+    suppressWarnings(
+      as.integer(trimws(sub('\\s*\\(.*', '', .data[[arm1_col]]))) >= 5
+    )
+  )
+cat("PT rows with n >= 5:", nrow(ae_filtered), "\n")
+knitr::kable(ae_filtered)
+```
+
+------------------------------------------------------------------------
+
+## Part 4: Shift Table
+
+### Step 6: Lab shift table with group_shift()
+
+```{r tplyr-shift}
+# group_shift() uses vars(row = <baseline>, column = <post-baseline>).
+# The keyword is 'column', not 'col'.
+t_shift <- tplyr_table(adlb_alt, TRT01A) |>
+  set_pop_data(adsl_safe) |>
+  set_pop_treat_var(TRT01A) |>
+  add_layer(
+    group_shift(vars(row = BNRIND, column = ANRIND), by = 'ALT') |>
+      set_format_strings(f_str('xx (xx.x%)', n, pct))
+  )
+shift_result <- build(t_shift) |>
+  dplyr::select(-dplyr::starts_with('ord'))
+knitr::kable(shift_result)
+```
+
+------------------------------------------------------------------------
+
+## Part 5: Extracting Numeric Data
+
+### Step 7: get_numeric_data() for traceability
+
+```{r tplyr-numeric}
+# get_numeric_data() returns a list of data frames with unformatted statistics.
+# Column names depend on which statistics were requested.
+# Always inspect with names() first -- never hard-code statistic column names.
+t_age2 <- tplyr_table(adsl_safe, TRT01A) |>
+  add_layer(
+    group_desc(AGE) |>
+      set_format_strings(
+        'Mean (SD)' = f_str('xx.x (xx.xx)', mean, sd),
+        'Median'    = f_str('xx.x', median)
+      )
+  )
+built_age <- build(t_age2)
+num_data  <- get_numeric_data(t_age2)
+cat("Layers returned:", length(num_data), "\n")
+cat("Layer 1 columns:", paste(names(num_data[[1]]), collapse = ", "), "\n")
+# Display all columns; select() avoided because column names vary by statistics
+knitr::kable(num_data[[1]], digits = 2)
+```
+
+------------------------------------------------------------------------
+
+## Part 6: Column Nesting
+
+### Step 8: cols argument for nested column splits
+
+```{r tplyr-cols}
+# cols adds a second level of column splitting (here: SEX within TRT01A)
+t_nested <- tplyr_table(adsl_safe, TRT01A, cols = SEX) |>
+  add_layer(
+    group_count(AGEGR1, by = 'Age Group') |>
+      set_format_strings(f_str('xx (xx.x%)', n, pct))
+  )
+build(t_nested) |>
+  dplyr::select(-dplyr::starts_with('ord')) |>
+  knitr::kable()
+```
+
+------------------------------------------------------------------------
+
+## Validation Checks
+
+```{r validate}
+cat("\n=== Day 28 Validation ===\n\n")
+cat("Check 1 - Demographics rows:", nrow(demo_result), "\n")
+cat("Check 2 - AE table rows:", nrow(ae_result), "\n")
+cat("Check 3 - AE rows after n>=5 filter:", nrow(ae_filtered), "\n")
+cat("Check 4 - Shift table rows:", nrow(shift_result), "\n")
+cat("Check 5 - Numeric data layers:", length(num_data), "\n")
+cat("\nValidation complete\n")
+```
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  **`tplyr_table(data, treat_var)`** -- unquoted NSE; `add_total_group()` adds a Total column
+2.  **Three layer types:** `group_desc()` continuous, `group_count()` categorical, `group_shift()` shift
+3.  **`f_str('xx.x (xx.xx)', mean, sd)`** -- positional vars map to statistics; named entries become row labels
+4.  **`group_shift()` uses `column=`** (not `col=`) in `vars(row = ..., column = ...)`
+5.  **`set_pop_data()` + `set_pop_treat_var()` + `set_distinct_by(USUBJID)`** -- required for AE subject-level denominators
+6.  **Never combine `set_order_count_method()` + `set_ordering_cols()`** -- sort with `dplyr::arrange()` after `build()` instead
+7.  **`get_numeric_data()` column names vary** -- always inspect with `names()` first; never hard-code statistic column names
+8.  **`build()` returns a plain data frame** -- filter, sort, join like any tibble; drop sort columns with `select(-starts_with('ord'))`
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   Tplyr documentation: <https://atorus-research.github.io/Tplyr/>
+-   Tplyr cheatsheet: <https://atorus-research.github.io/Tplyr_cheatsheet.pdf>
+-   r4csr book: <https://r4csr.org>
+
+------------------------------------------------------------------------
+
+End of Day 28

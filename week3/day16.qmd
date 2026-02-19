@@ -1,8 +1,8 @@
 ---
 title: "Day 16: ADSL Part 1 - Treatment Variables & Dates"
 subtitle: "Week 3, Day 16: First dose dates, treatment assignment, and study timeline from EX and DS"
-author: "30 Days of Pharmaverse"
-date: today
+
+
 format:
   html:
     theme:

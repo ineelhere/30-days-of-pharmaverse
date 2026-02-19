@@ -1,8 +1,8 @@
 ---
 title: "Day 21: ADTTE - Time-to-Event Analysis Dataset"
 subtitle: "Week 3, Day 21: Survival analysis structure with events and censoring"
-author: "30 Days of Pharmaverse"
-date: today
+
+
 format:
   html:
     theme:

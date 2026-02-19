@@ -1,8 +1,7 @@
 ---
 title: "Day 1: Environment Setup & First SDTM Code"
 subtitle: "SDTM Programming Walkthrough"
-author: "Indraneel Chakraborty"
-date: today
+
 format:
   html:
     theme:
@@ -15,6 +14,8 @@ format:
     smooth-scroll: true
     highlight-style: github
     page-layout: full
+    css: ../styles/site.css
+    
 editor: visual
 execute:
   echo: true

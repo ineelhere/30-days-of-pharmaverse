@@ -1,8 +1,8 @@
 ---
 title: "Day 8: Complex SDTM Domains - LB (Lab Results)"
 subtitle: "Findings Class with Unit Standardization"
-author: "Indraneel Chakraborty"
-date: today
+
+
 format:
   html:
     theme:
@@ -143,7 +143,7 @@ library(pharmaversesdtm)
 
 ## Exploring pharmaversesdtm LB Data
 
-Let's start by loading and exploring the LB domain from `pharmaversesdtm`. This is the same data used by production teams at Roche and GSK when developing the `admiral` package.
+Let's start by loading and exploring the LB domain from `pharmaversesdtm`. This is the same data used by production teams in the pharmaverse community when developing the `admiral` package.
 
 ### Load the LB Domain
 

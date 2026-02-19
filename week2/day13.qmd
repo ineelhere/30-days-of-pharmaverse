@@ -1,8 +1,8 @@
 ---
 title: "Day 13: SDTM Validation with sdtmchecks"
 subtitle: "Running FDA Business Rules Against Your Domains"
-author: "Indraneel Chakraborty"
-date: today
+
+
 format:
   html:
     theme:
@@ -94,7 +94,7 @@ library(lubridate)
 
 ### What is sdtmchecks?
 
-**`sdtmchecks`** is a Pharmaverse package developed by Roche that implements FDA business rules and data quality checks against SDTM datasets. It was developed based on years of experience with FDA submissions and reviewer feedback.
+**`sdtmchecks`** is a Pharmaverse package that implements FDA business rules and data quality checks against SDTM datasets. It was developed based on years of experience with FDA submissions and reviewer feedback.
 
 ### Available Checks
 

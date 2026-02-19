@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Day 28: Tplyr - Declarative Clinical Table Programming – 30 Days of Pharmaverse</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-60d4398d82fec002ccec76571ed06d15.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../styles/site.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">30 Days of Pharmaverse</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../week1/day1.html"> 
+<span class="menu-text">Week 1: SDTM Fundamentals</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../week2/day8.html"> 
+<span class="menu-text">Week 2: Production SDTM</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../week3/day15.html"> 
+<span class="menu-text">Week 3: ADaM Deep Dive</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../week4/day22.html" aria-current="page"> 
+<span class="menu-text">Week 4: Tables, Listings and Figures</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ineelhere/30-days-of-pharmaverse"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../week4/day28.html">Day 28: Tplyr - Declarative Clinical Table Programming</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week4/day22.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 22: Demography Table with gtsummary + gt</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week4/day23.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 23: ADCM and ADRS - Concomitant Meds and Oncology Response</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week4/day24.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 24: ARD-First Reporting with cards and cardx</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week4/day25.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 25: gtsummary and tfrmt - ARD-Backed Production Tables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week4/day26.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 26: flextable and officer - Word and RTF Clinical Tables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week4/day27.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 27: rtables, tern, and r2rtf - Structured Clinical Tables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../week4/day28.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Day 28: Tplyr - Declarative Clinical Table Programming</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+ <span class="menu-text">week4/day29.qmd</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">week4/day30.qmd</span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">2</span> Setup</a></li>
+  <li><a href="#part-1-core-tplyr-concepts" id="toc-part-1-core-tplyr-concepts" class="nav-link" data-scroll-target="#part-1-core-tplyr-concepts"><span class="header-section-number">3</span> Part 1: Core Tplyr Concepts</a>
+  <ul class="collapse">
+  <li><a href="#step-1-single-layer-count-table" id="toc-step-1-single-layer-count-table" class="nav-link" data-scroll-target="#step-1-single-layer-count-table"><span class="header-section-number">3.1</span> Step 1: Single-layer count table</a></li>
+  <li><a href="#step-2-descriptive-statistics-layer" id="toc-step-2-descriptive-statistics-layer" class="nav-link" data-scroll-target="#step-2-descriptive-statistics-layer"><span class="header-section-number">3.2</span> Step 2: Descriptive statistics layer</a></li>
+  </ul></li>
+  <li><a href="#part-2-demographics-table" id="toc-part-2-demographics-table" class="nav-link" data-scroll-target="#part-2-demographics-table"><span class="header-section-number">4</span> Part 2: Demographics Table</a>
+  <ul class="collapse">
+  <li><a href="#step-3-multi-layer-demographics-table" id="toc-step-3-multi-layer-demographics-table" class="nav-link" data-scroll-target="#step-3-multi-layer-demographics-table"><span class="header-section-number">4.1</span> Step 3: Multi-layer demographics table</a></li>
+  </ul></li>
+  <li><a href="#part-3-ae-frequency-table" id="toc-part-3-ae-frequency-table" class="nav-link" data-scroll-target="#part-3-ae-frequency-table"><span class="header-section-number">5</span> Part 3: AE Frequency Table</a>
+  <ul class="collapse">
+  <li><a href="#step-4-ae-table-with-subject-level-denominators" id="toc-step-4-ae-table-with-subject-level-denominators" class="nav-link" data-scroll-target="#step-4-ae-table-with-subject-level-denominators"><span class="header-section-number">5.1</span> Step 4: AE table with subject-level denominators</a></li>
+  <li><a href="#step-5-apply-a-frequency-threshold" id="toc-step-5-apply-a-frequency-threshold" class="nav-link" data-scroll-target="#step-5-apply-a-frequency-threshold"><span class="header-section-number">5.2</span> Step 5: Apply a frequency threshold</a></li>
+  </ul></li>
+  <li><a href="#part-4-shift-table" id="toc-part-4-shift-table" class="nav-link" data-scroll-target="#part-4-shift-table"><span class="header-section-number">6</span> Part 4: Shift Table</a>
+  <ul class="collapse">
+  <li><a href="#step-6-lab-shift-table-with-group_shift" id="toc-step-6-lab-shift-table-with-group_shift" class="nav-link" data-scroll-target="#step-6-lab-shift-table-with-group_shift"><span class="header-section-number">6.1</span> Step 6: Lab shift table with group_shift()</a></li>
+  </ul></li>
+  <li><a href="#part-5-extracting-numeric-data" id="toc-part-5-extracting-numeric-data" class="nav-link" data-scroll-target="#part-5-extracting-numeric-data"><span class="header-section-number">7</span> Part 5: Extracting Numeric Data</a>
+  <ul class="collapse">
+  <li><a href="#step-7-get_numeric_data-for-traceability" id="toc-step-7-get_numeric_data-for-traceability" class="nav-link" data-scroll-target="#step-7-get_numeric_data-for-traceability"><span class="header-section-number">7.1</span> Step 7: get_numeric_data() for traceability</a></li>
+  </ul></li>
+  <li><a href="#part-6-column-nesting" id="toc-part-6-column-nesting" class="nav-link" data-scroll-target="#part-6-column-nesting"><span class="header-section-number">8</span> Part 6: Column Nesting</a>
+  <ul class="collapse">
+  <li><a href="#step-8-cols-argument-for-nested-column-splits" id="toc-step-8-cols-argument-for-nested-column-splits" class="nav-link" data-scroll-target="#step-8-cols-argument-for-nested-column-splits"><span class="header-section-number">8.1</span> Step 8: cols argument for nested column splits</a></li>
+  </ul></li>
+  <li><a href="#validation-checks" id="toc-validation-checks" class="nav-link" data-scroll-target="#validation-checks"><span class="header-section-number">9</span> Validation Checks</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">10</span> Key Takeaways</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">11</span> Resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Day 28: Tplyr - Declarative Clinical Table Programming</h1>
+<p class="subtitle lead">Grammar of clinical data summaries</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
+<p><code>Tplyr</code> provides a grammar-of-tables approach to clinical data summaries. A table is built by stacking independent <strong>layers</strong>. When <code>build()</code> is called, all layers execute and assemble into a single data frame ready for downstream display or RTF export.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 24%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Concept</th>
+<th>Tplyr</th>
+<th>rtables / tern</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Entry point</td>
+<td><code>tplyr_table()</code></td>
+<td><code>basic_table()</code></td>
+</tr>
+<tr class="even">
+<td>Analysis unit</td>
+<td>layer (<code>add_layer()</code>)</td>
+<td><code>analyze()</code> / <code>split_rows_by()</code></td>
+</tr>
+<tr class="odd">
+<td>Execution</td>
+<td><code>build()</code> returns a data frame</td>
+<td><code>build_table()</code> returns an <code>rtable</code></td>
+</tr>
+<tr class="even">
+<td>Sorting</td>
+<td>dplyr post-<code>build()</code></td>
+<td>pre-ordered factors</td>
+</tr>
+<tr class="odd">
+<td>Output</td>
+<td>data frame -&gt; any renderer</td>
+<td><code>rtable</code> -&gt; <code>r2rtf</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="setup" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="setup"><span class="header-section-number">2</span> Setup</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Tplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pharmaverseadam)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> pharmaverseadam<span class="sc">::</span>adsl</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>adae  <span class="ot">&lt;-</span> pharmaverseadam<span class="sc">::</span>adae</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>adlb  <span class="ot">&lt;-</span> pharmaverseadam<span class="sc">::</span>adlb</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>adsl_safe <span class="ot">&lt;-</span> adsl <span class="sc">|&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(SAFFL <span class="sc">==</span> <span class="st">"Y"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">TRT01A =</span> <span class="fu">factor</span>(TRT01A),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">SEX    =</span> <span class="fu">factor</span>(SEX),</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">RACE   =</span> <span class="fu">factor</span>(RACE)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>adae_safe <span class="ot">&lt;-</span> adae <span class="sc">|&gt;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(SAFFL <span class="sc">==</span> <span class="st">"Y"</span>, TRTEMFL <span class="sc">==</span> <span class="st">"Y"</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>adlb_alt <span class="ot">&lt;-</span> adlb <span class="sc">|&gt;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(SAFFL <span class="sc">==</span> <span class="st">"Y"</span>, PARAMCD <span class="sc">==</span> <span class="st">"ALT"</span>,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                ANL01FL <span class="sc">==</span> <span class="st">"Y"</span>, <span class="sc">!</span><span class="fu">is.na</span>(BNRIND), <span class="sc">!</span><span class="fu">is.na</span>(ANRIND)) <span class="sc">|&gt;</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">BNRIND =</span> <span class="fu">factor</span>(BNRIND, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">'LOW'</span>, <span class="st">'NORMAL'</span>, <span class="st">'HIGH'</span>)),</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">ANRIND =</span> <span class="fu">factor</span>(ANRIND, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">'LOW'</span>, <span class="st">'NORMAL'</span>, <span class="st">'HIGH'</span>))</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"ADSL safety N:"</span>, <span class="fu">nrow</span>(adsl_safe), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ADSL safety N: 254 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Treatment arms:"</span>, <span class="fu">levels</span>(adsl_safe<span class="sc">$</span>TRT01A), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Treatment arms: Placebo Xanomeline High Dose Xanomeline Low Dose </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"ADAE TEAE records:"</span>, <span class="fu">nrow</span>(adae_safe), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ADAE TEAE records: 1122 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"ADLB ALT records:"</span>, <span class="fu">nrow</span>(adlb_alt), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ADLB ALT records: 2094 </code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="part-1-core-tplyr-concepts" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="part-1-core-tplyr-concepts"><span class="header-section-number">3</span> Part 1: Core Tplyr Concepts</h2>
+<section id="step-1-single-layer-count-table" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="step-1-single-layer-count-table"><span class="header-section-number">3.1</span> Step 1: Single-layer count table</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>t_sex <span class="ot">&lt;-</span> <span class="fu">tplyr_table</span>(adsl_safe, TRT01A) <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_total_group</span>() <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_layer</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_count</span>(SEX, <span class="at">by =</span> <span class="st">'Sex'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_format_strings</span>(<span class="fu">f_str</span>(<span class="st">'xx (xx.x%)'</span>, n, pct))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">build</span>(t_sex) <span class="sc">|&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">'ord'</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 13%">
+<col style="width: 12%">
+<col style="width: 26%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">row_label1</th>
+<th style="text-align: left;">row_label2</th>
+<th style="text-align: left;">var1_Placebo</th>
+<th style="text-align: left;">var1_Total</th>
+<th style="text-align: left;">var1_Xanomeline High Dose</th>
+<th style="text-align: left;">var1_Xanomeline Low Dose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Sex</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: left;">53 (61.6%)</td>
+<td style="text-align: left;">143 (56.3%)</td>
+<td style="text-align: left;">35 (48.6%)</td>
+<td style="text-align: left;">55 (57.3%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: left;">33 (38.4%)</td>
+<td style="text-align: left;">111 (43.7%)</td>
+<td style="text-align: left;">37 (51.4%)</td>
+<td style="text-align: left;">41 (42.7%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-2-descriptive-statistics-layer" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="step-2-descriptive-statistics-layer"><span class="header-section-number">3.2</span> Step 2: Descriptive statistics layer</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Named entries in set_format_strings() become row labels.</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># f_str() maps positional args to statistic keywords: mean, sd, median, q1, q3, min, max</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>t_age <span class="ot">&lt;-</span> <span class="fu">tplyr_table</span>(adsl_safe, TRT01A) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_total_group</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_layer</span>(</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_desc</span>(AGE, <span class="at">by =</span> <span class="st">'Age (years)'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_format_strings</span>(</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'n'</span>           <span class="ot">=</span> <span class="fu">f_str</span>(<span class="st">'xx'</span>, n),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Mean (SD)'</span>   <span class="ot">=</span> <span class="fu">f_str</span>(<span class="st">'xx.x (xx.xx)'</span>, mean, sd),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Median'</span>      <span class="ot">=</span> <span class="fu">f_str</span>(<span class="st">'xx.x'</span>, median),</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Q1, Q3'</span>      <span class="ot">=</span> <span class="fu">f_str</span>(<span class="st">'xx.x, xx.x'</span>, q1, q3),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Min, Max'</span>    <span class="ot">=</span> <span class="fu">f_str</span>(<span class="st">'xx.x, xx.x'</span>, min, max)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="fu">build</span>(t_age) <span class="sc">|&gt;</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">'ord'</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 11%">
+<col style="width: 13%">
+<col style="width: 26%">
+<col style="width: 25%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">row_label1</th>
+<th style="text-align: left;">row_label2</th>
+<th style="text-align: left;">var1_Placebo</th>
+<th style="text-align: left;">var1_Xanomeline High Dose</th>
+<th style="text-align: left;">var1_Xanomeline Low Dose</th>
+<th style="text-align: left;">var1_Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Age (years)</td>
+<td style="text-align: left;">n</td>
+<td style="text-align: left;">86</td>
+<td style="text-align: left;">72</td>
+<td style="text-align: left;">96</td>
+<td style="text-align: left;">254</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Age (years)</td>
+<td style="text-align: left;">Mean (SD)</td>
+<td style="text-align: left;">75.2 ( 8.59)</td>
+<td style="text-align: left;">73.8 ( 7.94)</td>
+<td style="text-align: left;">76.0 ( 8.11)</td>
+<td style="text-align: left;">75.1 ( 8.25)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Age (years)</td>
+<td style="text-align: left;">Median</td>
+<td style="text-align: left;">76.0</td>
+<td style="text-align: left;">75.5</td>
+<td style="text-align: left;">78.0</td>
+<td style="text-align: left;">77.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Age (years)</td>
+<td style="text-align: left;">Q1, Q3</td>
+<td style="text-align: left;">69.2, 81.8</td>
+<td style="text-align: left;">70.5, 79.0</td>
+<td style="text-align: left;">71.0, 82.0</td>
+<td style="text-align: left;">70.0, 81.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Age (years)</td>
+<td style="text-align: left;">Min, Max</td>
+<td style="text-align: left;">52.0, 89.0</td>
+<td style="text-align: left;">56.0, 88.0</td>
+<td style="text-align: left;">51.0, 88.0</td>
+<td style="text-align: left;">51.0, 89.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-2-demographics-table" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="part-2-demographics-table"><span class="header-section-number">4</span> Part 2: Demographics Table</h2>
+<section id="step-3-multi-layer-demographics-table" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="step-3-multi-layer-demographics-table"><span class="header-section-number">4.1</span> Step 3: Multi-layer demographics table</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>t_demo <span class="ot">&lt;-</span> <span class="fu">tplyr_table</span>(adsl_safe, TRT01A) <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_total_group</span>() <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_layer</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_desc</span>(AGE, <span class="at">by =</span> <span class="st">'Age (years)'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_format_strings</span>(</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'n'</span>         <span class="ot">=</span> <span class="fu">f_str</span>(<span class="st">'xx'</span>, n),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Mean (SD)'</span> <span class="ot">=</span> <span class="fu">f_str</span>(<span class="st">'xx.x (xx.xx)'</span>, mean, sd),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Median'</span>    <span class="ot">=</span> <span class="fu">f_str</span>(<span class="st">'xx.x'</span>, median),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Min, Max'</span>  <span class="ot">=</span> <span class="fu">f_str</span>(<span class="st">'xx.x, xx.x'</span>, min, max)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_layer</span>(</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_count</span>(SEX, <span class="at">by =</span> <span class="st">'Sex'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_format_strings</span>(<span class="fu">f_str</span>(<span class="st">'xx (xx.x%)'</span>, n, pct))</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_layer</span>(</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_count</span>(RACE, <span class="at">by =</span> <span class="st">'Race'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_format_strings</span>(<span class="fu">f_str</span>(<span class="st">'xx (xx.x%)'</span>, n, pct))</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_layer</span>(</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_count</span>(AGEGR1, <span class="at">by =</span> <span class="st">'Age Group'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_format_strings</span>(<span class="fu">f_str</span>(<span class="st">'xx (xx.x%)'</span>, n, pct))</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>demo_result <span class="ot">&lt;-</span> <span class="fu">build</span>(t_demo) <span class="sc">|&gt;</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">'ord'</span>))</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(demo_result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 27%">
+<col style="width: 10%">
+<col style="width: 21%">
+<col style="width: 20%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">row_label1</th>
+<th style="text-align: left;">row_label2</th>
+<th style="text-align: left;">var1_Placebo</th>
+<th style="text-align: left;">var1_Xanomeline High Dose</th>
+<th style="text-align: left;">var1_Xanomeline Low Dose</th>
+<th style="text-align: left;">var1_Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Age (years)</td>
+<td style="text-align: left;">n</td>
+<td style="text-align: left;">86</td>
+<td style="text-align: left;">72</td>
+<td style="text-align: left;">96</td>
+<td style="text-align: left;">254</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Age (years)</td>
+<td style="text-align: left;">Mean (SD)</td>
+<td style="text-align: left;">75.2 ( 8.59)</td>
+<td style="text-align: left;">73.8 ( 7.94)</td>
+<td style="text-align: left;">76.0 ( 8.11)</td>
+<td style="text-align: left;">75.1 ( 8.25)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Age (years)</td>
+<td style="text-align: left;">Median</td>
+<td style="text-align: left;">76.0</td>
+<td style="text-align: left;">75.5</td>
+<td style="text-align: left;">78.0</td>
+<td style="text-align: left;">77.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Age (years)</td>
+<td style="text-align: left;">Min, Max</td>
+<td style="text-align: left;">52.0, 89.0</td>
+<td style="text-align: left;">56.0, 88.0</td>
+<td style="text-align: left;">51.0, 88.0</td>
+<td style="text-align: left;">51.0, 89.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sex</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: left;">53 (61.6%)</td>
+<td style="text-align: left;">35 (48.6%)</td>
+<td style="text-align: left;">55 (57.3%)</td>
+<td style="text-align: left;">143 (56.3%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: left;">33 (38.4%)</td>
+<td style="text-align: left;">37 (51.4%)</td>
+<td style="text-align: left;">41 (42.7%)</td>
+<td style="text-align: left;">111 (43.7%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Race</td>
+<td style="text-align: left;">AMERICAN INDIAN OR ALASKA NATIVE</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">1 ( 1.4%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">1 ( 0.4%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Race</td>
+<td style="text-align: left;">BLACK OR AFRICAN AMERICAN</td>
+<td style="text-align: left;">8 ( 9.3%)</td>
+<td style="text-align: left;">9 (12.5%)</td>
+<td style="text-align: left;">6 ( 6.2%)</td>
+<td style="text-align: left;">23 ( 9.1%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Race</td>
+<td style="text-align: left;">WHITE</td>
+<td style="text-align: left;">78 (90.7%)</td>
+<td style="text-align: left;">62 (86.1%)</td>
+<td style="text-align: left;">90 (93.8%)</td>
+<td style="text-align: left;">230 (90.6%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Age Group</td>
+<td style="text-align: left;">&gt;64</td>
+<td style="text-align: left;">72 (83.7%)</td>
+<td style="text-align: left;">61 (84.7%)</td>
+<td style="text-align: left;">88 (91.7%)</td>
+<td style="text-align: left;">221 (87.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Age Group</td>
+<td style="text-align: left;">18-64</td>
+<td style="text-align: left;">14 (16.3%)</td>
+<td style="text-align: left;">11 (15.3%)</td>
+<td style="text-align: left;">8 ( 8.3%)</td>
+<td style="text-align: left;">33 (13.0%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-3-ae-frequency-table" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="part-3-ae-frequency-table"><span class="header-section-number">5</span> Part 3: AE Frequency Table</h2>
+<section id="step-4-ae-table-with-subject-level-denominators" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="step-4-ae-table-with-subject-level-denominators"><span class="header-section-number">5.1</span> Step 4: AE table with subject-level denominators</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Required trio for subject-level AE denominators:</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   set_pop_data() / set_pop_treat_var() / set_distinct_by(USUBJID)</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort by frequency AFTER build() using dplyr on the Total column.</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>t_ae <span class="ot">&lt;-</span> <span class="fu">tplyr_table</span>(adae_safe, TRT01A) <span class="sc">|&gt;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_pop_data</span>(adsl_safe) <span class="sc">|&gt;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_pop_treat_var</span>(TRT01A) <span class="sc">|&gt;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_total_group</span>() <span class="sc">|&gt;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_layer</span>(</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_count</span>(AEDECOD, <span class="at">by =</span> <span class="fu">vars</span>(AEBODSYS)) <span class="sc">|&gt;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_distinct_by</span>(USUBJID) <span class="sc">|&gt;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_format_strings</span>(<span class="fu">f_str</span>(<span class="st">'xx (xx.x%)'</span>, distinct_n, distinct_pct))</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>ae_result_raw <span class="ot">&lt;-</span> <span class="fu">build</span>(t_ae) <span class="sc">|&gt;</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">'ord'</span>))</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>total_col <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">'Total'</span>, <span class="fu">names</span>(ae_result_raw), <span class="at">value =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span>]</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>ae_result <span class="ot">&lt;-</span> ae_result_raw <span class="sc">|&gt;</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">.sort_n =</span> <span class="fu">suppressWarnings</span>(</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.integer</span>(<span class="fu">trimws</span>(<span class="fu">sub</span>(<span class="st">'</span><span class="sc">\\</span><span class="st">s*</span><span class="sc">\\</span><span class="st">(.*'</span>, <span class="st">''</span>, .data[[total_col]])))</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(row_label1, dplyr<span class="sc">::</span><span class="fu">desc</span>(.sort_n)) <span class="sc">|&gt;</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>.sort_n)</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"AE table rows:"</span>, <span class="fu">nrow</span>(ae_result), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AE table rows: 5290 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(ae_result, <span class="dv">20</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 28%">
+<col style="width: 10%">
+<col style="width: 8%">
+<col style="width: 20%">
+<col style="width: 19%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">row_label1</th>
+<th style="text-align: left;">row_label2</th>
+<th style="text-align: left;">var1_Placebo</th>
+<th style="text-align: left;">var1_Total</th>
+<th style="text-align: left;">var1_Xanomeline High Dose</th>
+<th style="text-align: left;">var1_Xanomeline Low Dose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">SINUS BRADYCARDIA</td>
+<td style="text-align: left;">2 ( 2.3%)</td>
+<td style="text-align: left;">17 ( 6.7%)</td>
+<td style="text-align: left;">8 (11.1%)</td>
+<td style="text-align: left;">7 ( 7.3%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">MYOCARDIAL INFARCTION</td>
+<td style="text-align: left;">4 ( 4.7%)</td>
+<td style="text-align: left;">10 ( 3.9%)</td>
+<td style="text-align: left;">4 ( 5.6%)</td>
+<td style="text-align: left;">2 ( 2.1%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">ATRIAL FIBRILLATION</td>
+<td style="text-align: left;">1 ( 1.2%)</td>
+<td style="text-align: left;">5 ( 2.0%)</td>
+<td style="text-align: left;">2 ( 2.8%)</td>
+<td style="text-align: left;">2 ( 2.1%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">SUPRAVENTRICULAR EXTRASYSTOLES</td>
+<td style="text-align: left;">1 ( 1.2%)</td>
+<td style="text-align: left;">3 ( 1.2%)</td>
+<td style="text-align: left;">1 ( 1.4%)</td>
+<td style="text-align: left;">1 ( 1.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">VENTRICULAR EXTRASYSTOLES</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">3 ( 1.2%)</td>
+<td style="text-align: left;">1 ( 1.4%)</td>
+<td style="text-align: left;">2 ( 2.1%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">ATRIAL FLUTTER</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">2 ( 0.8%)</td>
+<td style="text-align: left;">1 ( 1.4%)</td>
+<td style="text-align: left;">1 ( 1.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">ATRIOVENTRICULAR BLOCK FIRST DEGREE</td>
+<td style="text-align: left;">1 ( 1.2%)</td>
+<td style="text-align: left;">2 ( 0.8%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">1 ( 1.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">BUNDLE BRANCH BLOCK RIGHT</td>
+<td style="text-align: left;">1 ( 1.2%)</td>
+<td style="text-align: left;">2 ( 0.8%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">1 ( 1.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">PALPITATIONS</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">2 ( 0.8%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">2 ( 2.1%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">ATRIAL HYPERTROPHY</td>
+<td style="text-align: left;">1 ( 1.2%)</td>
+<td style="text-align: left;">1 ( 0.4%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">ATRIOVENTRICULAR BLOCK SECOND DEGREE</td>
+<td style="text-align: left;">1 ( 1.2%)</td>
+<td style="text-align: left;">1 ( 0.4%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">BRADYCARDIA</td>
+<td style="text-align: left;">1 ( 1.2%)</td>
+<td style="text-align: left;">1 ( 0.4%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">BUNDLE BRANCH BLOCK LEFT</td>
+<td style="text-align: left;">1 ( 1.2%)</td>
+<td style="text-align: left;">1 ( 0.4%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">CARDIAC DISORDER</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">1 ( 0.4%)</td>
+<td style="text-align: left;">1 ( 1.4%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">CARDIAC FAILURE CONGESTIVE</td>
+<td style="text-align: left;">1 ( 1.2%)</td>
+<td style="text-align: left;">1 ( 0.4%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">SINUS ARRHYTHMIA</td>
+<td style="text-align: left;">1 ( 1.2%)</td>
+<td style="text-align: left;">1 ( 0.4%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">SUPRAVENTRICULAR TACHYCARDIA</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">1 ( 0.4%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">1 ( 1.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">TACHYCARDIA</td>
+<td style="text-align: left;">1 ( 1.2%)</td>
+<td style="text-align: left;">1 ( 0.4%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">VENTRICULAR HYPERTROPHY</td>
+<td style="text-align: left;">1 ( 1.2%)</td>
+<td style="text-align: left;">1 ( 0.4%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CARDIAC DISORDERS</td>
+<td style="text-align: left;">WOLFF-PARKINSON-WHITE SYNDROME</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">1 ( 0.4%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">1 ( 1.0%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-5-apply-a-frequency-threshold" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="step-5-apply-a-frequency-threshold"><span class="header-section-number">5.2</span> Step 5: Apply a frequency threshold</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>arm_cols <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">'^var1_'</span>, <span class="fu">names</span>(ae_result), <span class="at">value =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>arm_cols <span class="ot">&lt;-</span> arm_cols[<span class="sc">!</span><span class="fu">grepl</span>(<span class="st">'Total'</span>, arm_cols, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>arm1_col <span class="ot">&lt;-</span> arm_cols[<span class="dv">1</span>]</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"First arm column:"</span>, arm1_col, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>First arm column: var1_Placebo </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ae_filtered <span class="ot">&lt;-</span> ae_result <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(row_label2),</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">suppressWarnings</span>(</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.integer</span>(<span class="fu">trimws</span>(<span class="fu">sub</span>(<span class="st">'</span><span class="sc">\\</span><span class="st">s*</span><span class="sc">\\</span><span class="st">(.*'</span>, <span class="st">''</span>, .data[[arm1_col]]))) <span class="sc">&gt;=</span> <span class="dv">5</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"PT rows with n &gt;= 5:"</span>, <span class="fu">nrow</span>(ae_filtered), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>PT rows with n &gt;= 5: 7 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(ae_filtered)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 20%">
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 16%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">row_label1</th>
+<th style="text-align: left;">row_label2</th>
+<th style="text-align: left;">var1_Placebo</th>
+<th style="text-align: left;">var1_Total</th>
+<th style="text-align: left;">var1_Xanomeline High Dose</th>
+<th style="text-align: left;">var1_Xanomeline Low Dose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">GASTROINTESTINAL DISORDERS</td>
+<td style="text-align: left;">DIARRHOEA</td>
+<td style="text-align: left;">9 (10.5%)</td>
+<td style="text-align: left;">17 ( 6.7%)</td>
+<td style="text-align: left;">3 ( 4.2%)</td>
+<td style="text-align: left;">5 ( 5.2%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS</td>
+<td style="text-align: left;">APPLICATION SITE PRURITUS</td>
+<td style="text-align: left;">6 ( 7.0%)</td>
+<td style="text-align: left;">50 (19.7%)</td>
+<td style="text-align: left;">21 (29.2%)</td>
+<td style="text-align: left;">23 (24.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS</td>
+<td style="text-align: left;">APPLICATION SITE DERMATITIS</td>
+<td style="text-align: left;">5 ( 5.8%)</td>
+<td style="text-align: left;">21 ( 8.3%)</td>
+<td style="text-align: left;">7 ( 9.7%)</td>
+<td style="text-align: left;">9 ( 9.4%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">INFECTIONS AND INFESTATIONS</td>
+<td style="text-align: left;">UPPER RESPIRATORY TRACT INFECTION</td>
+<td style="text-align: left;">6 ( 7.0%)</td>
+<td style="text-align: left;">10 ( 3.9%)</td>
+<td style="text-align: left;">3 ( 4.2%)</td>
+<td style="text-align: left;">1 ( 1.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SKIN AND SUBCUTANEOUS TISSUE DISORDERS</td>
+<td style="text-align: left;">PRURITUS</td>
+<td style="text-align: left;">8 ( 9.3%)</td>
+<td style="text-align: left;">54 (21.3%)</td>
+<td style="text-align: left;">25 (34.7%)</td>
+<td style="text-align: left;">21 (21.9%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SKIN AND SUBCUTANEOUS TISSUE DISORDERS</td>
+<td style="text-align: left;">ERYTHEMA</td>
+<td style="text-align: left;">8 ( 9.3%)</td>
+<td style="text-align: left;">36 (14.2%)</td>
+<td style="text-align: left;">14 (19.4%)</td>
+<td style="text-align: left;">14 (14.6%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SKIN AND SUBCUTANEOUS TISSUE DISORDERS</td>
+<td style="text-align: left;">RASH</td>
+<td style="text-align: left;">5 ( 5.8%)</td>
+<td style="text-align: left;">26 (10.2%)</td>
+<td style="text-align: left;">8 (11.1%)</td>
+<td style="text-align: left;">13 (13.5%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-4-shift-table" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="part-4-shift-table"><span class="header-section-number">6</span> Part 4: Shift Table</h2>
+<section id="step-6-lab-shift-table-with-group_shift" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="step-6-lab-shift-table-with-group_shift"><span class="header-section-number">6.1</span> Step 6: Lab shift table with group_shift()</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># group_shift() uses vars(row = &lt;baseline&gt;, column = &lt;post-baseline&gt;).</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The keyword is 'column', not 'col'.</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>t_shift <span class="ot">&lt;-</span> <span class="fu">tplyr_table</span>(adlb_alt, TRT01A) <span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_pop_data</span>(adsl_safe) <span class="sc">|&gt;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_pop_treat_var</span>(TRT01A) <span class="sc">|&gt;</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_layer</span>(</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_shift</span>(<span class="fu">vars</span>(<span class="at">row =</span> BNRIND, <span class="at">column =</span> ANRIND), <span class="at">by =</span> <span class="st">'ALT'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_format_strings</span>(<span class="fu">f_str</span>(<span class="st">'xx (xx.x%)'</span>, n, pct))</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>shift_result <span class="ot">&lt;-</span> <span class="fu">build</span>(t_shift) <span class="sc">|&gt;</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">'ord'</span>))</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(shift_result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 11%">
+<col style="width: 12%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 12%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">row_label1</th>
+<th style="text-align: left;">row_label2</th>
+<th style="text-align: left;">var1_Placebo_LOW</th>
+<th style="text-align: left;">var1_Placebo_NORMAL</th>
+<th style="text-align: left;">var1_Placebo_HIGH</th>
+<th style="text-align: left;">var1_Xanomeline High Dose_LOW</th>
+<th style="text-align: left;">var1_Xanomeline High Dose_NORMAL</th>
+<th style="text-align: left;">var1_Xanomeline High Dose_HIGH</th>
+<th style="text-align: left;">var1_Xanomeline Low Dose_LOW</th>
+<th style="text-align: left;">var1_Xanomeline Low Dose_NORMAL</th>
+<th style="text-align: left;">var1_Xanomeline Low Dose_HIGH</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ALT</td>
+<td style="text-align: left;">LOW</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ALT</td>
+<td style="text-align: left;">NORMAL</td>
+<td style="text-align: left;">6 ( 0.7%)</td>
+<td style="text-align: left;">786 (92.3%)</td>
+<td style="text-align: left;">20 ( 2.3%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">563 (91.1%)</td>
+<td style="text-align: left;">18 ( 2.9%)</td>
+<td style="text-align: left;">10 ( 1.6%)</td>
+<td style="text-align: left;">577 (92.5%)</td>
+<td style="text-align: left;">23 ( 3.7%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ALT</td>
+<td style="text-align: left;">HIGH</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">24 ( 2.8%)</td>
+<td style="text-align: left;">16 ( 1.9%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">22 ( 3.6%)</td>
+<td style="text-align: left;">15 ( 2.4%)</td>
+<td style="text-align: left;">0 ( 0.0%)</td>
+<td style="text-align: left;">5 ( 0.8%)</td>
+<td style="text-align: left;">9 ( 1.4%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-5-extracting-numeric-data" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="part-5-extracting-numeric-data"><span class="header-section-number">7</span> Part 5: Extracting Numeric Data</h2>
+<section id="step-7-get_numeric_data-for-traceability" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="step-7-get_numeric_data-for-traceability"><span class="header-section-number">7.1</span> Step 7: get_numeric_data() for traceability</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get_numeric_data() returns a list of data frames with unformatted statistics.</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Column names depend on which statistics were requested.</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Always inspect with names() first -- never hard-code statistic column names.</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>t_age2 <span class="ot">&lt;-</span> <span class="fu">tplyr_table</span>(adsl_safe, TRT01A) <span class="sc">|&gt;</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_layer</span>(</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_desc</span>(AGE) <span class="sc">|&gt;</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_format_strings</span>(</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Mean (SD)'</span> <span class="ot">=</span> <span class="fu">f_str</span>(<span class="st">'xx.x (xx.xx)'</span>, mean, sd),</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Median'</span>    <span class="ot">=</span> <span class="fu">f_str</span>(<span class="st">'xx.x'</span>, median)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>built_age <span class="ot">&lt;-</span> <span class="fu">build</span>(t_age2)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>num_data  <span class="ot">&lt;-</span> <span class="fu">get_numeric_data</span>(t_age2)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Layers returned:"</span>, <span class="fu">length</span>(num_data), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Layers returned: 1 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Layer 1 columns:"</span>, <span class="fu">paste</span>(<span class="fu">names</span>(num_data[[<span class="dv">1</span>]]), <span class="at">collapse =</span> <span class="st">", "</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Layer 1 columns: summary_var, TRT01A, stat, value </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display all columns; select() avoided because column names vary by statistics</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(num_data[[<span class="dv">1</span>]], <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">summary_var</th>
+<th style="text-align: left;">TRT01A</th>
+<th style="text-align: left;">stat</th>
+<th style="text-align: right;">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">AGE</td>
+<td style="text-align: left;">Placebo</td>
+<td style="text-align: left;">mean</td>
+<td style="text-align: right;">75.21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AGE</td>
+<td style="text-align: left;">Placebo</td>
+<td style="text-align: left;">sd</td>
+<td style="text-align: right;">8.59</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AGE</td>
+<td style="text-align: left;">Placebo</td>
+<td style="text-align: left;">median</td>
+<td style="text-align: right;">76.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AGE</td>
+<td style="text-align: left;">Xanomeline High Dose</td>
+<td style="text-align: left;">mean</td>
+<td style="text-align: right;">73.78</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AGE</td>
+<td style="text-align: left;">Xanomeline High Dose</td>
+<td style="text-align: left;">sd</td>
+<td style="text-align: right;">7.94</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AGE</td>
+<td style="text-align: left;">Xanomeline High Dose</td>
+<td style="text-align: left;">median</td>
+<td style="text-align: right;">75.50</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AGE</td>
+<td style="text-align: left;">Xanomeline Low Dose</td>
+<td style="text-align: left;">mean</td>
+<td style="text-align: right;">75.96</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AGE</td>
+<td style="text-align: left;">Xanomeline Low Dose</td>
+<td style="text-align: left;">sd</td>
+<td style="text-align: right;">8.11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AGE</td>
+<td style="text-align: left;">Xanomeline Low Dose</td>
+<td style="text-align: left;">median</td>
+<td style="text-align: right;">78.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-6-column-nesting" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="part-6-column-nesting"><span class="header-section-number">8</span> Part 6: Column Nesting</h2>
+<section id="step-8-cols-argument-for-nested-column-splits" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="step-8-cols-argument-for-nested-column-splits"><span class="header-section-number">8.1</span> Step 8: cols argument for nested column splits</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cols adds a second level of column splitting (here: SEX within TRT01A)</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>t_nested <span class="ot">&lt;-</span> <span class="fu">tplyr_table</span>(adsl_safe, TRT01A, <span class="at">cols =</span> SEX) <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_layer</span>(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_count</span>(AGEGR1, <span class="at">by =</span> <span class="st">'Age Group'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_format_strings</span>(<span class="fu">f_str</span>(<span class="st">'xx (xx.x%)'</span>, n, pct))</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">build</span>(t_nested) <span class="sc">|&gt;</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">'ord'</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">row_label1</th>
+<th style="text-align: left;">row_label2</th>
+<th style="text-align: left;">var1_Placebo_F</th>
+<th style="text-align: left;">var1_Placebo_M</th>
+<th style="text-align: left;">var1_Xanomeline High Dose_F</th>
+<th style="text-align: left;">var1_Xanomeline High Dose_M</th>
+<th style="text-align: left;">var1_Xanomeline Low Dose_F</th>
+<th style="text-align: left;">var1_Xanomeline Low Dose_M</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Age Group</td>
+<td style="text-align: left;">&gt;64</td>
+<td style="text-align: left;">44 (83.0%)</td>
+<td style="text-align: left;">28 (84.8%)</td>
+<td style="text-align: left;">30 (85.7%)</td>
+<td style="text-align: left;">31 (83.8%)</td>
+<td style="text-align: left;">50 (90.9%)</td>
+<td style="text-align: left;">38 (92.7%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Age Group</td>
+<td style="text-align: left;">18-64</td>
+<td style="text-align: left;">9 (17.0%)</td>
+<td style="text-align: left;">5 (15.2%)</td>
+<td style="text-align: left;">5 (14.3%)</td>
+<td style="text-align: left;">6 (16.2%)</td>
+<td style="text-align: left;">5 ( 9.1%)</td>
+<td style="text-align: left;">3 ( 7.3%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="validation-checks" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="validation-checks"><span class="header-section-number">9</span> Validation Checks</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== Day 28 Validation ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Day 28 Validation ===</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Check 1 - Demographics rows:"</span>, <span class="fu">nrow</span>(demo_result), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Check 1 - Demographics rows: 11 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Check 2 - AE table rows:"</span>, <span class="fu">nrow</span>(ae_result), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Check 2 - AE table rows: 5290 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Check 3 - AE rows after n&gt;=5 filter:"</span>, <span class="fu">nrow</span>(ae_filtered), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Check 3 - AE rows after n&gt;=5 filter: 7 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Check 4 - Shift table rows:"</span>, <span class="fu">nrow</span>(shift_result), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Check 4 - Shift table rows: 3 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Check 5 - Numeric data layers:"</span>, <span class="fu">length</span>(num_data), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Check 5 - Numeric data layers: 1 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Validation complete</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Validation complete</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="key-takeaways" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="key-takeaways"><span class="header-section-number">10</span> Key Takeaways</h2>
+<ol type="1">
+<li><strong><code>tplyr_table(data, treat_var)</code></strong> – unquoted NSE; <code>add_total_group()</code> adds a Total column</li>
+<li><strong>Three layer types:</strong> <code>group_desc()</code> continuous, <code>group_count()</code> categorical, <code>group_shift()</code> shift</li>
+<li><strong><code>f_str('xx.x (xx.xx)', mean, sd)</code></strong> – positional vars map to statistics; named entries become row labels</li>
+<li><strong><code>group_shift()</code> uses <code>column=</code></strong> (not <code>col=</code>) in <code>vars(row = ..., column = ...)</code></li>
+<li><strong><code>set_pop_data()</code> + <code>set_pop_treat_var()</code> + <code>set_distinct_by(USUBJID)</code></strong> – required for AE subject-level denominators</li>
+<li><strong>Never combine <code>set_order_count_method()</code> + <code>set_ordering_cols()</code></strong> – sort with <code>dplyr::arrange()</code> after <code>build()</code> instead</li>
+<li><strong><code>get_numeric_data()</code> column names vary</strong> – always inspect with <code>names()</code> first; never hard-code statistic column names</li>
+<li><strong><code>build()</code> returns a plain data frame</strong> – filter, sort, join like any tibble; drop sort columns with <code>select(-starts_with('ord'))</code></li>
+</ol>
+<hr>
+</section>
+<section id="resources" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="resources"><span class="header-section-number">11</span> Resources</h2>
+<ul>
+<li>Tplyr documentation: <a href="https://atorus-research.github.io/Tplyr/" class="uri">https://atorus-research.github.io/Tplyr/</a></li>
+<li>Tplyr cheatsheet: <a href="https://atorus-research.github.io/Tplyr_cheatsheet.pdf" class="uri">https://atorus-research.github.io/Tplyr_cheatsheet.pdf</a></li>
+<li>r4csr book: <a href="https://r4csr.org" class="uri">https://r4csr.org</a></li>
+</ul>
+<hr>
+<p>End of Day 28</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ineelhere\.github\.io\/30-days-of-pharmaverse\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

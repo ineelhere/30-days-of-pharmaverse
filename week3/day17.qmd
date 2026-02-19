@@ -1,8 +1,8 @@
 ---
 title: "Day 17: ADSL Part 2 - Population Flags & Demographics"
 subtitle: "Week 3, Day 17: SAFFL, ITTFL, demographic groupings, and baseline measurements"
-author: "30 Days of Pharmaverse"
-date: today
+
+
 format:
   html:
     theme:

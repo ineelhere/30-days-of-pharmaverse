@@ -1,8 +1,8 @@
 ---
 title: "Day 2: SDTM Domain Structure & Tidyverse Mastery"
 subtitle: "Understanding SDTM Domain Classes Through Code"
-author: "Indraneel Chakraborty"
-date: today
+
+
 format:
   html:
     theme:

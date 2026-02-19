@@ -1,8 +1,8 @@
 ---
 title: "Day 12: Data Cuts with datacutr"
 subtitle: "Applying Clinical Cutoff Dates for Interim & Final Analyses"
-author: "Indraneel Chakraborty"
-date: today
+
+
 format:
   html:
     theme:

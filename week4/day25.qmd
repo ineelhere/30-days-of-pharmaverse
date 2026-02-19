@@ -1,0 +1,338 @@
+---
+title: "Day 25: gtsummary and tfrmt - ARD-Backed Production Tables"
+subtitle: "Flexible TLGs from ARD and format-spec driven TLF libraries"
+
+
+format:
+  html:
+    theme:
+      light: cosmo
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    highlight-style: github
+    page-layout: full
+    css: ../styles/site.css
+
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+---
+
+## Overview
+
+Today covers two complementary approaches to clinical table production:
+
+-   **`gtsummary`** — builds publication-quality tables directly from ADaM data, and can extract an ARD via `gather_ard()`
+-   **`tfrmt`** — separates data preparation from display spec; one format spec applies to many tables
+
+------------------------------------------------------------------------
+
+## Setup
+
+```{r setup}
+library(gtsummary)
+library(tfrmt)
+library(pharmaverseadam)
+library(dplyr)
+library(gt)
+
+# Used explicitly later
+library(purrr)
+library(tidyr)
+
+# Safety population
+adsl_safe <- pharmaverseadam::adsl |>
+  dplyr::filter(SAFFL == "Y")
+
+# Lab data for tfrmt section
+adlb <- pharmaverseadam::adlb |>
+  dplyr::filter(SAFFL == "Y", !is.na(AVAL))
+
+cat("ADSL Safety N:", nrow(adsl_safe), "\n")
+cat("ADLB records:", nrow(adlb), "\n")
+
+cat("\nADLB columns (first 30):\n")
+print(utils::head(names(adlb), 30))
+```
+
+------------------------------------------------------------------------
+
+## Part 1: gtsummary
+
+### Step 1: Demographics Table
+
+```{r tbl-demo}
+tbl_demo <- adsl_safe |>
+  gtsummary::tbl_summary(
+    by       = TRT01A,
+    include  = c(AGE, AGEGR1, SEX, RACE, ETHNIC),
+    type     = list(AGE ~ "continuous2"),
+    statistic = list(
+      gtsummary::all_continuous2() ~ c("{mean} ({sd})", "{median} ({p25}, {p75})"),
+      gtsummary::all_categorical() ~ "{n} ({p}%)"
+    ),
+    digits  = gtsummary::all_continuous() ~ 1,
+    missing = "no"
+  ) |>
+  gtsummary::add_overall(last = TRUE) |>
+  gtsummary::add_n() |>
+  gtsummary::modify_header(label = "**Characteristic**") |>
+  gtsummary::bold_labels() |>
+  gtsummary::add_stat_label()
+
+tbl_demo
+```
+
+------------------------------------------------------------------------
+
+### Step 2: Convert to gt and Add Headers
+
+```{r tbl-demo-gt}
+tbl_demo |>
+  gtsummary::as_gt() |>
+  gt::tab_header(
+    title    = "Table 14.1.1",
+    subtitle = "Demographic and Baseline Characteristics (Safety Population)"
+  ) |>
+  gt::tab_source_note(
+    source_note = "Source: pharmaverseadam::adsl | Population: Safety (SAFFL=Y)"
+  )
+```
+
+------------------------------------------------------------------------
+
+### Step 3: Extract ARD from gtsummary
+
+```{r gather-ard}
+ard_from_gtsumm <- tbl_demo |>
+  gtsummary::gather_ard() |>
+  purrr::pluck("tbl_summary")
+
+cat("ARD rows extracted from gtsummary:", nrow(ard_from_gtsumm), "\n")
+
+ard_from_gtsumm |>
+  dplyr::select(group1, group1_level, variable, stat_name, stat_label, stat) |>
+  head(10)
+```
+
+------------------------------------------------------------------------
+
+### Step 4: Lab Summary Table from ADLB
+
+```{r tbl-lab}
+# Summarise ALT at baseline per treatment
+# (Do not assume AVALU exists in pharmaverseadam::adlb)
+adlb_alt_bl <- adlb |>
+  dplyr::filter(PARAMCD == "ALT", ABLFL == "Y") |>
+  dplyr::select(TRT01A, AVAL)
+
+cat("ALT baseline records:", nrow(adlb_alt_bl), "\n")
+
+tbl_lab <- adlb_alt_bl |>
+  gtsummary::tbl_summary(
+    by       = TRT01A,
+    include  = AVAL,
+    type     = list(AVAL ~ "continuous2"),
+    statistic = list(
+      gtsummary::all_continuous2() ~ c(
+        "{mean} ({sd})",
+        "{median} ({p25}, {p75})",
+        "{min}, {max}"
+      )
+    ),
+    digits  = gtsummary::all_continuous() ~ 1,
+    missing = "no",
+    label   = list(AVAL ~ "ALT")
+  ) |>
+  gtsummary::add_overall(last = TRUE) |>
+  gtsummary::add_n() |>
+  gtsummary::bold_labels()
+
+tbl_lab
+```
+
+------------------------------------------------------------------------
+
+### Step 5: Logistic Regression Table
+
+```{r tbl-regression}
+# Logistic regression: SEX ~ AGE + TRT01A
+adsl_model <- adsl_safe |>
+  dplyr::mutate(SEX_BIN = dplyr::if_else(SEX == "M", 1L, 0L))
+
+logit_mod <- glm(
+  SEX_BIN ~ AGE + TRT01A,
+  data   = adsl_model,
+  family = binomial()
+)
+
+tbl_reg <- logit_mod |>
+  gtsummary::tbl_regression(
+    exponentiate = TRUE,
+    label        = list(AGE ~ "Age (years)", TRT01A ~ "Treatment Arm")
+  ) |>
+  gtsummary::add_n() |>
+  gtsummary::add_nevent() |>
+  gtsummary::bold_p(t = 0.05) |>
+  gtsummary::bold_labels()
+
+tbl_reg
+```
+
+------------------------------------------------------------------------
+
+### Step 6: Merge Tables with tbl_merge
+
+```{r tbl-merge}
+tbl_merged <- gtsummary::tbl_merge(
+  tbls        = list(tbl_demo, tbl_lab),
+  tab_spanner = c("**Demographics**", "**ALT at Baseline**")
+)
+
+tbl_merged
+```
+
+------------------------------------------------------------------------
+
+## Part 2: tfrmt
+
+### Step 7: Build a tfrmt Format Spec
+
+```{r tfrmt-spec}
+# tfrmt expects a long dataset with:
+# - group columns, label column, column columns
+# - param column (e.g., mean, sd)
+# - value column (numeric)
+
+my_fmt <- tfrmt::tfrmt(
+  group  = vars(PARAMCD),
+  label  = vars(VISIT),
+  column = vars(TRT01A),
+  param  = PARAM,
+  value  = VALUE,
+  body_plan = tfrmt::body_plan(
+    tfrmt::frmt_structure(
+      group_val = ".default",
+      label_val = ".default",
+      tfrmt::frmt_combine(
+        "{mean} ({sd})",
+        mean = tfrmt::frmt("xx.x"),
+        sd   = tfrmt::frmt("xx.xx")
+      )
+    )
+  )
+)
+
+my_fmt
+```
+
+------------------------------------------------------------------------
+
+### Step 8: Prepare BDS Summary Data for tfrmt
+
+```{r tfrmt-data}
+# Summarise ADLB: mean and SD of AVAL by PARAMCD, AVISIT, TRT01A
+adlb_summary <- adlb |>
+  dplyr::filter(PARAMCD %in% c("ALT", "AST", "BILI")) |>
+  dplyr::filter(!is.na(AVISIT), !is.na(AVAL)) |>
+  dplyr::group_by(PARAMCD, AVISIT, TRT01A) |>
+  dplyr::summarise(
+    mean = mean(AVAL, na.rm = TRUE),
+    sd   = sd(AVAL, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  tidyr::pivot_longer(
+    cols      = c(mean, sd),
+    names_to  = "PARAM",
+    values_to = "VALUE"
+  ) |>
+  dplyr::rename(VISIT = AVISIT)
+
+cat("tfrmt input rows:", nrow(adlb_summary), "\n")
+head(adlb_summary, 10)
+```
+
+------------------------------------------------------------------------
+
+### Step 9: Apply tfrmt Format Spec
+
+```{r tfrmt-apply}
+tfrmt_gt <- tfrmt::print_to_gt(my_fmt, .data = adlb_summary)
+
+tfrmt_gt
+```
+
+------------------------------------------------------------------------
+
+### Step 10: Mock Table from tfrmt Spec
+
+```{r tfrmt-mock}
+tfrmt::print_mock_gt(my_fmt, .data = adlb_summary)
+```
+
+------------------------------------------------------------------------
+
+## Step 11: Export tfrmt table to HTML
+
+```{r export-html}
+tfrmt_gt |>
+  gt::gtsave("tfrmt_lab_summary.html")
+
+cat("✓ tfrmt_lab_summary.html exported\n")
+```
+
+------------------------------------------------------------------------
+
+## Validation Checks
+
+```{r validate}
+cat("\n=== Day 25 Validation ===\n\n")
+
+# Check 1: Safety N by arm
+cat("Check 1 - Safety N by arm:\n")
+print(adsl_safe |> dplyr::count(TRT01A))
+
+# Check 2: ARD extracted from gtsummary has rows
+cat("\nCheck 2 - ARD rows from gather_ard():", nrow(ard_from_gtsumm), "\n")
+
+# Check 3: tfrmt data has all 3 parameters
+cat("\nCheck 3 - PARAMCD in tfrmt data:\n")
+print(adlb_summary |> dplyr::distinct(PARAMCD))
+
+# Check 4: No NA VALUE in tfrmt input
+cat("\nCheck 4 - NA VALUE rows:", nrow(adlb_summary |> dplyr::filter(is.na(VALUE))), "\n")
+
+cat("\n✓ Validation complete\n")
+```
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+1.  `tbl_summary(by = TRT01A)` is the workhorse for clinical demographics tables
+2.  `gather_ard()` extracts a CDISC-compatible ARD from any `gtsummary` table
+3.  `tfrmt` decouples format spec from data; `print_mock_gt()` helps you agree shells early
+4.  Always validate dataset columns (e.g., do not assume `AVALU` exists)
+
+------------------------------------------------------------------------
+
+## Next Steps
+
+**Day 26:** `flextable` + `officer` — Word/RTF clinical output
+
+------------------------------------------------------------------------
+
+## Resources
+
+-   gtsummary documentation: <https://www.danieldsjoberg.com/gtsummary/>
+-   tfrmt examples: <https://gsk-biostatistics.github.io/tfrmt/articles/examples.html>
+
+------------------------------------------------------------------------
+
+**End of Day 25**

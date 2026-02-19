@@ -1,8 +1,8 @@
 ---
 title: "Day 3: Controlled Terminology & MedDRA Coding"
 subtitle: "Building AE Codelists in R"
-author: "Indraneel Chakraborty"
-date: today
+
+
 format:
   html:
     theme:
