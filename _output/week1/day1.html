@@ -266,7 +266,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#day-1-deliverable-summary" id="toc-day-1-deliverable-summary" class="nav-link" data-scroll-target="#day-1-deliverable-summary"><span class="header-section-number">8</span> Day 1 Deliverable Summary</a></li>
   <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">9</span> Key Takeaways</a></li>
   <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">10</span> Resources</a></li>
-  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next"><span class="header-section-number">11</span> What’s Next?</a></li>
+  <li><a href="#frequently-asked-questions" id="toc-frequently-asked-questions" class="nav-link" data-scroll-target="#frequently-asked-questions"><span class="header-section-number">11</span> Frequently Asked Questions</a></li>
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next"><span class="header-section-number">12</span> What’s Next?</a></li>
   </ul>
 </nav>
     </div>
@@ -359,6 +360,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why does this flow matter?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Think of this pipeline like a factory assembly line. Raw data arrives in messy, inconsistent shapes - different sponsors, different EDC vendors, different column names. SDTM is the <strong>standardization</strong> step: every study’s data gets reshaped into the same structure so the FDA (and your future self) can always find the same variable in the same place. ADaM then <strong>derives</strong> analysis-ready variables from that standardized base, and TLFs are the <strong>final output</strong> - the actual tables and figures that go into your Clinical Study Report (CSR). Skipping or muddling any stage creates compliance and reproducibility risks.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="what-is-the-pharmaverse" class="level3" data-number="2.3">
 <h3 data-number="2.3" class="anchored" data-anchor-id="what-is-the-pharmaverse"><span class="header-section-number">2.3</span> What is the Pharmaverse?</h3>
@@ -369,6 +386,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>TLG creation</strong>: <code>rtables</code>, <code>tern</code>, <code>tfrmt</code></li>
 <li><strong>Validation &amp; Export</strong>: <code>xportr</code>, <code>metacore</code>, <code>sdtmchecks</code></li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What is <code>pharmaversesdtm</code>?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>pharmaversesdtm</code> ships pre-built, realistic SDTM datasets based on a fictional Phase III clinical trial. These datasets follow the official CDISC SDTM Implementation Guide (SDTMIG) and are the same ones used internally by the <code>admiral</code> development team for testing. You can browse them at the <a href="https://github.com/pharmaverse/pharmaversesdtm">pharmaversesdtm GitHub repository</a>.</p>
+</div>
+</div>
+</div>
 <hr>
 </section>
 </section>
@@ -415,6 +448,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="step-1-install-packages-if-needed" class="level3" data-number="3.2">
 <h3 data-number="3.2" class="anchored" data-anchor-id="step-1-install-packages-if-needed"><span class="header-section-number">3.2</span> Step 1: Install Packages (if needed)</h3>
 <p>The code below checks if each package is installed and installs it if missing. This is a safe pattern that won’t reinstall packages you already have.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How <code>requireNamespace()</code> works
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>requireNamespace("pkg", quietly = TRUE)</code> tries to locate the package without actually loading it into your session. It returns <code>TRUE</code> if the package is found, <code>FALSE</code> if not. Wrapping it in <code>!</code> (logical NOT) flips the result - so the <code>install.packages()</code> call inside the <code>if</code> block only fires when the package is <strong>not</strong> installed. The <code>quietly = TRUE</code> argument suppresses any console messages during the check. This is the idiomatic way to write conditional installs in R scripts. <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/ns-load.html">(Reference: R documentation for <code>requireNamespace</code>)</a></p>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install packages if not already installed</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"admiral"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"admiral"</span>)</span>
@@ -423,10 +472,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"dplyr"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"dplyr"</span>)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"haven"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"haven"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What just happened?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>R checked your local package library for each package. If a package was missing, it downloaded and installed it from CRAN. If it was already installed, nothing happened - no unnecessary downloads, no version conflicts. You can verify what’s installed by running <code>installed.packages()[, c("Package", "Version")]</code> in your console.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="step-2-load-packages" class="level3" data-number="3.3">
 <h3 data-number="3.3" class="anchored" data-anchor-id="step-2-load-packages"><span class="header-section-number">3.3</span> Step 2: Load Packages</h3>
 <p>Now we load the packages into our R session. The <code>library()</code> function makes all functions from a package available for use.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span><code>library()</code> vs <code>require()</code> vs <code>requireNamespace()</code>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong><code>library(pkg)</code></strong> - loads the package and <strong>errors</strong> if it’s not found. Use this at the top of scripts/Quarto files.<br>
+</li>
+<li><strong><code>require(pkg)</code></strong> - loads the package and <strong>warns</strong> (but doesn’t error) if not found. Commonly used inside functions.<br>
+</li>
+<li><strong><code>requireNamespace(pkg)</code></strong> - checks existence <em>without</em> attaching the package to your session. Used for conditional installs (as above).</li>
+</ul>
+<p>For day-to-day scripts, <code>library()</code> is the right choice because a hard error is better than silently continuing without a needed package. <a href="https://r-pkgs.org/namespace.html">(Reference: Hadley Wickham’s <em>R Packages</em> - Namespaces)</a></p>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages into the session</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(admiral)</span>
@@ -436,16 +524,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xportr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>What do these messages mean?
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>When you load packages, you may see messages about package versions and any function name conflicts. This is normal and helps you understand which package’s function will be used when names overlap.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What just happened?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>After running the <code>library()</code> calls, all exported functions from these five packages are now available in your global environment. For example, you can now type <code>admiral::derive_vars_dt()</code> or just <code>derive_vars_dt()</code> directly. If you see a warning like <code>The following object is masked from 'package:X': filter</code>, it means two packages export a function with the same name - R will use the <strong>most recently loaded</strong> one. You can always be explicit, e.g., <code>dplyr::filter()</code>, to avoid ambiguity. Run <code>search()</code> in your console to see the full list of attached packages in the order R searches them.</p>
+</div>
 </div>
 </div>
 <hr>
@@ -508,10 +615,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Domain classes and their structure rules
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The SDTMIG defines three main <strong>observation classes</strong> with strict structural rules:</p>
+<ul>
+<li><strong>Events</strong> (AE, DS, CE…): Things that <em>happened</em> to the subject. Each row is a distinct occurrence. Key variable: <code>--TERM</code> (the verbatim text) and <code>--DECOD</code> (the standardized dictionary term).<br>
+</li>
+<li><strong>Interventions</strong> (EX, CM, PR…): Things that were <em>given to or done for</em> the subject. Each row is a treatment record. Key variable: <code>--TRT</code> (treatment name).<br>
+</li>
+<li><strong>Findings</strong> (LB, VS, EG…): Measurements or observations <em>collected from</em> the subject. Each row is a single result. Key variables: <code>--TESTCD</code> (short test code) and <code>--ORRES</code> (original result).</li>
+</ul>
+<p>The <strong>Special Purpose</strong> domains (DM, CO, SE, SV) don’t follow the three-class model; they have their own SDTMIG-specified structures.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="step-3-load-the-core-sdtm-domains" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="step-3-load-the-core-sdtm-domains"><span class="header-section-number">4.2</span> Step 3: Load the Core SDTM Domains</h3>
 <p>Let’s load four key domains that we’ll work with today:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How <code>data()</code> loads package datasets
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>data("dm", package = "pharmaversesdtm")</code> reaches into the <code>pharmaversesdtm</code> package’s <code>data/</code> folder and loads the <code>dm</code> object into your global environment. Without the <code>package =</code> argument, R searches all attached packages. After this call, <code>dm</code> is a plain R <code>data.frame</code> (or <code>tibble</code>) sitting in your workspace - just like one you’d import from a CSV. <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/data.html">(Reference: R documentation - <code>data()</code>)</a></p>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load SDTM domains from pharmaversesdtm</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># DM = Demographics (one row per subject)</span></span>
@@ -526,6 +673,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># LB = Laboratory Results (many rows per subject)</span></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"lb"</span>, <span class="at">package =</span> <span class="st">"pharmaversesdtm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What just happened?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Four new objects - <code>dm</code>, <code>ae</code>, <code>ex</code>, and <code>lb</code> - have been created in your R global environment. You can confirm this by running <code>ls()</code> in the console, which lists all objects currently in memory. Each is a <code>data.frame</code> (with <code>haven</code>-style labelled attributes, since SDTM datasets mimic SAS transport format). You can inspect labels with <code>attr(dm$ARM, "label")</code>.</p>
+</div>
+</div>
+</div>
 <hr>
 </section>
 </section>
@@ -535,6 +698,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="method-1-glimpse---quick-structure-overview" class="level3" data-number="5.1">
 <h3 data-number="5.1" class="anchored" data-anchor-id="method-1-glimpse---quick-structure-overview"><span class="header-section-number">5.1</span> Method 1: <code>glimpse()</code> - Quick Structure Overview</h3>
 <p>The <code>glimpse()</code> function from <code>dplyr</code> provides a compact view of the data structure, showing column names, types, and a preview of values.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What does <code>glimpse()</code> show you?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>glimpse()</code> is essentially a <strong>transposed</strong> version of <code>print()</code>. For each column it shows:</p>
+<ul>
+<li>The <strong>column name</strong> (e.g., <code>USUBJID</code>)<br>
+</li>
+<li>The <strong>data type</strong> in abbreviated form: <code>&lt;chr&gt;</code> = character, <code>&lt;dbl&gt;</code> = double/numeric, <code>&lt;lgl&gt;</code> = logical, <code>&lt;date&gt;</code> = Date, <code>&lt;dttm&gt;</code> = POSIXct datetime<br>
+</li>
+<li>A <strong>sample of values</strong> from the first few rows</li>
+</ul>
+<p>This is especially useful for wide datasets (many columns) where a regular <code>print()</code> would wrap awkwardly. <a href="https://dplyr.tidyverse.org/reference/glimpse.html">(Reference: dplyr <code>glimpse()</code> documentation)</a></p>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore the Demographics (DM) domain</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This shows us all variables and their types</span></span>
@@ -571,14 +758,38 @@ $ DMDY     &lt;dbl&gt; -7, -14, -8, -8, -7, -21, NA, -9, -13, -7, -13, -6, -5, N
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Reading the output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>After running <code>glimpse(dm)</code>, look for:</p>
+<ul>
+<li><strong>Rows</strong>: The total number of subjects. In SDTM DM, this should be <strong>one row per subject</strong> - a fundamental SDTMIG rule.</li>
+<li><strong>Columns</strong>: The number of variables in the domain.</li>
+<li><strong>Column types</strong>: Most SDTM character variables (like <code>USUBJID</code>, <code>ARM</code>, <code>SEX</code>) will show <code>&lt;chr&gt;</code>. Numeric variables like <code>AGE</code> will show <code>&lt;dbl&gt;</code>. Date/time character variables (ISO 8601 format, e.g., <code>RFSTDTC</code>) remain <code>&lt;chr&gt;</code> in SDTM - they get converted to proper Date objects only in ADaM.</li>
+<li><strong>Values</strong>: Scan the <code>ARM</code> column - you’ll see the treatment arm labels for this trial. Scan <code>ACTARM</code> to see if any subjects received something different from their planned arm.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Tip</span>Key DM Variables
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>USUBJID</strong>: Unique Subject Identifier - the key that links all domains together</li>
@@ -589,10 +800,34 @@ $ DMDY     &lt;dbl&gt; -7, -14, -8, -8, -7, -21, NA, -9, -13, -7, -13, -6, -5, N
 </ul>
 </div>
 </div>
+</div>
 </section>
 <section id="method-2-head---view-first-few-rows" class="level3" data-number="5.2">
 <h3 data-number="5.2" class="anchored" data-anchor-id="method-2-head---view-first-few-rows"><span class="header-section-number">5.2</span> Method 2: <code>head()</code> - View First Few Rows</h3>
 <p>The <code>head()</code> function shows the first n rows of data (default is 6).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span><code>head()</code> vs <code>tail()</code> vs <code>slice()</code>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong><code>head(df, n)</code></strong> - first <code>n</code> rows (default 6). Useful for a quick sanity check.<br>
+</li>
+<li><strong><code>tail(df, n)</code></strong> - last <code>n</code> rows. Useful for checking if sorting worked correctly or if data was appended properly.<br>
+</li>
+<li><strong><code>dplyr::slice(df, rows)</code></strong> - select any arbitrary rows by position. More flexible for exploring middle sections of large datasets.</li>
+</ul>
+<p>For very wide datasets, even <code>head()</code> output can be hard to read in the console. In those cases, <code>View(head(df))</code> opens the RStudio data viewer for a spreadsheet-style look. <a href="https://stat.ethz.ch/R-manual/R-devel/library/utils/html/head.html">(Reference: R documentation - <code>head()</code>)</a></p>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View the first 6 rows of Adverse Events</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>utils<span class="sc">::</span><span class="fu">head</span>(ae)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -614,9 +849,48 @@ $ DMDY     &lt;dbl&gt; -7, -14, -8, -8, -7, -21, NA, -9, -13, -7, -13, -6, -5, N
 #   AEENDY &lt;dbl&gt;</code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What to look for in the AE output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Multiple rows per subject</strong>: Unlike DM, you’ll see the same <code>USUBJID</code> appearing more than once - each row is a different adverse event for that subject.</li>
+<li><strong><code>AEDECOD</code></strong>: The MedDRA-standardized Preferred Term for the adverse event. This is what gets used in safety tables.</li>
+<li><strong><code>AEBODSYS</code></strong>: The MedDRA System Organ Class (SOC). Used for grouping in safety summaries.</li>
+<li><strong><code>AESEV</code></strong>: Severity - typically <code>MILD</code>, <code>MODERATE</code>, or <code>SEVERE</code>.</li>
+<li><strong><code>AESER</code></strong>: Serious flag - <code>Y</code> = serious, <code>N</code> = non-serious. This drives regulatory safety reporting obligations.</li>
+<li><strong>Date columns</strong> (<code>AESTDTC</code>, <code>AEENDTC</code>): Stored as ISO 8601 character strings (e.g., <code>"2014-01-02"</code>). These will be converted to numeric study-day variables (<code>AESTDY</code>) in ADaM.</li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section id="method-3-dim-and-names---dimensions-and-column-names" class="level3" data-number="5.3">
 <h3 data-number="5.3" class="anchored" data-anchor-id="method-3-dim-and-names---dimensions-and-column-names"><span class="header-section-number">5.3</span> Method 3: <code>dim()</code> and <code>names()</code> - Dimensions and Column Names</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Understanding <code>dim()</code>, <code>nrow()</code>, and <code>ncol()</code>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>dim(df)</code> returns a numeric vector of length 2: <code>c(nrow, ncol)</code>. So <code>dim(dm)[1]</code> gives you the row count and <code>dim(dm)[2]</code> gives the column count. You can also use the dedicated <code>nrow(df)</code> and <code>ncol(df)</code> functions for readability. The <code>cat()</code> function here concatenates and prints the text + number together in a readable line. <code>"\n"</code> inserts a newline character so each result prints on its own line. <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/dim.html">(Reference: R documentation - <code>dim()</code>)</a></p>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How many rows and columns in each domain?</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"DM dimensions:"</span>, <span class="fu">dim</span>(dm), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -636,6 +910,29 @@ $ DMDY     &lt;dbl&gt; -7, -14, -8, -8, -7, -21, NA, -9, -13, -7, -13, -6, -5, N
 <pre><code>LB dimensions: 59580 23 </code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Interpreting the dimensions
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The two numbers printed for each domain are <strong>[rows] [columns]</strong>. You should notice:</p>
+<ul>
+<li><strong>DM</strong> has the fewest rows - one per subject. This is the “spine” of your trial.</li>
+<li><strong>AE</strong> has more rows than DM - multiple adverse events can occur per subject.</li>
+<li><strong>LB</strong> typically has the <em>most</em> rows of any domain - lab panels are collected repeatedly over many visits, creating a large number of records per subject.</li>
+<li>The column count reflects how many SDTM variables that domain collects. LB has many columns because it captures rich measurement metadata (units, reference ranges, methods, etc.).</li>
+</ul>
+<p>Compare <code>nrow(ae)</code> to <code>nrow(dm)</code> - the ratio gives you an intuitive feel for how “event-heavy” this trial is.</p>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What variables are in the AE domain?</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ae)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -646,6 +943,23 @@ $ DMDY     &lt;dbl&gt; -7, -14, -8, -8, -7, -21, NA, -9, -13, -7, -13, -6, -5, N
 [19] "AESEV"    "AESER"    "AEACN"    "AEREL"    "AEOUT"    "AESCAN"  
 [25] "AESCONG"  "AESDISAB" "AESDTH"   "AESHOSP"  "AESLIFE"  "AESOD"   
 [31] "AEDTC"    "AESTDTC"  "AEENDTC"  "AESTDY"   "AEENDY"  </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Reading <code>names()</code> output
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>names()</code> returns a character vector of all column names. In SDTM, variable names follow a strict two-part convention: a <strong>domain prefix</strong> (usually 2 characters, e.g., <code>AE</code>) followed by a <strong>core variable name suffix</strong> (e.g., <code>TERM</code>, <code>DECOD</code>, <code>SEV</code>). So <code>AEDECOD</code> = AE domain + DECOD suffix. This naming convention is defined in the SDTMIG and makes variables instantly recognizable across domains - <code>AESTDTC</code>, <code>LBSTDTC</code>, and <code>EXSTDTC</code> all mean “start date/time” for their respective domains.</p>
+<p>Variables without a domain prefix (like <code>USUBJID</code>, <code>STUDYID</code>, <code>DOMAIN</code>) are <strong>identifier variables</strong> shared across all domains.</p>
+</div>
 </div>
 </div>
 <hr>
@@ -668,10 +982,42 @@ $ DMDY     &lt;dbl&gt; -7, -14, -8, -8, -7, -21, NA, -9, -13, -7, -13, -6, -5, N
 │  AE    │  │  EX   │  │  LB   │  │  VS    │
 │(events)│  │(doses)│  │(labs) │  │(vitals)│
 └────────┘  └───────┘  └───────┘  └────────┘</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why USUBJID is always a character variable
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>USUBJID</code> is always stored as a <strong>character</strong> (<code>&lt;chr&gt;</code>) string, never a number, even though it often contains digits. This is because it is a <strong>concatenated identifier</strong> - typically structured as <code>"STUDYID-SITEID-SUBJECTID"</code> (e.g., <code>"CDISCPILOT01-01-701"</code>). Treating it as numeric would risk stripping leading zeros, causing mismatches when joining domains. Always use <code>==</code> for exact string matching, never numeric comparisons. <a href="https://www.cdisc.org/standards/foundational/sdtm/sdtm-implementation-guide-v3-4">(Reference: CDISC SDTM Implementation Guide - Identifier Variables)</a></p>
+</div>
+</div>
+</div>
 </section>
 <section id="step-4-join-dm-and-ae-demographics-adverse-events" class="level3" data-number="6.2">
 <h3 data-number="6.2" class="anchored" data-anchor-id="step-4-join-dm-and-ae-demographics-adverse-events"><span class="header-section-number">6.2</span> Step 4: Join DM and AE (Demographics + Adverse Events)</h3>
 <p>When analyzing adverse events, we often need demographic information like treatment arm. Let’s join these domains.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What is a join and why do we need it?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In relational data, information is split across multiple tables to avoid duplication. DM stores demographic info (one row per subject) while AE stores adverse events (many rows per subject). To analyze AEs by treatment arm, we need to <em>combine</em> these - that’s what a <strong>join</strong> does. We match rows from two tables based on a shared key column (here: <code>USUBJID</code>). The <code>dplyr::select()</code> before the join ensures we only bring in the specific DM columns we need, keeping the result clean. <a href="https://dplyr.tidyverse.org/articles/two-table.html">(Reference: dplyr two-table verbs documentation)</a></p>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Join Demographics (DM) with Adverse Events (AE)</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We select key DM variables and join on USUBJID</span></span>
@@ -708,15 +1054,38 @@ $ DMDY     &lt;dbl&gt; -7, -14, -8, -8, -7, -21, NA, -9, -13, -7, -13, -6, -5, N
 #   AEENDY &lt;dbl&gt;</code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What changed after the join?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Before the join, <code>ae</code> had its own set of columns and rows. After the join:</p>
+<ul>
+<li><strong>Row count</strong>: <code>nrow(dm_ae)</code> equals <code>nrow(ae)</code> (since every AE record should match a subject in DM for a clean trial dataset). If these numbers differed, it would flag a data quality issue - AE records for subjects not in DM.</li>
+<li><strong>Column count</strong>: <code>dm_ae</code> now has <strong>7 columns from DM</strong> (USUBJID, RFSTDTC, RFENDTC, ARM, AGE, SEX, RACE) <strong>+ all columns from AE</strong>, minus one USUBJID since the key is merged. This is the “enriched” AE dataset with demographic context.</li>
+<li><strong>New columns visible</strong>: In the <code>head()</code> output you’ll now see <code>ARM</code>, <code>AGE</code>, <code>SEX</code>, <code>RACE</code> appearing alongside <code>AEDECOD</code>, <code>AESEV</code>, etc. - this combination is what allows you to break down AEs by treatment arm in safety tables.</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Why use <code>inner_join()</code>?
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>inner_join()</strong>: Keeps only rows where USUBJID exists in BOTH datasets</li>
@@ -725,10 +1094,33 @@ $ DMDY     &lt;dbl&gt; -7, -14, -8, -8, -7, -21, NA, -9, -13, -7, -13, -6, -5, N
 </ul>
 </div>
 </div>
+</div>
 </section>
 <section id="step-5-join-dm-and-ex-demographics-exposure" class="level3" data-number="6.3">
 <h3 data-number="6.3" class="anchored" data-anchor-id="step-5-join-dm-and-ex-demographics-exposure"><span class="header-section-number">6.3</span> Step 5: Join DM and EX (Demographics + Exposure)</h3>
 <p>Exposure data tells us about drug dosing. Let’s combine this with demographics.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What is the EX domain used for?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The <strong>EX (Exposure)</strong> domain records every dose of study drug administered to a subject - the drug name, dose, dose unit, route of administration, and start/end dates. In ADaM, EX is the primary source for:</p>
+<ul>
+<li>Calculating <strong>treatment-emergent</strong> flags (was the AE after the first dose?)</li>
+<li>Deriving <strong>last dose date</strong> (used for safety follow-up windows)</li>
+<li>Computing <strong>dose intensity</strong> and <strong>total exposure</strong> for pharmacokinetic analyses</li>
+</ul>
+<p>A subject can have multiple EX rows if they received multiple doses, dose changes, or multiple study periods. <a href="https://www.cdisc.org/standards/foundational/sdtm/sdtm-implementation-guide-v3-4">(Reference: CDISC SDTMIG - EX Domain)</a></p>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Join Demographics (DM) with Exposure (EX)</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>dm_ex <span class="ot">&lt;-</span> dm <span class="sc">%&gt;%</span></span>
@@ -762,6 +1154,27 @@ $ EXSTDY   &lt;dbl&gt; 1, 16, 169, 1, 24, 1, 15, 173, 1, 1, 16, 171, 1, 15, 1, 1
 $ EXENDY   &lt;dbl&gt; 15, 168, 182, 23, 28, 14, 172, 180, 14, 15, 170, 183, 14, 26,…</code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What changed after the DM-EX join?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>glimpse(dm_ex)</code> shows you:</p>
+<ul>
+<li><strong>Rows</strong>: Equal to <code>nrow(ex)</code> - one row per dosing record (not per subject). A subject receiving 10 doses contributes 10 rows.</li>
+<li><strong>Columns</strong>: The 4 selected DM variables (USUBJID, ARM, AGE, SEX) have been added to all EX columns. You should now see both <code>ARM</code> (from DM) and <code>EXTRT</code> (the actual drug name from EX) side by side - useful for verifying that subjects in the “Placebo” arm received the placebo drug and not an active compound.</li>
+<li><strong>Data types</strong>: Notice that EX dose variables like <code>EXDOSE</code> will be <code>&lt;dbl&gt;</code> (numeric), while most other EX variables are <code>&lt;chr&gt;</code>. The date variables <code>EXSTDTC</code> and <code>EXENDTC</code> are ISO 8601 character strings, just like in AE.</li>
+</ul>
+</div>
+</div>
+</div>
 <hr>
 </section>
 </section>
@@ -771,6 +1184,29 @@ $ EXENDY   &lt;dbl&gt; 15, 168, 182, 23, 28, 14, 172, 180, 14, 15, 170, 183, 14,
 <section id="operation-1-filter---subset-rows" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="operation-1-filter---subset-rows"><span class="header-section-number">7.1</span> Operation 1: <code>filter()</code> - Subset Rows</h3>
 <p>Filter AEs to show only serious adverse events (SAEs).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How <code>filter()</code> works
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>filter()</code> evaluates a logical condition for <strong>every row</strong> and keeps only those where the condition is <code>TRUE</code>. <code>AESER == "Y"</code> compares the value in the <code>AESER</code> column to the string <code>"Y"</code> - the double equals <code>==</code> is a comparison (not assignment). You can combine multiple conditions with:</p>
+<ul>
+<li><code>&amp;</code> or <code>,</code> for AND (both must be true)</li>
+<li><code>|</code> for OR (either can be true)</li>
+<li><code>!</code> for NOT (negates the condition)</li>
+</ul>
+<p>Example: <code>filter(AESER == "Y" &amp; AESEV == "SEVERE")</code> for serious AND severe AEs.</p>
+<p><a href="https://dplyr.tidyverse.org/reference/filter.html">(Reference: dplyr <code>filter()</code> documentation)</a></p>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for Serious Adverse Events only</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>serious_aes <span class="ot">&lt;-</span> ae <span class="sc">%&gt;%</span></span>
@@ -785,10 +1221,53 @@ $ EXENDY   &lt;dbl&gt; 15, 168, 182, 23, 28, 14, 172, 180, 14, 15, 170, 183, 14,
 <pre><code>Serious AEs: 3 </code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What just happened?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-26" class="callout-26-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>serious_aes</code> is a <strong>subset</strong> of <code>ae</code> with the exact same columns but fewer rows. The two <code>cat()</code> lines reveal:</p>
+<ul>
+<li>How many total adverse events were recorded in the trial.</li>
+<li>How many of those were flagged as <strong>serious</strong> (<code>AESER == "Y"</code>).</li>
+</ul>
+<p>The difference is the count of <strong>non-serious</strong> AEs. In clinical trials, serious AEs trigger expedited regulatory reporting (e.g., 7-day or 15-day safety reports to the FDA), so isolating them quickly is an everyday task for safety programmers. The percentage of serious AEs relative to total AEs is a key metric reviewed by Data Safety Monitoring Boards (DSMBs).</p>
+</div>
+</div>
+</div>
 </section>
 <section id="operation-2-select---choose-columns" class="level3" data-number="7.2">
 <h3 data-number="7.2" class="anchored" data-anchor-id="operation-2-select---choose-columns"><span class="header-section-number">7.2</span> Operation 2: <code>select()</code> - Choose Columns</h3>
 <p>Select only the variables we need for a quick AE overview.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How <code>select()</code> works
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>select()</code> subsets <strong>columns</strong> (variables), not rows. It takes column names (unquoted) as arguments. You can also:</p>
+<ul>
+<li><strong>Drop columns</strong> by prefixing with <code>-</code>: <code>select(-STUDYID, -DOMAIN)</code></li>
+<li><strong>Rename during selection</strong>: <code>select(Subject = USUBJID, Event = AEDECOD)</code></li>
+<li><strong>Use helper functions</strong>: <code>select(starts_with("AE"))</code> selects all columns beginning with “AE”; <code>select(contains("DTC"))</code> grabs all date columns.</li>
+</ul>
+<p><code>select()</code> does <strong>not</strong> change row count - it only changes column count. <a href="https://dplyr.tidyverse.org/reference/select.html">(Reference: dplyr <code>select()</code> documentation)</a></p>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select key AE variables</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>ae_summary <span class="ot">&lt;-</span> ae <span class="sc">%&gt;%</span></span>
@@ -807,10 +1286,43 @@ $ EXENDY   &lt;dbl&gt; 15, 168, 182, 23, 28, 14, 172, 180, 14, 15, 170, 183, 14,
 6 01-701-1023 ERYTHEMA                             MODERA… N     2012-0… &lt;NA&gt;   </code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What changed?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-28" class="callout-28-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Compare <code>ncol(ae)</code> vs <code>ncol(ae_summary)</code> - the full AE domain has many more columns than the 6 we selected. The row count is <strong>identical</strong> to <code>ae</code>. <code>ae_summary</code> is a focused, readable slice of the data containing just the variables needed for a quick listing of adverse events: who experienced what, how severe, was it serious, and when did it start and end. This pattern - select only what you need - is a best practice that makes downstream code faster and easier to read.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="operation-3-mutate---create-new-variables" class="level3" data-number="7.3">
 <h3 data-number="7.3" class="anchored" data-anchor-id="operation-3-mutate---create-new-variables"><span class="header-section-number">7.3</span> Operation 3: <code>mutate()</code> - Create New Variables</h3>
 <p>Create a flag for treatment-related adverse events.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How <code>mutate()</code> works
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-29" class="callout-29-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>mutate()</code> <strong>adds new columns</strong> (or overwrites existing ones) without changing the row count. Every expression inside <code>mutate()</code> is evaluated for each row. <code>dplyr::if_else(condition, true_value, false_value)</code> is a vectorized conditional - it’s safer than base R’s <code>ifelse()</code> because it enforces consistent data types for both outcomes.</p>
+<p>The <code>|</code> operator here means OR - <code>AEREL == "PROBABLE" | AEREL == "POSSIBLE"</code> is TRUE if either condition holds. You can chain multiple <code>mutate()</code> calls or add many variables in a single call separated by commas. <a href="https://dplyr.tidyverse.org/reference/mutate.html">(Reference: dplyr <code>mutate()</code> documentation)</a></p>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new variable: treatment-related flag</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>ae_with_flag <span class="ot">&lt;-</span> ae <span class="sc">%&gt;%</span></span>
@@ -827,10 +1339,53 @@ $ EXENDY   &lt;dbl&gt; 15, 168, 182, 23, 28, 14, 172, 180, 14, 15, 170, 183, 14,
  483  704    4 </code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What changed?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-30" class="callout-30-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>ae_with_flag</code> has <strong>one more column</strong> than <code>ae</code> - the new <code>AEREL_FLAG</code> variable you just derived. Row count is unchanged. The <code>table()</code> output shows you the <strong>distribution</strong> of this new flag:</p>
+<ul>
+<li><strong>Y</strong>: AEs where the investigator assessed the event as <em>probably</em> or <em>possibly</em> related to the study drug - these are <strong>treatment-related</strong> AEs, a critical subset for benefit-risk assessment.</li>
+<li><strong>N</strong>: AEs not considered related to treatment.</li>
+<li><strong><code>&lt;NA&gt;</code></strong>: If any subjects had a missing <code>AEREL</code> value, <code>if_else()</code> propagates <code>NA</code>. The <code>useNA = "ifany"</code> argument in <code>table()</code> makes missing values visible - always check for NAs before assuming your flag is complete.</li>
+</ul>
+<p>The ratio of Y to total tells you the <strong>treatment-related AE rate</strong> - a key safety metric in every clinical study report.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="operation-4-group_by-summarise---aggregate-data" class="level3" data-number="7.4">
 <h3 data-number="7.4" class="anchored" data-anchor-id="operation-4-group_by-summarise---aggregate-data"><span class="header-section-number">7.4</span> Operation 4: <code>group_by()</code> + <code>summarise()</code> - Aggregate Data</h3>
 <p>Count adverse events by System Organ Class (SOC).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How <code>group_by()</code> + <code>summarise()</code> works
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-31" class="callout-31-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>group_by()</code> silently marks the data frame with grouping information - it doesn’t visibly change the data. <code>summarise()</code> then <strong>collapses</strong> each group into a single summary row using the aggregation functions you provide:</p>
+<ul>
+<li><code>n()</code> counts the total number of rows in the group (= total events)</li>
+<li><code>n_distinct(USUBJID)</code> counts the number of <em>unique</em> subjects in the group</li>
+</ul>
+<p>The difference between <code>n()</code> and <code>n_distinct()</code> is important: a subject who experiences the same SOC twice would contribute 2 to <code>n_events</code> but only 1 to <code>n_subjects</code>. Regulatory tables typically report <strong>subjects</strong>, not events, to avoid overcounting. <code>arrange(desc(...))</code> then sorts from highest to lowest. <a href="https://dplyr.tidyverse.org/articles/grouping.html">(Reference: dplyr <code>group_by()</code> + <code>summarise()</code> documentation)</a></p>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count AEs by System Organ Class</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>ae_by_soc <span class="ot">&lt;-</span> ae <span class="sc">%&gt;%</span></span>
@@ -859,10 +1414,48 @@ $ EXENDY   &lt;dbl&gt; 15, 168, 182, 23, 28, 14, 172, 180, 14, 15, 170, 183, 14,
 10 INJURY, POISONING AND PROCEDURAL COMPLICATIONS             29         14</code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What changed?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-32" class="callout-32-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>ae_by_soc</code> is a <strong>completely transformed</strong> data frame:</p>
+<ul>
+<li><strong>Before</strong>: <code>ae</code> had one row per adverse event record (many rows, many columns).</li>
+<li><strong>After</strong>: <code>ae_by_soc</code> has one row per <strong>System Organ Class</strong> (few rows, 3 columns: <code>AEBODSYS</code>, <code>n_events</code>, <code>n_subjects</code>).</li>
+</ul>
+<p>This is the power of <code>group_by()</code> + <code>summarise()</code> - it condenses detailed transactional data into an analytical summary. The result, sorted by <code>n_events</code> descending, gives you an instant view of which organ systems are most affected in this trial. This is the backbone of the <strong>MedDRA SOC-level adverse event summary table</strong> that appears in every Clinical Study Report.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="operation-5-arrange---sort-data" class="level3" data-number="7.5">
 <h3 data-number="7.5" class="anchored" data-anchor-id="operation-5-arrange---sort-data"><span class="header-section-number">7.5</span> Operation 5: <code>arrange()</code> - Sort Data</h3>
 <p>Sort AEs by subject and start date.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How <code>arrange()</code> works
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-33" class="callout-33-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>arrange()</code> <strong>reorders rows</strong> based on one or more columns. By default it sorts <strong>ascending</strong> (A→Z for characters, smallest→largest for numbers). Wrap a column in <code>desc()</code> for <strong>descending</strong> order. When you provide multiple columns (like <code>USUBJID, AESTDTC</code>), rows are first sorted by the first column, and ties are broken by the second column. <code>arrange()</code> does not change the columns or the number of rows.</p>
+<p>In clinical programming, sorting by <code>USUBJID</code> and then chronologically by <code>AESTDTC</code> is a standard step before creating subject-level event narratives or listings. <a href="https://dplyr.tidyverse.org/reference/arrange.html">(Reference: dplyr <code>arrange()</code> documentation)</a></p>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort AEs chronologically within each subject</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>ae_sorted <span class="ot">&lt;-</span> ae <span class="sc">%&gt;%</span></span>
@@ -886,10 +1479,54 @@ $ EXENDY   &lt;dbl&gt; 15, 168, 182, 23, 28, 14, 172, 180, 14, 15, 170, 183, 14,
 10 01-701-1034 APPLICATION SITE PRURITUS            2014-08-27 MILD    </code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-34-contents" aria-controls="callout-34" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What changed?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-34" class="callout-34-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The data has the <strong>same rows and columns</strong> as after the <code>select()</code>, but the <strong>order is different</strong>. In the output you should see:</p>
+<ul>
+<li>All rows for a given <code>USUBJID</code> appear together (grouped by subject).</li>
+<li>Within each subject, events are ordered from earliest <code>AESTDTC</code> to latest.</li>
+<li>This chronological view lets you read a subject’s adverse event timeline from top to bottom - essential for writing individual patient narratives in safety reports and for detecting whether adverse events overlap or follow one another.</li>
+</ul>
+<p>Note: <code>AESTDTC</code> is a character string in ISO 8601 format (<code>YYYY-MM-DD</code>). Alphabetical sorting of ISO 8601 dates happens to be chronologically correct - another reason CDISC mandates this date format.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="bonus-operation-6-anti_join---find-missing-data" class="level3" data-number="7.6">
 <h3 data-number="7.6" class="anchored" data-anchor-id="bonus-operation-6-anti_join---find-missing-data"><span class="header-section-number">7.6</span> Bonus Operation 6: <code>anti_join()</code> - Find Missing Data</h3>
 <p>Find subjects in DM who have no adverse events (useful for data QC).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How <code>anti_join()</code> works
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-35" class="callout-35-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>anti_join(x, y, by = "key")</code> returns all rows from <code>x</code> where the key value is <strong>not found</strong> in <code>y</code>. Think of it as a “NOT IN” filter. It is one of the most useful functions for <strong>data quality checking</strong> in clinical programming:</p>
+<ul>
+<li>Find subjects in DM with no exposure records (potential protocol deviations)</li>
+<li>Find subjects with lab results but no demographics (orphan records)</li>
+<li>Find AE records for subjects not in DM (invalid USUBJIDs)</li>
+</ul>
+<p>Only the columns from the left-hand dataset (<code>x</code>) are returned - no columns from <code>y</code> are added. <a href="https://dplyr.tidyverse.org/reference/filter-joins.html">(Reference: dplyr filtering joins documentation)</a></p>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find subjects with NO adverse events</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>subjects_no_ae <span class="ot">&lt;-</span> dm <span class="sc">%&gt;%</span></span>
@@ -899,6 +1536,22 @@ $ EXENDY   &lt;dbl&gt; 15, 168, 182, 23, 28, 14, 172, 180, 14, 15, 170, 183, 14,
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Subjects with no AEs:"</span>, <span class="fu">nrow</span>(subjects_no_ae), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Subjects with no AEs: 81 </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-36-contents" aria-controls="callout-36" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What just happened?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-36" class="callout-36-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>subjects_no_ae</code> contains only the DM subjects whose <code>USUBJID</code> does <strong>not</strong> appear anywhere in the AE domain. The count tells you how many enrolled subjects experienced zero adverse events during the trial. This information is used when calculating <strong>incidence rates</strong> - the denominator must include <em>all</em> subjects, not just those with AEs. It’s also a useful data QC check: in some trials, every subject is expected to have at least one medical history AE entry; a subject with no AE records at all might indicate a data collection gap.</p>
+</div>
 </div>
 </div>
 <hr>
@@ -965,8 +1618,175 @@ $ EXENDY   &lt;dbl&gt; 15, 168, 182, 23, 28, 14, 172, 180, 14, 15, 170, 183, 14,
 </ul>
 <hr>
 </section>
-<section id="whats-next" class="level2" data-number="11">
-<h2 data-number="11" class="anchored" data-anchor-id="whats-next"><span class="header-section-number">11</span> What’s Next?</h2>
+<section id="frequently-asked-questions" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="frequently-asked-questions"><span class="header-section-number">11</span> Frequently Asked Questions</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-37-contents" aria-controls="callout-37" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What is the difference between SDTM and ADaM? When should I use each?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-37" class="callout-37-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>SDTM (Study Data Tabulation Model)</strong> is the <em>raw-to-standardized</em> transformation layer. Its purpose is to faithfully represent the collected data in a consistent, submission-ready format - minimal derivations, maximum traceability. Every SDTM variable should map directly back to a source CRF field or lab system.</p>
+<p><strong>ADaM (Analysis Data Model)</strong> is the <em>analysis-ready</em> layer. It derives new variables (e.g., baseline flags, analysis windows, treatment-emergent flags, study day calculations) that are needed to produce the statistical outputs in your Clinical Study Report.</p>
+<p><strong>Rule of thumb</strong>: If a statistician needs to compute something, it lives in ADaM. If it was collected directly from the subject, it lives in SDTM. Never perform analysis directly on raw SDTM without first deriving the needed ADaM variables - this ensures reproducibility and regulatory traceability.</p>
+<p><a href="https://www.cdisc.org/standards/foundational/adam">Reference: CDISC ADaM Overview</a></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-38-contents" aria-controls="callout-38" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why are SDTM date variables stored as character strings instead of R Date objects?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-38" class="callout-38-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>SDTM uses <strong>ISO 8601</strong> format for dates and times (e.g., <code>"2014-01-02"</code>, <code>"2014-01-02T08:30:00"</code>). One key reason they remain character strings in SDTM is that <strong>partial dates are allowed</strong> - a subject might have an adverse event where only the year and month are known (<code>"2014-01"</code>), or even just the year (<code>"2014"</code>). R’s <code>Date</code> class cannot represent partial dates.</p>
+<p>In ADaM, <code>admiral</code> provides dedicated functions like <code>derive_vars_dt()</code> and <code>derive_vars_dtm()</code> that convert ISO 8601 character strings to proper R <code>Date</code> or <code>POSIXct</code> objects, imputing partial dates according to CDISC rules.</p>
+<p><a href="https://pharmaverse.github.io/admiral/articles/imputation.html">Reference: admiral - Date and Time Imputation</a></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-39-contents" aria-controls="callout-39" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What is the <code>%&gt;%</code> (pipe) operator and should I use <code>|&gt;</code> instead?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-39" class="callout-39-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The <code>%&gt;%</code> operator comes from the <code>magrittr</code> package (re-exported by <code>dplyr</code>). It passes the object on its left as the <strong>first argument</strong> to the function on its right, allowing you to chain operations into readable pipelines instead of nesting function calls.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Without pipe (hard to read):</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">arrange</span>(<span class="fu">select</span>(ae, USUBJID, AEDECOD), USUBJID), <span class="dv">5</span>)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># With pipe (reads left-to-right like a sentence):</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>ae <span class="sc">%&gt;%</span> <span class="fu">select</span>(USUBJID, AEDECOD) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(USUBJID) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>R 4.1+ introduced the <strong>native pipe</strong> <code>|&gt;</code> which works similarly but has no package dependency. For most tidyverse/pharmaverse code, both are interchangeable. The main difference is that <code>|&gt;</code> requires R ≥ 4.1 and does not support the <code>.</code> placeholder that <code>%&gt;%</code> allows. New pharmaverse code is gradually migrating to <code>|&gt;</code>.</p>
+<p><a href="https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/">Reference: R 4.1 release notes - Native pipe</a></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-40-contents" aria-controls="callout-40" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What does <code>dplyr::n()</code> vs <code>dplyr::n_distinct()</code> mean, and when should I use each?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-40" class="callout-40-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong><code>n()</code></strong> counts the <strong>total number of rows</strong> in the current group. If a subject appears 5 times in the group (5 AE records), <code>n()</code> counts all 5.</li>
+<li><strong><code>n_distinct(USUBJID)</code></strong> counts the number of <strong>unique values</strong> of <code>USUBJID</code> in the group. If the same subject appears 5 times, <code>n_distinct(USUBJID)</code> counts them as 1.</li>
+</ul>
+<p>In clinical reporting, regulatory guidance (ICH E9) and FDA expectations require adverse event tables to report <strong>subject counts</strong> (<code>n_distinct</code>), not event counts (<code>n()</code>), in the primary summary. Event counts are reported separately. Always ask: “Am I counting <em>occurrences</em> or <em>people</em>?”</p>
+<p><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">Reference: dplyr <code>n_distinct()</code> documentation</a></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-41-contents" aria-controls="callout-41" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What is a <code>.xpt</code> file and why does clinical data need to be exported as one?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-41" class="callout-41-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A <strong>SAS Transport File (<code>.xpt</code>)</strong> is a format originally developed by SAS Institute for transferring datasets between different SAS versions and platforms. The FDA and EMA mandate <code>.xpt</code> format for electronic submissions because it is a well-documented, stable binary format that regulatory reviewers’ SAS systems can reliably read, regardless of the sponsor’s software environment.</p>
+<p>Even though pharmaverse teams work in R, the final submission datasets must be exported as <code>.xpt</code> files. The <code>haven</code> package can read and write <code>.xpt</code> files in R, and <code>xportr</code> adds the layer of applying CDISC metadata (variable labels, lengths, formats) before export to ensure the <code>.xpt</code> file meets submission standards.</p>
+<p><a href="https://www.fda.gov/media/88173/download">Reference: FDA Study Data Technical Conformance Guide</a></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-42-contents" aria-controls="callout-42" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What is <code>AEREL</code> and what values can it take in SDTM?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-42" class="callout-42-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>AEREL</code> is the <strong>causality assessment</strong> variable in the AE domain - it records the investigator’s judgment about whether the adverse event was caused by the study drug. The CDISC SDTMIG defines controlled terminology for this variable via the <strong>CDISC CT (Controlled Terminology)</strong> codelist <code>C66726</code>:</p>
+<ul>
+<li><code>UNLIKELY</code> - The event is unlikely to be related to the study drug</li>
+<li><code>POSSIBLE</code> - There is a reasonable possibility the event could be related</li>
+<li><code>PROBABLE</code> - The event is probably related to the study drug</li>
+<li><code>DEFINITELY RELATED</code> - The event is definitively related</li>
+<li><code>NOT RELATED</code> - No relationship to the study drug</li>
+</ul>
+<p>Some sponsors use a simpler Yes/No relatedness flag (<code>AEOUT</code>). The exact values used in your study must match your study-specific annotated CRF and the controlled terminology published by CDISC.</p>
+<p><a href="https://www.cdisc.org/standards/terminology/controlled-terminology">Reference: CDISC Controlled Terminology - AE Causality</a></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-43-contents" aria-controls="callout-43" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why does <code>inner_join()</code> sometimes produce more rows than the left dataset?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-43" class="callout-43-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This happens when the <strong>right-hand dataset has duplicate key values</strong>. For example, if a subject appears 3 times in AE (3 adverse events), and you join DM (1 row for that subject) to AE using <code>inner_join</code>, the result has 3 rows for that subject - the DM row is duplicated once for each matching AE row. This is expected and correct behavior for a one-to-many relationship.</p>
+<p>If you accidentally end up with <em>more</em> rows than expected after a join, check for unintended duplicate keys in either dataset using:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>ae <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">count</span>(USUBJID) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is a common source of row inflation bugs in clinical programming and should always be verified.</p>
+<p><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">Reference: dplyr Joins documentation</a></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-44-contents" aria-controls="callout-44" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What is the pharmaverse and is it endorsed by regulatory agencies?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-44" class="callout-44-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The <a href="https://pharmaverse.org">pharmaverse</a> is a voluntary, cross-industry consortium of pharmaceutical companies (including Roche, GSK, Pfizer, Novartis, and many others) that collaboratively develops and maintains R packages for clinical reporting. It is <strong>not</strong> an official regulatory body and its packages are not “certified” by the FDA or EMA.</p>
+<p>However, the FDA has indicated openness to R-based submissions and the packages are built to comply with CDISC standards, which <em>are</em> regulatory requirements. The <code>admiral</code> package, in particular, generates ADaM datasets that are structurally identical to what production SAS programs would produce - it has been used in actual regulatory submissions.</p>
+<p>The key validation requirement is that <strong>your company</strong> validates the use of any software (including R packages) in a submission context, following your own SOPs and potentially using tools like <code>valtools</code> or <code>thevalidatoR</code>.</p>
+<p><a href="https://pharmaverse.org/contribute/wg/">Reference: pharmaverse.org - About</a></p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="whats-next" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="whats-next"><span class="header-section-number">12</span> What’s Next?</h2>
 <p>In <strong>Day 2</strong>, we’ll dive deeper into: - SDTM domain classes and their specific structures - Advanced tidyverse operations - Variable naming conventions (–TESTCD, –ORRES, –DY patterns) - Creating data summaries by treatment arm</p>
 <p><a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&amp;label=Visits%20till%20date&amp;countColor=%23263759&amp;style=plastic&amp;labelStyle=none"></a></p>
 

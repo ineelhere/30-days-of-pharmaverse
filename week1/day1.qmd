@@ -63,6 +63,12 @@ Raw Data → SDTM → ADaM → TLFs
 | **ADaM** | Analysis Data Model - analysis-ready datasets | ADSL, ADAE, ADLB |
 | **TLFs** | Tables, Listings, and Figures for submission | Demographics table, AE summary |
 
+::: {.callout-note collapse="true"}
+## Why does this flow matter?
+
+Think of this pipeline like a factory assembly line. Raw data arrives in messy, inconsistent shapes - different sponsors, different EDC vendors, different column names. SDTM is the **standardization** step: every study's data gets reshaped into the same structure so the FDA (and your future self) can always find the same variable in the same place. ADaM then **derives** analysis-ready variables from that standardized base, and TLFs are the **final output** - the actual tables and figures that go into your Clinical Study Report (CSR). Skipping or muddling any stage creates compliance and reproducibility risks.
+:::
+
 ### What is the Pharmaverse?
 
 The **pharmaverse** is a cross-industry collaboration of R packages designed for clinical reporting workflows. It provides open-source tools that map to each stage of the CDISC data flow:
@@ -71,6 +77,12 @@ The **pharmaverse** is a cross-industry collaboration of R packages designed for
 -   **ADaM creation**: `admiral` (the flagship package)
 -   **TLG creation**: `rtables`, `tern`, `tfrmt`
 -   **Validation & Export**: `xportr`, `metacore`, `sdtmchecks`
+
+::: {.callout-tip collapse="true"}
+## What is `pharmaversesdtm`?
+
+`pharmaversesdtm` ships pre-built, realistic SDTM datasets based on a fictional Phase III clinical trial. These datasets follow the official CDISC SDTM Implementation Guide (SDTMIG) and are the same ones used internally by the `admiral` development team for testing. You can browse them at the [pharmaversesdtm GitHub repository](https://github.com/pharmaverse/pharmaversesdtm).
+:::
 
 ------------------------------------------------------------------------
 
@@ -92,6 +104,12 @@ The following packages are essential for today's exercises. Each serves a specif
 
 The code below checks if each package is installed and installs it if missing. This is a safe pattern that won't reinstall packages you already have.
 
+::: {.callout-note collapse="true"}
+## How `requireNamespace()` works
+
+`requireNamespace("pkg", quietly = TRUE)` tries to locate the package without actually loading it into your session. It returns `TRUE` if the package is found, `FALSE` if not. Wrapping it in `!` (logical NOT) flips the result - so the `install.packages()` call inside the `if` block only fires when the package is **not** installed. The `quietly = TRUE` argument suppresses any console messages during the check. This is the idiomatic way to write conditional installs in R scripts. [(Reference: R documentation for `requireNamespace`)](https://stat.ethz.ch/R-manual/R-devel/library/base/html/ns-load.html)
+:::
+
 ```{r}
 #| label: install-packages
 
@@ -103,9 +121,25 @@ if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
 if (!requireNamespace("haven", quietly = TRUE)) install.packages("haven")
 ```
 
+::: {.callout-tip collapse="true"}
+## What just happened?
+
+R checked your local package library for each package. If a package was missing, it downloaded and installed it from CRAN. If it was already installed, nothing happened - no unnecessary downloads, no version conflicts. You can verify what's installed by running `installed.packages()[, c("Package", "Version")]` in your console.
+:::
+
 ### Step 2: Load Packages
 
 Now we load the packages into our R session. The `library()` function makes all functions from a package available for use.
+
+::: {.callout-note collapse="true"}
+## `library()` vs `require()` vs `requireNamespace()`
+
+- **`library(pkg)`** - loads the package and **errors** if it's not found. Use this at the top of scripts/Quarto files.  
+- **`require(pkg)`** - loads the package and **warns** (but doesn't error) if not found. Commonly used inside functions.  
+- **`requireNamespace(pkg)`** - checks existence *without* attaching the package to your session. Used for conditional installs (as above).
+
+For day-to-day scripts, `library()` is the right choice because a hard error is better than silently continuing without a needed package. [(Reference: Hadley Wickham's *R Packages* - Namespaces)](https://r-pkgs.org/namespace.html)
+:::
 
 ```{r}
 #| label: load-packages
@@ -118,10 +152,16 @@ library(haven)
 library(xportr)
 ```
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## What do these messages mean?
 
 When you load packages, you may see messages about package versions and any function name conflicts. This is normal and helps you understand which package's function will be used when names overlap.
+:::
+
+::: {.callout-tip collapse="true"}
+## What just happened?
+
+After running the `library()` calls, all exported functions from these five packages are now available in your global environment. For example, you can now type `admiral::derive_vars_dt()` or just `derive_vars_dt()` directly. If you see a warning like `The following object is masked from 'package:X': filter`, it means two packages export a function with the same name - R will use the **most recently loaded** one. You can always be explicit, e.g., `dplyr::filter()`, to avoid ambiguity. Run `search()` in your console to see the full list of attached packages in the order R searches them.
 :::
 
 ------------------------------------------------------------------------
@@ -144,9 +184,27 @@ SDTM organizes clinical data into **domains**, each representing a specific type
 | **Findings**        | LB     | Laboratory Results                         |
 | **Findings**        | VS     | Vital Signs                                |
 
+::: {.callout-note collapse="true"}
+## Domain classes and their structure rules
+
+The SDTMIG defines three main **observation classes** with strict structural rules:
+
+- **Events** (AE, DS, CE…): Things that *happened* to the subject. Each row is a distinct occurrence. Key variable: `--TERM` (the verbatim text) and `--DECOD` (the standardized dictionary term).  
+- **Interventions** (EX, CM, PR…): Things that were *given to or done for* the subject. Each row is a treatment record. Key variable: `--TRT` (treatment name).  
+- **Findings** (LB, VS, EG…): Measurements or observations *collected from* the subject. Each row is a single result. Key variables: `--TESTCD` (short test code) and `--ORRES` (original result).
+
+The **Special Purpose** domains (DM, CO, SE, SV) don't follow the three-class model; they have their own SDTMIG-specified structures.
+:::
+
 ### Step 3: Load the Core SDTM Domains
 
 Let's load four key domains that we'll work with today:
+
+::: {.callout-note collapse="true"}
+## How `data()` loads package datasets
+
+`data("dm", package = "pharmaversesdtm")` reaches into the `pharmaversesdtm` package's `data/` folder and loads the `dm` object into your global environment. Without the `package =` argument, R searches all attached packages. After this call, `dm` is a plain R `data.frame` (or `tibble`) sitting in your workspace - just like one you'd import from a CSV. [(Reference: R documentation - `data()`)](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/data.html)
+:::
 
 ```{r}
 #| label: load-sdtm-data
@@ -165,6 +223,12 @@ data("ex", package = "pharmaversesdtm")
 data("lb", package = "pharmaversesdtm")
 ```
 
+::: {.callout-tip collapse="true"}
+## What just happened?
+
+Four new objects - `dm`, `ae`, `ex`, and `lb` - have been created in your R global environment. You can confirm this by running `ls()` in the console, which lists all objects currently in memory. Each is a `data.frame` (with `haven`-style labelled attributes, since SDTM datasets mimic SAS transport format). You can inspect labels with `attr(dm$ARM, "label")`.
+:::
+
 ------------------------------------------------------------------------
 
 ## Exploring the Data
@@ -175,6 +239,18 @@ Before working with any dataset, it's essential to understand its structure. Let
 
 The `glimpse()` function from `dplyr` provides a compact view of the data structure, showing column names, types, and a preview of values.
 
+::: {.callout-note collapse="true"}
+## What does `glimpse()` show you?
+
+`glimpse()` is essentially a **transposed** version of `print()`. For each column it shows:
+
+- The **column name** (e.g., `USUBJID`)  
+- The **data type** in abbreviated form: `<chr>` = character, `<dbl>` = double/numeric, `<lgl>` = logical, `<date>` = Date, `<dttm>` = POSIXct datetime  
+- A **sample of values** from the first few rows
+
+This is especially useful for wide datasets (many columns) where a regular `print()` would wrap awkwardly. [(Reference: dplyr `glimpse()` documentation)](https://dplyr.tidyverse.org/reference/glimpse.html)
+:::
+
 ```{r}
 #| label: explore-dm
 
@@ -183,7 +259,18 @@ The `glimpse()` function from `dplyr` provides a compact view of the data struct
 dplyr::glimpse(dm)
 ```
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
+## Reading the output
+
+After running `glimpse(dm)`, look for:
+
+- **Rows**: The total number of subjects. In SDTM DM, this should be **one row per subject** - a fundamental SDTMIG rule.
+- **Columns**: The number of variables in the domain.
+- **Column types**: Most SDTM character variables (like `USUBJID`, `ARM`, `SEX`) will show `<chr>`. Numeric variables like `AGE` will show `<dbl>`. Date/time character variables (ISO 8601 format, e.g., `RFSTDTC`) remain `<chr>` in SDTM - they get converted to proper Date objects only in ADaM.
+- **Values**: Scan the `ARM` column - you'll see the treatment arm labels for this trial. Scan `ACTARM` to see if any subjects received something different from their planned arm.
+:::
+
+::: {.callout-tip collapse="true"}
 ## Key DM Variables
 
 -   **USUBJID**: Unique Subject Identifier - the key that links all domains together
@@ -197,6 +284,16 @@ dplyr::glimpse(dm)
 
 The `head()` function shows the first n rows of data (default is 6).
 
+::: {.callout-note collapse="true"}
+## `head()` vs `tail()` vs `slice()`
+
+- **`head(df, n)`** - first `n` rows (default 6). Useful for a quick sanity check.  
+- **`tail(df, n)`** - last `n` rows. Useful for checking if sorting worked correctly or if data was appended properly.  
+- **`dplyr::slice(df, rows)`** - select any arbitrary rows by position. More flexible for exploring middle sections of large datasets.
+
+For very wide datasets, even `head()` output can be hard to read in the console. In those cases, `View(head(df))` opens the RStudio data viewer for a spreadsheet-style look. [(Reference: R documentation - `head()`)](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/head.html)
+:::
+
 ```{r}
 #| label: head-ae
 
@@ -204,7 +301,24 @@ The `head()` function shows the first n rows of data (default is 6).
 utils::head(ae)
 ```
 
+::: {.callout-tip collapse="true"}
+## What to look for in the AE output
+
+- **Multiple rows per subject**: Unlike DM, you'll see the same `USUBJID` appearing more than once - each row is a different adverse event for that subject.
+- **`AEDECOD`**: The MedDRA-standardized Preferred Term for the adverse event. This is what gets used in safety tables.
+- **`AEBODSYS`**: The MedDRA System Organ Class (SOC). Used for grouping in safety summaries.
+- **`AESEV`**: Severity - typically `MILD`, `MODERATE`, or `SEVERE`.
+- **`AESER`**: Serious flag - `Y` = serious, `N` = non-serious. This drives regulatory safety reporting obligations.
+- **Date columns** (`AESTDTC`, `AEENDTC`): Stored as ISO 8601 character strings (e.g., `"2014-01-02"`). These will be converted to numeric study-day variables (`AESTDY`) in ADaM.
+:::
+
 ### Method 3: `dim()` and `names()` - Dimensions and Column Names
+
+::: {.callout-note collapse="true"}
+## Understanding `dim()`, `nrow()`, and `ncol()`
+
+`dim(df)` returns a numeric vector of length 2: `c(nrow, ncol)`. So `dim(dm)[1]` gives you the row count and `dim(dm)[2]` gives the column count. You can also use the dedicated `nrow(df)` and `ncol(df)` functions for readability. The `cat()` function here concatenates and prints the text + number together in a readable line. `"\n"` inserts a newline character so each result prints on its own line. [(Reference: R documentation - `dim()`)](https://stat.ethz.ch/R-manual/R-devel/library/base/html/dim.html)
+:::
 
 ```{r}
 #| label: explore-dimensions
@@ -216,12 +330,33 @@ cat("EX dimensions:", dim(ex), "\n")
 cat("LB dimensions:", dim(lb), "\n")
 ```
 
+::: {.callout-tip collapse="true"}
+## Interpreting the dimensions
+
+The two numbers printed for each domain are **[rows] [columns]**. You should notice:
+
+- **DM** has the fewest rows - one per subject. This is the "spine" of your trial.
+- **AE** has more rows than DM - multiple adverse events can occur per subject.
+- **LB** typically has the *most* rows of any domain - lab panels are collected repeatedly over many visits, creating a large number of records per subject.
+- The column count reflects how many SDTM variables that domain collects. LB has many columns because it captures rich measurement metadata (units, reference ranges, methods, etc.).
+
+Compare `nrow(ae)` to `nrow(dm)` - the ratio gives you an intuitive feel for how "event-heavy" this trial is.
+:::
+
 ```{r}
 #| label: explore-names
 
 # What variables are in the AE domain?
 names(ae)
 ```
+
+::: {.callout-tip collapse="true"}
+## Reading `names()` output
+
+`names()` returns a character vector of all column names. In SDTM, variable names follow a strict two-part convention: a **domain prefix** (usually 2 characters, e.g., `AE`) followed by a **core variable name suffix** (e.g., `TERM`, `DECOD`, `SEV`). So `AEDECOD` = AE domain + DECOD suffix. This naming convention is defined in the SDTMIG and makes variables instantly recognizable across domains - `AESTDTC`, `LBSTDTC`, and `EXSTDTC` all mean "start date/time" for their respective domains.
+
+Variables without a domain prefix (like `USUBJID`, `STUDYID`, `DOMAIN`) are **identifier variables** shared across all domains.
+:::
 
 ------------------------------------------------------------------------
 
@@ -246,9 +381,21 @@ One of the most important concepts in clinical programming is understanding how 
 └────────┘  └───────┘  └───────┘  └────────┘
 ```
 
+::: {.callout-note collapse="true"}
+## Why USUBJID is always a character variable
+
+`USUBJID` is always stored as a **character** (`<chr>`) string, never a number, even though it often contains digits. This is because it is a **concatenated identifier** - typically structured as `"STUDYID-SITEID-SUBJECTID"` (e.g., `"CDISCPILOT01-01-701"`). Treating it as numeric would risk stripping leading zeros, causing mismatches when joining domains. Always use `==` for exact string matching, never numeric comparisons. [(Reference: CDISC SDTM Implementation Guide - Identifier Variables)](https://www.cdisc.org/standards/foundational/sdtm/sdtm-implementation-guide-v3-4)
+:::
+
 ### Step 4: Join DM and AE (Demographics + Adverse Events)
 
 When analyzing adverse events, we often need demographic information like treatment arm. Let's join these domains.
+
+::: {.callout-note collapse="true"}
+## What is a join and why do we need it?
+
+In relational data, information is split across multiple tables to avoid duplication. DM stores demographic info (one row per subject) while AE stores adverse events (many rows per subject). To analyze AEs by treatment arm, we need to *combine* these - that's what a **join** does. We match rows from two tables based on a shared key column (here: `USUBJID`). The `dplyr::select()` before the join ensures we only bring in the specific DM columns we need, keeping the result clean. [(Reference: dplyr two-table verbs documentation)](https://dplyr.tidyverse.org/articles/two-table.html)
+:::
 
 ```{r}
 #| label: join-dm-ae
@@ -269,7 +416,17 @@ cat("Number of AE records with demographic info:", nrow(dm_ae), "\n")
 utils::head(dm_ae)
 ```
 
-::: callout-note
+::: {.callout-tip collapse="true"}
+## What changed after the join?
+
+Before the join, `ae` had its own set of columns and rows. After the join:
+
+- **Row count**: `nrow(dm_ae)` equals `nrow(ae)` (since every AE record should match a subject in DM for a clean trial dataset). If these numbers differed, it would flag a data quality issue - AE records for subjects not in DM.
+- **Column count**: `dm_ae` now has **7 columns from DM** (USUBJID, RFSTDTC, RFENDTC, ARM, AGE, SEX, RACE) **+ all columns from AE**, minus one USUBJID since the key is merged. This is the "enriched" AE dataset with demographic context.
+- **New columns visible**: In the `head()` output you'll now see `ARM`, `AGE`, `SEX`, `RACE` appearing alongside `AEDECOD`, `AESEV`, etc. - this combination is what allows you to break down AEs by treatment arm in safety tables.
+:::
+
+::: {.callout-note collapse="true"}
 ## Why use `inner_join()`?
 
 -   **inner_join()**: Keeps only rows where USUBJID exists in BOTH datasets
@@ -280,6 +437,18 @@ utils::head(dm_ae)
 ### Step 5: Join DM and EX (Demographics + Exposure)
 
 Exposure data tells us about drug dosing. Let's combine this with demographics.
+
+::: {.callout-note collapse="true"}
+## What is the EX domain used for?
+
+The **EX (Exposure)** domain records every dose of study drug administered to a subject - the drug name, dose, dose unit, route of administration, and start/end dates. In ADaM, EX is the primary source for:
+
+- Calculating **treatment-emergent** flags (was the AE after the first dose?)
+- Deriving **last dose date** (used for safety follow-up windows)
+- Computing **dose intensity** and **total exposure** for pharmacokinetic analyses
+
+A subject can have multiple EX rows if they received multiple doses, dose changes, or multiple study periods. [(Reference: CDISC SDTMIG - EX Domain)](https://www.cdisc.org/standards/foundational/sdtm/sdtm-implementation-guide-v3-4)
+:::
 
 ```{r}
 #| label: join-dm-ex
@@ -293,6 +462,16 @@ dm_ex <- dm %>%
 dplyr::glimpse(dm_ex)
 ```
 
+::: {.callout-tip collapse="true"}
+## What changed after the DM-EX join?
+
+`glimpse(dm_ex)` shows you:
+
+- **Rows**: Equal to `nrow(ex)` - one row per dosing record (not per subject). A subject receiving 10 doses contributes 10 rows.
+- **Columns**: The 4 selected DM variables (USUBJID, ARM, AGE, SEX) have been added to all EX columns. You should now see both `ARM` (from DM) and `EXTRT` (the actual drug name from EX) side by side - useful for verifying that subjects in the "Placebo" arm received the placebo drug and not an active compound.
+- **Data types**: Notice that EX dose variables like `EXDOSE` will be `<dbl>` (numeric), while most other EX variables are `<chr>`. The date variables `EXSTDTC` and `EXENDTC` are ISO 8601 character strings, just like in AE.
+:::
+
 ------------------------------------------------------------------------
 
 ## Hands-On: 5+ dplyr Operations
@@ -302,6 +481,20 @@ The deliverable for Day 1 requires demonstrating at least 5 `dplyr` operations. 
 ### Operation 1: `filter()` - Subset Rows
 
 Filter AEs to show only serious adverse events (SAEs).
+
+::: {.callout-note collapse="true"}
+## How `filter()` works
+
+`filter()` evaluates a logical condition for **every row** and keeps only those where the condition is `TRUE`. `AESER == "Y"` compares the value in the `AESER` column to the string `"Y"` - the double equals `==` is a comparison (not assignment). You can combine multiple conditions with:
+
+- `&` or `,` for AND (both must be true)
+- `|` for OR (either can be true)
+- `!` for NOT (negates the condition)
+
+Example: `filter(AESER == "Y" & AESEV == "SEVERE")` for serious AND severe AEs.
+
+[(Reference: dplyr `filter()` documentation)](https://dplyr.tidyverse.org/reference/filter.html)
+:::
 
 ```{r}
 #| label: dplyr-filter
@@ -314,9 +507,32 @@ cat("Total AEs:", nrow(ae), "\n")
 cat("Serious AEs:", nrow(serious_aes), "\n")
 ```
 
+::: {.callout-tip collapse="true"}
+## What just happened?
+
+`serious_aes` is a **subset** of `ae` with the exact same columns but fewer rows. The two `cat()` lines reveal:
+
+- How many total adverse events were recorded in the trial.
+- How many of those were flagged as **serious** (`AESER == "Y"`). 
+
+The difference is the count of **non-serious** AEs. In clinical trials, serious AEs trigger expedited regulatory reporting (e.g., 7-day or 15-day safety reports to the FDA), so isolating them quickly is an everyday task for safety programmers. The percentage of serious AEs relative to total AEs is a key metric reviewed by Data Safety Monitoring Boards (DSMBs).
+:::
+
 ### Operation 2: `select()` - Choose Columns
 
 Select only the variables we need for a quick AE overview.
+
+::: {.callout-note collapse="true"}
+## How `select()` works
+
+`select()` subsets **columns** (variables), not rows. It takes column names (unquoted) as arguments. You can also:
+
+- **Drop columns** by prefixing with `-`: `select(-STUDYID, -DOMAIN)`
+- **Rename during selection**: `select(Subject = USUBJID, Event = AEDECOD)`
+- **Use helper functions**: `select(starts_with("AE"))` selects all columns beginning with "AE"; `select(contains("DTC"))` grabs all date columns.
+
+`select()` does **not** change row count - it only changes column count. [(Reference: dplyr `select()` documentation)](https://dplyr.tidyverse.org/reference/select.html)
+:::
 
 ```{r}
 #| label: dplyr-select
@@ -328,9 +544,23 @@ ae_summary <- ae %>%
 utils::head(ae_summary)
 ```
 
+::: {.callout-tip collapse="true"}
+## What changed?
+
+Compare `ncol(ae)` vs `ncol(ae_summary)` - the full AE domain has many more columns than the 6 we selected. The row count is **identical** to `ae`. `ae_summary` is a focused, readable slice of the data containing just the variables needed for a quick listing of adverse events: who experienced what, how severe, was it serious, and when did it start and end. This pattern - select only what you need - is a best practice that makes downstream code faster and easier to read.
+:::
+
 ### Operation 3: `mutate()` - Create New Variables
 
 Create a flag for treatment-related adverse events.
+
+::: {.callout-note collapse="true"}
+## How `mutate()` works
+
+`mutate()` **adds new columns** (or overwrites existing ones) without changing the row count. Every expression inside `mutate()` is evaluated for each row. `dplyr::if_else(condition, true_value, false_value)` is a vectorized conditional - it's safer than base R's `ifelse()` because it enforces consistent data types for both outcomes. 
+
+The `|` operator here means OR - `AEREL == "PROBABLE" | AEREL == "POSSIBLE"` is TRUE if either condition holds. You can chain multiple `mutate()` calls or add many variables in a single call separated by commas. [(Reference: dplyr `mutate()` documentation)](https://dplyr.tidyverse.org/reference/mutate.html)
+:::
 
 ```{r}
 #| label: dplyr-mutate
@@ -346,9 +576,32 @@ ae_with_flag <- ae %>%
 table(ae_with_flag$AEREL_FLAG, useNA = "ifany")
 ```
 
+::: {.callout-tip collapse="true"}
+## What changed?
+
+`ae_with_flag` has **one more column** than `ae` - the new `AEREL_FLAG` variable you just derived. Row count is unchanged. The `table()` output shows you the **distribution** of this new flag:
+
+- **Y**: AEs where the investigator assessed the event as *probably* or *possibly* related to the study drug - these are **treatment-related** AEs, a critical subset for benefit-risk assessment.
+- **N**: AEs not considered related to treatment.
+- **`<NA>`**: If any subjects had a missing `AEREL` value, `if_else()` propagates `NA`. The `useNA = "ifany"` argument in `table()` makes missing values visible - always check for NAs before assuming your flag is complete.
+
+The ratio of Y to total tells you the **treatment-related AE rate** - a key safety metric in every clinical study report.
+:::
+
 ### Operation 4: `group_by()` + `summarise()` - Aggregate Data
 
 Count adverse events by System Organ Class (SOC).
+
+::: {.callout-note collapse="true"}
+## How `group_by()` + `summarise()` works
+
+`group_by()` silently marks the data frame with grouping information - it doesn't visibly change the data. `summarise()` then **collapses** each group into a single summary row using the aggregation functions you provide:
+
+- `n()` counts the total number of rows in the group (= total events)
+- `n_distinct(USUBJID)` counts the number of *unique* subjects in the group
+
+The difference between `n()` and `n_distinct()` is important: a subject who experiences the same SOC twice would contribute 2 to `n_events` but only 1 to `n_subjects`. Regulatory tables typically report **subjects**, not events, to avoid overcounting. `arrange(desc(...))` then sorts from highest to lowest. [(Reference: dplyr `group_by()` + `summarise()` documentation)](https://dplyr.tidyverse.org/articles/grouping.html)
+:::
 
 ```{r}
 #| label: dplyr-summarise
@@ -366,9 +619,28 @@ ae_by_soc <- ae %>%
 utils::head(ae_by_soc, 10)
 ```
 
+::: {.callout-tip collapse="true"}
+## What changed?
+
+`ae_by_soc` is a **completely transformed** data frame:
+
+- **Before**: `ae` had one row per adverse event record (many rows, many columns).
+- **After**: `ae_by_soc` has one row per **System Organ Class** (few rows, 3 columns: `AEBODSYS`, `n_events`, `n_subjects`).
+
+This is the power of `group_by()` + `summarise()` - it condenses detailed transactional data into an analytical summary. The result, sorted by `n_events` descending, gives you an instant view of which organ systems are most affected in this trial. This is the backbone of the **MedDRA SOC-level adverse event summary table** that appears in every Clinical Study Report.
+:::
+
 ### Operation 5: `arrange()` - Sort Data
 
 Sort AEs by subject and start date.
+
+::: {.callout-note collapse="true"}
+## How `arrange()` works
+
+`arrange()` **reorders rows** based on one or more columns. By default it sorts **ascending** (A→Z for characters, smallest→largest for numbers). Wrap a column in `desc()` for **descending** order. When you provide multiple columns (like `USUBJID, AESTDTC`), rows are first sorted by the first column, and ties are broken by the second column. `arrange()` does not change the columns or the number of rows. 
+
+In clinical programming, sorting by `USUBJID` and then chronologically by `AESTDTC` is a standard step before creating subject-level event narratives or listings. [(Reference: dplyr `arrange()` documentation)](https://dplyr.tidyverse.org/reference/arrange.html)
+:::
 
 ```{r}
 #| label: dplyr-arrange
@@ -381,9 +653,33 @@ ae_sorted <- ae %>%
 utils::head(ae_sorted, 10)
 ```
 
+::: {.callout-tip collapse="true"}
+## What changed?
+
+The data has the **same rows and columns** as after the `select()`, but the **order is different**. In the output you should see:
+
+- All rows for a given `USUBJID` appear together (grouped by subject).
+- Within each subject, events are ordered from earliest `AESTDTC` to latest.
+- This chronological view lets you read a subject's adverse event timeline from top to bottom - essential for writing individual patient narratives in safety reports and for detecting whether adverse events overlap or follow one another.
+
+Note: `AESTDTC` is a character string in ISO 8601 format (`YYYY-MM-DD`). Alphabetical sorting of ISO 8601 dates happens to be chronologically correct - another reason CDISC mandates this date format.
+:::
+
 ### Bonus Operation 6: `anti_join()` - Find Missing Data
 
 Find subjects in DM who have no adverse events (useful for data QC).
+
+::: {.callout-note collapse="true"}
+## How `anti_join()` works
+
+`anti_join(x, y, by = "key")` returns all rows from `x` where the key value is **not found** in `y`. Think of it as a "NOT IN" filter. It is one of the most useful functions for **data quality checking** in clinical programming:
+
+- Find subjects in DM with no exposure records (potential protocol deviations)
+- Find subjects with lab results but no demographics (orphan records)
+- Find AE records for subjects not in DM (invalid USUBJIDs)
+
+Only the columns from the left-hand dataset (`x`) are returned - no columns from `y` are added. [(Reference: dplyr filtering joins documentation)](https://dplyr.tidyverse.org/reference/filter-joins.html)
+:::
 
 ```{r}
 #| label: dplyr-antijoin
@@ -395,6 +691,12 @@ subjects_no_ae <- dm %>%
 
 cat("Subjects with no AEs:", nrow(subjects_no_ae), "\n")
 ```
+
+::: {.callout-tip collapse="true"}
+## What just happened?
+
+`subjects_no_ae` contains only the DM subjects whose `USUBJID` does **not** appear anywhere in the AE domain. The count tells you how many enrolled subjects experienced zero adverse events during the trial. This information is used when calculating **incidence rates** - the denominator must include *all* subjects, not just those with AEs. It's also a useful data QC check: in some trials, every subject is expected to have at least one medical history AE entry; a subject with no AE records at all might indicate a data collection gap.
+:::
 
 ------------------------------------------------------------------------
 
@@ -430,6 +732,115 @@ Today you completed the following:
 -   [admiral 'Get Started' vignette](https://pharmaverse.github.io/admiral/articles/admiral.html) - Introduction to ADaM creation
 -   [CDISC SDTM Implementation Guide](https://www.cdisc.org/standards/foundational/sdtm) - Official SDTM documentation
 -   [dplyr documentation](https://dplyr.tidyverse.org/) - Complete reference for data manipulation
+
+------------------------------------------------------------------------
+
+## Frequently Asked Questions
+
+::: {.callout-note collapse="true"}
+## What is the difference between SDTM and ADaM? When should I use each?
+
+**SDTM (Study Data Tabulation Model)** is the *raw-to-standardized* transformation layer. Its purpose is to faithfully represent the collected data in a consistent, submission-ready format - minimal derivations, maximum traceability. Every SDTM variable should map directly back to a source CRF field or lab system.
+
+**ADaM (Analysis Data Model)** is the *analysis-ready* layer. It derives new variables (e.g., baseline flags, analysis windows, treatment-emergent flags, study day calculations) that are needed to produce the statistical outputs in your Clinical Study Report.
+
+**Rule of thumb**: If a statistician needs to compute something, it lives in ADaM. If it was collected directly from the subject, it lives in SDTM. Never perform analysis directly on raw SDTM without first deriving the needed ADaM variables - this ensures reproducibility and regulatory traceability.
+
+[Reference: CDISC ADaM Overview](https://www.cdisc.org/standards/foundational/adam)
+:::
+
+::: {.callout-note collapse="true"}
+## Why are SDTM date variables stored as character strings instead of R Date objects?
+
+SDTM uses **ISO 8601** format for dates and times (e.g., `"2014-01-02"`, `"2014-01-02T08:30:00"`). One key reason they remain character strings in SDTM is that **partial dates are allowed** - a subject might have an adverse event where only the year and month are known (`"2014-01"`), or even just the year (`"2014"`). R's `Date` class cannot represent partial dates. 
+
+In ADaM, `admiral` provides dedicated functions like `derive_vars_dt()` and `derive_vars_dtm()` that convert ISO 8601 character strings to proper R `Date` or `POSIXct` objects, imputing partial dates according to CDISC rules.
+
+[Reference: admiral - Date and Time Imputation](https://pharmaverse.github.io/admiral/articles/imputation.html)
+:::
+
+::: {.callout-note collapse="true"}
+## What is the `%>%` (pipe) operator and should I use `|>` instead?
+
+The `%>%` operator comes from the `magrittr` package (re-exported by `dplyr`). It passes the object on its left as the **first argument** to the function on its right, allowing you to chain operations into readable pipelines instead of nesting function calls.
+
+```r
+# Without pipe (hard to read):
+head(arrange(select(ae, USUBJID, AEDECOD), USUBJID), 5)
+
+# With pipe (reads left-to-right like a sentence):
+ae %>% select(USUBJID, AEDECOD) %>% arrange(USUBJID) %>% head(5)
+```
+
+R 4.1+ introduced the **native pipe** `|>` which works similarly but has no package dependency. For most tidyverse/pharmaverse code, both are interchangeable. The main difference is that `|>` requires R ≥ 4.1 and does not support the `.` placeholder that `%>%` allows. New pharmaverse code is gradually migrating to `|>`.
+
+[Reference: R 4.1 release notes - Native pipe](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/)
+:::
+
+::: {.callout-note collapse="true"}
+## What does `dplyr::n()` vs `dplyr::n_distinct()` mean, and when should I use each?
+
+- **`n()`** counts the **total number of rows** in the current group. If a subject appears 5 times in the group (5 AE records), `n()` counts all 5.
+- **`n_distinct(USUBJID)`** counts the number of **unique values** of `USUBJID` in the group. If the same subject appears 5 times, `n_distinct(USUBJID)` counts them as 1.
+
+In clinical reporting, regulatory guidance (ICH E9) and FDA expectations require adverse event tables to report **subject counts** (`n_distinct`), not event counts (`n()`), in the primary summary. Event counts are reported separately. Always ask: "Am I counting *occurrences* or *people*?"
+
+[Reference: dplyr `n_distinct()` documentation](https://dplyr.tidyverse.org/reference/n_distinct.html)
+:::
+
+::: {.callout-note collapse="true"}
+## What is a `.xpt` file and why does clinical data need to be exported as one?
+
+A **SAS Transport File (`.xpt`)** is a format originally developed by SAS Institute for transferring datasets between different SAS versions and platforms. The FDA and EMA mandate `.xpt` format for electronic submissions because it is a well-documented, stable binary format that regulatory reviewers' SAS systems can reliably read, regardless of the sponsor's software environment.
+
+Even though pharmaverse teams work in R, the final submission datasets must be exported as `.xpt` files. The `haven` package can read and write `.xpt` files in R, and `xportr` adds the layer of applying CDISC metadata (variable labels, lengths, formats) before export to ensure the `.xpt` file meets submission standards.
+
+[Reference: FDA Study Data Technical Conformance Guide](https://www.fda.gov/media/88173/download)
+:::
+
+::: {.callout-note collapse="true"}
+## What is `AEREL` and what values can it take in SDTM?
+
+`AEREL` is the **causality assessment** variable in the AE domain - it records the investigator's judgment about whether the adverse event was caused by the study drug. The CDISC SDTMIG defines controlled terminology for this variable via the **CDISC CT (Controlled Terminology)** codelist `C66726`:
+
+- `UNLIKELY` - The event is unlikely to be related to the study drug
+- `POSSIBLE` - There is a reasonable possibility the event could be related
+- `PROBABLE` - The event is probably related to the study drug
+- `DEFINITELY RELATED` - The event is definitively related
+- `NOT RELATED` - No relationship to the study drug
+
+Some sponsors use a simpler Yes/No relatedness flag (`AEOUT`). The exact values used in your study must match your study-specific annotated CRF and the controlled terminology published by CDISC.
+
+[Reference: CDISC Controlled Terminology - AE Causality](https://www.cdisc.org/standards/terminology/controlled-terminology)
+:::
+
+::: {.callout-note collapse="true"}
+## Why does `inner_join()` sometimes produce more rows than the left dataset?
+
+This happens when the **right-hand dataset has duplicate key values**. For example, if a subject appears 3 times in AE (3 adverse events), and you join DM (1 row for that subject) to AE using `inner_join`, the result has 3 rows for that subject - the DM row is duplicated once for each matching AE row. This is expected and correct behavior for a one-to-many relationship.
+
+If you accidentally end up with *more* rows than expected after a join, check for unintended duplicate keys in either dataset using:
+
+```r
+ae %>% dplyr::count(USUBJID) %>% dplyr::filter(n > 1)
+```
+
+This is a common source of row inflation bugs in clinical programming and should always be verified.
+
+[Reference: dplyr Joins documentation](https://dplyr.tidyverse.org/reference/mutate-joins.html)
+:::
+
+::: {.callout-note collapse="true"}
+## What is the pharmaverse and is it endorsed by regulatory agencies?
+
+The [pharmaverse](https://pharmaverse.org) is a voluntary, cross-industry consortium of pharmaceutical companies (including Roche, GSK, Pfizer, Novartis, and many others) that collaboratively develops and maintains R packages for clinical reporting. It is **not** an official regulatory body and its packages are not "certified" by the FDA or EMA.
+
+However, the FDA has indicated openness to R-based submissions and the packages are built to comply with CDISC standards, which *are* regulatory requirements. The `admiral` package, in particular, generates ADaM datasets that are structurally identical to what production SAS programs would produce - it has been used in actual regulatory submissions.
+
+The key validation requirement is that **your company** validates the use of any software (including R packages) in a submission context, following your own SOPs and potentially using tools like `valtools` or `thevalidatoR`.
+
+[Reference: pharmaverse.org - About](https://pharmaverse.org/contribute/wg/)
+:::
 
 ------------------------------------------------------------------------
 
