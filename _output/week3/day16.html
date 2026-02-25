@@ -160,7 +160,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../week3/day16.html">Day 16: ADSL Part 1 - Treatment Variables &amp; Dates</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">< a target="_blank" href="../week3/day16.html">Day 16: ADSL Part 1 - Treatment Variables &amp; Dates</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -174,43 +174,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../week3/day15.html" class="sidebar-item-text sidebar-link">
+  < a target="_blank" href="../week3/day15.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Day 15: ADaM Architecture &amp; Admiral Core Engine</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../week3/day16.html" class="sidebar-item-text sidebar-link active">
+  < a target="_blank" href="../week3/day16.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Day 16: ADSL Part 1 - Treatment Variables &amp; Dates</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../week3/day17.html" class="sidebar-item-text sidebar-link">
+  < a target="_blank" href="../week3/day17.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Day 17: ADSL Part 2 - Population Flags &amp; Demographics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../week3/day18.html" class="sidebar-item-text sidebar-link">
+  < a target="_blank" href="../week3/day18.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Day 18: ADAE - Adverse Events Analysis Dataset</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../week3/day19.html" class="sidebar-item-text sidebar-link">
+  < a target="_blank" href="../week3/day19.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Day 19: ADLB - Lab Analysis Dataset (BDS)</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../week3/day20.html" class="sidebar-item-text sidebar-link">
+  < a target="_blank" href="../week3/day20.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Day 20: ADVS - Vitals Analysis Dataset (BDS)</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../week3/day21.html" class="sidebar-item-text sidebar-link">
+  < a target="_blank" href="../week3/day21.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Day 21: ADTTE - Time-to-Event Analysis Dataset</span></a>
   </div>
 </li>
@@ -224,27 +224,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#welcome-to-hands-on-adsl-creation" id="toc-welcome-to-hands-on-adsl-creation" class="nav-link active" data-scroll-target="#welcome-to-hands-on-adsl-creation"><span class="header-section-number">1</span> Welcome to Hands-On ADSL Creation</a></li>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives"><span class="header-section-number">2</span> Learning Objectives</a></li>
-  <li><a href="#adsl-variables-created-today" id="toc-adsl-variables-created-today" class="nav-link" data-scroll-target="#adsl-variables-created-today"><span class="header-section-number">3</span> ADSL Variables Created Today</a></li>
-  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">4</span> Setup</a></li>
-  <li><a href="#step-1-initialize-adsl-from-dm" id="toc-step-1-initialize-adsl-from-dm" class="nav-link" data-scroll-target="#step-1-initialize-adsl-from-dm"><span class="header-section-number">5</span> Step 1: Initialize ADSL from DM</a></li>
-  <li><a href="#step-2-derive-treatment-variables" id="toc-step-2-derive-treatment-variables" class="nav-link" data-scroll-target="#step-2-derive-treatment-variables"><span class="header-section-number">6</span> Step 2: Derive Treatment Variables</a></li>
-  <li><a href="#step-3-prepare-ex-with-date-conversion" id="toc-step-3-prepare-ex-with-date-conversion" class="nav-link" data-scroll-target="#step-3-prepare-ex-with-date-conversion"><span class="header-section-number">7</span> Step 3: Prepare EX with Date Conversion</a></li>
-  <li><a href="#step-4-derive-first-dose-date" id="toc-step-4-derive-first-dose-date" class="nav-link" data-scroll-target="#step-4-derive-first-dose-date"><span class="header-section-number">8</span> Step 4: Derive First Dose Date</a></li>
-  <li><a href="#step-5-derive-last-dose-date" id="toc-step-5-derive-last-dose-date" class="nav-link" data-scroll-target="#step-5-derive-last-dose-date"><span class="header-section-number">9</span> Step 5: Derive Last Dose Date</a></li>
-  <li><a href="#step-6-convert-datetime-to-date" id="toc-step-6-convert-datetime-to-date" class="nav-link" data-scroll-target="#step-6-convert-datetime-to-date"><span class="header-section-number">10</span> Step 6: Convert Datetime to Date</a></li>
-  <li><a href="#step-7-derive-treatment-duration" id="toc-step-7-derive-treatment-duration" class="nav-link" data-scroll-target="#step-7-derive-treatment-duration"><span class="header-section-number">11</span> Step 7: Derive Treatment Duration</a></li>
-  <li><a href="#step-8-derive-disposition-date-eosdt" id="toc-step-8-derive-disposition-date-eosdt" class="nav-link" data-scroll-target="#step-8-derive-disposition-date-eosdt"><span class="header-section-number">12</span> Step 8: Derive Disposition Date (EOSDT)</a></li>
-  <li><a href="#step-9-derive-disposition-status-eosstt" id="toc-step-9-derive-disposition-status-eosstt" class="nav-link" data-scroll-target="#step-9-derive-disposition-status-eosstt"><span class="header-section-number">13</span> Step 9: Derive Disposition Status (EOSSTT)</a></li>
-  <li><a href="#step-10-derive-discontinuation-reason" id="toc-step-10-derive-discontinuation-reason" class="nav-link" data-scroll-target="#step-10-derive-discontinuation-reason"><span class="header-section-number">14</span> Step 10: Derive Discontinuation Reason</a></li>
-  <li><a href="#step-11-derive-safety-population-flag" id="toc-step-11-derive-safety-population-flag" class="nav-link" data-scroll-target="#step-11-derive-safety-population-flag"><span class="header-section-number">15</span> Step 11: Derive Safety Population Flag</a></li>
-  <li><a href="#validation-checks" id="toc-validation-checks" class="nav-link" data-scroll-target="#validation-checks"><span class="header-section-number">16</span> Validation Checks</a></li>
-  <li><a href="#final-adsl-part-1-summary" id="toc-final-adsl-part-1-summary" class="nav-link" data-scroll-target="#final-adsl-part-1-summary"><span class="header-section-number">17</span> Final ADSL Part 1 Summary</a></li>
-  <li><a href="#screen-failures-and-never-dosed-subjects" id="toc-screen-failures-and-never-dosed-subjects" class="nav-link" data-scroll-target="#screen-failures-and-never-dosed-subjects"><span class="header-section-number">18</span> Screen Failures and Never-Dosed Subjects</a></li>
-  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">19</span> Key Takeaways</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">20</span> Next Steps</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">21</span> Resources</a></li>
+  <li>< a target="_blank" href="#welcome-to-hands-on-adsl-creation" id="toc-welcome-to-hands-on-adsl-creation" class="nav-link active" data-scroll-target="#welcome-to-hands-on-adsl-creation"><span class="header-section-number">1</span> Welcome to Hands-On ADSL Creation</a></li>
+  <li>< a target="_blank" href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives"><span class="header-section-number">2</span> Learning Objectives</a></li>
+  <li>< a target="_blank" href="#adsl-variables-created-today" id="toc-adsl-variables-created-today" class="nav-link" data-scroll-target="#adsl-variables-created-today"><span class="header-section-number">3</span> ADSL Variables Created Today</a></li>
+  <li>< a target="_blank" href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">4</span> Setup</a></li>
+  <li>< a target="_blank" href="#step-1-initialize-adsl-from-dm" id="toc-step-1-initialize-adsl-from-dm" class="nav-link" data-scroll-target="#step-1-initialize-adsl-from-dm"><span class="header-section-number">5</span> Step 1: Initialize ADSL from DM</a></li>
+  <li>< a target="_blank" href="#step-2-derive-treatment-variables" id="toc-step-2-derive-treatment-variables" class="nav-link" data-scroll-target="#step-2-derive-treatment-variables"><span class="header-section-number">6</span> Step 2: Derive Treatment Variables</a></li>
+  <li>< a target="_blank" href="#step-3-prepare-ex-with-date-conversion" id="toc-step-3-prepare-ex-with-date-conversion" class="nav-link" data-scroll-target="#step-3-prepare-ex-with-date-conversion"><span class="header-section-number">7</span> Step 3: Prepare EX with Date Conversion</a></li>
+  <li>< a target="_blank" href="#step-4-derive-first-dose-date" id="toc-step-4-derive-first-dose-date" class="nav-link" data-scroll-target="#step-4-derive-first-dose-date"><span class="header-section-number">8</span> Step 4: Derive First Dose Date</a></li>
+  <li>< a target="_blank" href="#step-5-derive-last-dose-date" id="toc-step-5-derive-last-dose-date" class="nav-link" data-scroll-target="#step-5-derive-last-dose-date"><span class="header-section-number">9</span> Step 5: Derive Last Dose Date</a></li>
+  <li>< a target="_blank" href="#step-6-convert-datetime-to-date" id="toc-step-6-convert-datetime-to-date" class="nav-link" data-scroll-target="#step-6-convert-datetime-to-date"><span class="header-section-number">10</span> Step 6: Convert Datetime to Date</a></li>
+  <li>< a target="_blank" href="#step-7-derive-treatment-duration" id="toc-step-7-derive-treatment-duration" class="nav-link" data-scroll-target="#step-7-derive-treatment-duration"><span class="header-section-number">11</span> Step 7: Derive Treatment Duration</a></li>
+  <li>< a target="_blank" href="#step-8-derive-disposition-date-eosdt" id="toc-step-8-derive-disposition-date-eosdt" class="nav-link" data-scroll-target="#step-8-derive-disposition-date-eosdt"><span class="header-section-number">12</span> Step 8: Derive Disposition Date (EOSDT)</a></li>
+  <li>< a target="_blank" href="#step-9-derive-disposition-status-eosstt" id="toc-step-9-derive-disposition-status-eosstt" class="nav-link" data-scroll-target="#step-9-derive-disposition-status-eosstt"><span class="header-section-number">13</span> Step 9: Derive Disposition Status (EOSSTT)</a></li>
+  <li>< a target="_blank" href="#step-10-derive-discontinuation-reason" id="toc-step-10-derive-discontinuation-reason" class="nav-link" data-scroll-target="#step-10-derive-discontinuation-reason"><span class="header-section-number">14</span> Step 10: Derive Discontinuation Reason</a></li>
+  <li>< a target="_blank" href="#step-11-derive-safety-population-flag" id="toc-step-11-derive-safety-population-flag" class="nav-link" data-scroll-target="#step-11-derive-safety-population-flag"><span class="header-section-number">15</span> Step 11: Derive Safety Population Flag</a></li>
+  <li>< a target="_blank" href="#validation-checks" id="toc-validation-checks" class="nav-link" data-scroll-target="#validation-checks"><span class="header-section-number">16</span> Validation Checks</a></li>
+  <li>< a target="_blank" href="#final-adsl-part-1-summary" id="toc-final-adsl-part-1-summary" class="nav-link" data-scroll-target="#final-adsl-part-1-summary"><span class="header-section-number">17</span> Final ADSL Part 1 Summary</a></li>
+  <li>< a target="_blank" href="#screen-failures-and-never-dosed-subjects" id="toc-screen-failures-and-never-dosed-subjects" class="nav-link" data-scroll-target="#screen-failures-and-never-dosed-subjects"><span class="header-section-number">18</span> Screen Failures and Never-Dosed Subjects</a></li>
+  <li>< a target="_blank" href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">19</span> Key Takeaways</a></li>
+  <li>< a target="_blank" href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">20</span> Next Steps</a></li>
+  <li>< a target="_blank" href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">21</span> Resources</a></li>
   </ul>
 </nav>
     </div>
@@ -272,7 +272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div style="margin-bottom:12px;">
-<p><a href="../index.html" class="resource-link"> Back to Roadmap</a></p>
+<p>< a target="_blank" href="../index.html" class="resource-link"> Back to Roadmap</a></p>
 </div>
 <section id="welcome-to-hands-on-adsl-creation" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="welcome-to-hands-on-adsl-creation"><span class="header-section-number">1</span> Welcome to Hands-On ADSL Creation</h2>
@@ -326,27 +326,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="setup" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="setup"><span class="header-section-number">4</span> Setup</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(admiral)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pharmaversesdtm)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load SDTM domains</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>dm <span class="ot">&lt;-</span> pharmaversesdtm<span class="sc">::</span>dm</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ex <span class="ot">&lt;-</span> pharmaversesdtm<span class="sc">::</span>ex</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>ds <span class="ot">&lt;-</span> pharmaversesdtm<span class="sc">::</span>ds</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Check dimensions</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"DM:"</span>, <span class="fu">nrow</span>(dm), <span class="st">"subjects</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">< a target="_blank" href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(admiral)</span>
+<span id="cb1-2">< a target="_blank" href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pharmaversesdtm)</span>
+<span id="cb1-3">< a target="_blank" href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4">< a target="_blank" href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb1-5">< a target="_blank" href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb1-6">< a target="_blank" href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7">< a target="_blank" href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load SDTM domains</span></span>
+<span id="cb1-8">< a target="_blank" href="#cb1-8" aria-hidden="true" tabindex="-1"></a>dm <span class="ot">&lt;-</span> pharmaversesdtm<span class="sc">::</span>dm</span>
+<span id="cb1-9">< a target="_blank" href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ex <span class="ot">&lt;-</span> pharmaversesdtm<span class="sc">::</span>ex</span>
+<span id="cb1-10">< a target="_blank" href="#cb1-10" aria-hidden="true" tabindex="-1"></a>ds <span class="ot">&lt;-</span> pharmaversesdtm<span class="sc">::</span>ds</span>
+<span id="cb1-11">< a target="_blank" href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12">< a target="_blank" href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Check dimensions</span></span>
+<span id="cb1-13">< a target="_blank" href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"DM:"</span>, <span class="fu">nrow</span>(dm), <span class="st">"subjects</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DM: 306 subjects</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"EX:"</span>, <span class="fu">nrow</span>(ex), <span class="st">"records</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">< a target="_blank" href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"EX:"</span>, <span class="fu">nrow</span>(ex), <span class="st">"records</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>EX: 591 records</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"DS:"</span>, <span class="fu">nrow</span>(ds), <span class="st">"records</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">< a target="_blank" href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"DS:"</span>, <span class="fu">nrow</span>(ds), <span class="st">"records</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DS: 850 records</code></pre>
 </div>
@@ -356,19 +356,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="step-1-initialize-adsl-from-dm" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="step-1-initialize-adsl-from-dm"><span class="header-section-number">5</span> Step 1: Initialize ADSL from DM</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start with Demographics domain</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> dm <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>DOMAIN)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">ADSL initialized with"</span>, <span class="fu">nrow</span>(adsl), <span class="st">"subjects and"</span>, <span class="fu">ncol</span>(adsl), <span class="st">"variables</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">< a target="_blank" href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start with Demographics domain</span></span>
+<span id="cb7-2">< a target="_blank" href="#cb7-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> dm <span class="sc">%&gt;%</span></span>
+<span id="cb7-3">< a target="_blank" href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>DOMAIN)</span>
+<span id="cb7-4">< a target="_blank" href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5">< a target="_blank" href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">ADSL initialized with"</span>, <span class="fu">nrow</span>(adsl), <span class="st">"subjects and"</span>, <span class="fu">ncol</span>(adsl), <span class="st">"variables</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ADSL initialized with 306 subjects and 25 variables</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview first few subjects</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, AGE, SEX, RACE, ARM, ACTARM) <span class="sc">%&gt;%</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">< a target="_blank" href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview first few subjects</span></span>
+<span id="cb9-2">< a target="_blank" href="#cb9-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
+<span id="cb9-3">< a target="_blank" href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, AGE, SEX, RACE, ARM, ACTARM) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4">< a target="_blank" href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 6
   USUBJID       AGE SEX   RACE  ARM                  ACTARM              
@@ -391,16 +391,16 @@ ADSL initialized with 306 subjects and 25 variables</code></pre>
 <section id="step-2-derive-treatment-variables" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="step-2-derive-treatment-variables"><span class="header-section-number">6</span> Step 2: Derive Treatment Variables</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Derive planned and actual treatment</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">TRT01P =</span> ARM,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">TRT01A =</span> ACTARM</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Check treatment distribution</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(TRT01P, TRT01A)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">< a target="_blank" href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Derive planned and actual treatment</span></span>
+<span id="cb11-2">< a target="_blank" href="#cb11-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
+<span id="cb11-3">< a target="_blank" href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-4">< a target="_blank" href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">TRT01P =</span> ARM,</span>
+<span id="cb11-5">< a target="_blank" href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">TRT01A =</span> ACTARM</span>
+<span id="cb11-6">< a target="_blank" href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-7">< a target="_blank" href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8">< a target="_blank" href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Check treatment distribution</span></span>
+<span id="cb11-9">< a target="_blank" href="#cb11-9" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
+<span id="cb11-10">< a target="_blank" href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(TRT01P, TRT01A)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
   TRT01P               TRT01A                   n
@@ -423,28 +423,28 @@ ADSL initialized with 306 subjects and 25 variables</code></pre>
 <section id="step-3-prepare-ex-with-date-conversion" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="step-3-prepare-ex-with-date-conversion"><span class="header-section-number">7</span> Step 3: Prepare EX with Date Conversion</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert exposure dates to datetime</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ex_ext <span class="ot">&lt;-</span> ex <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_vars_dtm</span>(</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dtc =</span> EXSTDTC,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_vars_prefix =</span> <span class="st">"EXST"</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_vars_dtm</span>(</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">dtc =</span> EXENDTC,</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_vars_prefix =</span> <span class="st">"EXEN"</span>,</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_imputation =</span> <span class="st">"last"</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">EX dataset extended with datetime variables</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">< a target="_blank" href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert exposure dates to datetime</span></span>
+<span id="cb13-2">< a target="_blank" href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ex_ext <span class="ot">&lt;-</span> ex <span class="sc">%&gt;%</span></span>
+<span id="cb13-3">< a target="_blank" href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_vars_dtm</span>(</span>
+<span id="cb13-4">< a target="_blank" href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dtc =</span> EXSTDTC,</span>
+<span id="cb13-5">< a target="_blank" href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_vars_prefix =</span> <span class="st">"EXST"</span></span>
+<span id="cb13-6">< a target="_blank" href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb13-7">< a target="_blank" href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_vars_dtm</span>(</span>
+<span id="cb13-8">< a target="_blank" href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">dtc =</span> EXENDTC,</span>
+<span id="cb13-9">< a target="_blank" href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_vars_prefix =</span> <span class="st">"EXEN"</span>,</span>
+<span id="cb13-10">< a target="_blank" href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_imputation =</span> <span class="st">"last"</span></span>
+<span id="cb13-11">< a target="_blank" href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-12">< a target="_blank" href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13">< a target="_blank" href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">EX dataset extended with datetime variables</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 EX dataset extended with datetime variables</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check one subject</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ex_ext <span class="sc">%&gt;%</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(USUBJID <span class="sc">==</span> <span class="st">"01-701-1015"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, EXSTDTC, EXSTDTM, EXENDTC, EXENDTM, EXDOSE, VISIT) <span class="sc">%&gt;%</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">< a target="_blank" href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check one subject</span></span>
+<span id="cb15-2">< a target="_blank" href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ex_ext <span class="sc">%&gt;%</span></span>
+<span id="cb15-3">< a target="_blank" href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(USUBJID <span class="sc">==</span> <span class="st">"01-701-1015"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-4">< a target="_blank" href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, EXSTDTC, EXSTDTM, EXENDTC, EXENDTM, EXDOSE, VISIT) <span class="sc">%&gt;%</span></span>
+<span id="cb15-5">< a target="_blank" href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 7
   USUBJID   EXSTDTC EXSTDTM             EXENDTC EXENDTM             EXDOSE VISIT
@@ -465,29 +465,29 @@ EX dataset extended with datetime variables</code></pre>
 <section id="step-4-derive-first-dose-date" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="step-4-derive-first-dose-date"><span class="header-section-number">8</span> Step 4: Derive First Dose Date</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Derive first dose datetime</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_vars_merged</span>(</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dataset_add =</span> ex_ext,</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">filter_add =</span> (EXDOSE <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">|</span> </span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                 (EXDOSE <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">str_detect</span>(EXTRT, <span class="st">"PLACEBO"</span>))) <span class="sc">&amp;</span> </span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                 <span class="sc">!</span><span class="fu">is.na</span>(EXSTDTM),</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_vars =</span> <span class="fu">exprs</span>(<span class="at">TRTSDTM =</span> EXSTDTM),</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">order =</span> <span class="fu">exprs</span>(EXSTDTM, EXSEQ),</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">mode =</span> <span class="st">"first"</span>,</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(STUDYID, USUBJID)</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">First dose date derived</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">< a target="_blank" href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Derive first dose datetime</span></span>
+<span id="cb17-2">< a target="_blank" href="#cb17-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
+<span id="cb17-3">< a target="_blank" href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_vars_merged</span>(</span>
+<span id="cb17-4">< a target="_blank" href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dataset_add =</span> ex_ext,</span>
+<span id="cb17-5">< a target="_blank" href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">filter_add =</span> (EXDOSE <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">|</span> </span>
+<span id="cb17-6">< a target="_blank" href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                 (EXDOSE <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">str_detect</span>(EXTRT, <span class="st">"PLACEBO"</span>))) <span class="sc">&amp;</span> </span>
+<span id="cb17-7">< a target="_blank" href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                 <span class="sc">!</span><span class="fu">is.na</span>(EXSTDTM),</span>
+<span id="cb17-8">< a target="_blank" href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_vars =</span> <span class="fu">exprs</span>(<span class="at">TRTSDTM =</span> EXSTDTM),</span>
+<span id="cb17-9">< a target="_blank" href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">order =</span> <span class="fu">exprs</span>(EXSTDTM, EXSEQ),</span>
+<span id="cb17-10">< a target="_blank" href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">mode =</span> <span class="st">"first"</span>,</span>
+<span id="cb17-11">< a target="_blank" href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(STUDYID, USUBJID)</span>
+<span id="cb17-12">< a target="_blank" href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-13">< a target="_blank" href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14">< a target="_blank" href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">First dose date derived</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 First dose date derived</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check results</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, TRT01A, TRTSDTM) <span class="sc">%&gt;%</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTSDTM)) <span class="sc">%&gt;%</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1">< a target="_blank" href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check results</span></span>
+<span id="cb19-2">< a target="_blank" href="#cb19-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
+<span id="cb19-3">< a target="_blank" href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, TRT01A, TRTSDTM) <span class="sc">%&gt;%</span></span>
+<span id="cb19-4">< a target="_blank" href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTSDTM)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-5">< a target="_blank" href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
   USUBJID     TRT01A               TRTSDTM            
@@ -512,29 +512,29 @@ First dose date derived</code></pre>
 <section id="step-5-derive-last-dose-date" class="level2" data-number="9">
 <h2 data-number="9" class="anchored" data-anchor-id="step-5-derive-last-dose-date"><span class="header-section-number">9</span> Step 5: Derive Last Dose Date</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Derive last dose datetime</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_vars_merged</span>(</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dataset_add =</span> ex_ext,</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">filter_add =</span> (EXDOSE <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">|</span> </span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                 (EXDOSE <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">str_detect</span>(EXTRT, <span class="st">"PLACEBO"</span>))) <span class="sc">&amp;</span> </span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>                 <span class="sc">!</span><span class="fu">is.na</span>(EXENDTM),</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_vars =</span> <span class="fu">exprs</span>(<span class="at">TRTEDTM =</span> EXENDTM),</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">order =</span> <span class="fu">exprs</span>(EXENDTM, EXSEQ),</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">mode =</span> <span class="st">"last"</span>,</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(STUDYID, USUBJID)</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Last dose date derived</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1">< a target="_blank" href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Derive last dose datetime</span></span>
+<span id="cb21-2">< a target="_blank" href="#cb21-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
+<span id="cb21-3">< a target="_blank" href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_vars_merged</span>(</span>
+<span id="cb21-4">< a target="_blank" href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dataset_add =</span> ex_ext,</span>
+<span id="cb21-5">< a target="_blank" href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">filter_add =</span> (EXDOSE <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">|</span> </span>
+<span id="cb21-6">< a target="_blank" href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                 (EXDOSE <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">str_detect</span>(EXTRT, <span class="st">"PLACEBO"</span>))) <span class="sc">&amp;</span> </span>
+<span id="cb21-7">< a target="_blank" href="#cb21-7" aria-hidden="true" tabindex="-1"></a>                 <span class="sc">!</span><span class="fu">is.na</span>(EXENDTM),</span>
+<span id="cb21-8">< a target="_blank" href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_vars =</span> <span class="fu">exprs</span>(<span class="at">TRTEDTM =</span> EXENDTM),</span>
+<span id="cb21-9">< a target="_blank" href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">order =</span> <span class="fu">exprs</span>(EXENDTM, EXSEQ),</span>
+<span id="cb21-10">< a target="_blank" href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">mode =</span> <span class="st">"last"</span>,</span>
+<span id="cb21-11">< a target="_blank" href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(STUDYID, USUBJID)</span>
+<span id="cb21-12">< a target="_blank" href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb21-13">< a target="_blank" href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-14">< a target="_blank" href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Last dose date derived</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Last dose date derived</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check results</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, TRTSDTM, TRTEDTM) <span class="sc">%&gt;%</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTSDTM)) <span class="sc">%&gt;%</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1">< a target="_blank" href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check results</span></span>
+<span id="cb23-2">< a target="_blank" href="#cb23-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
+<span id="cb23-3">< a target="_blank" href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, TRTSDTM, TRTEDTM) <span class="sc">%&gt;%</span></span>
+<span id="cb23-4">< a target="_blank" href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTSDTM)) <span class="sc">%&gt;%</span></span>
+<span id="cb23-5">< a target="_blank" href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
   USUBJID     TRTSDTM             TRTEDTM            
@@ -556,20 +556,20 @@ Last dose date derived</code></pre>
 <section id="step-6-convert-datetime-to-date" class="level2" data-number="10">
 <h2 data-number="10" class="anchored" data-anchor-id="step-6-convert-datetime-to-date"><span class="header-section-number">10</span> Step 6: Convert Datetime to Date</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract date from datetime</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_vars_dtm_to_dt</span>(<span class="at">source_vars =</span> <span class="fu">exprs</span>(TRTSDTM, TRTEDTM))</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Date variables created from datetime</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1">< a target="_blank" href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract date from datetime</span></span>
+<span id="cb25-2">< a target="_blank" href="#cb25-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
+<span id="cb25-3">< a target="_blank" href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_vars_dtm_to_dt</span>(<span class="at">source_vars =</span> <span class="fu">exprs</span>(TRTSDTM, TRTEDTM))</span>
+<span id="cb25-4">< a target="_blank" href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5">< a target="_blank" href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Date variables created from datetime</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Date variables created from datetime</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check both formats</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, TRTSDTM, TRTSDT, TRTEDTM, TRTEDT) <span class="sc">%&gt;%</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTSDT)) <span class="sc">%&gt;%</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1">< a target="_blank" href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check both formats</span></span>
+<span id="cb27-2">< a target="_blank" href="#cb27-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
+<span id="cb27-3">< a target="_blank" href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, TRTSDTM, TRTSDT, TRTEDTM, TRTEDT) <span class="sc">%&gt;%</span></span>
+<span id="cb27-4">< a target="_blank" href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTSDT)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-5">< a target="_blank" href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 5
   USUBJID     TRTSDTM             TRTSDT     TRTEDTM             TRTEDT    
@@ -591,26 +591,26 @@ Date variables created from datetime</code></pre>
 <section id="step-7-derive-treatment-duration" class="level2" data-number="11">
 <h2 data-number="11" class="anchored" data-anchor-id="step-7-derive-treatment-duration"><span class="header-section-number">11</span> Step 7: Derive Treatment Duration</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate treatment duration in days</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_var_trtdurd</span>()</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Treatment duration calculated</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1">< a target="_blank" href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate treatment duration in days</span></span>
+<span id="cb29-2">< a target="_blank" href="#cb29-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
+<span id="cb29-3">< a target="_blank" href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_var_trtdurd</span>()</span>
+<span id="cb29-4">< a target="_blank" href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5">< a target="_blank" href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Treatment duration calculated</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Treatment duration calculated</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTDURD)) <span class="sc">%&gt;%</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">N =</span> <span class="fu">n</span>(),</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean =</span> <span class="fu">round</span>(<span class="fu">mean</span>(TRTDURD), <span class="dv">1</span>),</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">round</span>(<span class="fu">sd</span>(TRTDURD), <span class="dv">1</span>),</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Median =</span> <span class="fu">median</span>(TRTDURD),</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Min =</span> <span class="fu">min</span>(TRTDURD),</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Max =</span> <span class="fu">max</span>(TRTDURD)</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1">< a target="_blank" href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics</span></span>
+<span id="cb31-2">< a target="_blank" href="#cb31-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
+<span id="cb31-3">< a target="_blank" href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTDURD)) <span class="sc">%&gt;%</span></span>
+<span id="cb31-4">< a target="_blank" href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb31-5">< a target="_blank" href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">N =</span> <span class="fu">n</span>(),</span>
+<span id="cb31-6">< a target="_blank" href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean =</span> <span class="fu">round</span>(<span class="fu">mean</span>(TRTDURD), <span class="dv">1</span>),</span>
+<span id="cb31-7">< a target="_blank" href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD =</span> <span class="fu">round</span>(<span class="fu">sd</span>(TRTDURD), <span class="dv">1</span>),</span>
+<span id="cb31-8">< a target="_blank" href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Median =</span> <span class="fu">median</span>(TRTDURD),</span>
+<span id="cb31-9">< a target="_blank" href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Min =</span> <span class="fu">min</span>(TRTDURD),</span>
+<span id="cb31-10">< a target="_blank" href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Max =</span> <span class="fu">max</span>(TRTDURD)</span>
+<span id="cb31-11">< a target="_blank" href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 6
       N  Mean    SD Median   Min   Max
@@ -625,32 +625,32 @@ Treatment duration calculated</code></pre>
 <section id="step-8-derive-disposition-date-eosdt" class="level2" data-number="12">
 <h2 data-number="12" class="anchored" data-anchor-id="step-8-derive-disposition-date-eosdt"><span class="header-section-number">12</span> Step 8: Derive Disposition Date (EOSDT)</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert DS date</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>ds_ext <span class="ot">&lt;-</span> <span class="fu">derive_vars_dt</span>(</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  ds,</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">dtc =</span> DSSTDTC,</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">new_vars_prefix =</span> <span class="st">"DSST"</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge end of study date to ADSL</span></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_vars_merged</span>(</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">dataset_add =</span> ds_ext,</span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(STUDYID, USUBJID),</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_vars =</span> <span class="fu">exprs</span>(<span class="at">EOSDT =</span> DSSTDT),</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">filter_add =</span> DSCAT <span class="sc">==</span> <span class="st">"DISPOSITION EVENT"</span> <span class="sc">&amp;</span> DSDECOD <span class="sc">!=</span> <span class="st">"SCREEN FAILURE"</span></span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">End of study date derived</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1">< a target="_blank" href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert DS date</span></span>
+<span id="cb33-2">< a target="_blank" href="#cb33-2" aria-hidden="true" tabindex="-1"></a>ds_ext <span class="ot">&lt;-</span> <span class="fu">derive_vars_dt</span>(</span>
+<span id="cb33-3">< a target="_blank" href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  ds,</span>
+<span id="cb33-4">< a target="_blank" href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">dtc =</span> DSSTDTC,</span>
+<span id="cb33-5">< a target="_blank" href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">new_vars_prefix =</span> <span class="st">"DSST"</span></span>
+<span id="cb33-6">< a target="_blank" href="#cb33-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-7">< a target="_blank" href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8">< a target="_blank" href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge end of study date to ADSL</span></span>
+<span id="cb33-9">< a target="_blank" href="#cb33-9" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
+<span id="cb33-10">< a target="_blank" href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_vars_merged</span>(</span>
+<span id="cb33-11">< a target="_blank" href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">dataset_add =</span> ds_ext,</span>
+<span id="cb33-12">< a target="_blank" href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(STUDYID, USUBJID),</span>
+<span id="cb33-13">< a target="_blank" href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_vars =</span> <span class="fu">exprs</span>(<span class="at">EOSDT =</span> DSSTDT),</span>
+<span id="cb33-14">< a target="_blank" href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">filter_add =</span> DSCAT <span class="sc">==</span> <span class="st">"DISPOSITION EVENT"</span> <span class="sc">&amp;</span> DSDECOD <span class="sc">!=</span> <span class="st">"SCREEN FAILURE"</span></span>
+<span id="cb33-15">< a target="_blank" href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb33-16">< a target="_blank" href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-17">< a target="_blank" href="#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">End of study date derived</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 End of study date derived</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(EOSDT)) <span class="sc">%&gt;%</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, TRTEDT, EOSDT) <span class="sc">%&gt;%</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1">< a target="_blank" href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check</span></span>
+<span id="cb35-2">< a target="_blank" href="#cb35-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
+<span id="cb35-3">< a target="_blank" href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(EOSDT)) <span class="sc">%&gt;%</span></span>
+<span id="cb35-4">< a target="_blank" href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, TRTEDT, EOSDT) <span class="sc">%&gt;%</span></span>
+<span id="cb35-5">< a target="_blank" href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
   USUBJID     TRTEDT     EOSDT     
@@ -667,33 +667,33 @@ End of study date derived</code></pre>
 <section id="step-9-derive-disposition-status-eosstt" class="level2" data-number="13">
 <h2 data-number="13" class="anchored" data-anchor-id="step-9-derive-disposition-status-eosstt"><span class="header-section-number">13</span> Step 9: Derive Disposition Status (EOSSTT)</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Helper function for status formatting</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>format_eosstt <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"COMPLETED"</span>) <span class="sc">~</span> <span class="st">"COMPLETED"</span>,</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"SCREEN FAILURE"</span>) <span class="sc">~</span> <span class="cn">NA_character_</span>,</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"DISCONTINUED"</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Derive end of study status</span></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_vars_merged</span>(</span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">dataset_add =</span> ds,</span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(STUDYID, USUBJID),</span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">filter_add =</span> DSCAT <span class="sc">==</span> <span class="st">"DISPOSITION EVENT"</span>,</span>
-<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_vars =</span> <span class="fu">exprs</span>(<span class="at">EOSSTT =</span> <span class="fu">format_eosstt</span>(DSDECOD)),</span>
-<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">missing_values =</span> <span class="fu">exprs</span>(<span class="at">EOSSTT =</span> <span class="st">"ONGOING"</span>)</span>
-<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">End of study status derived</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1">< a target="_blank" href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Helper function for status formatting</span></span>
+<span id="cb37-2">< a target="_blank" href="#cb37-2" aria-hidden="true" tabindex="-1"></a>format_eosstt <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb37-3">< a target="_blank" href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
+<span id="cb37-4">< a target="_blank" href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"COMPLETED"</span>) <span class="sc">~</span> <span class="st">"COMPLETED"</span>,</span>
+<span id="cb37-5">< a target="_blank" href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"SCREEN FAILURE"</span>) <span class="sc">~</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb37-6">< a target="_blank" href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"DISCONTINUED"</span></span>
+<span id="cb37-7">< a target="_blank" href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb37-8">< a target="_blank" href="#cb37-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-9">< a target="_blank" href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-10">< a target="_blank" href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Derive end of study status</span></span>
+<span id="cb37-11">< a target="_blank" href="#cb37-11" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
+<span id="cb37-12">< a target="_blank" href="#cb37-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_vars_merged</span>(</span>
+<span id="cb37-13">< a target="_blank" href="#cb37-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">dataset_add =</span> ds,</span>
+<span id="cb37-14">< a target="_blank" href="#cb37-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(STUDYID, USUBJID),</span>
+<span id="cb37-15">< a target="_blank" href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">filter_add =</span> DSCAT <span class="sc">==</span> <span class="st">"DISPOSITION EVENT"</span>,</span>
+<span id="cb37-16">< a target="_blank" href="#cb37-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_vars =</span> <span class="fu">exprs</span>(<span class="at">EOSSTT =</span> <span class="fu">format_eosstt</span>(DSDECOD)),</span>
+<span id="cb37-17">< a target="_blank" href="#cb37-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">missing_values =</span> <span class="fu">exprs</span>(<span class="at">EOSSTT =</span> <span class="st">"ONGOING"</span>)</span>
+<span id="cb37-18">< a target="_blank" href="#cb37-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb37-19">< a target="_blank" href="#cb37-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-20">< a target="_blank" href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">End of study status derived</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 End of study status derived</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(EOSSTT)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1">< a target="_blank" href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution</span></span>
+<span id="cb39-2">< a target="_blank" href="#cb39-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
+<span id="cb39-3">< a target="_blank" href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(EOSSTT)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   EOSSTT           n
@@ -714,26 +714,26 @@ End of study status derived</code></pre>
 <section id="step-10-derive-discontinuation-reason" class="level2" data-number="14">
 <h2 data-number="14" class="anchored" data-anchor-id="step-10-derive-discontinuation-reason"><span class="header-section-number">14</span> Step 10: Derive Discontinuation Reason</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Derive reason for discontinuation</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_vars_merged</span>(</span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dataset_add =</span> ds,</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(USUBJID),</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_vars =</span> <span class="fu">exprs</span>(<span class="at">DCSREAS =</span> DSDECOD, <span class="at">DCSREASP =</span> DSTERM),</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">filter_add =</span> DSCAT <span class="sc">==</span> <span class="st">"DISPOSITION EVENT"</span> <span class="sc">&amp;</span></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>      <span class="sc">!</span>(DSDECOD <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"SCREEN FAILURE"</span>, <span class="st">"COMPLETED"</span>, <span class="cn">NA</span>))</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Discontinuation reason derived</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1">< a target="_blank" href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Derive reason for discontinuation</span></span>
+<span id="cb41-2">< a target="_blank" href="#cb41-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
+<span id="cb41-3">< a target="_blank" href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_vars_merged</span>(</span>
+<span id="cb41-4">< a target="_blank" href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dataset_add =</span> ds,</span>
+<span id="cb41-5">< a target="_blank" href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(USUBJID),</span>
+<span id="cb41-6">< a target="_blank" href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_vars =</span> <span class="fu">exprs</span>(<span class="at">DCSREAS =</span> DSDECOD, <span class="at">DCSREASP =</span> DSTERM),</span>
+<span id="cb41-7">< a target="_blank" href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">filter_add =</span> DSCAT <span class="sc">==</span> <span class="st">"DISPOSITION EVENT"</span> <span class="sc">&amp;</span></span>
+<span id="cb41-8">< a target="_blank" href="#cb41-8" aria-hidden="true" tabindex="-1"></a>      <span class="sc">!</span>(DSDECOD <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"SCREEN FAILURE"</span>, <span class="st">"COMPLETED"</span>, <span class="cn">NA</span>))</span>
+<span id="cb41-9">< a target="_blank" href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb41-10">< a target="_blank" href="#cb41-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-11">< a target="_blank" href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Discontinuation reason derived</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Discontinuation reason derived</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check discontinued subjects</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(DCSREAS)) <span class="sc">%&gt;%</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, EOSSTT, DCSREAS, DCSREASP) <span class="sc">%&gt;%</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1">< a target="_blank" href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check discontinued subjects</span></span>
+<span id="cb43-2">< a target="_blank" href="#cb43-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
+<span id="cb43-3">< a target="_blank" href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(DCSREAS)) <span class="sc">%&gt;%</span></span>
+<span id="cb43-4">< a target="_blank" href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, EOSSTT, DCSREAS, DCSREASP) <span class="sc">%&gt;%</span></span>
+<span id="cb43-5">< a target="_blank" href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 4
    USUBJID     EOSSTT       DCSREAS                     DCSREASP                
@@ -755,23 +755,23 @@ Discontinuation reason derived</code></pre>
 <section id="step-11-derive-safety-population-flag" class="level2" data-number="15">
 <h2 data-number="15" class="anchored" data-anchor-id="step-11-derive-safety-population-flag"><span class="header-section-number">15</span> Step 11: Derive Safety Population Flag</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag subjects who received any study treatment</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_var_merged_exist_flag</span>(</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dataset_add =</span> ex,</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(STUDYID, USUBJID),</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_var =</span> SAFFL,</span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">condition =</span> (EXDOSE <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">|</span> (EXDOSE <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">str_detect</span>(EXTRT, <span class="st">"PLACEBO"</span>)))</span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Safety population flag derived</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1">< a target="_blank" href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Flag subjects who received any study treatment</span></span>
+<span id="cb45-2">< a target="_blank" href="#cb45-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
+<span id="cb45-3">< a target="_blank" href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">derive_var_merged_exist_flag</span>(</span>
+<span id="cb45-4">< a target="_blank" href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dataset_add =</span> ex,</span>
+<span id="cb45-5">< a target="_blank" href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">by_vars =</span> <span class="fu">exprs</span>(STUDYID, USUBJID),</span>
+<span id="cb45-6">< a target="_blank" href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_var =</span> SAFFL,</span>
+<span id="cb45-7">< a target="_blank" href="#cb45-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">condition =</span> (EXDOSE <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">|</span> (EXDOSE <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">str_detect</span>(EXTRT, <span class="st">"PLACEBO"</span>)))</span>
+<span id="cb45-8">< a target="_blank" href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb45-9">< a target="_blank" href="#cb45-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-10">< a target="_blank" href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Safety population flag derived</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Safety population flag derived</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Population counts</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(SAFFL)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1">< a target="_blank" href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Population counts</span></span>
+<span id="cb47-2">< a target="_blank" href="#cb47-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
+<span id="cb47-3">< a target="_blank" href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(SAFFL)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
   SAFFL     n
@@ -790,42 +790,42 @@ Safety population flag derived</code></pre>
 <section id="validation-checks" class="level2" data-number="16">
 <h2 data-number="16" class="anchored" data-anchor-id="validation-checks"><span class="header-section-number">16</span> Validation Checks</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== ADSL Part 1 Validation ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1">< a target="_blank" href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== ADSL Part 1 Validation ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 === ADSL Part 1 Validation ===</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 1: TRTSDT ≤ TRTEDT</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>check1 <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTSDT) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(TRTEDT) <span class="sc">&amp;</span> TRTSDT <span class="sc">&gt;</span> TRTEDT)</span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Check 1 - TRTSDT &gt; TRTEDT (should be 0):"</span>, <span class="fu">nrow</span>(check1), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1">< a target="_blank" href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 1: TRTSDT ≤ TRTEDT</span></span>
+<span id="cb51-2">< a target="_blank" href="#cb51-2" aria-hidden="true" tabindex="-1"></a>check1 <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
+<span id="cb51-3">< a target="_blank" href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTSDT) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(TRTEDT) <span class="sc">&amp;</span> TRTSDT <span class="sc">&gt;</span> TRTEDT)</span>
+<span id="cb51-4">< a target="_blank" href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Check 1 - TRTSDT &gt; TRTEDT (should be 0):"</span>, <span class="fu">nrow</span>(check1), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Check 1 - TRTSDT &gt; TRTEDT (should be 0): 0 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 2: TRTDURD calculation</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>check2 <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTDURD)) <span class="sc">%&gt;%</span></span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TRTDURD_check =</span> <span class="fu">as.numeric</span>(TRTEDT <span class="sc">-</span> TRTSDT) <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(TRTDURD <span class="sc">!=</span> TRTDURD_check)</span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Check 2 - TRTDURD mismatch (should be 0):"</span>, <span class="fu">nrow</span>(check2), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1">< a target="_blank" href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 2: TRTDURD calculation</span></span>
+<span id="cb53-2">< a target="_blank" href="#cb53-2" aria-hidden="true" tabindex="-1"></a>check2 <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
+<span id="cb53-3">< a target="_blank" href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTDURD)) <span class="sc">%&gt;%</span></span>
+<span id="cb53-4">< a target="_blank" href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TRTDURD_check =</span> <span class="fu">as.numeric</span>(TRTEDT <span class="sc">-</span> TRTSDT) <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb53-5">< a target="_blank" href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(TRTDURD <span class="sc">!=</span> TRTDURD_check)</span>
+<span id="cb53-6">< a target="_blank" href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Check 2 - TRTDURD mismatch (should be 0):"</span>, <span class="fu">nrow</span>(check2), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Check 2 - TRTDURD mismatch (should be 0): 0 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 3: Safety flag consistency</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>check3 <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTSDT) <span class="sc">&amp;</span> <span class="fu">is.na</span>(SAFFL))</span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Check 3 - Treated but no SAFFL (should be 0):"</span>, <span class="fu">nrow</span>(check3), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1">< a target="_blank" href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 3: Safety flag consistency</span></span>
+<span id="cb55-2">< a target="_blank" href="#cb55-2" aria-hidden="true" tabindex="-1"></a>check3 <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
+<span id="cb55-3">< a target="_blank" href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTSDT) <span class="sc">&amp;</span> <span class="fu">is.na</span>(SAFFL))</span>
+<span id="cb55-4">< a target="_blank" href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Check 3 - Treated but no SAFFL (should be 0):"</span>, <span class="fu">nrow</span>(check3), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Check 3 - Treated but no SAFFL (should be 0): 0 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 4: Screen failures</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>check4 <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ARM <span class="sc">==</span> <span class="st">"Screen Failure"</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(TRTSDT))</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Check 4 - Screen failures with TRTSDT (should be 0):"</span>, <span class="fu">nrow</span>(check4), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1">< a target="_blank" href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check 4: Screen failures</span></span>
+<span id="cb57-2">< a target="_blank" href="#cb57-2" aria-hidden="true" tabindex="-1"></a>check4 <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
+<span id="cb57-3">< a target="_blank" href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ARM <span class="sc">==</span> <span class="st">"Screen Failure"</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(TRTSDT))</span>
+<span id="cb57-4">< a target="_blank" href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Check 4 - Screen failures with TRTSDT (should be 0):"</span>, <span class="fu">nrow</span>(check4), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Check 4 - Screen failures with TRTSDT (should be 0): 0 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">✓ All validation checks passed</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1">< a target="_blank" href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">✓ All validation checks passed</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ✓ All validation checks passed</code></pre>
@@ -836,30 +836,30 @@ Safety population flag derived</code></pre>
 <section id="final-adsl-part-1-summary" class="level2" data-number="17">
 <h2 data-number="17" class="anchored" data-anchor-id="final-adsl-part-1-summary"><span class="header-section-number">17</span> Final ADSL Part 1 Summary</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== ADSL Part 1 Summary ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1">< a target="_blank" href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== ADSL Part 1 Summary ===</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 === ADSL Part 1 Summary ===</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Total subjects:"</span>, <span class="fu">nrow</span>(adsl), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1">< a target="_blank" href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Total subjects:"</span>, <span class="fu">nrow</span>(adsl), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Total subjects: 306 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Variables:"</span>, <span class="fu">ncol</span>(adsl), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1">< a target="_blank" href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Variables:"</span>, <span class="fu">ncol</span>(adsl), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Variables: 37 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Treatment summary by arm</span></span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
-<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(TRT01A) <span class="sc">%&gt;%</span></span>
-<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">N =</span> <span class="fu">n</span>(),</span>
-<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">N_Treated =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTSDT)),</span>
-<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Pct_Treated =</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTSDT)) <span class="sc">/</span> <span class="fu">n</span>(), <span class="dv">1</span>),</span>
-<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean_Duration =</span> <span class="fu">round</span>(<span class="fu">mean</span>(TRTDURD, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>),</span>
-<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD_Duration =</span> <span class="fu">round</span>(<span class="fu">sd</span>(TRTDURD, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>),</span>
-<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1">< a target="_blank" href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Treatment summary by arm</span></span>
+<span id="cb67-2">< a target="_blank" href="#cb67-2" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">%&gt;%</span></span>
+<span id="cb67-3">< a target="_blank" href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(TRT01A) <span class="sc">%&gt;%</span></span>
+<span id="cb67-4">< a target="_blank" href="#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb67-5">< a target="_blank" href="#cb67-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">N =</span> <span class="fu">n</span>(),</span>
+<span id="cb67-6">< a target="_blank" href="#cb67-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">N_Treated =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTSDT)),</span>
+<span id="cb67-7">< a target="_blank" href="#cb67-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Pct_Treated =</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(TRTSDT)) <span class="sc">/</span> <span class="fu">n</span>(), <span class="dv">1</span>),</span>
+<span id="cb67-8">< a target="_blank" href="#cb67-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean_Duration =</span> <span class="fu">round</span>(<span class="fu">mean</span>(TRTDURD, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>),</span>
+<span id="cb67-9">< a target="_blank" href="#cb67-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD_Duration =</span> <span class="fu">round</span>(<span class="fu">sd</span>(TRTDURD, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>),</span>
+<span id="cb67-10">< a target="_blank" href="#cb67-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb67-11">< a target="_blank" href="#cb67-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 6
   TRT01A                   N N_Treated Pct_Treated Mean_Duration SD_Duration
@@ -875,18 +875,18 @@ Safety population flag derived</code></pre>
 <section id="screen-failures-and-never-dosed-subjects" class="level2" data-number="18">
 <h2 data-number="18" class="anchored" data-anchor-id="screen-failures-and-never-dosed-subjects"><span class="header-section-number">18</span> Screen Failures and Never-Dosed Subjects</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subjects with no treatment</span></span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>no_treatment <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
-<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(TRTSDT))</span>
-<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Subjects with no treatment dates:"</span>, <span class="fu">nrow</span>(no_treatment), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1">< a target="_blank" href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subjects with no treatment</span></span>
+<span id="cb69-2">< a target="_blank" href="#cb69-2" aria-hidden="true" tabindex="-1"></a>no_treatment <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
+<span id="cb69-3">< a target="_blank" href="#cb69-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(TRTSDT))</span>
+<span id="cb69-4">< a target="_blank" href="#cb69-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-5">< a target="_blank" href="#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Subjects with no treatment dates:"</span>, <span class="fu">nrow</span>(no_treatment), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Subjects with no treatment dates: 52 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution by ARM</span></span>
-<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>no_treatment <span class="sc">%&gt;%</span></span>
-<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(ARM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1">< a target="_blank" href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution by ARM</span></span>
+<span id="cb71-2">< a target="_blank" href="#cb71-2" aria-hidden="true" tabindex="-1"></a>no_treatment <span class="sc">%&gt;%</span></span>
+<span id="cb71-3">< a target="_blank" href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(ARM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   ARM                n
@@ -936,24 +936,24 @@ Subjects with no treatment dates: 52 </code></pre>
 <h2 data-number="21" class="anchored" data-anchor-id="resources"><span class="header-section-number">21</span> Resources</h2>
 <p><strong>Admiral Documentation:</strong></p>
 <ul>
-<li>Admiral ADSL Vignette: <a href="https://pharmaverse.github.io/admiral/articles/adsl.html" class="uri">https://pharmaverse.github.io/admiral/articles/adsl.html</a></li>
-<li>derive_vars_merged: <a href="https://pharmaverse.github.io/admiral/reference/derive_vars_merged.html" class="uri">https://pharmaverse.github.io/admiral/reference/derive_vars_merged.html</a></li>
-<li>Date Derivations: <a href="https://pharmaverse.github.io/admiral/articles/dates_times.html" class="uri">https://pharmaverse.github.io/admiral/articles/dates_times.html</a></li>
+<li>Admiral ADSL Vignette: < a target="_blank" href="https://pharmaverse.github.io/admiral/articles/adsl.html" class="uri">https://pharmaverse.github.io/admiral/articles/adsl.html</a></li>
+<li>derive_vars_merged: < a target="_blank" href="https://pharmaverse.github.io/admiral/reference/derive_vars_merged.html" class="uri">https://pharmaverse.github.io/admiral/reference/derive_vars_merged.html</a></li>
+<li>Date Derivations: < a target="_blank" href="https://pharmaverse.github.io/admiral/articles/dates_times.html" class="uri">https://pharmaverse.github.io/admiral/articles/dates_times.html</a></li>
 </ul>
 <p><strong>CDISC Standards:</strong></p>
 <ul>
-<li>ADaM IG v1.3: <a href="https://www.cdisc.org/standards/foundational/adam" class="uri">https://www.cdisc.org/standards/foundational/adam</a></li>
-<li>CDISC Pilot Project: <a href="https://github.com/cdisc-org/sdtm-adam-pilot-project" class="uri">https://github.com/cdisc-org/sdtm-adam-pilot-project</a></li>
+<li>ADaM IG v1.3: < a target="_blank" href="https://www.cdisc.org/standards/foundational/adam" class="uri">https://www.cdisc.org/standards/foundational/adam</a></li>
+<li>CDISC Pilot Project: < a target="_blank" href="https://github.com/cdisc-org/sdtm-adam-pilot-project" class="uri">https://github.com/cdisc-org/sdtm-adam-pilot-project</a></li>
 </ul>
 <p><strong>Pharmaverse:</strong></p>
 <ul>
-<li>pharmaversesdtm: <a href="https://github.com/pharmaverse/pharmaversesdtm" class="uri">https://github.com/pharmaverse/pharmaversesdtm</a></li>
-<li>pharmaverse.org: <a href="https://pharmaverse.org" class="uri">https://pharmaverse.org</a></li>
+<li>pharmaversesdtm: < a target="_blank" href="https://github.com/pharmaverse/pharmaversesdtm" class="uri">https://github.com/pharmaverse/pharmaversesdtm</a></li>
+<li>pharmaverse.org: < a target="_blank" href="https://pharmaverse.org" class="uri">https://pharmaverse.org</a></li>
 </ul>
 <hr>
 <p><strong>End of Day 16</strong></p>
 <p><em>Tomorrow: ADSL Part 2 - Population Flags &amp; Demographics</em></p>
-<p><a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&amp;label=Visits%20till%20date&amp;countColor=%23263759&amp;style=plastic&amp;labelStyle=none"></a></p>
+<p>< a target="_blank" href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&amp;label=Visits%20till%20date&amp;countColor=%23263759&amp;style=plastic&amp;labelStyle=none"></a></p>
 
 
 </section>

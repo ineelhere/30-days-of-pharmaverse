@@ -5,7 +5,7 @@
 ![R Version](https://img.shields.io/badge/R%20%3E%3D-4.0-brightblue?style=flat-square)
 ![Last Updated](https://img.shields.io/badge/updated-February%202026-blueviolet?style=flat-square)
 [![Live Site](https://img.shields.io/badge/📖_Live_Site-click-here?style=flat-square)](https://ineelhere.github.io/30-days-of-pharmaverse/)
-<a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>
+< a target="_blank" href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>
 
 A **free, open-source, 30-day guided exploration** of Clinical Data Science using **R** and the **[Pharmaverse](https://pharmaverse.org)** ecosystem. Walk through real-world CDISC workflows - from raw clinical trial data all the way to submission-ready SDTM, ADaM, and Tables/Listings/Figures - one day at a time.
 

@@ -78,9 +78,9 @@ format:
     page-layout: full
     footer: |
       <div style="text-align:center; padding:8px 0;">
-        <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>
+        < a target="_blank" href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>
         <br/>
-        <a href="/30-days-of-pharmaverse/index.html#important-disclaimer" style="font-size:12px;">⚠️ Important Disclaimer</a>
+        < a target="_blank" href="/30-days-of-pharmaverse/index.html#important-disclaimer" style="font-size:12px;">⚠️ Important Disclaimer</a>
         &nbsp;|&nbsp;
         <span style="font-size:12px;">© 2026 · 30 Days of Pharmaverse · Personal Learning Initiative</span>
       </div>

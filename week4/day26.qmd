@@ -25,7 +25,7 @@ execute:
 ---
 
 ::: {style="margin-bottom:12px;"}
-<a href="../index.html" class="resource-link"> Back to Roadmap</a>
+< a target="_blank" href="../index.html" class="resource-link"> Back to Roadmap</a>
 :::
 
 ## Overview
