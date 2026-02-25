@@ -183,20 +183,29 @@ This journey covers the essential toolkit for modern clinical programming in R:
 **Core Packages:**
 
 ``` r
-# SDTM layer
-install.packages(c("admiral", "pharmaversesdtm", "pharmaverseadam",
-                   "sdtm.oak", "sdtmchecks", "datacutr",
-                   "metacore", "metatools", "xportr", "haven"))
+# SDTM & ADaM layer
+install.packages(c(
+  "admiral",          # ADaM derivations
+  "admiralonco",      # Oncology extensions
+  "pharmaversesdtm",  # Example SDTM datasets
+  "pharmaverseadam",  # Example ADaM datasets
+  "sdtm.oak",         # SDTM utilities
+  "sdtmchecks",       # SDTM validation
+  "datacutr",         # Data cut utilities
+  "metacore",         # Metadata management
+  "metatools",        # Metadata tools
+  "xportr",           # Regulatory export (.xpt)
+  "haven",            # SAS interoperability
+  "dplyr",            # Data wrangling
+  "lubridate"         # Date handling
+))
 
-# ADaM extensions
-install.packages("admiralonco")
-
-# TLF - tables
-install.packages(c("rtables", "tern", "r2rtf", "flextable", "officer",
-                   "gtsummary", "tfrmt", "Tplyr", "rlistings"))
-
-# TLF - figures
-install.packages(c("ggplot2", "ggsurvfit", "patchwork"))
+# TLF layer
+install.packages(c(
+  "rtables", "tern", "r2rtf", "flextable", "officer",
+  "gtsummary", "tfrmt", "Tplyr", "rlistings",
+  "ggplot2", "ggsurvfit", "patchwork"
+))
 
 # ARD & QC
 install.packages(c("cards", "cardx", "testthat", "logrx"))
