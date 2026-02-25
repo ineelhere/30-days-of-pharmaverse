@@ -326,14 +326,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="2.1" class="anchored" data-anchor-id="what-is-the-lb-domain"><span class="header-section-number">2.1</span> What is the LB Domain?</h3>
 <p>The <strong>LB (Laboratory) domain</strong> is one of the most complex and data-rich domains in SDTM. It belongs to the <strong>Findings</strong> class of SDTM domains, which are designed to capture observations or measurements collected during a study.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Findings Class Characteristics
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Findings domains share a common structure:</p>
 <ul>
@@ -345,6 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>–STRESN</strong>: Standardized result in numeric format</li>
 <li><strong>–STRESU</strong>: Standardized unit</li>
 </ul>
+</div>
 </div>
 </div>
 </section>
@@ -535,14 +538,16 @@ $ LBDY     &lt;dbl&gt; -7, 15, 29, 42, 63, 84, 126, 140, 168, 182, -7, 15, 29, 4
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Tip</span>Understanding Test Codes
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Notice how <strong>LBTESTCD</strong> is a short, standardized code while <strong>LBTEST</strong> is the full descriptive name. This follows CDISC conventions where:</p>
 <ul>
@@ -550,6 +555,7 @@ $ LBDY     &lt;dbl&gt; -7, 15, 29, 42, 63, 84, 126, 140, 168, 182, -7, 15, 29, 4
 <li><strong>Full names</strong> (LBTEST) provide human-readable descriptions</li>
 <li><strong>Categories</strong> (LBCAT) group related tests (CHEMISTRY, HEMATOLOGY, etc.)</li>
 </ul>
+</div>
 </div>
 </div>
 <hr>
@@ -665,20 +671,23 @@ $ LBDY     &lt;dbl&gt; -7, 15, 29, 42, 63, 84, 126, 140, 168, 182, -7, 15, 29, 4
 </tbody>
 </table>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Reference for Unit Conversions
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>For a comprehensive list of clinical lab unit conversions, see:</p>
 <ul>
 <li><a href="https://www.ncbi.nlm.nih.gov/books/NBK535333/">National Institutes of Health - Unit Conversion Tables</a></li>
 <li><a href="https://www.cdisc.org/standards/foundational/sdtm">CDISC SEND/SDTM Unit Standards</a></li>
 </ul>
+</div>
 </div>
 </div>
 </section>
@@ -799,16 +808,19 @@ $ LBDY     &lt;dbl&gt; -7, 15, 29, 42, 63, 84, 126, 140, 168, 182, -7, 15, 29, 4
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Important</span>Key Learning Point
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Notice how the <strong>original</strong> values are preserved (<code>LBORRES</code>, <code>LBORRESU</code>) while <strong>standardized</strong> values are derived (<code>LBSTRESC</code>, <code>LBSTRESN</code>, <code>LBSTRESU</code>). This is a fundamental SDTM principle: <strong>never lose the original data!</strong></p>
+</div>
 </div>
 </div>
 <hr>
@@ -904,14 +916,16 @@ $ LBDY     &lt;dbl&gt; -7, 15, 29, 42, 63, 84, 126, 140, 168, 182, -7, 15, 29, 4
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Tip</span>Clinical Significance
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The <code>LBNRIND</code> variable is critical for safety analyses. It helps identify:</p>
 <ul>
@@ -919,6 +933,7 @@ $ LBDY     &lt;dbl&gt; -7, 15, 29, 42, 63, 84, 126, 140, 168, 182, -7, 15, 29, 4
 <li><strong>Trends</strong> in lab values over time (e.g., worsening liver function)</li>
 <li><strong>Treatment-emergent abnormalities</strong> (normal at baseline, abnormal post-treatment)</li>
 </ul>
+</div>
 </div>
 </div>
 <hr>
@@ -990,20 +1005,23 @@ $ LBDY     &lt;dbl&gt; -7, 15, 29, 42, 63, 84, 126, 140, 168, 182, -7, 15, 29, 4
 </tbody>
 </table>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Learn More About LOINC
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><a href="https://loinc.org/">LOINC Official Website</a></li>
 <li><a href="https://loinc.org/search/">Search LOINC Codes</a></li>
 <li><a href="https://www.cdisc.org/kb/articles/loinc-cdisc-lab-test-terminology">LOINC and CDISC Integration Guide</a></li>
 </ul>
+</div>
 </div>
 </div>
 <hr>

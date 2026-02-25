@@ -35,16 +35,16 @@ execute:
 
 ## Exploration Roadmap
 
-Welcome to **30 Days of Pharmaverse** — a free, open-source, hands-on exploration of Clinical Data Science with R and the [Pharmaverse](https://pharmaverse.org) ecosystem. Whether you're a clinical programmer, biostatistician, data scientist, or a curious learner, this project walks you through real-world CDISC workflows one day at a time.
+Welcome to **30 Days of Pharmaverse** - a free, open-source, hands-on exploration of Clinical Data Science with R and the [Pharmaverse](https://pharmaverse.org) ecosystem. Whether you're a clinical programmer, biostatistician, data scientist, or a curious learner, this project walks you through real-world CDISC workflows one day at a time.
 
-Each day tackles a specific concept — from setting up a working environment to building complex ADaM datasets and producing Tables, Listings, and Figures — using community-driven, open-source R packages like `admiral`, `xportr`, `metacore`, `rtables`, `tern`, and many more.
+Each day tackles a specific concept - from setting up a working environment to building complex ADaM datasets and producing Tables, Listings, and Figures - using community-driven, open-source R packages like `admiral`, `xportr`, `metacore`, `rtables`, `tern`, and many more.
 
 ### Who Is This For?
 
-- **Clinical programmers** transitioning from SAS to R, looking for a structured, code-first guide to the Pharmaverse
-- **Biostatisticians & data scientists** exploring how SDTM, ADaM, and TLF production work end-to-end in R
-- **Students & academics** learning clinical trial data standards and reproducible research workflows
-- **Open-source contributors** interested in the Pharmaverse — a growing family of validated R packages for clinical reporting
+-   **Clinical programmers** transitioning from SAS to R, looking for a structured, code-first guide to the Pharmaverse
+-   **Biostatisticians & data scientists** exploring how SDTM, ADaM, and TLF production work end-to-end in R
+-   **Students & academics** learning clinical trial data standards and reproducible research workflows
+-   **Open-source contributors** interested in the Pharmaverse - a growing family of validated R packages for clinical reporting
 
 No SAS license or prior CDISC experience required. If you know base R / `tidyverse` and are curious about clinical data pipelines, start with Day 1.
 
@@ -168,21 +168,20 @@ generate_week_table("week4", 4, "ADaM Advanced & TLF Production")
 
 This journey covers the essential toolkit for modern clinical programming in R:
 
-- **SDTM & ADaM Standards**: Understanding the structure and intent of CDISC-standardised data.
-- **Pharmaverse Tools**: Hands-on work with `admiral`, `pharmaversesdtm`, `pharmaverseadam`, `xportr`, `sdtm.oak`, `sdtmchecks`, `metacore`, and more.
-- **ADaM Construction**: Building ADSL, ADAE, ADLB, ADVS, ADTTE, ADCM, ADEX, and ADRS from SDTM using `admiral` and `admiralonco`.
-- **TLF Production**: Tables, listings, and figures using `rtables`/`tern`, `r2rtf`, `flextable`+`officer`, `gtsummary`, `tfrmt`, `rlistings`, and `ggsurvfit`.
-- **ARD-First Workflows**: Using `cards` and `cardx` to produce tidy Analysis Results Datasets that separate computation from formatting.
-- **QC & Traceability**: Unit testing with `testthat`, cell-level traceability with `Tplyr`, audit logging with `logrx`, and metadata-driven export with `xportr`.
+-   **SDTM & ADaM Standards**: Understanding the structure and intent of CDISC-standardised data.
+-   **Pharmaverse Tools**: Hands-on work with `admiral`, `pharmaversesdtm`, `pharmaverseadam`, `xportr`, `sdtm.oak`, `sdtmchecks`, `metacore`, and more.
+-   **ADaM Construction**: Building ADSL, ADAE, ADLB, ADVS, ADTTE, ADCM, ADEX, and ADRS from SDTM using `admiral` and `admiralonco`.
+-   **TLF Production**: Tables, listings, and figures using `rtables`/`tern`, `r2rtf`, `flextable`+`officer`, `gtsummary`, `tfrmt`, `rlistings`, and `ggsurvfit`.
+-   **ARD-First Workflows**: Using `cards` and `cardx` to produce tidy Analysis Results Datasets that separate computation from formatting.
+-   **QC & Traceability**: Unit testing with `testthat`, cell-level traceability with `Tplyr`, audit logging with `logrx`, and metadata-driven export with `xportr`.
 
 ## The Toolkit
 
-**Prerequisites:**
-- Comfort with R and the `tidyverse`
-- A curiosity about clinical trials and data standards
+**Prerequisites:** - Comfort with R and the `tidyverse` - A curiosity about clinical trials and data standards
 
 **Core Packages:**
-```r
+
+``` r
 # SDTM layer
 install.packages(c("admiral", "pharmaversesdtm", "pharmaverseadam",
                    "sdtm.oak", "sdtmchecks", "datacutr",
@@ -206,32 +205,30 @@ install.packages(c("cards", "cardx", "testthat", "logrx"))
 
 This project is a **personal initiative** created for **learning and exploratory purposes only**. It is in no way affiliated with, endorsed by, sponsored by, funded by, or assisted by any organisation or company at any capacity.
 
-* This project draws heavily from open-source projects, Pharmaverse examples, public repositories, and official CDISC documentation.
-* Significant portions of the code and content have been created with assistance from **Large Language Models (LLMs)** and refined through human review and intervention.
-* Examples and patterns are adapted from established best practices in the R and clinical programming communities.
+-   This project draws heavily from open-source projects, Pharmaverse examples, public repositories, and official CDISC documentation.
+-   Significant portions of the code and content have been created with assistance from **Large Language Models (LLMs)** and refined through human review and intervention.
+-   Examples and patterns are adapted from established best practices in the R and clinical programming communities.
 
 **Learners are strongly encouraged to:**
 
-1. **Think critically** - Don't just copy-paste code. Understand *why* each step exists.
-2. **Verify independently** - Check code against official Pharmaverse documentation and CDISC standards.
-3. **Test thoroughly** - Validate any code in your own environment before use in any context.
-4. **Consult experts** - When implementing for real clinical trials, seek guidance from qualified statisticians and data managers.
+1.  **Think critically** - Don't just copy-paste code. Understand *why* each step exists.
+2.  **Verify independently** - Check code against official Pharmaverse documentation and CDISC standards.
+3.  **Test thoroughly** - Validate any code in your own environment before use in any context.
+4.  **Consult experts** - When implementing for real clinical trials, seek guidance from qualified statisticians and data managers.
 
 The views, opinions, code, and materials shared in this project are solely for exploratory and learning purposes and do not guarantee accuracy, correctness, or compliance with any standard. They do not represent the positions of any external organisation and should not be treated as guidance for any formal or regulated use without independent verification.
 
 ## Community & Resources
 
-- [Pharmaverse.org](https://pharmaverse.org) — The central hub for open-source clinical R packages
-- [CDISC.org](https://www.cdisc.org) — The official standards body for clinical data interchange
-- [Admiral Documentation](https://pharmaverse.github.io/admiral/) — The flagship ADaM derivation package
-- [Pharmaverse TLG Catalogue](https://pharmaverse.github.io/TLG-Catalog) — Reference TLF outputs from the pharmaverse stack
-- [r4csr.org](https://r4csr.org) — Open-access book: *R for Clinical Study Reports* (Zhang et al.)
-- [R Consortium R Submissions WG](https://rconsortium.github.io/submissions-wg/) — Pilot projects for R-based regulatory submissions
-- [R for Data Science](https://r4ds.had.co.nz) — The foundation for learning tidyverse
-- [GitHub Repository](https://github.com/ineelhere/30-days-of-pharmaverse) — Source code, issues, and contributions welcome
+-   [Pharmaverse.org](https://pharmaverse.org) - The central hub for open-source clinical R packages
+-   [CDISC.org](https://www.cdisc.org) - The official standards body for clinical data interchange
+-   [Admiral Documentation](https://pharmaverse.github.io/admiral/) - The flagship ADaM derivation package
+-   [Pharmaverse TLG Catalogue](https://pharmaverse.github.io/TLG-Catalog) - Reference TLF outputs from the pharmaverse stack
+-   [r4csr.org](https://r4csr.org) - Open-access book: *R for Clinical Study Reports* (Zhang et al.)
+-   [R Consortium R Submissions WG](https://rconsortium.github.io/submissions-wg/) - Pilot projects for R-based regulatory submissions
+-   [R for Data Science](https://r4ds.had.co.nz) - The foundation for learning tidyverse
+-   [GitHub Repository](https://github.com/ineelhere/30-days-of-pharmaverse) - Source code, issues, and contributions welcome
 
-___
+------------------------------------------------------------------------
 
-**Curated by:** [Indraneel Chakraborty](https://www.linkedin.com/in/indraneelchakraborty/) | **Last Updated:** February 2026
-<br>
-<a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>
+**Curated by:** [Indraneel Chakraborty](https://www.linkedin.com/in/indraneelchakraborty/) \| **Last Updated:** February 2026 <br> <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&amp;label=Visits%20till%20date&amp;countColor=%23263759&amp;style=plastic&amp;labelStyle=none"/></a>

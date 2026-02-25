@@ -327,7 +327,7 @@ lb_step2 %>%
   head(10)
 ```
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## Unit Standardization in Practice
 
 Notice how subjects from Site 101 (US units) and Site 102 (SI units) now have comparable values in `LBSTRESN`. This is essential for cross-site analysis!

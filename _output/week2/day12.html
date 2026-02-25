@@ -323,14 +323,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
                         Only data BEFORE           Only data BEFORE
                         this date included         this date included</code></pre>
 <div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Important</span>Why Data Cuts Matter
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>Regulatory submissions</strong> require data frozen at a specific cutoff date</li>
@@ -338,6 +340,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Data integrity</strong> - analyses must be reproducible based on the same data</li>
 <li><strong>Blinding</strong> - in ongoing studies, only data up to the cutoff should be analyzed</li>
 </ul>
+</div>
 </div>
 </div>
 </section>
@@ -734,14 +737,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Warning</span>What About Ongoing AEs at Cutoff?
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>An AE that <strong>started before</strong> the cutoff but has <strong>no end date</strong> (ongoing) needs special handling:</p>
 <ul>
@@ -750,6 +755,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Flag it</strong> as “ongoing at data cutoff”</li>
 </ul>
 <p>This is where <code>datacutr</code> really helps - it handles these edge cases automatically.</p>
+</div>
 </div>
 </div>
 </section>
@@ -1005,14 +1011,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Tip</span>datacutr and Partial Dates
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The <code>datacutr::impute_sdtm()</code> function can handle partial date imputation before applying the cut. Common imputation strategies:</p>
 <ul>
@@ -1020,6 +1028,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Conservative (for efficacy)</strong>: Impute missing day to the <strong>last of the month</strong> - interpretation depends on the analysis</li>
 <li><strong>SAP-driven</strong>: Always follow the Statistical Analysis Plan’s imputation rules</li>
 </ul>
+</div>
 </div>
 </div>
 </section>

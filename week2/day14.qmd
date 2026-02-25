@@ -55,7 +55,7 @@ In traditional clinical programming, programmers manually:
 
 This is **error-prone**, **tedious**, and **hard to maintain**.
 
-::: callout-important
+::: {.callout-important collapse="true"}
 ## The Metadata-Driven Solution
 
 Instead of hardcoding metadata in your programs, you:
@@ -246,7 +246,7 @@ mc <- metacore::metacore(
 mc <- metacore::spec_to_metacore("path/to/specs.xlsx")
 ```
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## spec_to_metacore()
 
 The most common way to create a `metacore` object in production is using `spec_to_metacore()`, which reads from a formatted Excel specification file. This spec file is typically created by the study statistician or data standards team and contains all the metadata for every dataset and variable.
@@ -430,7 +430,7 @@ cat("Exported:", file.path(output_dir, "dm.xpt"), "\n")
 cat("File size:", file.size(file.path(output_dir, "dm.xpt")), "bytes\n")
 ```
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## The xportr Pipeline
 
 In practice, you'd chain all xportr functions together:
@@ -715,7 +715,7 @@ print(review)
 
 ### What You're Now Ready For
 
-::: callout-important
+::: {.callout-important collapse="true"}
 ## Preparation Complete for Week 3: ADaM
 
 You now have a solid foundation in SDTM:

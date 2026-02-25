@@ -44,7 +44,7 @@ By the end of Day 11, you will be able to:
 
 The DS domain answers the most fundamental question in a clinical trial: **What happened to each subject?**
 
-::: callout-important
+::: {.callout-important collapse="true"}
 ## Regulatory Requirement
 
 The FDA requires a complete accounting of **every subject** who entered the study:
@@ -115,7 +115,7 @@ These categorization variables are critical:
 | `PROTOCOL MILESTONE` | `INFORMED CONSENT` | INFORMED CONSENT OBTAINED |
 | `PROTOCOL MILESTONE` | `RANDOMIZATION` | RANDOMIZED |
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## DSCAT vs DSSCAT
 
 Think of it this way:
@@ -175,7 +175,7 @@ ds %>%
   arrange(across(all_of(term_vars[term_vars != "DSDECOD"])), desc(Count))
 ```
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## Reading DS Data
 
 Each subject typically has **multiple records** in DS:
@@ -239,7 +239,7 @@ dm %>%
   head(10)
 ```
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## Important DM Variables Related to DS
 
 | Variable | Description |
@@ -524,7 +524,7 @@ Trial Design domains describe the **structure of the study itself**, not individ
 | **TI** | Trial Inclusion/Exclusion | Documents the inclusion/exclusion criteria |
 | **TS** | Trial Summary | Key parameters about the study (phase, indication, design) |
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## When Do You Need These?
 
 Trial Design domains are **required** for FDA submissions. They provide the **context** for understanding the subject-level data. An FDA reviewer needs to know:
@@ -579,7 +579,7 @@ cat("Trial Visits (TV) - Study Schedule:\n")
 print(tv)
 ```
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## Visit Windows
 
 Notice `TVSTRL` and `TVENRL` - these define the **visit window**. In practice:
@@ -613,7 +613,7 @@ cat("Trial Summary (TS) - Key Study Parameters:\n")
 print(ts)
 ```
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## TS Parameters
 
 The TS domain uses a **parameter-value** structure where each row is one study-level parameter. Common parameters include:
@@ -693,7 +693,7 @@ adsl_disp %>%
   arrange(desc(N))
 ```
 
-::: callout-important
+::: {.callout-important collapse="true"}
 ## Key ADSL Variables from DS
 
 | ADSL Variable | Source | Description |

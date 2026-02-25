@@ -45,7 +45,7 @@ By the end of Day 8, you will be able to:
 
 The **LB (Laboratory) domain** is one of the most complex and data-rich domains in SDTM. It belongs to the **Findings** class of SDTM domains, which are designed to capture observations or measurements collected during a study.
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## Findings Class Characteristics
 
 Findings domains share a common structure:
@@ -182,7 +182,7 @@ lb %>%
   head(15)
 ```
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## Understanding Test Codes
 
 Notice how **LBTESTCD** is a short, standardized code while **LBTEST** is the full descriptive name. This follows CDISC conventions where:
@@ -242,7 +242,7 @@ Let's create a practical example of unit conversion. This is one of the most com
 | Bilirubin | mg/dL | µmol/L | × 17.10 |
 | Cholesterol | mg/dL | mmol/L | ÷ 38.67 |
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## Reference for Unit Conversions
 
 For a comprehensive list of clinical lab unit conversions, see:
@@ -342,7 +342,7 @@ cat("Standardized lab data:\n")
 print(lab_standardized)
 ```
 
-::: callout-important
+::: {.callout-important collapse="true"}
 ## Key Learning Point
 
 Notice how the **original** values are preserved (`LBORRES`, `LBORRESU`) while **standardized** values are derived (`LBSTRESC`, `LBSTRESN`, `LBSTRESU`). This is a fundamental SDTM principle: **never lose the original data!**
@@ -405,7 +405,7 @@ lab_with_ranges %>%
          LBSTNRLO, LBSTNRHI, LBNRIND)
 ```
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## Clinical Significance
 
 The `LBNRIND` variable is critical for safety analyses. It helps identify:
@@ -438,7 +438,7 @@ The `LBNRIND` variable is critical for safety analyses. It helps identify:
 | Creatinine | CREAT | 2160-0 | Creatinine [Mass/volume] in Serum or Plasma |
 | ALT | ALT | 1742-6 | Alanine aminotransferase [Enzymatic activity/volume] in Serum or Plasma |
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## Learn More About LOINC
 
 -   [LOINC Official Website](https://loinc.org/)

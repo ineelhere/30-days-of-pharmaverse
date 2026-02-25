@@ -265,7 +265,7 @@ ae_coded %>%
   head(10)
 ```
 
-::: callout-important
+::: {.callout-important collapse="true"}
 ## Why Left Join?
 
 We use `left_join` because we want to keep **all** rows from our clinical data (`ae_uncoded`), even if a matching code isn't found in the dictionary. If we used `inner_join`, we would lose data for any term not in our lookup table!

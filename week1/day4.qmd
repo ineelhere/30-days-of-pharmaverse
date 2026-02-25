@@ -186,7 +186,7 @@ data.frame(
 )
 ```
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## Notice the "No Day 0"
 
 Look at the output above: Day -2, Day -1, **Day 1**, Day 2, Day 5. There is no Day 0!
@@ -335,7 +335,7 @@ data.frame(
 )
 ```
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## Why Different Imputation Rules?
 
 -   For **start dates**, we impute to the **earliest** possible date to be conservative about when something started.

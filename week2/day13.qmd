@@ -46,7 +46,7 @@ By the end of Day 13, you will be able to:
 
 ### The Consequences of Bad SDTM Data
 
-::: callout-important
+::: {.callout-important collapse="true"}
 ## What Happens When SDTM Has Issues
 
 1.  **FDA Refuse-to-File** - The FDA can reject your entire submission if SDTM doesn't conform
@@ -145,7 +145,7 @@ cat("\n\nSample DM checks:\n")
 check_fns[grepl("_dm_", check_fns)] %>% head(10) %>% cat(sep = "\n")
 ```
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## Naming Convention
 
 The check functions follow a consistent naming pattern:
@@ -575,7 +575,7 @@ workflow <- tibble::tribble(
 print(workflow)
 ```
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## Validation in Practice
 
 In production environments, validation checks are typically:

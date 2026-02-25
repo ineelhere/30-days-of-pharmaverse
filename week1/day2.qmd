@@ -117,7 +117,7 @@ dm %>%
   utils::head(5)
 ```
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## Key DM Variables
 
 -   **STUDYID**: Study Identifier
@@ -229,7 +229,7 @@ lb %>%
   utils::head(5)
 ```
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## Why Two Result Variables?
 
 -   **ORRES/ORRESU**: Original result as collected (might be "\< 5", "\>100", or character values)

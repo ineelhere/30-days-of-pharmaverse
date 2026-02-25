@@ -62,7 +62,7 @@ Timeline of a clinical trial:
                         this date included         this date included
 ```
 
-::: callout-important
+::: {.callout-important collapse="true"}
 ## Why Data Cuts Matter
 
 -   **Regulatory submissions** require data frozen at a specific cutoff date
@@ -347,7 +347,7 @@ cat("  Records after:", nrow(lb_record_cut), "\n")
 cat("  Records removed:", nrow(lb_patient_cut) - nrow(lb_record_cut), "\n")
 ```
 
-::: callout-warning
+::: {.callout-warning collapse="true"}
 ## What About Ongoing AEs at Cutoff?
 
 An AE that **started before** the cutoff but has **no end date** (ongoing) needs special handling:
@@ -551,7 +551,7 @@ partial_examples <- tibble::tribble(
 print(partial_examples)
 ```
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## datacutr and Partial Dates
 
 The `datacutr::impute_sdtm()` function can handle partial date imputation before applying the cut. Common imputation strategies:

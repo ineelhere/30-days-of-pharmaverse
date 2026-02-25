@@ -62,7 +62,7 @@ The VS domain introduces an important concept: **repeated measures at the same t
 -   **Position-dependent measurements** (sitting vs. standing blood pressure)
 -   **Location-specific readings** (left arm vs. right arm)
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## Repeated Measures Challenge
 
 When analyzing vital signs, we need to decide:
@@ -185,7 +185,7 @@ vs %>%
   arrange(VSTESTCD)
 ```
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## Understanding VS Test Codes
 
 Common CDISC vital sign test codes:
@@ -370,7 +370,7 @@ vs_multiple %>%
   print()
 ```
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## Understanding the Data Structure
 
 Notice that for each subject at each visit, we have:
@@ -432,7 +432,7 @@ cat("Analysis-ready dataset (using mean values):\n")
 head(vs_analysis, 12)
 ```
 
-::: callout-important
+::: {.callout-important collapse="true"}
 ## ADaM Considerations
 
 When building ADVS (Analysis Dataset for Vital Signs):
@@ -468,7 +468,7 @@ cat("Wide format - One row per subject per visit:\n")
 print(vs_wide)
 ```
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## When to Use Wide Format
 
 Wide format is useful for:
@@ -698,7 +698,7 @@ advs_preview %>%
   print()
 ```
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## Looking Ahead to Week 3
 
 In Week 3 (Days 15-21), we'll use the `admiral` package to properly build ADaM datasets like ADVS. The key admiral functions include:

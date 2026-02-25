@@ -46,7 +46,7 @@ By the end of Day 10, you will be able to:
 
 On Day 7 we built a basic AE domain as part of the capstone. Today we go **much deeper** - because in production clinical programming, AE data is arguably the **most scrutinized dataset** by regulatory agencies. Getting AE logic wrong can delay a submission or trigger FDA queries.
 
-::: callout-important
+::: {.callout-important collapse="true"}
 ## The Stakes Are High
 
 Adverse event data directly impacts:
@@ -114,7 +114,7 @@ Let's look at the actual data - every column tells a story:
 dplyr::glimpse(ae)
 ```
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## AE Variables Quick Reference
 
 Here's what the key variables represent in plain English:
@@ -187,7 +187,7 @@ if ("AETOXGR" %in% names(ae)) {
 }
 ```
 
-::: callout-important
+::: {.callout-important collapse="true"}
 ## Severity ≠ Seriousness
 
 This is the **#1 most common confusion** in clinical programming:
@@ -313,7 +313,7 @@ ae_with_ser %>%
   select(USUBJID, AEDECOD, AESEV, AESER, AESDTH, AESLIFE, AESHOSP, AESDISAB, AESMIE)
 ```
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## Read the Logic Carefully
 
 The `case_when()` above uses a **waterfall** approach - it checks each criterion in sequence and returns `"Y"` at the first match. This works well for deriving `AESER`, but in production you'd typically use a more explicit approach:
@@ -432,7 +432,7 @@ ae_with_teae %>%
   head(5)
 ```
 
-::: callout-warning
+::: {.callout-warning collapse="true"}
 ## Partial Dates Are Common
 
 In real clinical data, you will frequently encounter **partial dates** like:
@@ -494,7 +494,7 @@ ae_duration %>%
   mutate(Percent = round(100 * Count / sum(Count), 1))
 ```
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## The "+1" Rule
 
 Notice we calculate duration as `(end - start) + 1`. This is the standard clinical convention:
@@ -586,7 +586,7 @@ ae %>%
   arrange(desc(Count))
 ```
 
-::: callout-tip
+::: {.callout-tip collapse="true"}
 ## Controlled Terminology Matters
 
 All of these variables - `AEACN`, `AEOUT`, `AESEV`, `AESER` - use **CDISC Controlled Terminology**. You can't invent your own values. The allowed values are specified in the [CDISC CT Package](https://www.cancer.gov/research/resources/terminology/cdisc).
@@ -763,7 +763,7 @@ The SDTM AE domain feeds into the ADaM **ADAE** dataset. Here's a preview of the
 | *derived*        | AESEQ_GR  | Worst event selection per subject/term |
 | from DM          | TRT01A    | Actual treatment (from ADSL)           |
 
-::: callout-note
+::: {.callout-note collapse="true"}
 ## Looking Ahead
 
 In Week 3, when we build ADaM datasets with `admiral`, the `derive_var_trtemfl()` function will handle TEAE derivation automatically - but understanding the logic behind it (as we've done today) is essential for debugging and validation.

@@ -7,7 +7,7 @@
 [![Live Site](https://img.shields.io/badge/📖_Live_Site-click-here?style=flat-square)](https://ineelhere.github.io/30-days-of-pharmaverse/)
 <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>
 
-A **free, open-source, 30-day guided exploration** of Clinical Data Science using **R** and the **[Pharmaverse](https://pharmaverse.org)** ecosystem. Walk through real-world CDISC workflows — from raw clinical trial data all the way to submission-ready SDTM, ADaM, and Tables/Listings/Figures — one day at a time.
+A **free, open-source, 30-day guided exploration** of Clinical Data Science using **R** and the **[Pharmaverse](https://pharmaverse.org)** ecosystem. Walk through real-world CDISC workflows - from raw clinical trial data all the way to submission-ready SDTM, ADaM, and Tables/Listings/Figures - one day at a time.
 
 > **[📖 Read online → ineelhere.github.io/30-days-of-pharmaverse](https://ineelhere.github.io/30-days-of-pharmaverse/)**
 
@@ -18,7 +18,7 @@ A **free, open-source, 30-day guided exploration** of Clinical Data Science usin
 - **Clinical programmers** transitioning from SAS to R and looking for a structured, code-first walkthrough of the Pharmaverse stack.
 - **Biostatisticians & data scientists** who want to understand how SDTM, ADaM, and TLF production work end-to-end in an open-source environment.
 - **Students & academics** exploring clinical trial data standards and reproducible research with R.
-- **Open-source contributors** interested in the Pharmaverse — the growing family of validated, community-driven R packages for clinical reporting.
+- **Open-source contributors** interested in the Pharmaverse - the growing family of validated, community-driven R packages for clinical reporting.
 
 No SAS license or prior CDISC experience required. If you know base R / `tidyverse` and are curious about clinical data pipelines, you're in the right place.
 
@@ -26,7 +26,7 @@ No SAS license or prior CDISC experience required. If you know base R / `tidyver
 
 ## 🗺️ Exploration Roadmap
 
-This isn't just a course — it's a deep dive into the tools and standards that power modern clinical trials.
+This isn't just a course - it's a deep dive into the tools and standards that power modern clinical trials.
 
 ### Week 1: SDTM Fundamentals & Core R Skills
 
@@ -82,7 +82,7 @@ This isn't just a course — it's a deep dive into the tools and standards that 
 
 ## 🎒 What You'll Explore
 
-- **SDTM & ADaM Standards**: The full structure and intent of CDISC-standardised clinical data — built in code, not slides.
+- **SDTM & ADaM Standards**: The full structure and intent of CDISC-standardised clinical data - built in code, not slides.
 - **The Pharmaverse Stack**: Hands-on work with `admiral`, `xportr`, `metacore`, `sdtm.oak`, `sdtmchecks`, and more.
 - **End-to-End ADaM Construction**: Build ADSL, ADAE, ADLB, ADVS, ADTTE, ADCM, ADEX, and ADRS from SDTM sources.
 - **TLF Production**: Tables, Listings, and Figures using `rtables`/`tern`, `r2rtf`, `flextable`, `gtsummary`, `tfrmt`, `rlistings`, and `ggsurvfit`.
@@ -164,11 +164,11 @@ This project is a **personal initiative** created for **learning and exploratory
 
 **Learners are strongly encouraged to:**
 
-1. **Think critically** — Don't just copy-paste code. Understand *why* each step exists.
-2. **Verify independently** — Check code against official Pharmaverse documentation and CDISC standards.
-3. **Test thoroughly** — Validate any code in your own environment before use in production.
-4. **Review regulatory guidance** — Always cross-reference with current FDA regulatory standards.
-5. **Consult experts** — When implementing for real clinical trials, seek guidance from regulatory specialists.
+1. **Think critically** - Don't just copy-paste code. Understand *why* each step exists.
+2. **Verify independently** - Check code against official Pharmaverse documentation and CDISC standards.
+3. **Test thoroughly** - Validate any code in your own environment before use in production.
+4. **Review regulatory guidance** - Always cross-reference with current FDA regulatory standards.
+5. **Consult experts** - When implementing for real clinical trials, seek guidance from regulatory specialists.
 
 The views, opinions, code, and materials shared in this project are solely for exploratory and learning purposes and DO NOT GUARANTEE accuracy/compliance/validation requirements. They do not represent the positions of any external organization, and this content should not be considered official guidance for regulatory submissions without independent verification.
 
@@ -176,13 +176,13 @@ The views, opinions, code, and materials shared in this project are solely for e
 
 ## 🔗 Community & Resources
 
-- [Pharmaverse.org](https://pharmaverse.org) — The home of open-source clinical R packages
-- [CDISC.org](https://www.cdisc.org) — The standards body for clinical data interchange
-- [Admiral Documentation](https://pharmaverse.github.io/admiral/) — The flagship ADaM derivation package
-- [Pharmaverse TLG Catalogue](https://pharmaverse.github.io/TLG-Catalog) — Reference TLF outputs from the pharmaverse stack
-- [r4csr.org](https://r4csr.org) — Open-access book: *R for Clinical Study Reports*
-- [R Consortium R Submissions WG](https://rconsortium.github.io/submissions-wg/) — Pilot projects for R-based regulatory submissions
-- [R for Data Science](https://r4ds.had.co.nz) — The foundation for learning tidyverse
+- [Pharmaverse.org](https://pharmaverse.org) - The home of open-source clinical R packages
+- [CDISC.org](https://www.cdisc.org) - The standards body for clinical data interchange
+- [Admiral Documentation](https://pharmaverse.github.io/admiral/) - The flagship ADaM derivation package
+- [Pharmaverse TLG Catalogue](https://pharmaverse.github.io/TLG-Catalog) - Reference TLF outputs from the pharmaverse stack
+- [r4csr.org](https://r4csr.org) - Open-access book: *R for Clinical Study Reports*
+- [R Consortium R Submissions WG](https://rconsortium.github.io/submissions-wg/) - Pilot projects for R-based regulatory submissions
+- [R for Data Science](https://r4ds.had.co.nz) - The foundation for learning tidyverse
 
 ---
 

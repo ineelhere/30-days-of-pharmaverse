@@ -321,14 +321,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2" class="anchored" data-anchor-id="why-this-day-matters"><span class="header-section-number">2</span> Why This Day Matters</h2>
 <p>On Day 7 we built a basic AE domain as part of the capstone. Today we go <strong>much deeper</strong> - because in production clinical programming, AE data is arguably the <strong>most scrutinized dataset</strong> by regulatory agencies. Getting AE logic wrong can delay a submission or trigger FDA queries.</p>
 <div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Important</span>The Stakes Are High
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Adverse event data directly impacts:</p>
 <ul>
@@ -338,6 +340,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Post-marketing surveillance</strong> - What to watch for after approval</li>
 </ul>
 <p>Every variable, every flag, every derivation matters.</p>
+</div>
 </div>
 </div>
 <hr>
@@ -456,14 +459,16 @@ $ AEENDY   &lt;dbl&gt; NA, NA, 10, NA, 26, NA, 26, NA, NA, NA, NA, NA, 1, 1, NA,
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>AE Variables Quick Reference
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Here’s what the key variables represent in plain English:</p>
 <table class="caption-top table">
@@ -532,6 +537,7 @@ $ AEENDY   &lt;dbl&gt; NA, NA, 10, NA, 26, NA, 26, NA, NA, NA, NA, NA, 1, 1, NA,
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 </div>
 <hr>
@@ -625,14 +631,16 @@ When AETOXGR IS available, it goes in the AE domain as:
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Important</span>Severity ≠ Seriousness
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This is the <strong>#1 most common confusion</strong> in clinical programming:</p>
 <ul>
@@ -641,6 +649,7 @@ When AETOXGR IS available, it goes in the AE domain as:
 </ul>
 <p>A <strong>MILD rash</strong> could be an SAE if it requires hospitalization. A <strong>SEVERE headache</strong> may NOT be an SAE if it resolves quickly with OTC medication.</p>
 <p><strong>Severity describes intensity. Seriousness describes regulatory significance.</strong></p>
+</div>
 </div>
 </div>
 <hr>
@@ -784,14 +793,16 @@ SAE records detail:</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Tip</span>Read the Logic Carefully
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The <code>case_when()</code> above uses a <strong>waterfall</strong> approach - it checks each criterion in sequence and returns <code>"Y"</code> at the first match. This works well for deriving <code>AESER</code>, but in production you’d typically use a more explicit approach:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>AESER <span class="ot">=</span> <span class="fu">if_else</span>(</span>
@@ -800,6 +811,7 @@ SAE records detail:</code></pre>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Y"</span>, <span class="st">"N"</span></span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Both approaches give the same result. The <code>if_else()</code> version makes the OR-logic more explicit.</p>
+</div>
 </div>
 </div>
 <hr>
@@ -948,14 +960,16 @@ Sample of non-TEAE records (started before first dose):</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Warning</span>Partial Dates Are Common
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In real clinical data, you will frequently encounter <strong>partial dates</strong> like:</p>
 <ul>
@@ -969,6 +983,7 @@ Sample of non-TEAE records (started before first dose):</code></pre>
 <li><strong>Non-conservative</strong>: Impute to the earliest possible date</li>
 <li><strong>Rule-based</strong>: Use other available information to make the best guess</li>
 </ul>
+</div>
 </div>
 </div>
 <hr>
@@ -1033,14 +1048,16 @@ Ongoing AEs (no end date):</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>The “+1” Rule
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Notice we calculate duration as <code>(end - start) + 1</code>. This is the standard clinical convention:</p>
 <ul>
@@ -1048,6 +1065,7 @@ Ongoing AEs (no end date):</code></pre>
 <li>An AE that starts on Day 5 and ends on Day 7 lasted <strong>3 days</strong> (not 2)</li>
 </ul>
 <p>This is the same “inclusive” counting rule used for study day calculations.</p>
+</div>
 </div>
 </div>
 <hr>
@@ -1183,17 +1201,20 @@ Ongoing AEs (no end date):</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Tip</span>Controlled Terminology Matters
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>All of these variables - <code>AEACN</code>, <code>AEOUT</code>, <code>AESEV</code>, <code>AESER</code> - use <strong>CDISC Controlled Terminology</strong>. You can’t invent your own values. The allowed values are specified in the <a href="https://www.cancer.gov/research/resources/terminology/cdisc">CDISC CT Package</a>.</p>
 <p>For example, valid <code>AEOUT</code> values are: - RECOVERED/RESOLVED - RECOVERING/RESOLVING - NOT RECOVERED/NOT RESOLVED - RECOVERED/RESOLVED WITH SEQUELAE - FATAL - UNKNOWN</p>
+</div>
 </div>
 </div>
 <hr>
@@ -1458,16 +1479,19 @@ TEAE by Maximum Severity per Subject:</code></pre>
 </tbody>
 </table>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Looking Ahead
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In Week 3, when we build ADaM datasets with <code>admiral</code>, the <code>derive_var_trtemfl()</code> function will handle TEAE derivation automatically - but understanding the logic behind it (as we’ve done today) is essential for debugging and validation.</p>
+</div>
 </div>
 </div>
 <hr>

@@ -308,14 +308,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-consequences-of-bad-sdtm-data" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="the-consequences-of-bad-sdtm-data"><span class="header-section-number">2.1</span> The Consequences of Bad SDTM Data</h3>
 <div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Important</span>What Happens When SDTM Has Issues
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><strong>FDA Refuse-to-File</strong> - The FDA can reject your entire submission if SDTM doesn’t conform</li>
@@ -325,6 +327,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Delayed approval</strong> - Each round of queries adds weeks/months to the timeline</li>
 </ol>
 <p><strong>Validation is not optional - it’s a survival skill.</strong></p>
+</div>
 </div>
 </div>
 </section>
@@ -491,18 +494,21 @@ check_sc_dm_seyeselc</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Tip</span>Naming Convention
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The check functions follow a consistent naming pattern:</p>
 <p><code>check_&lt;domain&gt;_&lt;what_is_checked&gt;</code></p>
 <p>For example: - <code>check_ae_aestdtc_after_aeendtc</code> - AE start date should not be after end date - <code>check_dm_age_missing</code> - Age should not be missing in DM - <code>check_ae_aeser_aesdth</code> - If AESER = “Y” and AESDTH = “Y”, consistency check</p>
+</div>
 </div>
 </div>
 <hr>
@@ -1075,14 +1081,16 @@ Controlled Terminology Check (AESER):</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Validation in Practice
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In production environments, validation checks are typically:</p>
 <ul>
@@ -1093,6 +1101,7 @@ Controlled Terminology Check (AESER):</code></pre>
 <li><strong>Reviewed</strong> - A second programmer reviews the findings</li>
 </ul>
 <p>Some organizations run <strong>Pinnacle 21</strong> (OpenCDISC) in addition to <code>sdtmchecks</code> for a more comprehensive validation.</p>
+</div>
 </div>
 </div>
 <hr>

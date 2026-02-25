@@ -348,14 +348,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Location-specific readings</strong> (left arm vs.&nbsp;right arm)</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Repeated Measures Challenge
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>When analyzing vital signs, we need to decide:</p>
 <ul>
@@ -364,6 +366,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Do we report the <strong>minimum</strong> or <strong>maximum</strong>?</li>
 </ul>
 <p>This is a key consideration when building ADaM datasets (ADVS) from SDTM VS data.</p>
+</div>
 </div>
 </div>
 </section>
@@ -536,14 +539,16 @@ $ VSTPTREF &lt;chr&gt; "PATIENT SUPINE", "PATIENT STANDING", "PATIENT STANDING",
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Tip</span>Understanding VS Test Codes
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Common CDISC vital sign test codes:</p>
 <ul>
@@ -556,6 +561,7 @@ $ VSTPTREF &lt;chr&gt; "PATIENT SUPINE", "PATIENT STANDING", "PATIENT STANDING",
 <li><strong>HEIGHT</strong> = Height</li>
 <li><strong>BMI</strong> = Body Mass Index (often derived)</li>
 </ul>
+</div>
 </div>
 </div>
 <hr>
@@ -868,14 +874,16 @@ $ VSTPTREF &lt;chr&gt; "PATIENT SUPINE", "PATIENT STANDING", "PATIENT STANDING",
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Understanding the Data Structure
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Notice that for each subject at each visit, we have:</p>
 <ul>
@@ -883,6 +891,7 @@ $ VSTPTREF &lt;chr&gt; "PATIENT SUPINE", "PATIENT STANDING", "PATIENT STANDING",
 <li>Each reading is identified by <code>VSTPT</code> and <code>VSTPTNUM</code></li>
 <li>This granular data allows for various analysis approaches</li>
 </ul>
+</div>
 </div>
 </div>
 <hr>
@@ -975,14 +984,16 @@ $ VSTPTREF &lt;chr&gt; "PATIENT SUPINE", "PATIENT STANDING", "PATIENT STANDING",
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Important</span>ADaM Considerations
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>When building ADVS (Analysis Dataset for Vital Signs):</p>
 <ul>
@@ -991,6 +1002,7 @@ $ VSTPTREF &lt;chr&gt; "PATIENT SUPINE", "PATIENT STANDING", "PATIENT STANDING",
 <li><strong>DTYPE</strong> = Derivation Type (documents how AVAL was calculated)</li>
 </ul>
 <p>Common DTYPE values: “MEAN”, “MEDIAN”, “LAST”, “FIRST”, “WORST”</p>
+</div>
 </div>
 </div>
 <hr>
@@ -1035,14 +1047,16 @@ $ VSTPTREF &lt;chr&gt; "PATIENT SUPINE", "PATIENT STANDING", "PATIENT STANDING",
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Tip</span>When to Use Wide Format
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Wide format is useful for:</p>
 <ul>
@@ -1051,6 +1065,7 @@ $ VSTPTREF &lt;chr&gt; "PATIENT SUPINE", "PATIENT STANDING", "PATIENT STANDING",
 <li><strong>Exploratory data analysis</strong></li>
 </ul>
 <p>SDTM VS is always in <strong>long format</strong> (one row per measurement).</p>
+</div>
 </div>
 </div>
 <hr>
@@ -1401,14 +1416,16 @@ Data coverage:</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Looking Ahead to Week 3
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In Week 3 (Days 15-21), we’ll use the <code>admiral</code> package to properly build ADaM datasets like ADVS. The key admiral functions include:</p>
 <ul>
@@ -1417,6 +1434,7 @@ Data coverage:</code></pre>
 <li><code>derive_vars_chg()</code> - Calculate change from baseline</li>
 </ul>
 <p>Learn more at: <a href="https://pharmaverse.github.io/admiral/articles/bds_finding.html">Admiral ADVS Vignette</a></p>
+</div>
 </div>
 </div>
 <hr>
