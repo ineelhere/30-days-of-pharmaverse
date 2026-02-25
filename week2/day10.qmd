@@ -26,7 +26,7 @@ execute:
 ---
 
 ::: {style="margin-bottom:12px;"}
-< a target="_blank" href="../index.html" class="resource-link">← Back to Roadmap</a>
+<a href="../index.html" class="resource-link">← Back to Roadmap</a>
 :::
 
 ## Learning Objectives
@@ -818,4 +818,4 @@ In **Day 11**, we will focus on **Disposition (DS) & Trial Design Domains**:
 -   Working with EPOCH and milestone variables
 -   Subject flow and disposition summaries
 
-< a target="_blank" href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>
+<a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>

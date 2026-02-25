@@ -25,7 +25,7 @@ execute:
   message: false
 ---
 
-<div style="margin-bottom:12px;">< a target="_blank" href="../index.html" class="resource-link">← Back to Roadmap</a></div>
+<div style="margin-bottom:12px;"><a href="../index.html" class="resource-link">← Back to Roadmap</a></div>
 
 ## Learning Objectives
 
@@ -677,4 +677,4 @@ In **Day 9**, we will focus on **VS (Vital Signs) & Repeated Measures**:
 -   Deriving statistics across multiple readings
 -   Preparing for ADaM BDS structure (baseline, change from baseline)
 
-< a target="_blank" href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>
+<a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>

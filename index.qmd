@@ -182,29 +182,20 @@ This journey covers the essential toolkit for modern clinical programming in R:
 **Core Packages:**
 
 ``` r
-# SDTM & ADaM layer
-install.packages(c(
-  "admiral",          # ADaM derivations
-  "admiralonco",      # Oncology extensions
-  "pharmaversesdtm",  # Example SDTM datasets
-  "pharmaverseadam",  # Example ADaM datasets
-  "sdtm.oak",         # SDTM utilities
-  "sdtmchecks",       # SDTM validation
-  "datacutr",         # Data cut utilities
-  "metacore",         # Metadata management
-  "metatools",        # Metadata tools
-  "xportr",           # Regulatory export (.xpt)
-  "haven",            # SAS interoperability
-  "dplyr",            # Data wrangling
-  "lubridate"         # Date handling
-))
+# SDTM layer
+install.packages(c("admiral", "pharmaversesdtm", "pharmaverseadam",
+                   "sdtm.oak", "sdtmchecks", "datacutr",
+                   "metacore", "metatools", "xportr", "haven"))
 
-# TLF layer
-install.packages(c(
-  "rtables", "tern", "r2rtf", "flextable", "officer",
-  "gtsummary", "tfrmt", "Tplyr", "rlistings",
-  "ggplot2", "ggsurvfit", "patchwork"
-))
+# ADaM extensions
+install.packages("admiralonco")
+
+# TLF - tables
+install.packages(c("rtables", "tern", "r2rtf", "flextable", "officer",
+                   "gtsummary", "tfrmt", "Tplyr", "rlistings"))
+
+# TLF - figures
+install.packages(c("ggplot2", "ggsurvfit", "patchwork"))
 
 # ARD & QC
 install.packages(c("cards", "cardx", "testthat", "logrx"))
@@ -240,4 +231,4 @@ The views, opinions, code, and materials shared in this project are solely for e
 
 ------------------------------------------------------------------------
 
-**Curated by:** [Indraneel Chakraborty](https://www.linkedin.com/in/indraneelchakraborty/) \| **Last Updated:** February 2026 <br> < a target="_blank" href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&amp;label=Visits%20till%20date&amp;countColor=%23263759&amp;style=plastic&amp;labelStyle=none"/></a>
+**Curated by:** [Indraneel Chakraborty](https://www.linkedin.com/in/indraneelchakraborty/) \| **Last Updated:** February 2026 <br> <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&amp;label=Visits%20till%20date&amp;countColor=%23263759&amp;style=plastic&amp;labelStyle=none"/></a>
