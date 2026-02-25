@@ -11,6 +11,7 @@ format:
     toc-location: right
     smooth-scroll: true
     highlight-style: github
+    css: ../styles/site.css
     header-includes: |
       <style>
         .navbar {
@@ -228,6 +229,12 @@ The views, opinions, code, and materials shared in this project are solely for e
 -   [R Consortium R Submissions WG](https://rconsortium.github.io/submissions-wg/) - Pilot projects for R-based regulatory submissions
 -   [R for Data Science](https://r4ds.had.co.nz) - The foundation for learning tidyverse
 -   [GitHub Repository](https://github.com/ineelhere/30-days-of-pharmaverse) - Source code, issues, and contributions welcome
+
+## Contributing
+
+This is a living document powered with Quarto. Suggestions, corrections, and improvements are always welcome. Feel free to [open an issue](https://github.com/ineelhere/30-days-of-pharmaverse/issues/new) or submit a [pull request](https://github.com/ineelhere/30-days-of-pharmaverse/compare) on [GitHub](https://github.com/ineelhere/30-days-of-pharmaverse)!
+
+If you find the project useful, please consider starring the [repository](https://github.com/ineelhere/30-days-of-pharmaverse) and sharing it with your network. The more eyes and minds we have, the better this resource can become for everyone exploring clinical data science with R.
 
 ------------------------------------------------------------------------
 
