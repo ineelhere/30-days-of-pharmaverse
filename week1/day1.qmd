@@ -848,4 +848,3 @@ The key validation requirement is that **your company** validates the use of any
 
 In **Day 2**, we'll dive deeper into: - SDTM domain classes and their specific structures - Advanced tidyverse operations - Variable naming conventions (--TESTCD, --ORRES, --DY patterns) - Creating data summaries by treatment arm
 
-<a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>

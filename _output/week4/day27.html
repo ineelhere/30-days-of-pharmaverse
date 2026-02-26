@@ -104,9 +104,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<meta name="keywords" content="pharmaverse, R, clinical data science, SDTM, ADaM, TLF, admiral, xportr, metacore, rtables, tern, CDISC, clinical programming, biostatistics">
+<meta name="author" content="Indraneel Chakraborty">
 
 
 <link rel="stylesheet" href="../styles/site.css">
+<meta property="og:title" content="30 Days of Pharmaverse">
+<meta property="og:description" content="A free, hands-on 30-day guide to Clinical Data Science with R - SDTM, ADaM, and TLF production with the Pharmaverse ecosystem.">
+<meta property="og:site_name" content="30 Days of Pharmaverse">
+<meta name="twitter:title" content="30 Days of Pharmaverse">
+<meta name="twitter:description" content="Free 30-day hands-on guide to Pharmaverse, SDTM, ADaM &amp; TLF production in R.">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light">
@@ -368,7 +376,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>              Placebo     Xanomeline High Dose   Xanomeline Low Dose
               (N=86)             (N=72)                (N=96)       
-————————————————————————————————————————————————————————————————————
+--------------------------------------------------------------------
 Mean (SD)   75.2 (8.59)       73.8 (7.94)            76.0 (8.11)    </code></pre>
 </div>
 </div>
@@ -426,7 +434,7 @@ Mean (SD)   75.2 (8.59)       73.8 (7.94)            76.0 (8.11)    </code></pre
 <div class="cell-output cell-output-stdout">
 <pre><code>                                          Placebo        Xanomeline High Dose   Xanomeline Low Dose     All Subjects   
                                           (N=86)                (N=72)                (N=96)               (N=254)     
-———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+-----------------------------------------------------------------------------------------------------------------------
 Age (years)                                                                                                            
   Mean (SD)                             75.2 (8.59)          73.8 (7.94)            76.0 (8.11)          75.1 (8.25)   
   Median (Q1, Q3)                    76.0 (69.2, 81.8)    75.5 (70.5, 79.0)      78.0 (71.0, 82.0)    77.0 (70.0, 81.0)
@@ -462,7 +470,7 @@ Race
 <div class="cell-output cell-output-stdout">
 <pre><code>                                       Placebo     Xanomeline High Dose   Xanomeline Low Dose   All Subjects
                                        (N=86)             (N=72)                (N=96)            (N=254)   
-————————————————————————————————————————————————————————————————————————————————————————————————————————————
+------------------------------------------------------------------------------------------------------------
 Age (years)                                                                                                 
   n                                      86                 72                    96                254     
   Mean (SD)                          75.2 (8.6)         73.8 (7.9)            76.0 (8.1)         75.1 (8.2) 
@@ -527,7 +535,7 @@ Race
 <div class="cell-output cell-output-stdout">
 <pre><code>                                                                       Placebo    Xanomeline High Dose   Xanomeline Low Dose   All Subjects
 System Organ Class                                                     (N=86)            (N=72)                (N=96)            (N=254)   
-———————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+-------------------------------------------------------------------------------------------------------------------------------------------
 GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS                                                                                       
     APPLICATION SITE PRURITUS                                         6 (7.0%)         21 (29.2%)            23 (24.0%)         50 (19.7%) 
     APPLICATION SITE ERYTHEMA                                         3 (3.5%)         14 (19.4%)            13 (13.5%)         30 (11.8%) 
@@ -821,7 +829,7 @@ SOCIAL CIRCUMSTANCES
 <div class="cell-output cell-output-stdout">
 <pre><code>                            Placebo     Xanomeline High Dose   Xanomeline Low Dose   All Subjects
 Baseline Reference Range     (N=86)            (N=72)                (N=96)            (N=254)   
-—————————————————————————————————————————————————————————————————————————————————————————————————
+-------------------------------------------------------------------------------------------------
 NORMAL                                                                                           
     LOW                     1 (1.2%)             0                  5 (5.2%)           6 (2.4%)  
     NORMAL                 79 (91.9%)        68 (94.4%)            72 (75.0%)        219 (86.2%) 
@@ -1037,7 +1045,7 @@ Validation complete</code></pre>
 </ul>
 <hr>
 <p>End of Day 27</p>
-<p><a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&amp;label=Visits%20till%20date&amp;countColor=%23263759&amp;style=plastic&amp;labelStyle=none"></a></p>
+<hr>
 
 
 </section>
@@ -1116,7 +1124,7 @@ Validation complete</code></pre>
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/ineelhere\.github\.io\/30-days-of-pharmaverse\/");
+        var filterRegex = new RegExp("https:\/\/ineelhere\.github\.io\/30-days-of-pharmaverse");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -1444,6 +1452,19 @@ Validation complete</code></pre>
   });
   </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p><span style="font-size:13px; color:#4a5568;"><a href="https://ineelhere.github.io/30-days-of-pharmaverse/" style="color:#2b6cb0; text-decoration:none;">30 Days of Pharmaverse</a> &nbsp;·&nbsp; <a href="../30-days-of-pharmaverse/#important-disclaimer" style="color:#2b6cb0; text-decoration:none;">Disclaimer</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/indraneelchakraborty/" style="color:#2b6cb0; text-decoration:none;">Indraneel Chakraborty</a> &nbsp;·&nbsp; © 2026<br><a href="https://ineelhere.github.io/30-days-of-pharmaverse/"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&amp;label=Visits&amp;countColor=%232b6cb0&amp;style=plastic&amp;labelStyle=none" style="vertical-align:middle;"></a></span></p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 

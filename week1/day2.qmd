@@ -562,4 +562,4 @@ In **Day 3**, we'll explore:
 -   CDISC CT concepts: AESEV, AEREL, AESER values
 -   How metacore + metatools automate CT validation
 
-<a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>
+___

@@ -758,4 +758,4 @@ In **Day 10**, we will focus on **AE Domain Mastery & SAE Logic**:
 -   Deriving AE duration and treatment-emergent flags
 -   Preparing for ADaM ADAE creation
 
-<a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>
+___

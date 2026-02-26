@@ -247,4 +247,4 @@ If you find the project useful, please consider starring the [repository](https:
 
 ------------------------------------------------------------------------
 
-**Curated by:** [Indraneel Chakraborty](https://www.linkedin.com/in/indraneelchakraborty/) \| **Last Updated:** February 2026 <br> <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&amp;label=Visits%20till%20date&amp;countColor=%23263759&amp;style=plastic&amp;labelStyle=none"/></a>
+**Curated by:** [Indraneel Chakraborty](https://www.linkedin.com/in/indraneelchakraborty/)

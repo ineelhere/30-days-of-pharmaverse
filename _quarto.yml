@@ -4,11 +4,23 @@ project:
 
 website:
   title: "30 Days of Pharmaverse"
-  description: "A Practitioner's Guide to Clinical Data Science with R"
-  site-url: https://ineelhere.github.io/30-days-of-pharmaverse/
+  description: "A free, hands-on 30-day guide to Clinical Data Science with R and the Pharmaverse ecosystem - covering SDTM, ADaM, and TLF production using admiral, xportr, metacore, rtables, and more."
+  site-url: https://ineelhere.github.io/30-days-of-pharmaverse
   repo-url: https://github.com/ineelhere/30-days-of-pharmaverse
   repo-branch: main
-  
+
+  open-graph:
+    title: "30 Days of Pharmaverse"
+    description: "A free, hands-on 30-day guide to Clinical Data Science with R - SDTM, ADaM, and TLF production with the Pharmaverse ecosystem."
+
+  twitter-card:
+    title: "30 Days of Pharmaverse"
+    description: "Free 30-day hands-on guide to Pharmaverse, SDTM, ADaM & TLF production in R."
+    card-style: summary_large_image
+
+  page-footer:
+    center: |
+      <span style="font-size:13px; color:#4a5568;"><a href="https://ineelhere.github.io/30-days-of-pharmaverse/" style="color:#2b6cb0; text-decoration:none;">30 Days of Pharmaverse</a> &nbsp;·&nbsp; <a href="/30-days-of-pharmaverse/#important-disclaimer" style="color:#2b6cb0; text-decoration:none;">Disclaimer</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/indraneelchakraborty/" style="color:#2b6cb0; text-decoration:none;">Indraneel Chakraborty</a> &nbsp;·&nbsp; © 2026<br><a href="https://ineelhere.github.io/30-days-of-pharmaverse/"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits&countColor=%232b6cb0&style=plastic&labelStyle=none" style="vertical-align:middle;"></a></span>
   navbar:
     title: "30 Days of Pharmaverse"
     left:
@@ -45,7 +57,7 @@ website:
         - week2/day12.qmd
         - week2/day13.qmd
         - week2/day14.qmd
-    - id: week2
+    - id: week3
       title: "Week 3: ADaM Deep Dive"
       contents:
         - week3/day15.qmd
@@ -72,15 +84,10 @@ format:
   html:
     theme:
       light: cosmo
-
     toc: true
     toc-depth: 2
     page-layout: full
-    footer: |
-      <div style="text-align:center; padding:8px 0;">
-        <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>
-        <br/>
-        <a href="/30-days-of-pharmaverse/index.html#important-disclaimer" style="font-size:12px;">⚠️ Important Disclaimer</a>
-        &nbsp;|&nbsp;
-        <span style="font-size:12px;">© 2026 · 30 Days of Pharmaverse · Personal Learning Initiative</span>
-      </div>
+    include-in-header:
+      text: |
+        <meta name="keywords" content="pharmaverse, R, clinical data science, SDTM, ADaM, TLF, admiral, xportr, metacore, rtables, tern, CDISC, clinical programming, biostatistics" />
+        <meta name="author" content="Indraneel Chakraborty" />

@@ -543,4 +543,4 @@ ADSL is complete - ready for all other ADaMs!
 
 *Tomorrow: ADAE (Adverse Events)*
 
-<a href="https://visitorbadge.io/status?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fineelhere.github.io%2F30-days-of-pharmaverse&label=Visits%20till%20date&countColor=%23263759&style=plastic&labelStyle=none" /></a>
+___
