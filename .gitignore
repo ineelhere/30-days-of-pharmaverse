@@ -52,3 +52,4 @@ rsconnect/
 render.R
 /.quarto/
 **/*.quarto_ipynb
+*.vscode/
