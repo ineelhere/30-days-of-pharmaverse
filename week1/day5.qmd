@@ -40,12 +40,21 @@ By the end of Day 5, you will be able to:
 
 ## Introduction
 
+
 ### Wide vs. Long Data
+
+In clinical data, how you organize your tables (datasets) is very important. There are two main ways:
+
+- **Long format:** Each row is a single measurement or observation. For example, if you measure blood pressure three times for a subject, you’ll have three rows for that subject. This is the format used by SDTM because it is flexible and easy to filter or summarize.
+- **Wide format:** Each row is a subject or visit, and each measurement is in its own column. For example, you might have one row per subject, with columns for blood pressure at each visit. This format is often used for calculations or when you need to compare values side-by-side.
 
 | Format | Structure | Use Case |
 |----|----|----|
 | **Long** | One measurement per row | Storage, filtering, SDTM standard |
 | **Wide** | All measurements in columns | Calculations (BMI, Change from Baseline) |
+
+#### Why does this matter?
+Some analyses are easier in long format (like counting how many times a test was done), while others are easier in wide format (like calculating BMI from height and weight). Being able to switch between these formats is a key skill for clinical programmers.
 
 SDTM stores data in **long format** (one row per observation). For analysis, we often need to reshape to **wide format** (one row per subject/visit).
 

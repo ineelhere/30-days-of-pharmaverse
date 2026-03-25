@@ -353,7 +353,7 @@ window.Quarto = {
 <h2 data-number="2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2</span> Introduction</h2>
 <section id="dates-in-cdisc-iso-8601" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="dates-in-cdisc-iso-8601"><span class="header-section-number">2.1</span> Dates in CDISC (ISO 8601)</h3>
-<p>CDISC standards use the <strong>ISO 8601</strong> format for dates and times: <code>YYYY-MM-DDThh:mm:ss</code>.</p>
+<p>In clinical trials, dates and times are very important. CDISC requires that all dates and times follow the <strong>ISO 8601</strong> standard format. This makes it easy for computers and people to read and compare dates. The format looks like this: <code>YYYY-MM-DDThh:mm:ss</code>.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -385,19 +385,33 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+<section id="why-does-this-matter" class="level4" data-number="2.1.1">
+<h4 data-number="2.1.1" class="anchored" data-anchor-id="why-does-this-matter"><span class="header-section-number">2.1.1</span> Why does this matter?</h4>
+<p>If everyone uses the same date format, it’s much easier to merge, analyze, and review data. It also prevents mistakes that can happen if dates are written in different ways (like 01/02/2024— is that January 2 or February 1?).</p>
+</section>
 </section>
 <section id="the-no-day-0-rule" class="level3" data-number="2.2">
 <h3 data-number="2.2" class="anchored" data-anchor-id="the-no-day-0-rule"><span class="header-section-number">2.2</span> The “No Day 0” Rule</h3>
-<p>CDISC has a specific rule for calculating Study Days:</p>
+<p>When calculating study days (like how many days since a subject started treatment), CDISC has a special rule: <strong>There is NO Day 0</strong>. The reference date (usually the first dose) is always <strong>Day 1</strong>. Days before the reference date are negative numbers (Day -1, Day -2, etc.).</p>
 <ul>
 <li><strong>Day 1</strong> = Reference date (usually first dose)</li>
 <li><strong>Day -1</strong> = The day before reference date</li>
 <li><strong>There is NO Day 0</strong></li>
 </ul>
+<section id="why-is-this-important" class="level4" data-number="2.2.1">
+<h4 data-number="2.2.1" class="anchored" data-anchor-id="why-is-this-important"><span class="header-section-number">2.2.1</span> Why is this important?</h4>
+<p>This rule keeps things clear and avoids confusion. If you see Day 1, you know it’s the first day of treatment. There’s never a Day 0 to worry about.</p>
+</section>
 </section>
 <section id="the-role-of-lubridate" class="level3" data-number="2.3">
 <h3 data-number="2.3" class="anchored" data-anchor-id="the-role-of-lubridate"><span class="header-section-number">2.3</span> The Role of <code>lubridate</code></h3>
-<p>The <code>lubridate</code> package (part of tidyverse) makes working with dates in R easy. It handles parsing, arithmetic, and formatting much better than base R functions.</p>
+<p>Working with dates in R can be tricky, but the <code>lubridate</code> package (part of the tidyverse) makes it much easier. It helps you:</p>
+<ul>
+<li>Parse (read) dates from character strings</li>
+<li>Do date math (like adding days)</li>
+<li>Extract parts of a date (year, month, day)</li>
+</ul>
+<p>This is very helpful for clinical data, where you often need to calculate things like study day, duration, or handle partial dates.</p>
 <hr>
 </section>
 </section>

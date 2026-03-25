@@ -318,18 +318,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2</span> Introduction</h2>
 <section id="why-controlled-terminology-matters" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="why-controlled-terminology-matters"><span class="header-section-number">2.1</span> Why Controlled Terminology Matters</h3>
-<p>In clinical trials, consistency is key. Regulatory agencies like the FDA need data to be standardized so they can analyze it across different studies. <strong>Controlled Terminology (CT)</strong> ensures that everyone uses the same words to describe the same things.</p>
-<p>For example, without CT, severity might be recorded as:</p>
-<ul>
-<li>“Mild”, “Mod”, “Severe”</li>
-<li>“1”, “2”, “3”</li>
-<li>“Light”, “Moderate”, “Heavy”</li>
-</ul>
-<p>With CDISC CT, we must use: <strong>“MILD”, “MODERATE”, “SEVERE”</strong>.</p>
+<p>In clinical trials, it is extremely important that everyone uses the same words to describe the same things. This is called <strong>Controlled Terminology (CT)</strong>. Regulatory agencies like the FDA require this because they need to compare data from many different studies and sponsors. If everyone used their own words, it would be impossible to analyze the data together.</p>
+<section id="example" class="level4" data-number="2.1.1">
+<h4 data-number="2.1.1" class="anchored" data-anchor-id="example"><span class="header-section-number">2.1.1</span> Example:</h4>
+<p>Suppose one doctor writes “Mild”, another writes “Mod”, and a third writes “1” to describe the severity of an event. Without CT, these would all be treated as different, even though they mean the same thing. With CDISC CT, everyone must use the same set of allowed values, like <strong>“MILD”, “MODERATE”, “SEVERE”</strong>.</p>
+</section>
+<section id="why-is-this-important" class="level4" data-number="2.1.2">
+<h4 data-number="2.1.2" class="anchored" data-anchor-id="why-is-this-important"><span class="header-section-number">2.1.2</span> Why is this important?</h4>
+<p>Using CT makes your data clear, consistent, and ready for regulatory review. It also helps avoid mistakes and confusion when combining data from different sources.</p>
+</section>
 </section>
 <section id="the-role-of-meddra" class="level3" data-number="2.2">
 <h3 data-number="2.2" class="anchored" data-anchor-id="the-role-of-meddra"><span class="header-section-number">2.2</span> The Role of MedDRA</h3>
-<p><strong>MedDRA</strong> (Medical Dictionary for Regulatory Activities) is the standard for coding medical terms. It organizes adverse events into a hierarchy:</p>
+<p><strong>MedDRA</strong> (Medical Dictionary for Regulatory Activities) is the international standard dictionary for coding medical terms in clinical trials. It is especially important for coding adverse events (AEs). MedDRA organizes medical terms into a hierarchy, from very broad categories down to very specific terms:</p>
 <pre><code>┌─────────────────────────────────────────────────────────────────┐
 │  SOC  │ System Organ Class (e.g., "Gastrointestinal disorders") │
 ├───────┴─────────────────────────────────────────────────────────┤

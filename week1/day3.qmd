@@ -43,21 +43,19 @@ By the end of Day 3, you will be able to:
 
 ### Why Controlled Terminology Matters
 
-In clinical trials, consistency is key. Regulatory agencies like the FDA need data to be standardized so they can analyze it across different studies. **Controlled Terminology (CT)** ensures that everyone uses the same words to describe the same things.
+In clinical trials, it is extremely important that everyone uses the same words to describe the same things. This is called **Controlled Terminology (CT)**. Regulatory agencies like the FDA require this because they need to compare data from many different studies and sponsors. If everyone used their own words, it would be impossible to analyze the data together.
 
-For example, without CT, severity might be recorded as:
+#### Example:
+Suppose one doctor writes "Mild", another writes "Mod", and a third writes "1" to describe the severity of an event. Without CT, these would all be treated as different, even though they mean the same thing. With CDISC CT, everyone must use the same set of allowed values, like **"MILD", "MODERATE", "SEVERE"**.
 
--   "Mild", "Mod", "Severe"
--   "1", "2", "3"
--   "Light", "Moderate", "Heavy"
-
-With CDISC CT, we must use: **"MILD", "MODERATE", "SEVERE"**.
+#### Why is this important?
+Using CT makes your data clear, consistent, and ready for regulatory review. It also helps avoid mistakes and confusion when combining data from different sources.
 
 ### The Role of MedDRA
 
-**MedDRA** (Medical Dictionary for Regulatory Activities) is the standard for coding medical terms. It organizes adverse events into a hierarchy:
+**MedDRA** (Medical Dictionary for Regulatory Activities) is the international standard dictionary for coding medical terms in clinical trials. It is especially important for coding adverse events (AEs). MedDRA organizes medical terms into a hierarchy, from very broad categories down to very specific terms:
 
-```         
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │  SOC  │ System Organ Class (e.g., "Gastrointestinal disorders") │
 ├───────┴─────────────────────────────────────────────────────────┤

@@ -321,17 +321,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2" class="anchored" data-anchor-id="introduction-to-cdisc-and-the-pharmaverse"><span class="header-section-number">2</span> Introduction to CDISC and the Pharmaverse</h2>
 <section id="what-is-cdisc" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="what-is-cdisc"><span class="header-section-number">2.1</span> What is CDISC?</h3>
-<p><strong>CDISC (Clinical Data Interchange Standards Consortium)</strong> is an organization that develops global data standards for clinical research. These standards ensure that clinical trial data is:</p>
+<p><strong>CDISC (Clinical Data Interchange Standards Consortium)</strong> is a global organization that creates standards for how clinical trial data should be collected, organized, and shared. These standards are important because they:</p>
 <ul>
-<li><strong>Consistent</strong> across different studies and organizations</li>
-<li><strong>Interoperable</strong> between different systems and regulatory agencies</li>
-<li><strong>Submission-ready</strong> for regulatory authorities like the FDA and EMA</li>
+<li><strong>Ensure Consistency:</strong> Data from different studies and companies can be compared easily because everyone uses the same structure and terms.</li>
+<li><strong>Enable Interoperability:</strong> Data can move smoothly between different software systems, making it easier for teams, sponsors, and regulators to work together.</li>
+<li><strong>Support Regulatory Submission:</strong> Regulatory agencies like the FDA (U.S.) and EMA (Europe) require data in CDISC formats for new drug applications. Using CDISC makes your data ready for these submissions.</li>
 </ul>
+<section id="why-does-this-matter" class="level4" data-number="2.1.1">
+<h4 data-number="2.1.1" class="anchored" data-anchor-id="why-does-this-matter"><span class="header-section-number">2.1.1</span> Why does this matter?</h4>
+<p>Imagine you are reading a book, but every chapter is written in a different language or format. It would be very hard to understand the story! CDISC makes sure all the “chapters” (datasets) in a clinical trial are written in the same “language” so everyone can understand and use them.</p>
+</section>
 </section>
 <section id="the-cdisc-data-flow" class="level3" data-number="2.2">
 <h3 data-number="2.2" class="anchored" data-anchor-id="the-cdisc-data-flow"><span class="header-section-number">2.2</span> The CDISC Data Flow</h3>
-<p>Understanding the data flow is critical for clinical programming:</p>
+<p>Understanding how data moves through a clinical trial is key for programmers. Here’s the typical flow:</p>
 <pre><code>Raw Data → SDTM → ADaM → TLFs</code></pre>
+<ul>
+<li><strong>Raw Data:</strong> This is the data collected directly from sources like electronic data capture (EDC) systems, lab machines, or paper forms. It is often messy and not standardized.</li>
+<li><strong>SDTM (Study Data Tabulation Model):</strong> This is the first step of standardization. SDTM organizes the raw data into specific domains (tables) with defined variables and formats. Each domain represents a type of information, like demographics (DM), adverse events (AE), or lab results (LB).</li>
+<li><strong>ADaM (Analysis Data Model):</strong> These datasets are derived from SDTM and are designed to make statistical analysis easier. They include derived variables, flags, and are structured to answer specific analysis questions.</li>
+<li><strong>TLFs (Tables, Listings, and Figures):</strong> These are the final outputs—summaries, tables, and graphs that go into clinical study reports and regulatory submissions.</li>
+</ul>
+<section id="example" class="level4" data-number="2.2.1">
+<h4 data-number="2.2.1" class="anchored" data-anchor-id="example"><span class="header-section-number">2.2.1</span> Example:</h4>
+<p>Suppose a subject’s blood pressure is measured during a study. The measurement is first recorded as raw data. It is then organized into the SDTM VS (Vital Signs) domain. Later, it might be used to calculate a derived variable (like average blood pressure) in ADaM, and finally, the results are summarized in a table for the study report.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -384,6 +397,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+</section>
 </section>
 <section id="what-is-the-pharmaverse" class="level3" data-number="2.3">
 <h3 data-number="2.3" class="anchored" data-anchor-id="what-is-the-pharmaverse"><span class="header-section-number">2.3</span> What is the Pharmaverse?</h3>

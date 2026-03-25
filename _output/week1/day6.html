@@ -314,15 +314,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2</span> Introduction</h2>
 <section id="what-is-sdtm.oak" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="what-is-sdtm.oak"><span class="header-section-number">2.1</span> What is <code>sdtm.oak</code>?</h3>
-<p><code>sdtm.oak</code> is a pharmaverse package that provides a standardized, algorithm-based approach to creating SDTM datasets. Key concepts:</p>
+<p><code>sdtm.oak</code> is a package from the pharmaverse that helps you create SDTM datasets in a standardized, repeatable way. Instead of writing custom code for every study, you use a set of reusable algorithms and rules. This makes your code easier to maintain, test, and share with others.</p>
+<section id="key-concepts" class="level4" data-number="2.1.1">
+<h4 data-number="2.1.1" class="anchored" data-anchor-id="key-concepts"><span class="header-section-number">2.1.1</span> Key concepts:</h4>
 <ul>
-<li><strong>Algorithm-based</strong>: Instead of custom code, use reusable algorithms</li>
-<li><strong>Metadata-driven</strong>: Transformations defined in specifications</li>
-<li><strong>Modular</strong>: Small, testable functions that can be chained</li>
+<li><strong>Algorithm-based:</strong> You use small, well-defined steps (algorithms) to transform your data. For example, you might have an algorithm to assign subject IDs, another to map test codes, and another to standardize units.</li>
+<li><strong>Metadata-driven:</strong> The rules for how to transform the data are defined in a specification (metadata), not hard-coded in your script. This means you can update the rules without rewriting your code.</li>
+<li><strong>Modular:</strong> Each transformation is a small, testable function. You can chain them together to build complex workflows.</li>
 </ul>
+</section>
+<section id="why-is-this-important" class="level4" data-number="2.1.2">
+<h4 data-number="2.1.2" class="anchored" data-anchor-id="why-is-this-important"><span class="header-section-number">2.1.2</span> Why is this important?</h4>
+<p>This approach saves time, reduces errors, and makes it easier to follow CDISC standards. It also helps new programmers understand what each step is doing, because the code is organized and well-documented.</p>
+</section>
 </section>
 <section id="the-sdtm.oak-philosophy" class="level3" data-number="2.2">
 <h3 data-number="2.2" class="anchored" data-anchor-id="the-sdtm.oak-philosophy"><span class="header-section-number">2.2</span> The sdtm.oak Philosophy</h3>
+<p>Here are some common algorithms used in SDTM transformations:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 20%">
@@ -359,6 +367,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+<p>Each algorithm does one thing, and you can combine them to build your SDTM domains step by step.</p>
 <p><em>Note: We’ll simulate sdtm.oak patterns using dplyr/tidyr to understand the concepts.</em></p>
 <hr>
 </section>

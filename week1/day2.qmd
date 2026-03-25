@@ -93,7 +93,8 @@ data("ds", package = "pharmaversesdtm")
 
 ## SDTM Domain Classes
 
-SDTM organizes clinical data into **four domain classes**, each designed for a specific type of information. Understanding these classes helps you know what to expect from each domain.
+
+SDTM organizes clinical data into **four domain classes**, each designed for a specific type of information. Understanding these classes helps you know what to expect from each domain. Here’s a simple breakdown:
 
 ### The Four Domain Classes
 
@@ -104,9 +105,16 @@ SDTM organizes clinical data into **four domain classes**, each designed for a s
 | **Interventions** | Treatments administered | EX, CM, EC, SU | Dosing info, frequencies, routes |
 | **Findings** | Collected measurements/tests | LB, VS, EG, PE | Test codes, results, units, standards |
 
+#### What do these mean?
+
+- **Special Purpose:** These domains (like DM for Demographics) are the backbone of your study. They contain key information about each subject, such as their ID, age, sex, and treatment group. Usually, there is one row per subject.
+- **Events:** These domains (like AE for Adverse Events) record things that *happen* to a subject, such as getting sick or dropping out of the study. There can be many events per subject, so you’ll see multiple rows for the same person.
+- **Interventions:** These domains (like EX for Exposure) track what is *done to* a subject, such as giving them a drug or a procedure. Each row is a record of a treatment or intervention.
+- **Findings:** These domains (like LB for Laboratory) store results of tests or measurements taken from the subject, such as blood pressure or lab results. Each row is a single measurement.
+
 ### Special Purpose Class: DM (Demographics)
 
-The Demographics domain is the **anchor** of all SDTM data. It contains one row per subject and provides the reference information that other domains link to.
+The Demographics domain is the **anchor** of all SDTM data. It contains one row per subject and provides the reference information that other domains link to. For example, if you want to know a subject’s age or which treatment group they are in, you look in DM.
 
 ```{r}
 #| label: explore-dm
@@ -120,16 +128,16 @@ dm %>%
 ::: {.callout-note collapse="true"}
 ## Key DM Variables
 
--   **STUDYID**: Study Identifier
--   **USUBJID**: Unique Subject Identifier (links all domains)
--   **RFSTDTC**: Reference Start Date/Time (usually first dose)
--   **RFENDTC**: Reference End Date/Time
--   **ARM/ACTARM**: Planned/Actual Treatment Arm
+-   **STUDYID**: Study Identifier (the name/code of the study)
+-   **USUBJID**: Unique Subject Identifier (a unique code for each subject, used to link all domains)
+-   **RFSTDTC**: Reference Start Date/Time (usually the date of first dose)
+-   **RFENDTC**: Reference End Date/Time (when the subject finished or left the study)
+-   **ARM/ACTARM**: Planned/Actual Treatment Arm (which group the subject was assigned to)
 :::
 
 ### Events Class: AE (Adverse Events)
 
-Events domains capture discrete occurrences that happen to subjects. Each event has a start and potentially an end.
+Events domains capture discrete occurrences that happen to subjects. Each event has a start and potentially an end. For example, if a subject gets a headache during the study, it is recorded as an adverse event (AE).
 
 ```{r}
 #| label: explore-ae
@@ -140,9 +148,20 @@ ae %>%
   utils::head(10)
 ```
 
+::: {.callout-note collapse="true"}
+## Key AE Variables
+
+- **AETERM:** The verbatim term reported by the investigator (e.g., "Headache")
+- **AEDECOD:** The standardized (coded) term (e.g., "HEADACHE")
+- **AEBODSYS:** The body system affected (e.g., "Nervous system disorders")
+- **AESEV:** Severity (e.g., Mild, Moderate, Severe)
+- **AESER:** Seriousness (Yes/No)
+- **AESTDTC/AEENDTC:** Start and end dates of the event
+:::
+
 ### Interventions Class: EX (Exposure)
 
-Interventions domains track treatments given to subjects. They include dosing information, routes, and frequencies.
+Interventions domains track treatments given to subjects. They include dosing information, routes, and frequencies. For example, every time a subject receives a dose of study drug, it is recorded in EX.
 
 ```{r}
 #| label: explore-ex
@@ -153,9 +172,19 @@ ex %>%
   utils::head(10)
 ```
 
+::: {.callout-note collapse="true"}
+## Key EX Variables
+
+- **EXTRT:** Name of the treatment (e.g., "Drug A")
+- **EXDOSE:** Dose amount
+- **EXDOSU:** Dose units (e.g., mg)
+- **EXROUTE:** Route of administration (e.g., Oral)
+- **EXSTDTC/EXENDTC:** Start and end dates of dosing
+:::
+
 ### Findings Class: LB (Laboratory)
 
-Findings domains contain collected measurements. They have a standardized structure with test codes, results, units, and reference ranges.
+Findings domains contain collected measurements. They have a standardized structure with test codes, results, units, and reference ranges. For example, each blood test result is a row in LB.
 
 ```{r}
 #| label: explore-lb
@@ -165,6 +194,17 @@ lb %>%
   dplyr::select(USUBJID, LBTESTCD, LBTEST, LBORRES, LBORRESU, LBSTRESN, LBSTRESU) %>%
   utils::head(10)
 ```
+
+::: {.callout-note collapse="true"}
+## Key LB Variables
+
+- **LBTESTCD:** Short test code (e.g., "GLUC")
+- **LBTEST:** Full test name (e.g., "Glucose")
+- **LBORRES:** Original result (as collected)
+- **LBORRESU:** Original result units (e.g., mg/dL)
+- **LBSTRESN:** Standardized numeric result
+- **LBSTRESU:** Standardized units (e.g., mmol/L)
+:::
 
 ------------------------------------------------------------------------
 

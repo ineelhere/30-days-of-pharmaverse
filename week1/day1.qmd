@@ -42,19 +42,30 @@ By the end of Day 1, you will be able to:
 
 ### What is CDISC?
 
-**CDISC (Clinical Data Interchange Standards Consortium)** is an organization that develops global data standards for clinical research. These standards ensure that clinical trial data is:
+**CDISC (Clinical Data Interchange Standards Consortium)** is a global organization that creates standards for how clinical trial data should be collected, organized, and shared. These standards are important because they:
 
--   **Consistent** across different studies and organizations
--   **Interoperable** between different systems and regulatory agencies
--   **Submission-ready** for regulatory authorities like the FDA and EMA
+-   **Ensure Consistency:** Data from different studies and companies can be compared easily because everyone uses the same structure and terms.
+-   **Enable Interoperability:** Data can move smoothly between different software systems, making it easier for teams, sponsors, and regulators to work together.
+-   **Support Regulatory Submission:** Regulatory agencies like the FDA (U.S.) and EMA (Europe) require data in CDISC formats for new drug applications. Using CDISC makes your data ready for these submissions.
+
+#### Why does this matter?
+Imagine you are reading a book, but every chapter is written in a different language or format. It would be very hard to understand the story! CDISC makes sure all the "chapters" (datasets) in a clinical trial are written in the same "language" so everyone can understand and use them.
 
 ### The CDISC Data Flow
 
-Understanding the data flow is critical for clinical programming:
+Understanding how data moves through a clinical trial is key for programmers. Here’s the typical flow:
 
-```         
+```
 Raw Data → SDTM → ADaM → TLFs
 ```
+
+- **Raw Data:** This is the data collected directly from sources like electronic data capture (EDC) systems, lab machines, or paper forms. It is often messy and not standardized.
+- **SDTM (Study Data Tabulation Model):** This is the first step of standardization. SDTM organizes the raw data into specific domains (tables) with defined variables and formats. Each domain represents a type of information, like demographics (DM), adverse events (AE), or lab results (LB).
+- **ADaM (Analysis Data Model):** These datasets are derived from SDTM and are designed to make statistical analysis easier. They include derived variables, flags, and are structured to answer specific analysis questions.
+- **TLFs (Tables, Listings, and Figures):** These are the final outputs—summaries, tables, and graphs that go into clinical study reports and regulatory submissions.
+
+#### Example:
+Suppose a subject’s blood pressure is measured during a study. The measurement is first recorded as raw data. It is then organized into the SDTM VS (Vital Signs) domain. Later, it might be used to calculate a derived variable (like average blood pressure) in ADaM, and finally, the results are summarized in a table for the study report.
 
 | Stage | Description | Example |
 |------------------|--------------------------------|----------------------|

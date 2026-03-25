@@ -41,22 +41,31 @@ By the end of Day 6, you will be able to:
 
 ## Introduction
 
+
 ### What is `sdtm.oak`?
 
-`sdtm.oak` is a pharmaverse package that provides a standardized, algorithm-based approach to creating SDTM datasets. Key concepts:
+`sdtm.oak` is a package from the pharmaverse that helps you create SDTM datasets in a standardized, repeatable way. Instead of writing custom code for every study, you use a set of reusable algorithms and rules. This makes your code easier to maintain, test, and share with others.
 
--   **Algorithm-based**: Instead of custom code, use reusable algorithms
--   **Metadata-driven**: Transformations defined in specifications
--   **Modular**: Small, testable functions that can be chained
+#### Key concepts:
+- **Algorithm-based:** You use small, well-defined steps (algorithms) to transform your data. For example, you might have an algorithm to assign subject IDs, another to map test codes, and another to standardize units.
+- **Metadata-driven:** The rules for how to transform the data are defined in a specification (metadata), not hard-coded in your script. This means you can update the rules without rewriting your code.
+- **Modular:** Each transformation is a small, testable function. You can chain them together to build complex workflows.
+
+#### Why is this important?
+This approach saves time, reduces errors, and makes it easier to follow CDISC standards. It also helps new programmers understand what each step is doing, because the code is organized and well-documented.
 
 ### The sdtm.oak Philosophy
+
+Here are some common algorithms used in SDTM transformations:
 
 | Algorithm     | Description                    | Example Use                |
 |---------------|--------------------------------|----------------------------|
 | **Assign**    | Copy source to target          | Subject ID → USUBJID       |
 | **Hardcode**  | Set a constant value           | DOMAIN = "LB"              |
-| **Condition** | Apply logic based on condition | If severity \>= 3 then "Y" |
+| **Condition** | Apply logic based on condition | If severity >= 3 then "Y" |
 | **Assign CT** | Map to Controlled Terminology  | "Male" → "M"               |
+
+Each algorithm does one thing, and you can combine them to build your SDTM domains step by step.
 
 *Note: We'll simulate sdtm.oak patterns using dplyr/tidyr to understand the concepts.*
 

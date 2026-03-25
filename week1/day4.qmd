@@ -41,9 +41,10 @@ By the end of Day 4, you will be able to:
 
 ## Introduction
 
+
 ### Dates in CDISC (ISO 8601)
 
-CDISC standards use the **ISO 8601** format for dates and times: `YYYY-MM-DDThh:mm:ss`.
+In clinical trials, dates and times are very important. CDISC requires that all dates and times follow the **ISO 8601** standard format. This makes it easy for computers and people to read and compare dates. The format looks like this: `YYYY-MM-DDThh:mm:ss`.
 
 | Format          | Example            | Description           |
 |-----------------|--------------------|-----------------------|
@@ -52,17 +53,29 @@ CDISC standards use the **ISO 8601** format for dates and times: `YYYY-MM-DDThh:
 | Year-Month only | `2024-01`          | Partial (missing day) |
 | Year only       | `2024`             | Partial (month + day) |
 
+#### Why does this matter?
+If everyone uses the same date format, it’s much easier to merge, analyze, and review data. It also prevents mistakes that can happen if dates are written in different ways (like 01/02/2024— is that January 2 or February 1?).
+
 ### The "No Day 0" Rule
 
-CDISC has a specific rule for calculating Study Days:
+When calculating study days (like how many days since a subject started treatment), CDISC has a special rule: **There is NO Day 0**. The reference date (usually the first dose) is always **Day 1**. Days before the reference date are negative numbers (Day -1, Day -2, etc.).
 
 -   **Day 1** = Reference date (usually first dose)
 -   **Day -1** = The day before reference date
 -   **There is NO Day 0**
 
+#### Why is this important?
+This rule keeps things clear and avoids confusion. If you see Day 1, you know it’s the first day of treatment. There’s never a Day 0 to worry about.
+
 ### The Role of `lubridate`
 
-The `lubridate` package (part of tidyverse) makes working with dates in R easy. It handles parsing, arithmetic, and formatting much better than base R functions.
+Working with dates in R can be tricky, but the `lubridate` package (part of the tidyverse) makes it much easier. It helps you:
+
+- Parse (read) dates from character strings
+- Do date math (like adding days)
+- Extract parts of a date (year, month, day)
+
+This is very helpful for clinical data, where you often need to calculate things like study day, duration, or handle partial dates.
 
 ------------------------------------------------------------------------
 

@@ -378,7 +378,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="sdtm-domain-classes" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="sdtm-domain-classes"><span class="header-section-number">4</span> SDTM Domain Classes</h2>
-<p>SDTM organizes clinical data into <strong>four domain classes</strong>, each designed for a specific type of information. Understanding these classes helps you know what to expect from each domain.</p>
+<p>SDTM organizes clinical data into <strong>four domain classes</strong>, each designed for a specific type of information. Understanding these classes helps you know what to expect from each domain. Here’s a simple breakdown:</p>
 <section id="the-four-domain-classes" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="the-four-domain-classes"><span class="header-section-number">4.1</span> The Four Domain Classes</h3>
 <table class="caption-top table">
@@ -423,10 +423,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+<section id="what-do-these-mean" class="level4" data-number="4.1.1">
+<h4 data-number="4.1.1" class="anchored" data-anchor-id="what-do-these-mean"><span class="header-section-number">4.1.1</span> What do these mean?</h4>
+<ul>
+<li><strong>Special Purpose:</strong> These domains (like DM for Demographics) are the backbone of your study. They contain key information about each subject, such as their ID, age, sex, and treatment group. Usually, there is one row per subject.</li>
+<li><strong>Events:</strong> These domains (like AE for Adverse Events) record things that <em>happen</em> to a subject, such as getting sick or dropping out of the study. There can be many events per subject, so you’ll see multiple rows for the same person.</li>
+<li><strong>Interventions:</strong> These domains (like EX for Exposure) track what is <em>done to</em> a subject, such as giving them a drug or a procedure. Each row is a record of a treatment or intervention.</li>
+<li><strong>Findings:</strong> These domains (like LB for Laboratory) store results of tests or measurements taken from the subject, such as blood pressure or lab results. Each row is a single measurement.</li>
+</ul>
+</section>
 </section>
 <section id="special-purpose-class-dm-demographics" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="special-purpose-class-dm-demographics"><span class="header-section-number">4.2</span> Special Purpose Class: DM (Demographics)</h3>
-<p>The Demographics domain is the <strong>anchor</strong> of all SDTM data. It contains one row per subject and provides the reference information that other domains link to.</p>
+<p>The Demographics domain is the <strong>anchor</strong> of all SDTM data. It contains one row per subject and provides the reference information that other domains link to. For example, if you want to know a subject’s age or which treatment group they are in, you look in DM.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DM structure - note the one row per subject</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dm <span class="sc">%&gt;%</span></span>
@@ -456,11 +465,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
-<li><strong>STUDYID</strong>: Study Identifier</li>
-<li><strong>USUBJID</strong>: Unique Subject Identifier (links all domains)</li>
-<li><strong>RFSTDTC</strong>: Reference Start Date/Time (usually first dose)</li>
-<li><strong>RFENDTC</strong>: Reference End Date/Time</li>
-<li><strong>ARM/ACTARM</strong>: Planned/Actual Treatment Arm</li>
+<li><strong>STUDYID</strong>: Study Identifier (the name/code of the study)</li>
+<li><strong>USUBJID</strong>: Unique Subject Identifier (a unique code for each subject, used to link all domains)</li>
+<li><strong>RFSTDTC</strong>: Reference Start Date/Time (usually the date of first dose)</li>
+<li><strong>RFENDTC</strong>: Reference End Date/Time (when the subject finished or left the study)</li>
+<li><strong>ARM/ACTARM</strong>: Planned/Actual Treatment Arm (which group the subject was assigned to)</li>
 </ul>
 </div>
 </div>
@@ -468,7 +477,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="events-class-ae-adverse-events" class="level3" data-number="4.3">
 <h3 data-number="4.3" class="anchored" data-anchor-id="events-class-ae-adverse-events"><span class="header-section-number">4.3</span> Events Class: AE (Adverse Events)</h3>
-<p>Events domains capture discrete occurrences that happen to subjects. Each event has a start and potentially an end.</p>
+<p>Events domains capture discrete occurrences that happen to subjects. Each event has a start and potentially an end. For example, if a subject gets a headache during the study, it is recorded as an adverse event (AE).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># AE structure - multiple rows per subject</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ae <span class="sc">%&gt;%</span></span>
@@ -490,10 +499,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 10 01-701-1034 APPLICATION SITE PR… APPLIC… GENERAL… MILD  N     2014-0… &lt;NA&gt;   </code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key AE Variables
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>AETERM:</strong> The verbatim term reported by the investigator (e.g., “Headache”)</li>
+<li><strong>AEDECOD:</strong> The standardized (coded) term (e.g., “HEADACHE”)</li>
+<li><strong>AEBODSYS:</strong> The body system affected (e.g., “Nervous system disorders”)</li>
+<li><strong>AESEV:</strong> Severity (e.g., Mild, Moderate, Severe)</li>
+<li><strong>AESER:</strong> Seriousness (Yes/No)</li>
+<li><strong>AESTDTC/AEENDTC:</strong> Start and end dates of the event</li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section id="interventions-class-ex-exposure" class="level3" data-number="4.4">
 <h3 data-number="4.4" class="anchored" data-anchor-id="interventions-class-ex-exposure"><span class="header-section-number">4.4</span> Interventions Class: EX (Exposure)</h3>
-<p>Interventions domains track treatments given to subjects. They include dosing information, routes, and frequencies.</p>
+<p>Interventions domains track treatments given to subjects. They include dosing information, routes, and frequencies. For example, every time a subject receives a dose of study drug, it is recorded in EX.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># EX structure - dosing records</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ex <span class="sc">%&gt;%</span></span>
@@ -515,10 +547,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 10 01-701-1034 XANOMELINE     54 mg     TRANSDERMAL 2014-07-01 2014-07-15</code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key EX Variables
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>EXTRT:</strong> Name of the treatment (e.g., “Drug A”)</li>
+<li><strong>EXDOSE:</strong> Dose amount</li>
+<li><strong>EXDOSU:</strong> Dose units (e.g., mg)</li>
+<li><strong>EXROUTE:</strong> Route of administration (e.g., Oral)</li>
+<li><strong>EXSTDTC/EXENDTC:</strong> Start and end dates of dosing</li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section id="findings-class-lb-laboratory" class="level3" data-number="4.5">
 <h3 data-number="4.5" class="anchored" data-anchor-id="findings-class-lb-laboratory"><span class="header-section-number">4.5</span> Findings Class: LB (Laboratory)</h3>
-<p>Findings domains contain collected measurements. They have a standardized structure with test codes, results, units, and reference ranges.</p>
+<p>Findings domains contain collected measurements. They have a standardized structure with test codes, results, units, and reference ranges. For example, each blood test result is a row in LB.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LB structure - lab results with standardization</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>lb <span class="sc">%&gt;%</span></span>
@@ -538,6 +592,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  8 01-701-1015 ALB      Albumin 3.7     g/dL           37 g/L     
  9 01-701-1015 ALB      Albumin 3.8     g/dL           38 g/L     
 10 01-701-1015 ALB      Albumin 3.8     g/dL           38 g/L     </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key LB Variables
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>LBTESTCD:</strong> Short test code (e.g., “GLUC”)</li>
+<li><strong>LBTEST:</strong> Full test name (e.g., “Glucose”)</li>
+<li><strong>LBORRES:</strong> Original result (as collected)</li>
+<li><strong>LBORRESU:</strong> Original result units (e.g., mg/dL)</li>
+<li><strong>LBSTRESN:</strong> Standardized numeric result</li>
+<li><strong>LBSTRESU:</strong> Standardized units (e.g., mmol/L)</li>
+</ul>
+</div>
 </div>
 </div>
 <hr>
@@ -711,7 +788,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -720,7 +797,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>ORRES/ORRESU</strong>: Original result as collected (might be “&lt; 5”, “&gt;100”, or character values)</li>

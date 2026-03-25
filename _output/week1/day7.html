@@ -295,16 +295,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="capstone-project-overview" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="capstone-project-overview"><span class="header-section-number">2</span> Capstone Project Overview</h2>
-<p><strong>Goal</strong>: Create three SDTM domains from simulated raw clinical trial data:</p>
+<p><strong>Goal:</strong> In this capstone, you will use everything you learned in Days 1-6 to create three key SDTM domains from scratch, using simulated raw clinical trial data. Here’s what each domain means:</p>
 <ul>
-<li><strong>DM</strong> (Demographics) - One row per subject</li>
-<li><strong>AE</strong> (Adverse Events) - Multiple rows per subject</li>
-<li><strong>EX</strong> (Exposure) - Dosing records</li>
+<li><strong>DM (Demographics):</strong> This domain contains one row per subject and includes basic information like subject ID, age, sex, race, and treatment group. It is the foundation for linking all other domains.</li>
+<li><strong>AE (Adverse Events):</strong> This domain records all adverse events experienced by subjects. There can be multiple rows per subject, one for each event. Each row includes details like the event term, severity, seriousness, and dates.</li>
+<li><strong>EX (Exposure):</strong> This domain tracks dosing information—when and how much of the study drug each subject received. There can be multiple rows per subject, one for each dose.</li>
 </ul>
 <section id="the-pipeline" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="the-pipeline"><span class="header-section-number">2.1</span> The Pipeline</h3>
+<p>The process for building SDTM domains follows a clear pipeline:</p>
 <pre><code>Raw Data → Transform → Validate → Format → Export (.xpt)</code></pre>
+<ol type="1">
+<li><strong>Raw Data:</strong> Start with unprocessed data collected from the study (simulated here).</li>
+<li><strong>Transform:</strong> Clean and organize the data into SDTM structure using R and tidyverse tools.</li>
+<li><strong>Validate:</strong> Check that your SDTM domains follow CDISC rules and are internally consistent.</li>
+<li><strong>Format:</strong> Apply metadata (labels, types) and prepare for export.</li>
+<li><strong>Export:</strong> Save the final datasets as SAS Transport files (<code>.xpt</code>), which are required for regulatory submission.</li>
+</ol>
+<section id="why-is-this-important" class="level4" data-number="2.1.1">
+<h4 data-number="2.1.1" class="anchored" data-anchor-id="why-is-this-important"><span class="header-section-number">2.1.1</span> Why is this important?</h4>
+<p>This workflow is exactly what happens in real clinical programming jobs. Mastering it means you can confidently produce submission-ready datasets for any study.</p>
 <hr>
+</section>
 </section>
 </section>
 <section id="part-1-generate-simulated-raw-data-20-subjects" class="level2" data-number="3">

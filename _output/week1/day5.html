@@ -308,6 +308,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2</span> Introduction</h2>
 <section id="wide-vs.-long-data" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="wide-vs.-long-data"><span class="header-section-number">2.1</span> Wide vs.&nbsp;Long Data</h3>
+<p>In clinical data, how you organize your tables (datasets) is very important. There are two main ways:</p>
+<ul>
+<li><strong>Long format:</strong> Each row is a single measurement or observation. For example, if you measure blood pressure three times for a subject, you’ll have three rows for that subject. This is the format used by SDTM because it is flexible and easy to filter or summarize.</li>
+<li><strong>Wide format:</strong> Each row is a subject or visit, and each measurement is in its own column. For example, you might have one row per subject, with columns for blood pressure at each visit. This format is often used for calculations or when you need to compare values side-by-side.</li>
+</ul>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -334,8 +339,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+<section id="why-does-this-matter" class="level4" data-number="2.1.1">
+<h4 data-number="2.1.1" class="anchored" data-anchor-id="why-does-this-matter"><span class="header-section-number">2.1.1</span> Why does this matter?</h4>
+<p>Some analyses are easier in long format (like counting how many times a test was done), while others are easier in wide format (like calculating BMI from height and weight). Being able to switch between these formats is a key skill for clinical programmers.</p>
 <p>SDTM stores data in <strong>long format</strong> (one row per observation). For analysis, we often need to reshape to <strong>wide format</strong> (one row per subject/visit).</p>
 <hr>
+</section>
 </section>
 </section>
 <section id="package-installation-loading" class="level2" data-number="3">

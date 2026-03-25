@@ -41,17 +41,29 @@ By the end of Day 7, you will be able to:
 
 ## Capstone Project Overview
 
-**Goal**: Create three SDTM domains from simulated raw clinical trial data:
 
--   **DM** (Demographics) - One row per subject
--   **AE** (Adverse Events) - Multiple rows per subject
--   **EX** (Exposure) - Dosing records
+**Goal:** In this capstone, you will use everything you learned in Days 1-6 to create three key SDTM domains from scratch, using simulated raw clinical trial data. Here’s what each domain means:
+
+- **DM (Demographics):** This domain contains one row per subject and includes basic information like subject ID, age, sex, race, and treatment group. It is the foundation for linking all other domains.
+- **AE (Adverse Events):** This domain records all adverse events experienced by subjects. There can be multiple rows per subject, one for each event. Each row includes details like the event term, severity, seriousness, and dates.
+- **EX (Exposure):** This domain tracks dosing information—when and how much of the study drug each subject received. There can be multiple rows per subject, one for each dose.
 
 ### The Pipeline
 
-```         
+The process for building SDTM domains follows a clear pipeline:
+
+```
 Raw Data → Transform → Validate → Format → Export (.xpt)
 ```
+
+1. **Raw Data:** Start with unprocessed data collected from the study (simulated here).
+2. **Transform:** Clean and organize the data into SDTM structure using R and tidyverse tools.
+3. **Validate:** Check that your SDTM domains follow CDISC rules and are internally consistent.
+4. **Format:** Apply metadata (labels, types) and prepare for export.
+5. **Export:** Save the final datasets as SAS Transport files (`.xpt`), which are required for regulatory submission.
+
+#### Why is this important?
+This workflow is exactly what happens in real clinical programming jobs. Mastering it means you can confidently produce submission-ready datasets for any study.
 
 ------------------------------------------------------------------------
 
