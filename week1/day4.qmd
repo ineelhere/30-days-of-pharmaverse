@@ -54,7 +54,7 @@ In clinical trials, dates and times are very important. CDISC requires that all 
 | Year only       | `2024`             | Partial (month + day) |
 
 #### Why does this matter?
-If everyone uses the same date format, it’s much easier to merge, analyze, and review data. It also prevents mistakes that can happen if dates are written in different ways (like 01/02/2024— is that January 2 or February 1?).
+If everyone uses the same date format, it’s much easier to merge, analyze, and review data. It also prevents mistakes that can happen if dates are written in different ways (like 01/02/2024- is that January 2 or February 1?).
 
 ### The "No Day 0" Rule
 
