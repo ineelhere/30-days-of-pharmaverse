@@ -62,7 +62,7 @@ Raw Data → SDTM → ADaM → TLFs
 - **Raw Data:** This is the data collected directly from sources like electronic data capture (EDC) systems, lab machines, or paper forms. It is often messy and not standardized.
 - **SDTM (Study Data Tabulation Model):** This is the first step of standardization. SDTM organizes the raw data into specific domains (tables) with defined variables and formats. Each domain represents a type of information, like demographics (DM), adverse events (AE), or lab results (LB).
 - **ADaM (Analysis Data Model):** These datasets are derived from SDTM and are designed to make statistical analysis easier. They include derived variables, flags, and are structured to answer specific analysis questions.
-- **TLFs (Tables, Listings, and Figures):** These are the final outputs—summaries, tables, and graphs that go into clinical study reports and regulatory submissions.
+- **TLFs (Tables, Listings, and Figures):** These are the final outputs-summaries, tables, and graphs that go into clinical study reports and regulatory submissions.
 
 #### Example:
 Suppose a subject’s blood pressure is measured during a study. The measurement is first recorded as raw data. It is then organized into the SDTM VS (Vital Signs) domain. Later, it might be used to calculate a derived variable (like average blood pressure) in ADaM, and finally, the results are summarized in a table for the study report.
@@ -183,7 +183,9 @@ The `pharmaversesdtm` package contains example SDTM datasets that mirror real cl
 
 ### What are SDTM Domains?
 
-SDTM organizes clinical data into **domains**, each representing a specific type of information:
+SDTM organizes clinical data into **domains**, each representing a specific type of information. The full SDTM standard defines **30+ domains** across several categories (General Observation Classes, Special Purpose, Trial Design, and Relationship datasets). The exact count grows with each new version of the SDTMIG as CDISC adds domains for new therapeutic areas and data types.
+
+The table below shows the **most commonly used ("core") domains** - the ones you will encounter in nearly every clinical trial:
 
 | Domain Class        | Domain | Description                                |
 |---------------------|--------|--------------------------------------------|
@@ -194,6 +196,30 @@ SDTM organizes clinical data into **domains**, each representing a specific type
 | **Interventions**   | CM     | Concomitant Medications                    |
 | **Findings**        | LB     | Laboratory Results                         |
 | **Findings**        | VS     | Vital Signs                                |
+
+::: {.callout-note collapse="true"}
+## "Core" domains vs. the full SDTM standard
+
+We use the term **"core"** here to mean the domains you'll work with most frequently - DM, AE, EX, LB, VS, DS, CM. These appear in virtually every clinical study. However, the full SDTM Implementation Guide (SDTMIG), available from [CDISC](https://www.cdisc.org), defines many more domains, including:
+
+- **Additional General Observation domains**: MH (Medical History), PE (Physical Examination), EG (ECG), QS (Questionnaires), FA (Findings About), and others  
+- **Trial Design domains**: TA (Trial Arms), TE (Trial Elements), TV (Trial Visits), TI (Trial Inclusion/Exclusion Criteria) - these describe the *study design* rather than individual subject data  
+- **Relationship datasets**: RELREC (Related Records), SUPP-- (Supplemental Qualifiers) - these capture relationships and non-standard variables  
+
+The SDTMIG also allows sponsors to create **custom domains** when no standard domain fits the data, as long as they follow the general observation class structure.
+:::
+
+::: {.callout-note collapse="true"}
+## What is the SDTMIG?
+
+The **SDTM Implementation Guide (SDTMIG)** is the companion document to the SDTM standard. While the SDTM model defines the *conceptual* framework (observation classes, general variable roles), the SDTMIG provides the *practical* implementation details:
+
+- **Domain specifications**: Which variables belong in each domain, their data types, controlled terminology, and whether they are Required, Expected, or Permissible  
+- **Assumptions and business rules**: How to handle specific data scenarios (e.g., partial dates, multiple occurrences, supplemental qualifiers)  
+- **Examples**: Sample data showing how real clinical data maps into SDTM structure  
+
+The current version is SDTMIG v3.4. You can obtain it from [CDISC](https://www.cdisc.org) (a free CDISC account is required to access the full documentation).
+:::
 
 ::: {.callout-note collapse="true"}
 ## Domain classes and their structure rules
@@ -209,7 +235,7 @@ The **Special Purpose** domains (DM, CO, SE, SV) don't follow the three-class mo
 
 ### Step 3: Load the Core SDTM Domains
 
-Let's load four key domains that we'll work with today:
+Out of the 30+ domains defined in the SDTMIG, we'll load four **core** domains today - the ones that appear in virtually every clinical trial and form the foundation for most safety and efficacy analyses:
 
 ::: {.callout-note collapse="true"}
 ## How `data()` loads package datasets
@@ -245,6 +271,30 @@ Four new objects - `dm`, `ae`, `ex`, and `lb` - have been created in your R glob
 ## Exploring the Data
 
 Before working with any dataset, it's essential to understand its structure. Let's explore each domain using different R functions.
+
+::: {.callout-important collapse="true"}
+## A note on terminology: "column names" vs. "variables"
+
+In CDISC and pharma programming, the terms **"column name"** and **"variable"** refer to the same thing - a single field in a dataset. For example, `USUBJID`, `AGE`, `AEDECOD` are all **variables** (in CDISC terminology) that appear as **columns** in the data frame. If you come from a database background, you might also know them as "fields" or "attributes". Throughout this course, we use these terms interchangeably.
+:::
+
+::: {.callout-important collapse="true"}
+## Key variables: uniquely identifying each row
+
+If you come from a database background, you know how important **key fields** (primary keys) are - the set of columns that **uniquely identify a single row** in a table. SDTM domains follow the same concept:
+
+| Domain | Key Variables (Natural Key) | What each row represents |
+|--------|----------------------------|-------------------------|
+| **DM** | `USUBJID` | One row per subject |
+| **AE** | `USUBJID`, `AESEQ` | One row per adverse event per subject |
+| **EX** | `USUBJID`, `EXSEQ` | One row per dosing record per subject |
+| **LB** | `USUBJID`, `LBSEQ` | One row per lab result per subject |
+| **VS** | `USUBJID`, `VSSEQ` | One row per vital sign measurement per subject |
+
+The `--SEQ` variable (e.g., `AESEQ`, `EXSEQ`) is a **sequence number** assigned within each subject - it acts as a record-level identifier that, combined with `USUBJID`, forms the **natural key** for the domain. This is conceptually identical to a composite primary key in a relational database.
+
+In addition, `STUDYID` + `USUBJID` together form a globally unique subject identifier across studies. Always verify that your key variables truly produce unique rows - duplicate keys indicate data quality issues.
+:::
 
 ### Method 1: `glimpse()` - Quick Structure Overview
 
@@ -373,7 +423,7 @@ Variables without a domain prefix (like `USUBJID`, `STUDYID`, `DOMAIN`) are **id
 
 ## Understanding Domain Relationships
 
-One of the most important concepts in clinical programming is understanding how domains relate to each other. **USUBJID** is the universal key that connects all domains.
+One of the most important concepts in clinical programming is understanding how domains relate to each other. **USUBJID** is the universal key that connects all domains - much like a **foreign key** in a relational database.
 
 ### The USUBJID Connection
 
@@ -385,6 +435,7 @@ One of the most important concepts in clinical programming is understanding how 
         └──────┬──────┘
                │ USUBJID
     ┌──────────┼──────────┬──────────┐
+    │ 1:many   │ 1:many   │ 1:many   │ 1:many
     ▼          ▼          ▼          ▼
 ┌────────┐  ┌───────┐  ┌───────┐  ┌────────┐
 │  AE    │  │  EX   │  │  LB   │  │  VS    │
@@ -392,10 +443,28 @@ One of the most important concepts in clinical programming is understanding how 
 └────────┘  └───────┘  └───────┘  └────────┘
 ```
 
+::: {.callout-important collapse="true"}
+## Domain relationships: one-to-one vs. one-to-many
+
+If you come from a database background, you'll recognize the relational patterns between SDTM domains:
+
+| Relationship | From → To | Explanation |
+|-------------|-----------|-------------|
+| **One-to-one** | DM → each subject | DM has exactly one row per `USUBJID`. It is the "master" table. |
+| **One-to-many** | DM → AE | Each subject (one DM row) can have zero, one, or many AE records. |
+| **One-to-many** | DM → EX | Each subject can have multiple dosing records. |
+| **One-to-many** | DM → LB | Each subject can have hundreds of lab results across visits. |
+| **One-to-many** | DM → VS | Each subject can have many vital sign measurements. |
+
+When you `inner_join(dm, ae, by = "USUBJID")`, the single DM row for a subject gets **replicated** for each of that subject's AE rows - this is the standard one-to-many join behavior. Understanding this is critical for avoiding unexpected row counts after joins.
+
+In database terms, `USUBJID` in DM acts as the **primary key**, while `USUBJID` in AE, EX, LB, etc. acts as a **foreign key** referencing back to DM.
+:::
+
 ::: {.callout-note collapse="true"}
 ## Why USUBJID is always a character variable
 
-`USUBJID` is always stored as a **character** (`<chr>`) string, never a number, even though it often contains digits. This is because it is a **concatenated identifier** - typically structured as `"STUDYID-SITEID-SUBJECTID"` (e.g., `"CDISCPILOT01-01-701"`). Treating it as numeric would risk stripping leading zeros, causing mismatches when joining domains. Always use `==` for exact string matching, never numeric comparisons. [(Reference: CDISC SDTM Implementation Guide - Identifier Variables)](https://www.cdisc.org/standards/foundational/sdtm/sdtm-implementation-guide-v3-4)
+`USUBJID` is always stored as a **character** (`<chr>`) string, never a number, even though it often contains digits. This is because it is a **concatenated identifier** - typically structured as `"STUDYID-SITEID-SUBJECTID"` (e.g., `"CDISCPILOT01-01-701"`). Treating it as numeric would risk stripping leading zeros, causing mismatches when joining domains. Always use `==` for exact string matching, never numeric comparisons. (Reference: CDISC SDTMIG - Identifier Variables, available from [CDISC](https://www.cdisc.org))
 :::
 
 ### Step 4: Join DM and AE (Demographics + Adverse Events)
@@ -458,7 +527,7 @@ The **EX (Exposure)** domain records every dose of study drug administered to a 
 - Deriving **last dose date** (used for safety follow-up windows)
 - Computing **dose intensity** and **total exposure** for pharmacokinetic analyses
 
-A subject can have multiple EX rows if they received multiple doses, dose changes, or multiple study periods. [(Reference: CDISC SDTMIG - EX Domain)](https://www.cdisc.org/standards/foundational/sdtm/sdtm-implementation-guide-v3-4)
+A subject can have multiple EX rows if they received multiple doses, dose changes, or multiple study periods. (Reference: CDISC SDTMIG - EX Domain, available from [CDISC](https://www.cdisc.org))
 :::
 
 ```{r}
